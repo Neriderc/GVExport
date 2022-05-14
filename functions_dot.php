@@ -944,7 +944,7 @@ class Dot {
 		// Add the family nr which he/she belongs to as spouse (needed when "combined" mode is used)
 		if ($this->settings["diagram_type"] == "combined") {
 			$fams = $i->spouseFamilies();
-			if (!empty($fams)) {
+			if (count($fams) > 0) {
 
 				// --- DEBUG ---
 				if ($this->settings["debug"]) {
@@ -1063,7 +1063,7 @@ class Dot {
 				}
 				// -------------
 
-				if (!empty($famc)) {
+				if (count($famc) > 0) {
 					// For every family where the INDI is listed as CHILD
 					foreach ($famc as $fam) {
 						// Get the family ID
