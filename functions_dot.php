@@ -1137,16 +1137,16 @@ class Dot {
 						}
 
 						// Add father & mother
-                    $h = $f->husband();
-                    $w = $f->wife();
-                    if($h)
-                        $husb_id = $h->xref();
-                    else
-                        $husb_id = null;
-                    if($w)
-                        $wife_id = $w->xref();
-                    else
-                        $wife_id = null;
+						$h = $f->husband();
+						$w = $f->wife();
+						if($h)
+							$husb_id = $h->xref();
+						else
+							$husb_id = null;
+						if($w)
+							$wife_id = $w->xref();
+						else
+							$wife_id = null;
 
 						if (!empty($husb_id)) {
 							$this->families[$fid]["has_children"] = TRUE;
