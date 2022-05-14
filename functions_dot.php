@@ -1355,11 +1355,11 @@ class Dot {
 						}
 						// -------------
 
-						//if ($this->settings["mark_not_related"] == TRUE) {
+						if ($this->settings["mark_not_related"] == TRUE) {
 							$this->addIndiToList($spouse_id, FALSE, FALSE, FALSE, FALSE, FALSE, $ind, $ance_level, $desc_level);
-						//} else {
-						//	$this->addIndiToList($spouse_id, FALSE, FALSE, FALSE, FALSE, TRUE, $ind, $ance_level, $desc_level);
-						//}
+						} else {
+							$this->addIndiToList($spouse_id, FALSE, FALSE, FALSE, FALSE, TRUE, $ind, $ance_level, $desc_level);
+						}
 					}
 
 				}
