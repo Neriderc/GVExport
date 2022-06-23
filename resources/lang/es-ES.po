@@ -1,0 +1,249 @@
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: POEditor.com\n"
+"Project-Id-Version: GVExport\n"
+"Language: es\n"
+
+#: 
+msgid "Update"
+msgstr "Actualizar"
+
+#: 
+msgid "Render serverside"
+msgstr "Renderizar en el servidor"
+
+#: 
+msgid "Reset"
+msgstr "Reiniciar"
+
+#: 
+msgid "Diagram preferences"
+msgstr "Preferencias del Diagrama"
+
+#: 
+msgid "Appearance"
+msgstr "Apariencia"
+
+#: 
+msgid "Output Settings"
+msgstr "Opciones de salida"
+
+#: 
+msgid "Include anyone related to"
+msgstr "Incluya a cualquier persona relacionada con"
+
+#: 
+msgid "Stop processing on"
+msgstr "Detener proceso en"
+
+#: 
+msgid "Include Ancestors"
+msgstr "Incluir Ancestros"
+
+#: 
+msgid "Include"
+msgstr "Incluir"
+
+#: 
+msgid "Siblings"
+msgstr "Hermanos"
+
+#: 
+msgid "Cousins"
+msgstr "Primos"
+
+#: 
+msgid "Spouses"
+msgstr "Esposas"
+
+#: 
+msgid "Include Descendants"
+msgstr "Incluir Descendientes"
+
+#: 
+msgid "Max Levels"
+msgstr "Nivel Max"
+
+#: 
+msgid "Mark not blood-related people with different color"
+msgstr "Marque a las personas sin consanguinidad con un color diferente"
+
+#: 
+msgid "Add URL to individuals and families"
+msgstr "Añadir URL a individuales y familias"
+
+#: 
+msgid "Use abbreviated placenames"
+msgstr "Usar nombres de lugares abreviados"
+
+#: 
+msgid "Show Birth Date"
+msgstr "Mostrar Fecha de Nacimiento"
+
+#: 
+msgid "Show Birth Place"
+msgstr "Mostrar lugar de nacimiento"
+
+#: 
+msgid "Show Death Date"
+msgstr "Mostrar fecha de Defunción"
+
+#: 
+msgid "Full Date"
+msgstr "Fecha Completa"
+
+#: 
+msgid "Year"
+msgstr "Año"
+
+#: 
+msgid "Show Death Place"
+msgstr "Mostrar lugar de muerte"
+
+#: 
+msgid "Show Family ID"
+msgstr "Mostrar ID Familia"
+
+#: 
+msgid "Show Marriage Date"
+msgstr "Mostrar fecha de matrimonio"
+
+#: 
+msgid "Show Marriage Place"
+msgstr "Mostrar lugar de matrimonio"
+
+#: 
+msgid "Graph Direction"
+msgstr "Dirección del gráfico"
+
+#: 
+msgid "Diagram Type"
+msgstr "Tipo de diagrama"
+
+#: 
+msgid "Simple"
+msgstr "Simple"
+
+#: 
+msgid "Decorated"
+msgstr "Decorado"
+
+#: 
+msgid "Combined"
+msgstr "Combinado"
+
+#: 
+msgid "Add photos"
+msgstr "Añadir fotos"
+
+#: 
+msgid "Only Decorated or Combined"
+msgstr "Solo Decorado o Combinado"
+
+#: 
+msgid "Output File Type"
+msgstr "Tipo de archivo de salida"
+
+#: 
+msgid "Generate a file for download"
+msgstr "Generar un archivo para descargar"
+
+#: 
+msgid "Choose DOT if you don't have GraphViz installed on server."
+msgstr "Elija DOT si no tiene GraphViz instalado en el servidor."
+
+#: 
+msgid "Number of iterations (MCLIMIT)"
+msgstr "Número de iteraciones (MCLIMIT)"
+
+#: 
+msgid "helps to reduce the crossings on the graph. This can be really slow (up to 10..15x compared to the 20 setting)"
+msgstr "Ayuda a reducir los cruces en el gráfico. Esto puede ser muy lento (hasta 10..15x comparado con la configuración 20)"
+
+#: 
+msgid "DPI"
+msgstr "DPI"
+
+#: 
+msgid "Show Selection"
+msgstr "Mostrar selección"
+
+#: 
+msgid "SVG only"
+msgstr "Solo SVG"
+
+#: 
+msgid "Top-to-Bottom"
+msgstr "Arriba-a-Abajo"
+
+#: 
+msgid "Left-to-Right"
+msgstr "Izquierda-a-Derecha"
+
+#: 
+msgid "Space between generations"
+msgstr "Espacio entre generaciones"
+
+#: 
+msgid "Space between individuals on the same level"
+msgstr "Espacio entre individuos en el mismo nivel"
+
+#: 
+msgid "Error running GVExport in Browser mode"
+msgstr "Error al ejecutar GVExport en modo navegador"
+
+#: 
+msgid "Preview"
+msgstr "Previo"
+
+#: 
+msgid "Download"
+msgstr "Descargar"
+
+#: 
+msgid "Full place name"
+msgstr "Nombre completo del lugar"
+
+#: 
+msgid "City and Country"
+msgstr "Ciudad y país"
+
+#: 
+msgid "City and 2 Letter ISO Country Code"
+msgstr "Ciudad y código de país ISO de 2 letras"
+
+#: 
+msgid "City and 3 Letter ISO Country Code"
+msgstr "Ciudad y código de país ISO de 3 letras"
+
+#: 
+msgid "Space"
+msgstr "Espacio"
+
+#: 
+msgid "Between generations"
+msgstr "Entre generaciones"
+
+#: 
+msgid "Between individuals on the same level"
+msgstr "Entre personas del mismo nivel"
+
+#: 
+msgid "Abbreviated place names"
+msgstr "Nombres de lugares abreviados"
+
+#: 
+msgid "You have items in the clippings cart, so clippings cart items will be used for the diagram instead of the below options."
+msgstr "Tiene elementos en el carrito de recortes, por lo que los elementos del carrito de recortes se utilizarán para el diagrama en lugar de las siguientes opciones."
+
+#: 
+msgid "People to be included"
+msgstr "Personas a incluir"
+
+#: 
+msgid "Show Individual ID"
+msgstr "Mostrar ID individual"
+
