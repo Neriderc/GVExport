@@ -15,7 +15,7 @@ Webtrees
 Installation of GVExport
 ------------
 
-To install GVExport, copy files to modules_v4 directory in webtrees. For more detail, see the [install instructions](https://github.com/Neriderc/GVExport/wiki/Installing-the-module).
+To install GVExport, copy files to modules_v4 directory in webtrees and rename the folder to GVExport. For more detail, see the [install instructions](https://github.com/Neriderc/GVExport/wiki/Installing-the-module).
 
 GraphViz
 --------
