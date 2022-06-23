@@ -1,0 +1,251 @@
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: POEditor.com\n"
+"Project-Id-Version: GVExport\n"
+"Language: en-gb\n"
+
+#: 
+msgid "Update"
+msgstr "Update"
+
+#: 
+msgid "Render serverside"
+msgstr "Render serverside"
+
+#: 
+msgid "Reset"
+msgstr "Reset"
+
+#: 
+msgid "Diagram preferences"
+msgstr "Diagram preferences"
+
+#: 
+msgid "Appearance"
+msgstr "Appearance"
+
+#: 
+msgid "Output Settings"
+msgstr "Output Settings"
+
+#: 
+msgid "Include anyone related to"
+msgstr "Include anyone related to"
+
+#: 
+msgid "Stop processing on"
+msgstr "Stop processing on"
+
+#: 
+msgid "Include Ancestors"
+msgstr "Include Ancestors"
+
+#: 
+msgid "Include"
+msgstr "Include"
+
+#: 
+msgid "Siblings"
+msgstr "Siblings"
+
+#: 
+msgid "Cousins"
+msgstr "Cousins"
+
+#: 
+msgid "Spouses"
+msgstr "Spouses"
+
+#: 
+msgid "Include Descendants"
+msgstr "Include Descentdants"
+
+#: 
+msgid "Max Levels"
+msgstr "Max Levels"
+
+#: 
+msgid "Mark not blood-related people with different color"
+msgstr "Mark not blood-related people with different colour"
+
+#: 
+msgid "Add URL to individuals and families"
+msgstr "Add URL to individuals and families"
+
+#: 
+msgid "Use abbreviated placenames"
+msgstr "Use abbreviated placenames"
+
+#: 
+msgid "Show Birth Date"
+msgstr "Show Birth Date"
+
+#: 
+msgid "Show Birth Place"
+msgstr "Show Birth Place"
+
+#: 
+msgid "Show Death Date"
+msgstr "Show Death Date"
+
+#: 
+msgid "Full Date"
+msgstr "Full Date"
+
+#: 
+msgid "Year"
+msgstr "Year"
+
+#: 
+msgid "Show Death Place"
+msgstr "Show Death Place"
+
+#: 
+msgid "Show Family ID"
+msgstr "Show Family ID"
+
+#: 
+msgid "Show Marriage Date"
+msgstr "Show Marriage Date"
+
+#: 
+msgid "Show Marriage Place"
+msgstr "Show Marriage Place"
+
+#: 
+msgid "Graph Direction"
+msgstr "Graph Direction"
+
+#: 
+msgid "Diagram Type"
+msgstr "Diagram Type"
+
+#: 
+msgid "Simple"
+msgstr "Simple"
+
+#: 
+msgid "Decorated"
+msgstr "Decorated"
+
+#: 
+msgid "Combined"
+msgstr "Combined"
+
+#: 
+msgid "Add photos"
+msgstr "Add photos"
+
+#: 
+msgid "Only Decorated or Combined"
+msgstr "Only Decorated or Combined"
+
+#: 
+msgid "Output File Type"
+msgstr "Output File Type"
+
+#: 
+msgid "Generate a file for download"
+msgstr "Generate a file for download"
+
+#: 
+msgid "Choose DOT if you don't have GraphViz installed on server."
+msgstr "Choose DOT if you don't have GraphViz installed on server."
+
+#: 
+msgid "Number of iterations (MCLIMIT)"
+msgstr "Number of iterations (MCLIMIT)"
+
+#: 
+msgid "helps to reduce the crossings on the graph. This can be really slow (up to 10..15x compared to the 20 setting)"
+msgstr "\n"
+"Helps to reduce the crossings on the graph. This can be really slow (up to 10-15x compared to the 20 setting)\n"
+""
+
+#: 
+msgid "DPI"
+msgstr "DPI"
+
+#: 
+msgid "Show Selection"
+msgstr "Show Selection"
+
+#: 
+msgid "SVG only"
+msgstr "SVG only"
+
+#: 
+msgid "Top-to-Bottom"
+msgstr "Top-to-Bottom"
+
+#: 
+msgid "Left-to-Right"
+msgstr "Left-to-Right"
+
+#: 
+msgid "Space between generations"
+msgstr "Space between generations"
+
+#: 
+msgid "Space between individuals on the same level"
+msgstr "Space between individuals on the same level"
+
+#: 
+msgid "Error running GVExport in Browser mode"
+msgstr "Error running GVExport in Browser mode"
+
+#: 
+msgid "Preview"
+msgstr "Preview"
+
+#: 
+msgid "Download"
+msgstr "Download"
+
+#: 
+msgid "Full place name"
+msgstr "Full place name"
+
+#: 
+msgid "City and Country"
+msgstr "City and Country"
+
+#: 
+msgid "City and 2 Letter ISO Country Code"
+msgstr "City and 2 Letter ISO Country Code"
+
+#: 
+msgid "City and 3 Letter ISO Country Code"
+msgstr "City and 3 Letter ISO Country Code"
+
+#: 
+msgid "Space"
+msgstr "Space"
+
+#: 
+msgid "Between generations"
+msgstr "Between generations"
+
+#: 
+msgid "Between individuals on the same level"
+msgstr "Between individuals on the same level"
+
+#: 
+msgid "Abbreviated place names"
+msgstr "Abbreviated place names"
+
+#: 
+msgid "You have items in the clippings cart, so clippings cart items will be used for the diagram instead of the below options."
+msgstr "You have items in the clippings cart, so clippings cart items will be used for the diagram instead of the below options."
+
+#: 
+msgid "People to be included"
+msgstr "People to be included"
+
+#: 
+msgid "Show Individual ID"
+msgstr "Show Individual ID"
+
