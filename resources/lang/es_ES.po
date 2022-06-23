@@ -21,7 +21,7 @@ msgstr "Reiniciar"
 
 #: 
 msgid "Diagram preferences"
-msgstr "Preferencias del Diagranma"
+msgstr "Preferencias del Diagrama"
 
 #: 
 msgid "Appearance"
@@ -175,7 +175,7 @@ msgstr "Mostrar selección"
 
 #: 
 msgid "SVG only"
-msgstr "Sólo SVG"
+msgstr "Solo SVG"
 
 #: 
 msgid "Top-to-Bottom"
