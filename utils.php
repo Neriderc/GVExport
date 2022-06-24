@@ -79,5 +79,6 @@ function updateTranslations($array){
 	foreach ($array as $key => $value) {
 		$array[$key] = I18N::translate($value);
 	}
+	return $array;
 }
 ?>

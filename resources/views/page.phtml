@@ -192,8 +192,7 @@ use Fisharebest\Webtrees\Tree;
         <div class="row form-group">
             <label class=" col-sm-4 col-form-label wt-page-options-label" for="vars[grdir]"><?= I18N::translate('Graph Direction') ?></label>
             <div class="col-sm-8 wt-page-options-value">
-                <?php  updateTranslations($gve_config["directions"]);
-                    echo view('components/select', ['name' => 'vars[grdir]', 'selected' => $vars['grdir'], 'options' => $gve_config["directions"]]) ?>
+                <?= view('components/select', ['name' => 'vars[grdir]', 'selected' => $vars['grdir'], 'options' => updateTranslations($gve_config["directions"])]) ?>
             </div>
         </div>
 
@@ -240,8 +239,7 @@ use Fisharebest\Webtrees\Tree;
         <div class="row form-group">
             <label class=" col-sm-4 col-form-label wt-page-options-label" for="vars[use_abbr_place]"><?= I18N::translate('Abbreviated place names') ?></label>
             <div class="col-sm-8 wt-page-options-value">
-                <?php updateTranslations($gve_config["settings"]["use_abbr_places"]);
-                    echo view('components/select', ['name' => 'vars[use_abbr_place]', 'selected' => $vars['use_abbr_place'], 'options' => $gve_config["settings"]["use_abbr_places"]]) ?>
+                <?= view('components/select', ['name' => 'vars[use_abbr_place]', 'selected' => $vars['use_abbr_place'], 'options' => updateTranslations($gve_config["settings"]["use_abbr_places"])]) ?>
                 <small class="form-text text-muted"></small>
             </div>
         </div>

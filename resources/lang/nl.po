@@ -1,0 +1,249 @@
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: POEditor.com\n"
+"Project-Id-Version: GVExport\n"
+"Language: nl\n"
+
+#: 
+msgid "Update"
+msgstr "Bijwerken"
+
+#: 
+msgid "Render serverside"
+msgstr "Genereren aan serverkant"
+
+#: 
+msgid "Reset"
+msgstr "Opnieuw instellen"
+
+#: 
+msgid "Diagram preferences"
+msgstr "Diagramvoorkeuren"
+
+#: 
+msgid "Appearance"
+msgstr "Weergave"
+
+#: 
+msgid "Output Settings"
+msgstr "Uitvoerinstellingen"
+
+#: 
+msgid "Include anyone related to"
+msgstr "Inclusief iedereen die gerelateerd is aan"
+
+#: 
+msgid "Stop processing on"
+msgstr "Stop verwerking bij"
+
+#: 
+msgid "Include Ancestors"
+msgstr "Inclusief voorouders"
+
+#: 
+msgid "Include"
+msgstr "Inclusief"
+
+#: 
+msgid "Siblings"
+msgstr "Broers en zussen"
+
+#: 
+msgid "Cousins"
+msgstr "Neven en nichten"
+
+#: 
+msgid "Spouses"
+msgstr "Huwelijkspartners"
+
+#: 
+msgid "Include Descendants"
+msgstr "Inclusief afstammelingen"
+
+#: 
+msgid "Max Levels"
+msgstr "Max. niveaus"
+
+#: 
+msgid "Mark not blood-related people with different color"
+msgstr "Markeer niet-bloedverwante mensen met verschillende kleur"
+
+#: 
+msgid "Add URL to individuals and families"
+msgstr "URL toevoegen naar personen en gezinnen"
+
+#: 
+msgid "Use abbreviated placenames"
+msgstr "Gebruik verkorte plaatsnamen"
+
+#: 
+msgid "Show Birth Date"
+msgstr "Toon geboortedatum"
+
+#: 
+msgid "Show Birth Place"
+msgstr "Toon geboorteplaats"
+
+#: 
+msgid "Show Death Date"
+msgstr "Toon overlijdensdatum"
+
+#: 
+msgid "Full Date"
+msgstr "Volledige datum"
+
+#: 
+msgid "Year"
+msgstr "Jaar"
+
+#: 
+msgid "Show Death Place"
+msgstr "Toon overlijdensplaats"
+
+#: 
+msgid "Show Family ID"
+msgstr "Toon gezins-ID"
+
+#: 
+msgid "Show Marriage Date"
+msgstr "Toon huwelijksdatum"
+
+#: 
+msgid "Show Marriage Place"
+msgstr "Toon huwelijksplaats"
+
+#: 
+msgid "Graph Direction"
+msgstr "Grafiekrichting"
+
+#: 
+msgid "Diagram Type"
+msgstr "Diagramtype"
+
+#: 
+msgid "Simple"
+msgstr "Eenvoudig"
+
+#: 
+msgid "Decorated"
+msgstr "Versierd"
+
+#: 
+msgid "Combined"
+msgstr "Gecombineerd"
+
+#: 
+msgid "Add photos"
+msgstr "Foto's toevoegen"
+
+#: 
+msgid "Only Decorated or Combined"
+msgstr "Alleen versierd of gecombineerd"
+
+#: 
+msgid "Output File Type"
+msgstr "Type uitvoerbestand"
+
+#: 
+msgid "Generate a file for download"
+msgstr "Genereer een bestand om te downloaden"
+
+#: 
+msgid "Choose DOT if you don't have GraphViz installed on server."
+msgstr "Kies DOT als u GraphViz niet op de server heeft geïnstalleerd."
+
+#: 
+msgid "Number of iterations (MCLIMIT)"
+msgstr "Aantal iteraties (MCLIMIT)"
+
+#: 
+msgid "helps to reduce the crossings on the graph. This can be really slow (up to 10..15x compared to the 20 setting)"
+msgstr "helpt om de kruisingen op de grafiek te verminderen. Dit kan erg traag zijn (tot 10..15x vergeleken met de 20 instelling)"
+
+#: 
+msgid "DPI"
+msgstr "DPI"
+
+#: 
+msgid "Show Selection"
+msgstr "Toon selectie"
+
+#: 
+msgid "SVG only"
+msgstr "Alleen SVG"
+
+#: 
+msgid "Top-to-Bottom"
+msgstr "Van boven naar beneden"
+
+#: 
+msgid "Left-to-Right"
+msgstr "Van links naar rechts"
+
+#: 
+msgid "Space between generations"
+msgstr "Ruimte tussen generaties"
+
+#: 
+msgid "Space between individuals on the same level"
+msgstr "Ruimte tussen personen op hetzelfde niveau"
+
+#: 
+msgid "Error running GVExport in Browser mode"
+msgstr "Fout bij het uitvoeren van GVExport in browsermodus"
+
+#: 
+msgid "Preview"
+msgstr "Voorbeeld"
+
+#: 
+msgid "Download"
+msgstr "Downloaden"
+
+#: 
+msgid "Full place name"
+msgstr "Volledige plaatsnaam"
+
+#: 
+msgid "City and Country"
+msgstr "Plaats en land"
+
+#: 
+msgid "City and 2 Letter ISO Country Code"
+msgstr "Plaats en 2-letterige ISO-landcode"
+
+#: 
+msgid "City and 3 Letter ISO Country Code"
+msgstr "Plaats en 3-letterige ISO-landcode"
+
+#: 
+msgid "Space"
+msgstr "Ruimte"
+
+#: 
+msgid "Between generations"
+msgstr "Tussen generaties"
+
+#: 
+msgid "Between individuals on the same level"
+msgstr "Tussen personen op hetzelfde niveau"
+
+#: 
+msgid "Abbreviated place names"
+msgstr "Verkorte plaatsnamen"
+
+#: 
+msgid "You have items in the clippings cart, so clippings cart items will be used for the diagram instead of the below options."
+msgstr "U heeft items in de stamboomknipsels, daarom worden die stamboomknipsels gebruikt voor het diagram in plaats van de onderstaande opties."
+
+#: 
+msgid "People to be included"
+msgstr "Inclusief de volgende personen"
+
+#: 
+msgid "Show Individual ID"
+msgstr "Toon persoons-ID"
+
