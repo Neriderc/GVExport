@@ -149,6 +149,7 @@ class GVExport extends AbstractModule implements ModuleCustomInterface, ModuleCh
 			"indidesc" => "desc",
 			"desc_level" => $GVE_CONFIG["settings"]["desc_level"],
 			"indispou" => "spou",
+            "indiany" => "any",
 			"marknr" => "marknr",
 			"show_url" => "show_url",
 			"show_pid" => "",
@@ -330,18 +331,24 @@ class GVExport extends AbstractModule implements ModuleCustomInterface, ModuleCh
 		if ($vars['indiance'] == 'ance') {
 			$dot->setIndiSearchMethod("ance");
 		}
-		if ($vars['indisibl'] == 'sibl') {
+        if ($vars['indidesc'] == 'desc') {
+            $dot->setIndiSearchMethod("desc");
+        }
+
+        // If "Anyone" option is picked, then other relations options also must be set
+		if ($vars['indisibl'] == 'sibl' || $vars['indiany'] == 'any') {
 			$dot->setIndiSearchMethod("sibl");
 		}
-		if ($vars['indidesc'] == 'desc') {
-			$dot->setIndiSearchMethod("desc");
-		}
-		if ($vars['indispou'] == 'spou') {
+		if ($vars['indispou'] == 'spou' || $vars['indiany'] == 'any') {
 			$dot->setIndiSearchMethod("spou");
 		}
-		if ($vars['indicous'] == 'cous') {
+		if ($vars['indicous'] == 'cous' || $vars['indiany'] == 'any') {
 			$dot->setIndiSearchMethod("cous");
 		}
+        if ($vars['indiany'] == 'any') {
+            $dot->setIndiSearchMethod("any");
+        }
+
 		if (isset($vars['ance_level'])) {
 			$dot->setSettings("ance_level", $_REQUEST["vars"]["ance_level"]);
 		} else {

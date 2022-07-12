@@ -48,7 +48,7 @@ use Fisharebest\Webtrees\Registry;
 class Dot {
 	var $individuals = array();
 	var $families = array();
-	var $indi_search_method = array("ance" => FALSE, "desc" => FALSE, "spou" => FALSE, "sibl" => FALSE, "cous" => FALSE);
+	var $indi_search_method = array("ance" => FALSE, "desc" => FALSE, "spou" => FALSE, "sibl" => FALSE, "cous" => FALSE, "any" => FALSE);
 	var $font_size;
 	var $colors = array();
 	var $settings = array();
@@ -225,7 +225,6 @@ class Dot {
 
 	function createIndiList () {
 			// -- DEBUG ---
-			// echo "INDI: " . $this->settings["indi"];
 			if ($this->settings["multi_indi"] == FALSE) {
 				$this->addIndiToList($this->settings["indi"], $this->indi_search_method["ance"], $this->indi_search_method["desc"], $this->indi_search_method["spou"], $this->indi_search_method["sibl"], TRUE, 0, $this->settings["ance_level"], $this->settings["desc_level"]);
 			} else {
@@ -987,7 +986,7 @@ class Dot {
 		}
 		// -------------
 
-		// Overwrite the 'related' status if it was not set before or its 'false' (for those people who are added as both related and non-related)
+		// Overwrite the 'related' status if it was not set before or it's 'false' (for those people who are added as both related and non-related)
 		if (!isset($this->individuals[$pid]['rel']) || ($this->individuals[$pid]['rel'] == FALSE)) {
 			$this->individuals[$pid]['rel'] = $rel;
 		}
@@ -1076,7 +1075,6 @@ class Dot {
 				 	$this->families["F_$pid"]["husb_id"] = "";
 				}
 			}
-		} else {
 		}
 
 		if ($this->settings["indi"] == "ALL") { 	#ESL!!! 20090208 Fix for PGV 4.2
@@ -1164,33 +1162,30 @@ class Dot {
 							if (is_array($fact))
 							{
 
-							if (substr_count($fact[1], "1 ADOP") >0) {
-								$adop = preg_split("/\n/", $fact[1]);
-								//var_dump($adop);
-								foreach ($adop as $adopline) {
-									if (substr_count($adopline, "2 FAMC") >0) {
-										$adopfamcline = preg_split("/@/", $adopline);
-										$adopfamid = $adopfamcline[1];
-										//print $adopfamid;
+								if (substr_count($fact[1], "1 ADOP") >0) {
+									$adop = preg_split("/\n/", $fact[1]);
+									foreach ($adop as $adopline) {
+										if (substr_count($adopline, "2 FAMC") >0) {
+											$adopfamcline = preg_split("/@/", $adopline);
+											$adopfamid = $adopfamcline[1];
 
-										// Adopter family found
-										if ($adopfamid == $fid) {
-											$adopfam_found = TRUE;
-											// ---DEBUG---
-											if ($this->settings["debug"]) {
-												$this->printDebug("($pid) -- ADOP record: " . preg_replace("/\n/", " | ", $fact[1]) . "\n", $ind);
+											// Adopter family found
+											if ($adopfamid == $fid) {
+												$adopfam_found = TRUE;
+												// ---DEBUG---
+												if ($this->settings["debug"]) {
+													$this->printDebug("($pid) -- ADOP record: " . preg_replace("/\n/", " | ", $fact[1]) . "\n", $ind);
+												}
+												// -----------
 											}
-											// -----------
+										}
+
+										if ($adopfam_found && substr_count($adopline, "3 ADOP") >0) {
+											$adopfamcadopline = preg_split("/ /", $adopline);
+											$adopfamcadoptype = $adopfamcadopline[2];
 										}
 									}
-
-									if ($adopfam_found && substr_count($adopline, "3 ADOP") >0) {
-										$adopfamcadopline = preg_split("/ /", $adopline);
-										$adopfamcadoptype = $adopfamcadopline[2];
-										//print $adopfamcadoptype;
-									}
 								}
-							}
 
 							}
 						}
@@ -1341,7 +1336,7 @@ class Dot {
 							}
 							// -------------
 
-							$this->addIndiToList($child_id, FALSE, TRUE, $this->indi_search_method["spou"], FALSE, TRUE, $ind, 0, ($desc_level - 1));
+							$this->addIndiToList($child_id, FALSE, TRUE, $this->indi_search_method["spou"], FALSE, $rel, $ind, 0, ($desc_level - 1));
 						}
 					}
 				}
@@ -1415,9 +1410,9 @@ class Dot {
 						// -------------
 
 						if ($this->settings["mark_not_related"] == TRUE) {
-							$this->addIndiToList($spouse_id, FALSE, FALSE, FALSE, FALSE, FALSE, $ind, $ance_level, $desc_level);
+							$this->addIndiToList($spouse_id, $this->indi_search_method["any"], $this->indi_search_method["any"], FALSE, $this->indi_search_method["any"], FALSE, $ind, $ance_level, $desc_level );
 						} else {
-							$this->addIndiToList($spouse_id, FALSE, FALSE, FALSE, FALSE, TRUE, $ind, $ance_level, $desc_level);
+							$this->addIndiToList($spouse_id, $this->indi_search_method["any"], $this->indi_search_method["any"], FALSE, $this->indi_search_method["any"], TRUE, $ind, $ance_level, $desc_level	);
 						}
 					}
 
@@ -1475,9 +1470,9 @@ class Dot {
 							// If searching for cousins, then the descendants of ancestors' siblings should be added
 							if ($this->indi_search_method["cous"]) {
 								//$this->addIndiToList($child_id, FALSE, TRUE, $this->indi_search_method["spou"], FALSE, TRUE, $ind, 0, ($this->settings["ance_level"] - $ance_level));
-								$this->addIndiToList($child_id, FALSE, TRUE, $this->indi_search_method["spou"], FALSE, TRUE, $ind, 0, ($this->settings["ance_level"] - $ance_level) + $this->settings["desc_level"]);
+								$this->addIndiToList($child_id, FALSE, TRUE, $this->indi_search_method["spou"], FALSE, $rel, $ind, 0, ($this->settings["ance_level"] - $ance_level) + $this->settings["desc_level"]);
 							} else {
-								$this->addIndiToList($child_id, TRUE, FALSE, $this->indi_search_method["spou"], FALSE, TRUE, $ind, 1, 0);
+								$this->addIndiToList($child_id, TRUE, FALSE, $this->indi_search_method["spou"], FALSE, $rel, $ind, 1, 0);
 							}
 
 						}
@@ -1522,11 +1517,11 @@ class Dot {
 							}
 							// -------------
 
-							// If searching for step-cusins, then the descendants of ancestors' siblings should be added
+							// If searching for step-cousins, then the descendants of ancestors' siblings should be added
 							if ($this->indi_search_method["cous"]) {
-								$this->addIndiToList($child_id, FALSE, TRUE, $this->indi_search_method["spou"], FALSE, TRUE, $ind, 0, ($this->settings["ance_level"] - $ance_level));
+								$this->addIndiToList($child_id, FALSE, TRUE, $this->indi_search_method["spou"], FALSE, $rel, $ind, 0, ($this->settings["ance_level"] - $ance_level));
 							} else {
-								$this->addIndiToList($child_id, TRUE, FALSE, $this->indi_search_method["spou"], FALSE, TRUE, $ind, 1, 0);
+								$this->addIndiToList($child_id, TRUE, FALSE, $this->indi_search_method["spou"], FALSE, $rel, $ind, 1, 0);
 							}
 						}
 					}

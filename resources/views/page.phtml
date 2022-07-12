@@ -180,8 +180,13 @@ use Fisharebest\Webtrees\Session;
                     </div>
                     <div class="col-auto mx-3">
                         <input type="hidden" name="vars[indispou]" value="no">
-                        <input type="checkbox" name="vars[indispou]" id="vars[indispou]" value="spou" <?= $vars["indispou"] == "spou" ? 'checked' : '' ?> <?= !$cartempty ? "disabled" : ""; ?>>
+                        <input type="checkbox" onclick="updateRelationOption('indispou')" name="vars[indispou]" id="vars[indispou]" value="spou" <?= $vars["indispou"] == "spou" ? 'checked' : '' ?> <?= !$cartempty ? "disabled" : ""; ?>>
                         <label for="vars[indispou]"><?= I18N::translate('Spouses') ?></label>
+                    </div>
+                    <div class="col-auto mx-3">
+                        <input type="hidden" name="vars[indiany]" value="no">
+                        <input type="checkbox" onclick="updateRelationOption('indiany')" name="vars[indiany]" id="vars[indiany]" value="any" <?= $vars["indiany"] == "any" ? 'checked' : '' ?> <?= !$cartempty ? "disabled" : ""; ?>>
+                        <label for="vars[indiany]"><?= I18N::translate('Anyone') ?></label>
                     </div>
                 </div>
             </div>
@@ -596,6 +601,7 @@ use Fisharebest\Webtrees\Session;
     // Add or remove the % sign from the text input
     function togglePercent(element, add) {
         // Clicked out of input field, add % sign
+        var startval;
         if (add) {
             element.value = element.value.replace("%", "") + "%";
         } else {
@@ -603,26 +609,59 @@ use Fisharebest\Webtrees\Session;
             // but only select text the first time, let use move cursor if they want
             startval = element.value;
             element.value = element.value.replace("%", "");
-            if (startval != element.value) {
+            if (startval !== element.value) {
                 element.select();
             }
         }
     }
 
-    // This function ensures that if "All relations" is checked, so is "Siblings"
+    // This function ensures that if certain options are checked in regards to which relations to include,
+    // then other required options are selected. e.g. if 'Anyone" is selected, all other options must
+    // all be selected
     function updateRelationOption(field) {
-        // If function triggered by checking "All relatives" field, ensure "Siblings" is checked
-        if (field == "indicous") {
+        // If user clicked "All relatives"
+        if (field === "indicous") {
+            // If function triggered by checking "All relatives" field, ensure "Siblings" is checked
             if (document.getElementById("vars[indicous]").checked) {
                 document.getElementById("vars[indisibl]").checked = true;
             }
+            // If "All relatives" unchecked, uncheck "Anyone"
+            if (!document.getElementById("vars[indicous]").checked) {
+                document.getElementById("vars[indiany]").checked = false;
+            }
         }
-        // If function triggered by unchecking "Siblings" field, ensure "All relatives" is unchecked
-        if (field == "indisibl") {
+        // If user clicked "Siblings"
+        if (field === "indisibl") {
+            // If function triggered by unchecking "Siblings" field, ensure "All relatives" is unchecked
             if (!document.getElementById("vars[indisibl]").checked) {
                 document.getElementById("vars[indicous]").checked = false;
             }
+            // If "Siblings" unchecked, uncheck "Anyone"
+            if (!document.getElementById("vars[indisibl]").checked) {
+                document.getElementById("vars[indiany]").checked = false;
+            }
         }
+        // If user clicked "Spouses"
+        if (field === "indispou") {
+            // If function triggered by checking "All relatives" field, ensure "Siblings" is checked
+            if (!document.getElementById("vars[indisibl]").checked) {
+                document.getElementById("vars[indicous]").checked = false;
+            }
+            // If "Spouses" unchecked, uncheck "Anyone"
+            if (!document.getElementById("vars[indispou]").checked) {
+                document.getElementById("vars[indiany]").checked = false;
+            }
+        }
+        // If function triggered by checking "All relatives" field, ensure everything else is checked
+        if (field === "indiany") {
+            if (document.getElementById("vars[indiany]").checked) {
+                document.getElementById("vars[indicous]").checked = true;
+                document.getElementById("vars[indisibl]").checked = true;
+                document.getElementById("vars[indispou]").checked = true;
+
+            }
+        }
+
     }
 </script>
 
