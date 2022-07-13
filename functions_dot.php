@@ -1410,7 +1410,7 @@ class Dot {
 						// -------------
 
 						if ($this->settings["mark_not_related"] == TRUE) {
-							$this->addIndiToList($spouse_id, $this->indi_search_method["any"], $this->indi_search_method["any"], FALSE, $this->indi_search_method["any"], FALSE, $ind, $ance_level, $desc_level );
+							$this->addIndiToList($spouse_id, $this->indi_search_method["any"] && $ance, $this->indi_search_method["any"] && $desc, FALSE, $this->indi_search_method["any"], FALSE, $ind, $ance_level, $desc_level );
 						} else {
 							$this->addIndiToList($spouse_id, $this->indi_search_method["any"], $this->indi_search_method["any"], FALSE, $this->indi_search_method["any"], TRUE, $ind, $ance_level, $desc_level	);
 						}
