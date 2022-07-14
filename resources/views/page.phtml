@@ -13,6 +13,7 @@ use Fisharebest\Webtrees\Session;
 
 <script src="<?= $module->assetUrl('javascript/viz.js'); ?>"></script>
 <script src="<?= $module->assetUrl('javascript/panzoom.min.js'); ?>"></script>
+<script type="text/javascript">const cartempty = <?= $cartempty ? "true" : "false" ?>;</script>
 
 <style>
     .sidebar {
@@ -45,11 +46,11 @@ use Fisharebest\Webtrees\Session;
     .sidebar__toggler {
         position: fixed;
         left: 0;
-        top: 400px; 
+        top: 400px;
         transform-origin: left bottom;
         transform: rotate(90deg);
     }
-    
+
     .btn-hover {
         float: right;
         position: absolute;
@@ -65,7 +66,7 @@ use Fisharebest\Webtrees\Session;
     <div class="pull-right btn-hover">
         <a href="#" class="hide-form btn btn-secondary">X</a>
     </div>
-    
+
     <div class="sidebar__formfields col">
 
         <?= csrf_field() ?>
@@ -95,30 +96,40 @@ use Fisharebest\Webtrees\Session;
         $cart = Session::get('cart', []);
         $xrefs = array_keys($cart[$tree->name()] ?? []);
         $cartempty = sizeof($xrefs) == 0;
-        if (!$cartempty) :
-        ?>
-        <div class="row form-group">
-            <label class="col-sm-4 col-form-label wt-page-options-label" for="vars[marknr]">Warning</label>
-            <div class="col-sm-8 wt-page-options-value">
-                <?= I18N::translate('You have items in the clippings cart, so clippings cart items will be used for the diagram instead of the below options.') ?>
+        $greypeople = false;
+        if (!$cartempty) {
+            if ($vars["usecart"] == "usecart") {
+                $greypeople = true;
+            }
+            ?>
+            <div class="row form-group">
+                <label class="col-sm-4 col-form-label wt-page-options-label" for="vars[marknr]">Warning</label>
+                <div class="col-sm-8 wt-page-options-value">
+                    <?= I18N::translate('You have items in the clippings cart, so clippings cart items will be used for the diagram instead of the below options.') ?>
+                    <div class="col-sm-8 wt-page-options-value">
+                        <div class="row">
+                            <div class="col-auto mx-3">
+                                <input type="radio" onclick="toggleCart(true)" name="vars[usecart]" id="vars[usecart]_yes" value="usecart" <?= $vars["usecart"] == "usecart" ? 'checked' : '' ?>>
+                                <label for="vars[usecart]_yes"><?= I18N::translate('Use cart') ?></label>
+                            </div>
+                            <div class="col-auto mx-3">
+                                <input type="radio" onclick="toggleCart(false)" name="vars[usecart]" id="vars[usecart]_no" value="ignorecart" <?= $vars["usecart"] == "ignorecart" ? 'checked' : '' ?>>
+                                <label for="vars[usecart]_no"><?= I18N::translate('Ignore cart') ?></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-        <?php endif; ?>
+        <?php } ?>
 
         <div class="row form-group">
             <label class=" col-sm-4 col-form-label wt-page-options-label" for="pid"><?= I18N::translate('Include anyone related to') ?></label>
             <div class="col-sm-8 wt-page-options-value">
-                <?php
-                    if ($cartempty) {
-                        echo view('components/select-individual', ['name' => 'pid', 'id' => 'pid', 'tree' => $tree, 'individual' => $individual]);
-                    } else { ?>
-                        <div style="display: none">
-                        <?= view('components/select-individual', ['name' => 'pid', 'id' => 'pid', 'tree' => $tree, 'individual' => $individual]); ?>
-                        </div>
-                        <input type="text" class="form-control" disabled />
-                    <?php } ?>
+                <div class="cart_toggle_hide" <?php if ($greypeople) { echo 'style="display: none"'; } ?>>
+                    <?= view('components/select-individual', ['name' => 'pid', 'id' => 'pid', 'tree' => $tree, 'individual' => $individual]); ?>
+                </div>
                 <div class="input-group mt-1">
-                    <input type="text" class="form-control" name="vars[other_pids]" id="vars[other_pids]" value="<?= $vars['other_pids'] ?>" <?= !$cartempty ? "disabled" : ""; ?>>
+                    <input class="cart_toggle" type="text" class="form-control" name="vars[other_pids]" id="vars[other_pids]" value="<?= $vars['other_pids'] ?>" <?= $greypeople ? "disabled" : ""; ?>>
                     <div class="input-group-append">
                         <button type="button" class="btn btn-outline-secondary" onclick="appendPidTo('pid', 'vars[other_pids]')">⏎</button>
                     </div>
@@ -129,18 +140,13 @@ use Fisharebest\Webtrees\Session;
         <div class="row form-group">
             <label class=" col-sm-4 col-form-label wt-page-options-label" for="vars[other_stop_pids]"><?= I18N::translate('Stop processing on') ?></label>
             <div class="col-sm-8 wt-page-options-value">
-                <?php
-                if ($cartempty) {
-                    echo view('components/select-individual', ['name' => 'vars[stop_pid]', 'id' => 'vars[stop_pid]', 'tree' => $tree, 'xref' => $vars['stop_pid']]);
-                } else {
-                    ?>
-                    <input type="text" class="form-control" name="" id="" value="" disabled>
-                    <input type="hidden" name="vars[stoppid]" value="">
+                <div class="cart_toggle_hide" <?php if ($greypeople) { echo 'style="display: none"'; } ?>>
                     <?php
-                }
-                ?>
+                    echo view('components/select-individual', ['name' => 'vars[stop_pid]', 'id' => 'vars[stop_pid]', 'tree' => $tree, 'xref' => $vars['stop_pid']]);
+                    ?>
+                </div>
                 <div class="input-group mt-1">
-                    <input type="text" class="form-control" name="vars[other_stop_pids]" id="vars[other_stop_pids]" value="<?= $vars['other_stop_pids'] ?>" <?= !$cartempty ? "disabled" : ""; ?>>
+                    <input class="cart_toggle" type="text" class="form-control" name="vars[other_stop_pids]" id="vars[other_stop_pids]" value="<?= $vars['other_stop_pids'] ?>" <?= $greypeople ? "disabled" : ""; ?>>
                     <div class="input-group-append">
                         <button type="button" class="btn btn-outline-secondary" onclick="appendPidTo('vars[stop_pid]', 'vars[other_stop_pids]')">⏎</button>
                     </div>
@@ -154,11 +160,11 @@ use Fisharebest\Webtrees\Session;
                 <div class="row">
                     <div class="col-auto mx-3">
                         <input type="hidden" name="vars[indiance]" value="no">
-                        <input type="checkbox" name="vars[indiance]" id="vars[indiance]" value="ance" <?= $vars["indiance"] == "ance" ? 'checked' : '' ?>  <?= !$cartempty ? "disabled" : ""; ?>>
+                        <input class="cart_toggle" type="checkbox" name="vars[indiance]" id="vars[indiance]" value="ance" <?= $vars["indiance"] == "ance" ? 'checked' : '' ?>  <?= $greypeople ? "disabled" : ""; ?>>
                     </div>
                     <div class="col-auto row">
                         <label for="vars[ance_level]" class="col-sm-6"><?= I18N::translate('Max Levels') ?>:</label>
-                        <input type="text" class="form-control col-sm-6" size="10" name="vars[ance_level]" id="vars[ance_level]" value="<?= $vars["ance_level"] ?>" <?= !$cartempty ? "disabled" : ""; ?>>
+                        <input class="cart_toggle" type="text" class="form-control col-sm-6" size="10" name="vars[ance_level]" id="vars[ance_level]" value="<?= $vars["ance_level"] ?>" <?= $greypeople ? "disabled" : ""; ?>>
                     </div>
                 </div>
             </div>
@@ -170,17 +176,17 @@ use Fisharebest\Webtrees\Session;
                 <div class="row">
                     <div class="col-auto mx-3">
                         <input type="hidden" name="vars[indisibl]" value="no">
-                        <input type="checkbox" onclick="updateRelationOption('indisibl')" name="vars[indisibl]" id="vars[indisibl]" value="sibl" <?= $vars["indisibl"] == "sibl" ? 'checked' : '' ?> <?= !$cartempty ? "disabled" : ""; ?>>
+                        <input class="cart_toggle" type="checkbox" onclick="updateRelationOption('indisibl')" name="vars[indisibl]" id="vars[indisibl]" value="sibl" <?= $vars["indisibl"] == "sibl" ? 'checked' : '' ?> <?= $greypeople ? "disabled" : ""; ?>>
                         <label for="vars[indisibl]"><?= I18N::translate('Siblings') ?></label>
                     </div>
                     <div class="col-auto mx-3">
                         <input type="hidden" name="vars[indicous]" value="no">
-                        <input type="checkbox" onclick="updateRelationOption('indicous')" name="vars[indicous]" id="vars[indicous]" value="cous" <?= $vars["indicous"] == "cous" ? 'checked' : '' ?> <?= !$cartempty ? "disabled" : ""; ?>>
+                        <input class="cart_toggle" onclick="updateRelationOption('indicous')" type="checkbox" name="vars[indicous]" id="vars[indicous]" value="cous" <?= $vars["indicous"] == "cous" ? 'checked' : '' ?> <?= $greypeople ? "disabled" : ""; ?>>
                         <label for="vars[indicous]"><?= I18N::translate('All relatives') ?></label>
                     </div>
                     <div class="col-auto mx-3">
                         <input type="hidden" name="vars[indispou]" value="no">
-                        <input type="checkbox" onclick="updateRelationOption('indispou')" name="vars[indispou]" id="vars[indispou]" value="spou" <?= $vars["indispou"] == "spou" ? 'checked' : '' ?> <?= !$cartempty ? "disabled" : ""; ?>>
+                        <input class="cart_toggle" type="checkbox" onclick="updateRelationOption('indispou')" name="vars[indispou]" id="vars[indispou]" value="spou" <?= $vars["indispou"] == "spou" ? 'checked' : '' ?> <?= $greypeople ? "disabled" : ""; ?>>
                         <label for="vars[indispou]"><?= I18N::translate('Spouses') ?></label>
                     </div>
                     <div class="col-auto mx-3">
@@ -198,11 +204,11 @@ use Fisharebest\Webtrees\Session;
                 <div class="row">
                     <div class="col-auto mx-3">
                         <input type="hidden" name="vars[indidesc]" value="no">
-                        <input type="checkbox" name="vars[indidesc]" id="vars[indidesc]" value="desc" <?= $vars["indidesc"] == "desc" ? 'checked' : '' ?> <?= !$cartempty ? "disabled" : ""; ?>>
+                        <input class="cart_toggle" type="checkbox" name="vars[indidesc]" id="vars[indidesc]" value="desc" <?= $vars["indidesc"] == "desc" ? 'checked' : '' ?> <?= $greypeople ? "disabled" : ""; ?>>
                     </div>
                     <div class="col-auto row">
                         <label for="vars[desc_level]" class="col-sm-6"><?= I18N::translate('Max Levels') ?>:</label>
-                        <input type="text" class="form-control col-sm-6" size="10" name="vars[desc_level]" id="vars[desc_level]" value="<?= $vars["desc_level"] ?>" <?= !$cartempty ? "disabled" : ""; ?>>
+                        <input class="cart_toggle" type="text" class="form-control col-sm-6" size="10" name="vars[desc_level]" id="vars[desc_level]" value="<?= $vars["desc_level"] ?>" <?= $greypeople ? "disabled" : ""; ?>>
                     </div>
                 </div>
             </div>
@@ -212,7 +218,7 @@ use Fisharebest\Webtrees\Session;
             <label class="col-sm-4 col-form-label wt-page-options-label" for="vars[marknr]"><?= I18N::translate('Mark not blood-related people with different color') ?></label>
             <div class="col-sm-8 wt-page-options-value">
                 <input type="hidden" name="vars[marknr]" value="no">
-                <input type="checkbox" name="vars[marknr]" id="vars[marknr]" value="marknr" <?= $vars["marknr"] == "marknr" ? 'checked' : '' ?> <?= !$cartempty ? "disabled" : ""; ?>>
+                <input class="cart_toggle" type="checkbox" name="vars[marknr]" id="vars[marknr]" value="marknr" <?= $vars["marknr"] == "marknr" ? 'checked' : '' ?> <?= $greypeople ? "disabled" : ""; ?>>
             </div>
         </div>
 
@@ -500,7 +506,18 @@ use Fisharebest\Webtrees\Session;
     document.querySelector('.update-browser-rendering').addEventListener('click', function(e) {
         var oldOtype = document.getElementById('vars[otype]').value;
         document.getElementById('vars[otype]').value = 'dot';
+        // Enable disabled fields so they are included in serialised data - this means the values are remembered
+        var el = document.getElementsByClassName("cart_toggle");
+        for (var i = 0; i < el.length; i++) {
+            el.item(i).disabled = false;
+        }
+        // Get the form data
         var data = jQuery(form).serialize();
+        // Disable our fields again by indicating cart is enabled (only if items in cart)
+        if (!cartempty && document.getElementById("vars[usecart]_yes").checked) {
+            toggleCart(true);
+        }
+
         document.getElementById('vars[otype]').value = oldOtype;
         var lastDotStr;
 
@@ -509,7 +526,7 @@ use Fisharebest\Webtrees\Session;
 
         var h = window.innerHeight - document.querySelector('.wt-header-wrapper').getBoundingClientRect().height -  document.querySelector('.wt-footers').getBoundingClientRect().height;
         rendering.style.height = h + "px";
-        
+
 
         window.fetch(form.getAttribute('action'), {
             method: form.getAttribute('method'),
@@ -579,7 +596,7 @@ use Fisharebest\Webtrees\Session;
         document.querySelector('.sidebar').hidden = false;
         e.preventDefault();
     }
-    
+
     document.querySelector('.hide-form').addEventListener('click', hideSidebar);
 
 
@@ -614,7 +631,7 @@ use Fisharebest\Webtrees\Session;
             }
         }
     }
-
+    
     // This function ensures that if certain options are checked in regards to which relations to include,
     // then other required options are selected. e.g. if 'Anyone" is selected, all other options must
     // all be selected
@@ -663,6 +680,32 @@ use Fisharebest\Webtrees\Session;
         }
 
     }
+
+    // Toggle items based on if the items in the cart should be used or not
+    // enable - if set to true, use cart. Update form to disable options. Set to false to reverse.
+    function toggleCart(enable) {
+        var el = document.getElementsByClassName("cart_toggle");
+        for (var i = 0; i < el.length; i++) {
+            el.item(i).disabled = enable;
+        }
+        showHide("cart_toggle_hide", enable);
+        showHide("cart_toggle_show", !enable);
+    }
+    // This function is used in toggleCart to show or hide all elements with a certain class,
+    // by adding or removing "display: none"
+    // css_class - the class to search for
+    // show - true to show the elements and false to hide them
+    function showHide(css_class, show) {
+        el = document.getElementsByClassName(css_class);
+        for (var i = 0; i < el.length; i++) {
+            if (show) {
+                el.item(i).style.display = "none";
+            } else {
+                el.item(i).style.removeProperty("display");
+            }
+        }
+    }
+
 </script>
 
 <template id=dropdown>

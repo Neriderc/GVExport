@@ -137,6 +137,8 @@ $GVE_CONFIG["settings"]["download"] = TRUE;
 $GVE_CONFIG["settings"]["ance_level"] = 5;
 // Deafult max levels of descendants
 $GVE_CONFIG["settings"]["desc_level"] = 5;
+// By default, if there are clippings in the clippings cart then use them
+$GVE_CONFIG["settings"]["usecart"] = TRUE;
 
 // Debug mode (if set to true the DOT file & other debug info will be dumped on screen)
 $GVE_CONFIG["debug"] = FALSE;

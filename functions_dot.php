@@ -112,6 +112,7 @@ class Dot {
 
 		$this->settings["ance_level"] = $GVE_CONFIG["settings"]["ance_level"];
 		$this->settings["desc_level"] = $GVE_CONFIG["settings"]["desc_level"];
+		$this->settings["usecart"] = $GVE_CONFIG["settings"]["usecart"];
 
 		$this->settings["birth_text"] = $GVE_CONFIG["custom"]["birth_text"];
 		$this->settings["death_text"] = $GVE_CONFIG["custom"]["death_text"];
@@ -237,10 +238,11 @@ class Dot {
 	}
 
 	function createDOTDump() {
-		// Create the individuals list
-		if (!functionsClippingsCart::isIndividualInCart($this->tree)) {
+		// If no individuals in the clippings cart (or option chosen to overide), use standard method
+		if (!functionsClippingsCart::isIndividualInCart($this->tree) || !$this->settings["usecart"] ) {
 			$this->createIndiList();
 		} else {
+		// If individuals in clipping cart and option chosen to use them, then proceed
 			$functionsCC = new functionsClippingsCart($this->tree, $this->isPhotoRequired(), ($this->settings["diagram_type"] == "combined"));
 			$this->individuals = $functionsCC->getIndividuals();
 			$this->families = $functionsCC->getFamilies();
@@ -1569,7 +1571,7 @@ class Dot {
 			return $m->downloadUrl('inline');
 		}
 		else if (!$m->isExternal() && $m->fileExists($this->file_system)) {
-			// If we are rendering in the browser, provide the URL, otherwise provide the server side file locartion
+			// If we are rendering in the browser, provide the URL, otherwise provide the server side file location
 			if (isset($_REQUEST["render"])) {
 				return Site::getPreference('INDEX_DIRECTORY').$this->tree->getPreference('MEDIA_DIRECTORY').$m->filename();
 			} else {
