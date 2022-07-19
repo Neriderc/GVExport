@@ -1338,7 +1338,7 @@ class Dot {
 							}
 							// -------------
 
-							$this->addIndiToList($child_id, FALSE, TRUE, $this->indi_search_method["spou"], FALSE, $rel, $ind, 0, ($desc_level - 1));
+							$this->addIndiToList($child_id, $this->indi_search_method["any"], TRUE, $this->indi_search_method["spou"], FALSE, $rel, $ind, $this->indi_search_method["any"] ? 1 : 0, ($desc_level - 1));
 						}
 					}
 				}
