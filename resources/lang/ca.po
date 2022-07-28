@@ -5,249 +5,249 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: POEditor.com\n"
 "Project-Id-Version: GVExport\n"
-"Language: de\n"
+"Language: ca\n"
 
 #: 
 msgid "Update"
-msgstr "Aktualisieren"
+msgstr "Actualitzar"
 
 #: 
 msgid "Render serverside"
-msgstr "Serverseitig rendern"
+msgstr "Renderitzar ajl servidor"
 
 #: 
 msgid "Reset"
-msgstr "Einstellungen zur&uuml;cksetzen"
+msgstr "Restabliment"
 
 #: 
 msgid "Diagram preferences"
-msgstr "Eigenschaften des Diagramms"
+msgstr "Preferències de diagrama"
 
 #: 
 msgid "Appearance"
-msgstr "Gestaltung des Diagramms"
+msgstr "Aparença"
 
 #: 
 msgid "Output Settings"
-msgstr "Ausgabe-Einstellungen"
+msgstr "Configuració d'eixida"
 
 #: 
 msgid "Include anyone related to"
-msgstr "Alle, die verwandt sind mit"
+msgstr "Incloure a qualsevol persona relacionada amb"
 
 #: 
 msgid "Stop processing on"
-msgstr "Beende Bearbeitung bei"
+msgstr "Detindre el processament en"
 
 #: 
 msgid "Include Ancestors"
-msgstr "Vorfahren einbeziehen"
+msgstr "Incloure avantpassats"
 
 #: 
 msgid "Include"
-msgstr "Einbeziehen"
+msgstr "Incloure"
 
 #: 
 msgid "Siblings"
-msgstr "Geschwister"
+msgstr "germans"
 
 #: 
 msgid "Cousins"
-msgstr "Cousins und Cousinen"
+msgstr "Cosins"
 
 #: 
 msgid "Spouses"
-msgstr "Partner"
+msgstr "Cònjuges"
 
 #: 
 msgid "Include Descendants"
-msgstr "Nachkommen einbeziehen"
+msgstr "Incloure descendents"
 
 #: 
 msgid "Max Levels"
-msgstr "Maximale Generationen"
+msgstr "Nivells màxims"
 
 #: 
 msgid "Mark not blood-related people with different color"
-msgstr "Markierung von nicht blutsverwandten Personen in einer anderen Farbe"
+msgstr "Marcar persones no consanguínies amb diferent color"
 
 #: 
 msgid "Add URL to individuals and families"
-msgstr "URL hinzuf&uuml;gen zu Personen und Familien"
+msgstr "Agregar URL a individus i famílies"
 
 #: 
 msgid "Use abbreviated placenames"
-msgstr "Benutzung abgek&uuml;rzter Ortsnamen"
+msgstr "Utilitzar topònims abreujats"
 
 #: 
 msgid "Show Birth Date"
-msgstr "Zeige Geburtsdatum"
+msgstr "Mostrar data de naixement"
 
 #: 
 msgid "Show Birth Place"
-msgstr "Zeige Geburtsort"
+msgstr "Mostrar indret de naixement"
 
 #: 
 msgid "Show Death Date"
-msgstr "Zeige Sterbedatum"
+msgstr "Mostrar data de defunció"
 
 #: 
 msgid "Full Date"
-msgstr "Vollständiges Datum"
+msgstr "Data completa"
 
 #: 
 msgid "Year"
-msgstr "Jahr"
+msgstr "Any"
 
 #: 
 msgid "Show Death Place"
-msgstr "Zeige Sterbeort"
+msgstr "Mostrar lloc de defunció"
 
 #: 
 msgid "Show Family ID"
-msgstr "Zeige XREF einer Familie"
+msgstr "Mostrar ID familiar"
 
 #: 
 msgid "Show Marriage Date"
-msgstr "Zeige Heiratsdatum"
+msgstr "Mostrar data de casament"
 
 #: 
 msgid "Show Marriage Place"
-msgstr "Zeige Heiratsort"
+msgstr "Mostrar indret de casament"
 
 #: 
 msgid "Graph Direction"
-msgstr "Diagrammrichtung"
+msgstr "Direcció del gràfic"
 
 #: 
 msgid "Diagram Type"
-msgstr "Diagrammtyp"
+msgstr "Tipus de diagrama"
 
 #: 
 msgid "Simple"
-msgstr "Einfach"
+msgstr "Senzill"
 
 #: 
 msgid "Decorated"
-msgstr "Dekoriert"
+msgstr "Decorat"
 
 #: 
 msgid "Combined"
-msgstr "Kombiniert"
+msgstr "Combinat"
 
 #: 
 msgid "Add photos"
-msgstr "Fotos hinzufügen"
+msgstr "Afegir fotos"
 
 #: 
 msgid "Only Decorated or Combined"
-msgstr "nur bei \"dekoriert\" oder \"kombiniert\""
+msgstr "Sols decorat o combinat"
 
 #: 
 msgid "Output File Type"
-msgstr "Ausgabedatei-Typ"
+msgstr "Tipus d'arxiu d'eixida"
 
 #: 
 msgid "Generate a file for download"
-msgstr "Erzeuge eine Datei zum Herunterladen"
+msgstr "Generar arxiu per a descàrrega"
 
 #: 
 msgid "Number of iterations (MCLIMIT)"
-msgstr "Anzahl der Iterationen"
+msgstr "Nombre d'iteracions (MCLIMIT)"
 
 #: 
 msgid "helps to reduce the crossings on the graph. This can be really slow (up to 10..15x compared to the 20 setting)"
-msgstr "Hilfreich um Überkreuzungen im Diagramm zu vermeiden (kann sehr langsam sein; im Vergleich zum Wert 20 um den Faktor 10 bis 15)"
+msgstr "Ajuda a reduir els encreuaments al gràfic. Això pot ser molt lent (fins a 10..15x en comparació amb la configuració de 20)"
 
 #: 
 msgid "DPI"
-msgstr "DPI (Punkte pro Zoll)"
+msgstr "PPP"
 
 #: 
 msgid "Show Selection"
-msgstr "Zeige Auswahl"
+msgstr "Mostrar selecció"
 
 #: 
 msgid "SVG only"
-msgstr "nur SVG"
+msgstr "Només SVG"
 
 #: 
 msgid "Top-to-Bottom"
-msgstr "von oben nach unten"
+msgstr "De d'alt a baix"
 
 #: 
 msgid "Left-to-Right"
-msgstr "von links nach rechts"
+msgstr "D'esquerra a dreta"
 
 #: 
 msgid "Space between generations"
-msgstr "Abstand zwischen den Generationen"
+msgstr "Espai entre generacions"
 
 #: 
 msgid "Space between individuals on the same level"
-msgstr "Abstand zwischen den Personen auf der selben Ebene"
+msgstr "Espai entre individus del mateix nivell"
 
 #: 
 msgid "Error running GVExport in Browser mode"
-msgstr "Fehler bei der Ausführung von GVExport im Browser"
+msgstr "Error en executar GVExport en manera navegador"
 
 #: 
 msgid "Preview"
-msgstr "Vorschau"
+msgstr "Vista prèvia"
 
 #: 
 msgid "Download"
-msgstr "Herunterladen"
+msgstr "Descarregar"
 
 #: 
 msgid "Full place name"
-msgstr "Vollständige Ortsnamen"
+msgstr "Topònim complet"
 
 #: 
 msgid "City and Country"
-msgstr "Ort und Land"
+msgstr "Ciutat i país"
 
 #: 
 msgid "City and 2 Letter ISO Country Code"
-msgstr "Ort und 2-Buchstaben ISO-Länder-Code"
+msgstr "Ciutat i codi de país ISO de dues lletres"
 
 #: 
 msgid "City and 3 Letter ISO Country Code"
-msgstr "Ort und 3-Buchstaben ISO-Länder-Code"
+msgstr "Ciutat i codi de país ISO de tres lletres"
 
 #: 
 msgid "Space"
-msgstr "Abstand"
+msgstr "Espai"
 
 #: 
 msgid "Between generations"
-msgstr "Zwischen den Generationen"
+msgstr "Entre generacions"
 
 #: 
 msgid "Between individuals on the same level"
-msgstr "Zwischen Personen auf der selben Ebene"
+msgstr "Entre individus del mateix nivell"
 
 #: 
 msgid "Abbreviated place names"
-msgstr "Abgekürzte Ortsnamen"
+msgstr "Topònims abreujats"
 
 #: 
 msgid "You have items in the clippings cart, so clippings cart items will be used for the diagram instead of the below options."
-msgstr "Sie haben Datensätze im Sammelbehälter. Diese werden hier dargestellt und damit werden die untenstehenden Optionen ausgeblendet."
+msgstr "Té articles el cistell de retallades, per la qual cosa els elements del cistell s'utilitzaran per al diagrama en lloc de les següents opcions."
 
 #: 
 msgid "People to be included"
-msgstr "Einzubeziehende Personen"
+msgstr "Persones a incloure"
 
 #: 
 msgid "Show Individual ID"
-msgstr "Zeige XREF einer Person"
+msgstr "Mostrar ID individual"
 
 #: 
 msgid "Options limited as GraphViz not installed on server"
-msgstr "Optionen sind eingeschränkt, da Graphviz nicht auf dem Server installiert ist"
+msgstr "Opcions limitades, perquè GraphViz no està instal·lat al servidor"
 
 #: 
 msgid "Anyone"
-msgstr ""
+msgstr "Ningú"
 

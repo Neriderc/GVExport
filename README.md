@@ -57,6 +57,8 @@ If you'd like to contribute to GVExport, great! You can contribute by:
 - Documentation - anyone can update [our Wiki](https://github.com/Neriderc/GVExport/wiki)
 - Translating - you can translate into a language you are fluent in by joining the [PO Editor project](https://poeditor.com/join/project/YqPRBXZnlf). Discussion on translating can be done by creating an issue.
 
+For more information on contributing, please see [CONTRIBUTING.md](https://github.com/Neriderc/GVExport/blob/master/CONTRIBUTING.md).
+
 This repository
 ---------------
 This repository was forked from [tillsc/GVExport](https://github.com/tillsc/GVExport) after community pull requests had not been merged for some time. [A post](https://www.webtrees.net/index.php/en/forum/4-customising/35801-display-complex-all-in-on-tree-with-gvexport) had been made on the webtrees forum stating that GVExport had been brought up to date to work with webtrees 2.0, but that the developer could not provide ongoing support. After a webtrees update broke the module, this fork was created to maintain compatibility and continue refining the tool with new features and other enhancements.

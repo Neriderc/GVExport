@@ -247,3 +247,7 @@ msgstr "Toon persoons-ID"
 msgid "Options limited as GraphViz not installed on server"
 msgstr "Opties beperkt omdat GraphViz niet op de server is geïnstalleerd"
 
+#: 
+msgid "Anyone"
+msgstr "Iedereen"
+

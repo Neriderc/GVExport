@@ -61,7 +61,7 @@ msgstr "Spouses"
 
 #: 
 msgid "Include Descendants"
-msgstr "Include Descentdants"
+msgstr "Include Descendants"
 
 #: 
 msgid "Max Levels"
@@ -150,10 +150,6 @@ msgstr "Output File Type"
 #: 
 msgid "Generate a file for download"
 msgstr "Generate a file for download"
-
-#: 
-msgid "Choose DOT if you don't have GraphViz installed on server."
-msgstr "Choose DOT if you don't have GraphViz installed on server."
 
 #: 
 msgid "Number of iterations (MCLIMIT)"
@@ -248,4 +244,12 @@ msgstr "People to be included"
 #: 
 msgid "Show Individual ID"
 msgstr "Show Individual ID"
+
+#: 
+msgid "Options limited as GraphViz not installed on server"
+msgstr "Options limited as GraphViz not installed on server"
+
+#: 
+msgid "Anyone"
+msgstr "Anyone"
 

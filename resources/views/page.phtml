@@ -92,6 +92,18 @@ use Fisharebest\Webtrees\Session;
             }
         </script>
         <?php
+        /* Check if another module (e.g. vesta classic) is adding the XREF to
+           the name. If so, we want to enable the XREF option for individuals
+           unless we already have a saved setting */
+        $individual = $module->getIndividual($tree, $_GET["xref"]);
+        $startName = $individual->fullName();
+        $name = str_replace(" (" . $_GET["xref"] . ")", "", $startName);
+        if ($startName != $name && $vars["show_pid"] == "DEFAULT") {
+            $overridePID = true;
+        } else {
+            $overridePID = false;
+        }
+        
         // Check if the clippings cart is empty, to decide what options to allow
         $cart = Session::get('cart', []);
         $xrefs = array_keys($cart[$tree->name()] ?? []);
@@ -284,7 +296,7 @@ use Fisharebest\Webtrees\Session;
             <label class="col-sm-4 col-form-label wt-page-options-label" for="vars[show_pid]"><?= I18N::translate('Show Individual ID') ?></label>
             <div class="col-sm-8 wt-page-options-value">
                 <input type="hidden" name="vars[show_pid]" value="no">
-                <input type="checkbox" name="vars[show_pid]" id="vars[show_pid]" value="show_pid" <?= $vars["show_pid"] == "show_pid" ? 'checked' : '' ?>>
+                <input type="checkbox" name="vars[show_pid]" id="vars[show_pid]" value="show_pid" <?= $vars["show_pid"] == "show_pid" || $overridePID ? 'checked' : '' ?>>
             </div>
         </div>
 
@@ -620,10 +632,16 @@ use Fisharebest\Webtrees\Session;
         // Clicked out of input field, add % sign
         var startval;
         if (add) {
-            element.value = element.value.replace("%", "") + "%";
+            // Keep just numbers
+            let boxVal = element.value.replace(/\D/g, "");
+            // If result is blank, set to default
+            if (boxVal == "") {
+                boxVal = "100";
+            }
+            element.value =  boxVal + "%";
         } else {
             // Clicked in input box, remove % and select text,
-            // but only select text the first time, let use move cursor if they want
+            // but only select text the first time, let user move cursor if they want
             startval = element.value;
             element.value = element.value.replace("%", "");
             if (startval !== element.value) {

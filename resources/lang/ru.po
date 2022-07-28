@@ -247,3 +247,7 @@ msgstr "Показать индивидуальный идентификатор
 msgid "Options limited as GraphViz not installed on server"
 msgstr "Параметры ограничены, так как GraphViz не установлен на сервере"
 
+#: 
+msgid "Anyone"
+msgstr ""
+
