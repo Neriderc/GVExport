@@ -1329,7 +1329,7 @@ class Dot {
 							}
 							// -------------
 							if ($this->indi_search_method["any"]) {
-								$this->addIndiToList($pid."|Code 14", $child_id, FALSE, FALSE, $this->indi_search_method["spou"], FALSE, FALSE, $ind, $level-1);
+								$this->addIndiToList($pid."|Code 14", $child_id, TRUE, FALSE, $this->indi_search_method["spou"], FALSE, FALSE, $ind, $level-1);
 							}
 							$this->addIndiToList($pid."|Code 5", $child_id, FALSE, TRUE, $this->indi_search_method["spou"], FALSE, $rel, $ind, $level-1);
 
