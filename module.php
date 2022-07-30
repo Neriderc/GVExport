@@ -149,7 +149,7 @@ class GVExport extends AbstractModule implements ModuleCustomInterface, ModuleCh
 			"indidesc" => "desc",
 			"desc_level" => $GVE_CONFIG["settings"]["desc_level"],
 			"indispou" => "spou",
-            "indiany" => "any",
+            "indiany" => "",
 			"marknr" => "marknr",
 			"show_url" => "show_url",
 			"show_pid" => "DEFAULT", // This is set to DEFAULT so we can tell if it was loaded from cookie or not
