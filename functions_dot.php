@@ -1152,6 +1152,7 @@ class Dot {
 							// -------------
 
 							// Workaround for 4.1.6, because the $fact is an object now not an array as before
+							// [TODO] check if this relevant at all - seems to be from PHPGedView
 							if (is_array($fact))
 							{
 
@@ -1406,9 +1407,9 @@ class Dot {
 						// -------------
 
 						if ($this->settings["mark_not_related"] == TRUE) {
-							$this->addIndiToList($pid."|Code 6", $spouse_id, $this->indi_search_method["any"] && $ance, $this->indi_search_method["any"] && $desc, FALSE, $this->indi_search_method["any"], FALSE, $ind, $level);
+							$this->addIndiToList($pid."|Code 6", $spouse_id, $this->indi_search_method["any"] && $ance, $this->indi_search_method["any"] && $desc, $this->indi_search_method["any"], $this->indi_search_method["any"], FALSE, $ind, $level);
 						} else {
-							$this->addIndiToList($pid."|Code 7", $spouse_id, $this->indi_search_method["any"], $this->indi_search_method["any"], FALSE, $this->indi_search_method["any"], TRUE, $ind, $level);
+							$this->addIndiToList($pid."|Code 7", $spouse_id, $this->indi_search_method["any"], $this->indi_search_method["any"], $this->indi_search_method["any"], $this->indi_search_method["any"], TRUE, $ind, $level);
 						}
 					}
 
