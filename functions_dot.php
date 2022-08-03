@@ -225,16 +225,20 @@ class Dot {
 	}
 
 	function createIndiList () {
-			// -- DEBUG ---
-			if ($this->settings["multi_indi"] == FALSE) {
-				$this->addIndiToList("", $this->settings["indi"], $this->indi_search_method["ance"], $this->indi_search_method["desc"], $this->indi_search_method["spou"], $this->indi_search_method["sibl"], TRUE, 0, 0);
-			} else {
-				// if multiple indis are defined
-				$indis = explode(",", $this->settings["indi"]);
-				for ($i=0;$i<count($indis);$i++) {
-					$this->addIndiToList("", trim($indis[$i]), $this->indi_search_method["ance"], $this->indi_search_method["desc"], $this->indi_search_method["spou"], $this->indi_search_method["sibl"], TRUE, 0, 0);
-				}
+		if ($this->settings["multi_indi"] == FALSE) {
+			$this->addIndiToList("Start | Code 15", $this->settings["indi"], $this->indi_search_method["ance"], $this->indi_search_method["desc"], $this->indi_search_method["spou"], $this->indi_search_method["sibl"], TRUE, 0, 0);
+		} else {
+			// if multiple indis are defined
+			$indis = explode(",", $this->settings["indi"]);
+			for ($i=0;$i<count($indis);$i++) {
+				$this->addIndiToList("Start | Code 16", trim($indis[$i]), $this->indi_search_method["ance"], $this->indi_search_method["desc"], $this->indi_search_method["spou"], $this->indi_search_method["sibl"], TRUE, 0, 0);
 			}
+		}
+		// -- DEBUG ---
+		if ($this->settings["debug"]) {
+			$this->printDebug("Finished individuals list: ".print_r($this->individuals), $ind);
+		}
+		// -------------
 	}
 
 	function createDOTDump() {
@@ -1253,7 +1257,9 @@ class Dot {
 					if ($this->settings["diagram_type"] == "combined") {
 						// This person's spouse family HAS NO parents
 						foreach ($this->individuals[$pid]["fams"] as $s_fid=>$s_fam) {
-							$this->families[$s_fid]["has_parents"] = FALSE;
+							if (!isset($this->families[$s_fid]["has_parents"])) {
+								$this->families[$s_fid]["has_parents"] = FALSE;
+							}
 						}
 					}
 				}
