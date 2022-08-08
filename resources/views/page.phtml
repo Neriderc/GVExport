@@ -85,16 +85,16 @@ use Fisharebest\Webtrees\Tree;
             <div class="row form-group">
                 <label class="col-sm-4 col-form-label wt-page-options-label" for="vars[marknr]">Warning</label>
                 <div class="col-sm-8 wt-page-options-value">
-                    <?= I18N::translate('You have items in the clippings cart, so clippings cart items will be used for the diagram instead of the below options.') ?>
+                    <?= I18N::translate('You have items in the clippings cart, which can be used for the diagram instead of the below options.') ?>
                     <div class="col-sm-8 wt-page-options-value">
                         <div class="row">
                             <div class="col-auto mx-3">
                                 <input type="radio" onclick="toggleCart(true)" name="vars[usecart]" id="vars[usecart]_yes" value="usecart" <?= $vars["usecart"] == "usecart" ? 'checked' : '' ?>>
-                                <label for="vars[usecart]_yes"><?= I18N::translate('Use cart') ?></label>
+                                <label for="vars[usecart]_yes"><?= I18N::translate('Use clippings cart') ?></label>
                             </div>
                             <div class="col-auto mx-3">
                                 <input type="radio" onclick="toggleCart(false)" name="vars[usecart]" id="vars[usecart]_no" value="ignorecart" <?= $vars["usecart"] == "ignorecart" ? 'checked' : '' ?>>
-                                <label for="vars[usecart]_no"><?= I18N::translate('Ignore cart') ?></label>
+                                <label for="vars[usecart]_no"><?= I18N::translate('Ignore clippings cart') ?></label>
                             </div>
                         </div>
                     </div>
