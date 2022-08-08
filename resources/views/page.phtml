@@ -492,7 +492,15 @@ use Fisharebest\Webtrees\Tree;
     var rendering = document.getElementById('rendering');
 
     document.addEventListener("DOMContentLoaded", function(e) {
+        // Load browser render when page has loaded
         updateRender();
+        // Remove reset parameter from URL when page loaded, to prevent
+        // further resets when page reloaded
+        let url=document.location.href.split("?")[0];
+        let args=document.location.href.split("?")[1];
+        let params = new URLSearchParams(args);
+        params.delete('reset');
+        history.pushState(null, '', url+"?"+params.toString())
     });
     document.querySelector('.update-browser-rendering').addEventListener('click', function(e) {
         updateRender();
