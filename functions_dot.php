@@ -224,6 +224,33 @@ class Dot {
 			($this->settings["diagram_type_combined_with_photo"]));
 	}
 
+	function formatName($name, $pid): string {
+		// Show nickname in quotes
+		$name = str_replace(array('<q class="wt-nickname">', '</q>'), array('"', '"'), $name);
+
+		// Show preferred name as underlined by replacing span with underline tags
+		$pos_start = strpos($name,'<span class="starredname">');
+		if ($pos_start !== false) {
+			$pos_end = strpos(substr($name, $pos_start), "</span>") + $pos_start;
+			if ($pos_end) {
+				$name = substr_replace($name, "_/U_", $pos_end, strlen("</span>"));
+			}
+			$name = str_replace('<span class="starredname">', '_U_', $name);
+		}
+		$name = strip_tags($name);
+		// We use _ instead of < >, remove tags, then switch them to proper tags. This lets
+		// us control the tags included in an environment where we don't normally have control
+		$name = str_replace("_U_", "<u>", $name);
+		$name = str_replace("_/U_", "</u> ", $name);
+
+		// If PID already in name (from another module), remove it so we don't add twice
+		$name = str_replace(" (" . $pid . ")", "", $name);
+		if ($this->settings["show_pid"]) {
+			// Show INDI id
+			$name = $name . " (" . $pid . ")";
+		}
+		return $name;
+	}
 	function createIndiList () {
 		if ($this->settings["multi_indi"] == FALSE) {
 			$this->addIndiToList("Start | Code 15", $this->settings["indi"], $this->indi_search_method["ance"], $this->indi_search_method["desc"], $this->indi_search_method["spou"], $this->indi_search_method["sibl"], TRUE, 0, 0);
@@ -685,30 +712,8 @@ class Dot {
 				else
 					$name .= '<BR />' . $addname;//@@ Meliza Amity
 			}
-			$name = str_replace(array('<q class="wt-nickname">', '</q>'), array('"', '"'), $name); // Show nickname in quotes
-			$name = strip_tags($name);
-
-			//@@ $name = str_replace(array('<span class="starredname">','</span>'), array('_','_'), $name); //@@ replace starredname by <u> and </u>
-			//@@ replace starredname by <u> and </u>
-			//@@ $name = str_replace(array('<span class="starredname">','</span>'), array('<U>','</U>'), $name); //@@ replace starredname by <u> and </u>
-			//$name = str_replace(array('<span class="starredname">','</span>'), array("",""), $name); //@@ replace starredname by null till graphviz supports underline
-			//$name = strip_tags($name);
-
-			if ($this->settings["diagram_type"] == "simple") { //@@ Meliza Amity
-				$name = str_replace(array('<span class="starredname">', '</span>'), array('\"', '\"'), $name);
-				//$name = str_replace('"', '\"', $name); //@@ Meliza Amity Handle double quotes of nick-names in simple tree ...
-			} else {
-				$name = str_replace(array('<span class="starredname">', '</span>'), array('<FONT face="' . $this->settings["fontname"] . ' italic">', '</FONT>'), $name);
-			}
-
-			// If PID already in name (from another module), remove it so we don't add twice
-			$name = str_replace(" (" . $pid . ")", "", $name);
-
-			if ($this->settings["show_pid"]) {
-				// Show INDI id
-				$name = $name . " (" . $pid . ")";
-			}
-			//$name = str_replace('"', '', $name); // To remove double quotes
+			// Handle webtrees tags for formatting name
+			$name = $this->formatName($name, $pid);
 		}
 
 		// --- Printing the INDI details ---
