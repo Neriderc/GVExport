@@ -3,63 +3,49 @@
 namespace vendor\WebtreesModules\gvexport;
 
 use Fisharebest\Webtrees\I18N;
-use Fisharebest\Webtrees\Session;
+use Fisharebest\Webtrees\Individual;
+use Fisharebest\Webtrees\Tree;
+
+/*
+ * tbd: better documentation of all transferred variables
+ */
+
+/**
+ * @var string      $gvexport_css           used in javascript code as a link to the css file
+ * @var Tree        $tree                   used tree
+ * @var Individual  $individual             ?
+// unused parameter $disposition
+ * @var string      $title                  title of this page
+ * @var array       $vars                   ?
+ * @var array       $otypes                 output file type options
+ * @var array       $gve_config             ?
+ * @var bool        $cartempty              are there any individuals (INDI records) in the clippings cart?
+ * @var ?           $module                 this module
+ */
 
 ?>
 
-<h2 class="wt-page-title">
-    <?= $title ?>
-</h2>
+<script type="text/javascript">
+    // stylesheet
+    var newSheet = document.createElement("link");
+    newSheet.setAttribute("rel","stylesheet");
+    newSheet.setAttribute("type","text/css");
+    newSheet.setAttribute("href","<?= $gvexport_css ?>");
+    document.head.appendChild(newSheet);
 
+    // Javascript functions
+    var newSheet = document.createElement("script");
+    newSheet.setAttribute("type","text/javascript");
+    newSheet.setAttribute("src","<?= $gvexport_js ?>");
+    document.head.appendChild(newSheet);
+</script>
 <script src="<?= $module->assetUrl('javascript/viz.js'); ?>"></script>
 <script src="<?= $module->assetUrl('javascript/panzoom.min.js'); ?>"></script>
 <script type="text/javascript">const cartempty = <?= $cartempty ? "true" : "false" ?>;</script>
 
-<style>
-    .sidebar {
-        height: calc(100% - 200px);
-        width: 500px;
-        position: fixed;
-        z-index: 1050;
-        top: 200px;
-        left: 0;
-        border-top: 1px solid black;
-        border-right: 1px solid black;
-        padding-top: 0.5rem;
-        background-color: #fff;
-        display: flex;
-        flex-direction: column;
-    }
-
-
-    .sidebar__formfields {
-        overflow-x: hidden;
-        overflow-y: scroll;
-        flex-shrink: 1;
-    }
-
-    .sidebar__buttons {
-        border-top: 1px solid black;
-        padding: 0.5rem;
-    }
-
-    .sidebar__toggler {
-        position: fixed;
-        left: 0;
-        top: 400px;
-        transform-origin: left bottom;
-        transform: rotate(90deg);
-    }
-
-    .btn-hover {
-        float: right;
-        position: absolute;
-        right: 5px;
-        top: 5px;
-        z-index: 1100;
-    }
-</style>
-
+<h2 class="wt-page-title">
+    <?= $title ?>
+</h2>
 
 <form action="<?= $module->chartUrl($individual) ?>" method="post" class="wt-page-options sidebar d-print-none" id="gvexport">
 
@@ -75,22 +61,6 @@ use Fisharebest\Webtrees\Session;
             <h3><?= I18N::translate('People to be included') ?></h3>
         </div>
 
-        <script type="text/javascript">
-            var appendPidTo = function(sourceId, targetId) {
-                var ids = [];
-                document.getElementById(targetId).value.split(',').forEach(function(id) {
-                    id = id.trim();
-                    if (id !== '') {
-                        ids.push(id);
-                    }
-                });
-                var newId = document.getElementById(sourceId).value.trim();
-                if (ids.indexOf(newId) === -1) {
-                    ids.push(newId);
-                }
-                document.getElementById(targetId).value = ids.join(', ')
-            }
-        </script>
         <?php
         /* Check if another module (e.g. vesta classic) is adding the XREF to
            the name. If so, we want to enable the XREF option for individuals
@@ -103,17 +73,15 @@ use Fisharebest\Webtrees\Session;
         } else {
             $overridePID = false;
         }
-        
-        // Check if the clippings cart is empty, to decide what options to allow
-        $cart = Session::get('cart', []);
-        $xrefs = array_keys($cart[$tree->name()] ?? []);
-        $cartempty = sizeof($xrefs) == 0;
+
         $greypeople = false;
+        // Check if there are INDI records in the clippings cart, to decide what options to allow
         if (!$cartempty) {
-            if ($vars["usecart"] == "usecart") {
-                $greypeople = true;
-            }
-            ?>
+        if ($vars["usecart"] == "usecart") {
+            $greypeople = true;
+        }
+        ?>
+
             <div class="row form-group">
                 <label class="col-sm-4 col-form-label wt-page-options-label" for="vars[marknr]">Warning</label>
                 <div class="col-sm-8 wt-page-options-value">
@@ -138,8 +106,15 @@ use Fisharebest\Webtrees\Session;
             <label class=" col-sm-4 col-form-label wt-page-options-label" for="pid"><?= I18N::translate('Include anyone related to') ?></label>
             <div class="col-sm-8 wt-page-options-value">
                 <div class="cart_toggle_hide" <?php if ($greypeople) { echo 'style="display: none"'; } ?>>
-                    <?= view('components/select-individual', ['name' => 'pid', 'id' => 'pid', 'tree' => $tree, 'individual' => $individual]); ?>
-                </div>
+                <?php
+                if ($cartempty) {
+                    echo view('components/select-individual', ['name' => 'pid', 'id' => 'pid', 'tree' => $tree, 'individual' => $individual]);
+                } else { ?>
+                    <div style="display: none">
+                        <?= view('components/select-individual', ['name' => 'pid', 'id' => 'pid', 'tree' => $tree, 'individual' => $individual]); ?>
+                    </div>
+                    <input type="text" class="form-control" disabled />
+                <?php } ?>
                 <div class="input-group mt-1">
                     <input class="cart_toggle" type="text" class="form-control" name="vars[other_pids]" id="vars[other_pids]" value="<?= $vars['other_pids'] ?>" <?= $greypeople ? "disabled" : ""; ?>>
                     <div class="input-group-append">
@@ -153,9 +128,9 @@ use Fisharebest\Webtrees\Session;
             <label class=" col-sm-4 col-form-label wt-page-options-label" for="vars[other_stop_pids]"><?= I18N::translate('Stop processing on') ?></label>
             <div class="col-sm-8 wt-page-options-value">
                 <div class="cart_toggle_hide" <?php if ($greypeople) { echo 'style="display: none"'; } ?>>
-                    <?php
+                <?php
                     echo view('components/select-individual', ['name' => 'vars[stop_pid]', 'id' => 'vars[stop_pid]', 'tree' => $tree, 'xref' => $vars['stop_pid']]);
-                    ?>
+                ?>
                 </div>
                 <div class="input-group mt-1">
                     <input class="cart_toggle" type="text" class="form-control" name="vars[other_stop_pids]" id="vars[other_stop_pids]" value="<?= $vars['other_stop_pids'] ?>" <?= $greypeople ? "disabled" : ""; ?>>
@@ -428,57 +403,57 @@ use Fisharebest\Webtrees\Session;
             </div>
         </div>
         <!--
-		<input type=" checkbox" name="vars[no_fams]" id="no_fams_var" value="no_fams\"" . ((isset($userDefaultVars[" no_fams"]) and $userDefaultVars["no_fams"]=="no_fams" ) ? " checked=" checked\"" : "" ) . " />" . "No family containers, just individuals
-		$out .= '</td></tr>';
+            <input type=" checkbox" name="vars[no_fams]" id="no_fams_var" value="no_fams\"" . ((isset($userDefaultVars[" no_fams"]) and $userDefaultVars["no_fams"]=="no_fams" ) ? " checked=" checked\"" : "" ) . " />" . "No family containers, just individuals
+            $out .= '</td></tr>';
 
-		// Font name
-		<tr><td class=" descriptionbox wrap\">" . "Font Name" . "
-                        </td>
-                        <td class="optionbox" style="text-align: left;\">
-                            <input type="text" name="vars[fontname]" id="fontname_var" value="" . $GVE_CONFIG["default_fontname"] . "" />
-                        </td>
-                    </tr>
+            // Font name
+            <tr><td class=" descriptionbox wrap\">" . "Font Name" . "
+                            </td>
+                            <td class="optionbox" style="text-align: left;\">
+                                <input type="text" name="vars[fontname]" id="fontname_var" value="" . $GVE_CONFIG["default_fontname"] . "" />
+                            </td>
+                        </tr>
 
-                    // Font size
-                    <tr>
-                        <td class="descriptionbox wrap\">" . "Font Size" . "</td>
-                        <td class="optionbox" style="text-align: left;\">
-                            <input type="text" size="2" name="vars[fontsize]" id="fontsize_var" value="" . (isset($userDefaultVars["fontsize"]) ? $userDefaultVars["fontsize"] : $GVE_CONFIG["dot"]["fontsize"]) . "" />
-                        </td>
-                    </tr>
+                        // Font size
+                        <tr>
+                            <td class="descriptionbox wrap\">" . "Font Size" . "</td>
+                            <td class="optionbox" style="text-align: left;\">
+                                <input type="text" size="2" name="vars[fontsize]" id="fontsize_var" value="" . (isset($userDefaultVars["fontsize"]) ? $userDefaultVars["fontsize"] : $GVE_CONFIG["dot"]["fontsize"]) . "" />
+                            </td>
+                        </tr>
 
-                    // Custom colors
-                    $out .= '<tr>
-                        <td class="descriptionbox wrap">' . "Color code of male individuals" . '</td>';
-                        <td class="optionbox" style="text-align: left;\">
-                            $out .= '<input type="radio" name="vars[colorm]" id="colorm_var" value="default" onclick="document.setup_gvexport_allinontree.colorm_custom_var.disabled=true;"' . ((isset($userDefaultVars[' colorm']) and $userDefaultVars['colorm']=="custom" ) ? '' : ' checked="checked"' ) . ' />' ; $out .='<input type="text" name="colorm_default_var" id="colorm_default_var" value="' . "Default" . '" readonly="readonly" style="background: ' . $GVE_CONFIG['dot']['colorm'] . ';"/>' ; $out .='<input type="radio" name="vars[colorm]" id="colorm_var" value="custom" onclick="gve_enablecustomcolor(\' colorm_custom_var\');"' . ((isset($userDefaultVars['colorm']) and $userDefaultVars['colorm']=="custom" ) ? ' checked="checked"' : '' ) . ' />' ; $defcustcol=isset($userDefaultVars['colorm_custom']) ? $userDefaultVars['colorm_custom'] : $GVE_CONFIG["dot"]["colorm"]; <input type="text" name="colorm_custom_var" id="colorm_custom_var" value="$defcustcol" style="background-color: $defcustcol\"" . ((isset($userDefaultVars['colorm']) and $userDefaultVars['colorm'] == " custom") ? '' : ' disabled="disabled"' ) . " onblur=" document.setup_gvexport_allinontree.colorm_custom_var.style.backgroundColor=document.setup_gvexport_allinontree.colorm_custom_var.value;" />
-                            $out .= '</td>
-                    </tr>';
-                    $out .= '<tr>
-                        <td class="descriptionbox wrap">' . "Color code of female individuals" . '</td>';
-                        <td class="optionbox" style="text-align: left;\">
-                            $out .= '<input type="radio" name="vars[colorf]" id="colorf_var" value="default" onclick="document.setup_gvexport_allinontree.colorf_custom_var.disabled=true;"' . ((isset($userDefaultVars[' colorf']) and $userDefaultVars['colorf']=="custom" ) ? '' : ' checked="checked"' ) . ' />' ; $out .='<input type="text" name="colorf_default_var" id="colorf_default_var" value="' . "Default" . '" readonly="readonly" style="background: ' . $GVE_CONFIG['dot']['colorf'] . ';"/>' ; $out .='<input type="radio" name="vars[colorf]" id="colorf_var" value="custom" onclick="gve_enablecustomcolor(\' colorf_custom_var\');"' . ((isset($userDefaultVars['colorf']) and $userDefaultVars['colorf']=="custom" ) ? ' checked="checked"' : '' ) . ' />' ; $defcustcol=isset($userDefaultVars['colorf_custom']) ? $userDefaultVars['colorf_custom'] : $GVE_CONFIG["dot"]["colorf"]; <input type="text" name="colorf_custom_var" id="colorf_custom_var" value="$defcustcol" style="background-color: $defcustcol\"" . ((isset($userDefaultVars['colorf']) and $userDefaultVars['colorf'] == " custom") ? '' : ' disabled="disabled"' ) . " onblur=" document.setup_gvexport_allinontree.colorf_custom_var.style.backgroundColor=document.setup_gvexport_allinontree.colorf_custom_var.value;" />
-                            $out .= '</td>
-                    </tr>';
-                    $out .= '<tr>
-                        <td class="descriptionbox wrap">' . "Color code of unknown individuals" . '</td>';
-                        <td class="optionbox" style="text-align: left;\">
-                            $out .= '<input type="radio" name="vars[coloru]" id="coloru_var" value="default" onclick="document.setup_gvexport_allinontree.coloru_custom_var.disabled=true;"' . ((isset($userDefaultVars[' coloru']) and $userDefaultVars['coloru']=="custom" ) ? '' : ' checked="checked"' ) . ' />' ; $out .='<input type="text" name="coloru_default_var" id="coloru_default_var" value="' . "Default" . '" readonly="readonly" style="background: ' . $GVE_CONFIG['dot']['coloru'] . ';"/>' ; $out .='<input type="radio" name="vars[coloru]" id="coloru_var" value="custom" onclick="gve_enablecustomcolor(\' coloru_custom_var\');"' . ((isset($userDefaultVars['coloru']) and $userDefaultVars['coloru']=="custom" ) ? ' checked="checked"' : '' ) . ' />' ; $defcustcol=isset($userDefaultVars['coloru_custom']) ? $userDefaultVars['coloru_custom'] : $GVE_CONFIG["dot"]["coloru"]; <input type="text" name="coloru_custom_var" id="coloru_custom_var" value="$defcustcol" style="background-color: $defcustcol\"" . ((isset($userDefaultVars['coloru']) and $userDefaultVars['coloru'] == " custom") ? '' : ' disabled="disabled"' ) . " onblur=" document.setup_gvexport_allinontree.coloru_custom_var.style.backgroundColor=document.setup_gvexport_allinontree.coloru_custom_var.value;" />
-                            $out .= '</td>
-                    </tr>';
-                    $out .= '<tr>
-                        <td class="descriptionbox wrap">' . "Color code of families" . '</td>';
-                        <td class="optionbox" style="text-align: left;\">
-                            $out .= '<input type="radio" name="vars[colorfam]" id="colorfam_var" value="default" onclick="document.setup_gvexport_allinontree.colorfam_custom_var.disabled=true;"' . ((isset($userDefaultVars[' colorfam']) and $userDefaultVars['colorfam']=="custom" ) ? '' : ' checked="checked"' ) . ' />' ; $out .='<input type="text" name="colorfam_default_var" id="colorfam_default_var" value="' . "Default" . '" readonly="readonly" style="background: ' . $GVE_CONFIG['dot']['colorfam'] . ';"/>' ; $out .='<input type="radio" name="vars[colorfam]" id="colorfam_var" value="custom" onclick="gve_enablecustomcolor(\' colorfam_custom_var\');"' . ((isset($userDefaultVars['colorfam']) and $userDefaultVars['colorfam']=="custom" ) ? ' checked="checked"' : '' ) . ' />' ; $defcustcol=isset($userDefaultVars['colorfam_custom']) ? $userDefaultVars['colorfam_custom'] : $GVE_CONFIG["dot"]["colorfam"]; <input type="text" name="colorfam_custom_var" id="colorfam_custom_var" value="$defcustcol" style="background-color: $defcustcol\"" . ((isset($userDefaultVars['colorfam']) and $userDefaultVars['colorfam'] == " custom") ? '' : ' disabled="disabled"' ) . " onblur=" document.setup_gvexport_allinontree.colorfam_custom_var.style.backgroundColor=document.setup_gvexport_allinontree.colorfam_custom_var.value;" />
-                            $out .= '</td>
-                    </tr>';
+                        // Custom colors
+                        $out .= '<tr>
+                            <td class="descriptionbox wrap">' . "Color code of male individuals" . '</td>';
+                            <td class="optionbox" style="text-align: left;\">
+                                $out .= '<input type="radio" name="vars[colorm]" id="colorm_var" value="default" onclick="document.setup_gvexport_allinontree.colorm_custom_var.disabled=true;"' . ((isset($userDefaultVars[' colorm']) and $userDefaultVars['colorm']=="custom" ) ? '' : ' checked="checked"' ) . ' />' ; $out .='<input type="text" name="colorm_default_var" id="colorm_default_var" value="' . "Default" . '" readonly="readonly" style="background: ' . $GVE_CONFIG['dot']['colorm'] . ';"/>' ; $out .='<input type="radio" name="vars[colorm]" id="colorm_var" value="custom" onclick="gve_enablecustomcolor(\' colorm_custom_var\');"' . ((isset($userDefaultVars['colorm']) and $userDefaultVars['colorm']=="custom" ) ? ' checked="checked"' : '' ) . ' />' ; $defcustcol=isset($userDefaultVars['colorm_custom']) ? $userDefaultVars['colorm_custom'] : $GVE_CONFIG["dot"]["colorm"]; <input type="text" name="colorm_custom_var" id="colorm_custom_var" value="$defcustcol" style="background-color: $defcustcol\"" . ((isset($userDefaultVars['colorm']) and $userDefaultVars['colorm'] == " custom") ? '' : ' disabled="disabled"' ) . " onblur=" document.setup_gvexport_allinontree.colorm_custom_var.style.backgroundColor=document.setup_gvexport_allinontree.colorm_custom_var.value;" />
+                                $out .= '</td>
+                        </tr>';
+                        $out .= '<tr>
+                            <td class="descriptionbox wrap">' . "Color code of female individuals" . '</td>';
+                            <td class="optionbox" style="text-align: left;\">
+                                $out .= '<input type="radio" name="vars[colorf]" id="colorf_var" value="default" onclick="document.setup_gvexport_allinontree.colorf_custom_var.disabled=true;"' . ((isset($userDefaultVars[' colorf']) and $userDefaultVars['colorf']=="custom" ) ? '' : ' checked="checked"' ) . ' />' ; $out .='<input type="text" name="colorf_default_var" id="colorf_default_var" value="' . "Default" . '" readonly="readonly" style="background: ' . $GVE_CONFIG['dot']['colorf'] . ';"/>' ; $out .='<input type="radio" name="vars[colorf]" id="colorf_var" value="custom" onclick="gve_enablecustomcolor(\' colorf_custom_var\');"' . ((isset($userDefaultVars['colorf']) and $userDefaultVars['colorf']=="custom" ) ? ' checked="checked"' : '' ) . ' />' ; $defcustcol=isset($userDefaultVars['colorf_custom']) ? $userDefaultVars['colorf_custom'] : $GVE_CONFIG["dot"]["colorf"]; <input type="text" name="colorf_custom_var" id="colorf_custom_var" value="$defcustcol" style="background-color: $defcustcol\"" . ((isset($userDefaultVars['colorf']) and $userDefaultVars['colorf'] == " custom") ? '' : ' disabled="disabled"' ) . " onblur=" document.setup_gvexport_allinontree.colorf_custom_var.style.backgroundColor=document.setup_gvexport_allinontree.colorf_custom_var.value;" />
+                                $out .= '</td>
+                        </tr>';
+                        $out .= '<tr>
+                            <td class="descriptionbox wrap">' . "Color code of unknown individuals" . '</td>';
+                            <td class="optionbox" style="text-align: left;\">
+                                $out .= '<input type="radio" name="vars[coloru]" id="coloru_var" value="default" onclick="document.setup_gvexport_allinontree.coloru_custom_var.disabled=true;"' . ((isset($userDefaultVars[' coloru']) and $userDefaultVars['coloru']=="custom" ) ? '' : ' checked="checked"' ) . ' />' ; $out .='<input type="text" name="coloru_default_var" id="coloru_default_var" value="' . "Default" . '" readonly="readonly" style="background: ' . $GVE_CONFIG['dot']['coloru'] . ';"/>' ; $out .='<input type="radio" name="vars[coloru]" id="coloru_var" value="custom" onclick="gve_enablecustomcolor(\' coloru_custom_var\');"' . ((isset($userDefaultVars['coloru']) and $userDefaultVars['coloru']=="custom" ) ? ' checked="checked"' : '' ) . ' />' ; $defcustcol=isset($userDefaultVars['coloru_custom']) ? $userDefaultVars['coloru_custom'] : $GVE_CONFIG["dot"]["coloru"]; <input type="text" name="coloru_custom_var" id="coloru_custom_var" value="$defcustcol" style="background-color: $defcustcol\"" . ((isset($userDefaultVars['coloru']) and $userDefaultVars['coloru'] == " custom") ? '' : ' disabled="disabled"' ) . " onblur=" document.setup_gvexport_allinontree.coloru_custom_var.style.backgroundColor=document.setup_gvexport_allinontree.coloru_custom_var.value;" />
+                                $out .= '</td>
+                        </tr>';
+                        $out .= '<tr>
+                            <td class="descriptionbox wrap">' . "Color code of families" . '</td>';
+                            <td class="optionbox" style="text-align: left;\">
+                                $out .= '<input type="radio" name="vars[colorfam]" id="colorfam_var" value="default" onclick="document.setup_gvexport_allinontree.colorfam_custom_var.disabled=true;"' . ((isset($userDefaultVars[' colorfam']) and $userDefaultVars['colorfam']=="custom" ) ? '' : ' checked="checked"' ) . ' />' ; $out .='<input type="text" name="colorfam_default_var" id="colorfam_default_var" value="' . "Default" . '" readonly="readonly" style="background: ' . $GVE_CONFIG['dot']['colorfam'] . ';"/>' ; $out .='<input type="radio" name="vars[colorfam]" id="colorfam_var" value="custom" onclick="gve_enablecustomcolor(\' colorfam_custom_var\');"' . ((isset($userDefaultVars['colorfam']) and $userDefaultVars['colorfam']=="custom" ) ? ' checked="checked"' : '' ) . ' />' ; $defcustcol=isset($userDefaultVars['colorfam_custom']) ? $userDefaultVars['colorfam_custom'] : $GVE_CONFIG["dot"]["colorfam"]; <input type="text" name="colorfam_custom_var" id="colorfam_custom_var" value="$defcustcol" style="background-color: $defcustcol\"" . ((isset($userDefaultVars['colorfam']) and $userDefaultVars['colorfam'] == " custom") ? '' : ' disabled="disabled"' ) . " onblur=" document.setup_gvexport_allinontree.colorfam_custom_var.style.backgroundColor=document.setup_gvexport_allinontree.colorfam_custom_var.value;" />
+                                $out .= '</td>
+                        </tr>';
 
-                </table>
-            </div>
-        </td>
-    </tr>
+                    </table>
+                </div>
+            </td>
+        </tr>
 
-   -->
+        -->
 
         <h3><?= /* I18N: Appearance heading */ I18N::translate('Output Settings') ?></h3>
         <div class="row form-group">
@@ -596,134 +571,6 @@ use Fisharebest\Webtrees\Session;
         e.preventDefault();
         return false;
     });
-
-    function hideSidebar(e) {
-        document.querySelector('.sidebar').hidden = true;
-        document.querySelector('.sidebar__toggler').hidden = false;
-        e.preventDefault();
-    }
-
-    function showSidebar(e) {
-        document.querySelector('.sidebar__toggler').hidden = true;
-        document.querySelector('.sidebar').hidden = false;
-        e.preventDefault();
-    }
-
-    document.querySelector('.hide-form').addEventListener('click', hideSidebar);
-
-
-    document.querySelector('.sidebar__toggler a').addEventListener('click', showSidebar);
-
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Esc' || e.key === 'Escape') {
-            document.querySelector('.sidebar').hidden ? showSidebar(e) : hideSidebar(e);
-        }
-    });
-
-    // Enable or disable the option to add photos.
-    // This is used when selecting diagram type, as only
-    // some types support photos.
-    function togglePhotos(enable) {
-        document.getElementById("vars[with_photos]").disabled = !enable;
-    }
-
-    // Add or remove the % sign from the text input
-    function togglePercent(element, add) {
-        // Clicked out of input field, add % sign
-        var startval;
-        if (add) {
-            // Keep just numbers
-            let boxVal = element.value.replace(/\D/g, "");
-            // If result is blank, set to default
-            if (boxVal == "") {
-                boxVal = "100";
-            }
-            element.value =  boxVal + "%";
-        } else {
-            // Clicked in input box, remove % and select text,
-            // but only select text the first time, let user move cursor if they want
-            startval = element.value;
-            element.value = element.value.replace("%", "");
-            if (startval !== element.value) {
-                element.select();
-            }
-        }
-    }
-    
-    // This function ensures that if certain options are checked in regards to which relations to include,
-    // then other required options are selected. e.g. if 'Anyone" is selected, all other options must
-    // all be selected
-    function updateRelationOption(field) {
-        // If user clicked "All relatives"
-        if (field === "indicous") {
-            // If function triggered by checking "All relatives" field, ensure "Siblings" is checked
-            if (document.getElementById("vars[indicous]").checked) {
-                document.getElementById("vars[indisibl]").checked = true;
-            }
-            // If "All relatives" unchecked, uncheck "Anyone"
-            if (!document.getElementById("vars[indicous]").checked) {
-                document.getElementById("vars[indiany]").checked = false;
-            }
-        }
-        // If user clicked "Siblings"
-        if (field === "indisibl") {
-            // If function triggered by unchecking "Siblings" field, ensure "All relatives" is unchecked
-            if (!document.getElementById("vars[indisibl]").checked) {
-                document.getElementById("vars[indicous]").checked = false;
-            }
-            // If "Siblings" unchecked, uncheck "Anyone"
-            if (!document.getElementById("vars[indisibl]").checked) {
-                document.getElementById("vars[indiany]").checked = false;
-            }
-        }
-        // If user clicked "Spouses"
-        if (field === "indispou") {
-            // If function triggered by checking "All relatives" field, ensure "Siblings" is checked
-            if (!document.getElementById("vars[indisibl]").checked) {
-                document.getElementById("vars[indicous]").checked = false;
-            }
-            // If "Spouses" unchecked, uncheck "Anyone"
-            if (!document.getElementById("vars[indispou]").checked) {
-                document.getElementById("vars[indiany]").checked = false;
-            }
-        }
-        // If function triggered by checking "All relatives" field, ensure everything else is checked
-        if (field === "indiany") {
-            if (document.getElementById("vars[indiany]").checked) {
-                document.getElementById("vars[indicous]").checked = true;
-                document.getElementById("vars[indisibl]").checked = true;
-                document.getElementById("vars[indispou]").checked = true;
-
-            }
-        }
-
-    }
-
-    // Toggle items based on if the items in the cart should be used or not
-    // enable - if set to true, use cart. Update form to disable options. Set to false to reverse.
-    function toggleCart(enable) {
-        var el = document.getElementsByClassName("cart_toggle");
-        for (var i = 0; i < el.length; i++) {
-            el.item(i).disabled = enable;
-        }
-        showHide("cart_toggle_hide", enable);
-        showHide("cart_toggle_show", !enable);
-    }
-    // This function is used in toggleCart to show or hide all elements with a certain class,
-    // by adding or removing "display: none"
-    // css_class - the class to search for
-    // show - true to show the elements and false to hide them
-    function showHide(css_class, show) {
-        el = document.getElementsByClassName(css_class);
-        for (var i = 0; i < el.length; i++) {
-            if (show) {
-                el.item(i).style.display = "none";
-            } else {
-                el.item(i).style.removeProperty("display");
-            }
-        }
-    }
-
 </script>
 
 <template id=dropdown>

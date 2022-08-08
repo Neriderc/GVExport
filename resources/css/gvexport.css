@@ -1,0 +1,42 @@
+.sidebar {
+    height: calc(100% - 200px);
+    width: 500px;
+    position: fixed;
+    z-index: 1050;
+    top: 200px;
+    left: 0;
+    border-top: 1px solid black;
+    border-right: 1px solid black;
+    padding-top: 0.5rem;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.sidebar__formfields {
+    overflow-x: hidden;
+    overflow-y: scroll;
+    flex-shrink: 1;
+}
+
+.sidebar__buttons {
+    border-top: 1px solid black;
+    padding: 0.5rem;
+}
+
+.sidebar__toggler {
+    position: fixed;
+    left: 0;
+    top: 400px;
+    transform-origin: left bottom;
+    transform: rotate(90deg);
+}
+
+.btn-hover {
+    float: right;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    z-index: 1100;
+}
