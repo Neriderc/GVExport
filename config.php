@@ -119,7 +119,7 @@ $GVE_CONFIG["directions"]["TB"] = "Top-to-Bottom";
 $GVE_CONFIG["directions"]["LR"] = "Left-to-Right";
 
 // Font name
-$GVE_CONFIG["default_fontname"] = "Sans";
+$GVE_CONFIG["default_fontname"] = "Arial";
 
 // mclimit settings (number of iterations to help to reduce crossings)
 $GVE_CONFIG["default_mclimit"] = "50";
@@ -134,9 +134,9 @@ $GVE_CONFIG["settings"]["use_abbr_place"] = "Full place name";
 $GVE_CONFIG["settings"]["download"] = TRUE;
 
 // Deafult max levels of ancestors
-$GVE_CONFIG["settings"]["ance_level"] = 5;
+$GVE_CONFIG["settings"]["ance_level"] = 2;
 // Deafult max levels of descendants
-$GVE_CONFIG["settings"]["desc_level"] = 5;
+$GVE_CONFIG["settings"]["desc_level"] = 2;
 // By default, if there are clippings in the clippings cart then use them
 $GVE_CONFIG["settings"]["usecart"] = TRUE;
 

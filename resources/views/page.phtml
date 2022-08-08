@@ -491,7 +491,15 @@ use Fisharebest\Webtrees\Tree;
     var form = document.getElementById('gvexport');
     var rendering = document.getElementById('rendering');
 
+    document.addEventListener("DOMContentLoaded", function(e) {
+        updateRender();
+    });
     document.querySelector('.update-browser-rendering').addEventListener('click', function(e) {
+        updateRender();
+        e.preventDefault();
+    });
+
+    function updateRender() {
         var oldOtype = document.getElementById('vars[otype]').value;
         document.getElementById('vars[otype]').value = 'dot';
         // Enable disabled fields so they are included in serialised data - this means the values are remembered
@@ -512,7 +520,7 @@ use Fisharebest\Webtrees\Tree;
         rendering.innerHTML = '<div class="d-flex justify-content-center h-100"><div class="spinner-border align-self-center" role="status"><span class="sr-only">Loading...</span></div></div>';
         rendering.hidden = false;
 
-        var h = window.innerHeight - document.querySelector('.wt-header-wrapper').getBoundingClientRect().height -  document.querySelector('.wt-footers').getBoundingClientRect().height;
+        var h = window.innerHeight - document.querySelector('.wt-header-wrapper').getBoundingClientRect().height - document.querySelector('.wt-footers').getBoundingClientRect().height;
         rendering.style.height = h + "px";
 
 
@@ -523,16 +531,16 @@ use Fisharebest\Webtrees\Tree;
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
             body: data
-        }).then(function(response) {
+        }).then(function (response) {
             if (!response.ok) {
-                return response.text().then(function(errorText) {
+                return response.text().then(function (errorText) {
                     return Promise.reject(errorText)
                 });
             }
             return response.text();
-        }).then(function(dotStr) {
+        }).then(function (dotStr) {
             lastDotStr = dotStr;
-            var images = [...lastDotStr.matchAll(/<IMG[^>]+SRC="([^"]*)/gmi)].map(function(matches) {
+            var images = [...lastDotStr.matchAll(/<IMG[^>]+SRC="([^"]*)/gmi)].map(function (matches) {
                 return {
                     path: matches[1],
                     width: '150px',
@@ -543,9 +551,9 @@ use Fisharebest\Webtrees\Tree;
             return viz.renderSVGElement(dotStr, {
                 images: images
             });
-        }).then(function(element) {
+        }).then(function (element) {
             console.log("Appending SVG", element);
-            element.innerHTML = element.innerHTML.replaceAll("%26","&amp;"); //half of bug fix for photos not showing in browser - we change & to %26 in functions_dot.php
+            element.innerHTML = element.innerHTML.replaceAll("%26", "&amp;"); //half of bug fix for photos not showing in browser - we change & to %26 in functions_dot.php
             rendering.innerHTML = "";
             rendering.appendChild(element);
             var fullZoom = Math.min(2, rendering.getBoundingClientRect().width / element.getBBox().width);
@@ -555,7 +563,7 @@ use Fisharebest\Webtrees\Tree;
                 initialZoom: fullZoom
             });
             return element;
-        }).catch(function(error) {
+        }).catch(function (error) {
             rendering.innerHTML = '<div class="alert alert-danger" role="alert"><?= I18N::translate('Error running GVExport in Browser mode') ?>:<br>' + error + '</div>';
             if (lastDotStr) {
                 rendering.innerHTML = rendering.innerHTML + '<h4>DOT contents</h4><pre id="dot-text"></pre>';
@@ -568,10 +576,9 @@ use Fisharebest\Webtrees\Tree;
                 workerURL: workerURL
             });
         });
-
-        e.preventDefault();
         return false;
-    });
+    }
+
 </script>
 
 <template id=dropdown>
