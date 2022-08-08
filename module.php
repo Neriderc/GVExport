@@ -123,7 +123,7 @@ class GVExport extends AbstractModule implements ModuleCustomInterface, ModuleCh
 
         $individual = $this->getIndividual($tree, $request->getQueryParams()['xref']);
 
-        $userDefaultVars = [ //Defaults (this could be defined in the config?)
+		$userDefaultVars = [ //Defaults (this could be defined in the config?)
             "otype" => "svg",
             "grdir" => $GVE_CONFIG["default_direction"],
             "mclimit" => $GVE_CONFIG["default_mclimit"],
@@ -360,12 +360,37 @@ class GVExport extends AbstractModule implements ModuleCustomInterface, ModuleCh
             $dot->setSettings("stop_proc", FALSE);
         }
 
-        if ($vars['indiance'] == 'ance') {
-            $dot->setIndiSearchMethod("ance");
-        }
+		if ($vars['indiance'] == 'ance') {
+			$dot->setIndiSearchMethod("ance");
+		}
         if ($vars['indidesc'] == 'desc') {
             $dot->setIndiSearchMethod("desc");
         }
+
+        // If "Anyone" option is picked, then other relations options also must be set
+		if ($vars['indisibl'] == 'sibl' || $vars['indiany'] == 'any') {
+			$dot->setIndiSearchMethod("sibl");
+		}
+		if ($vars['indispou'] == 'spou' || $vars['indiany'] == 'any') {
+			$dot->setIndiSearchMethod("spou");
+		}
+		if ($vars['indicous'] == 'cous' || $vars['indiany'] == 'any') {
+			$dot->setIndiSearchMethod("cous");
+		}
+        if ($vars['indiany'] == 'any') {
+            $dot->setIndiSearchMethod("any");
+        }
+
+		if (isset($vars['ance_level'])) {
+			$dot->setSettings("ance_level", $_REQUEST["vars"]["ance_level"]);
+		} else {
+			$dot->setSettings("ance_level", 0);
+		}
+		if (isset($vars['desc_level'])) {
+			$dot->setSettings("desc_level", $_REQUEST["vars"]["desc_level"]);
+		} else {
+			$dot->setSettings("desc_level", 0);
+		}
 
         // If "Anyone" option is picked, then other relations options also must be set
         if ($vars['indisibl'] == 'sibl' || $vars['indiany'] == 'any') {
