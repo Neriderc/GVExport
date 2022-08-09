@@ -224,6 +224,11 @@ class Dot {
 			($this->settings["diagram_type_combined_with_photo"]));
 	}
 
+	/** Add formatting to name before adding to DOT
+	 * @param string $name full name of the person
+	 * @param string $pid XREF of the person, for adding to name if enabled
+	 * @return string Returns formatted name
+	 */
 	function formatName($name, $pid): string {
 		// Show nickname in quotes
 		$name = str_replace(array('<q class="wt-nickname">', '</q>'), array('"', '"'), $name);
@@ -250,6 +255,49 @@ class Dot {
 			$name = $name . " (" . $pid . ")";
 		}
 		return $name;
+	}
+
+	/** Checks if provided individual is related by
+	 * adoption to the provided family record
+	 * @param individual $i webtrees individual object for the person to check
+	 * @param family $f webtrees family object for the family to check against
+	 * @return string
+	 */
+	function checkIndiAdopted($i, $f) {
+		$fid = $f->xref();
+		$facts = $i->facts();
+		$adopfam_found = FALSE;
+		// Find out that actual family has adopters or not
+		foreach ($facts as $fact) {
+			if (substr_count($fact->gedcom(), "1 ADOP") > 0) {
+				$adop = preg_split("/\n/", $fact->gedcom());
+				foreach ($adop as $adopline) {
+					if (substr_count($adopline, "2 FAMC") > 0) {
+						$adopfamcline = preg_split("/@/", $adopline);
+						$adopfamid = $adopfamcline[1];
+
+						// Adopter family found
+						if ($adopfamid == $fid) {
+							$adopfam_found = TRUE;
+							// ---DEBUG---
+							if ($this->settings["debug"]) {
+								$this->printDebug("($i->xref()) -- ADOP record: " . preg_replace("/\n/", " | ", $fact->gedcom()) . "\n", $ind);
+							}
+							// -----------
+						}
+					}
+
+					if ($adopfam_found && substr_count($adopline, "3 ADOP") > 0) {
+						$adopfamcadopline = preg_split("/ /", $adopline);
+						$adopfamcadoptype = $adopfamcadopline[2];
+					}
+				}
+			}
+		}
+		if (!isset($adopfamcadoptype)) {
+			$adopfamcadoptype = "";
+		}
+		return $adopfamcadoptype;
 	}
 	function createIndiList () {
 		if ($this->settings["multi_indi"] == FALSE) {
@@ -1150,48 +1198,8 @@ class Dot {
 							// -------------
 						}
 
-						$adopfam_found = FALSE;
-						// Find out that actual family has adopters or not
-						$indifacts = $i->facts();
-						foreach ($indifacts as $fact) {
-							// --- DEBUG ---
-							if ($this->settings["debug"]) {
-								//var_dump($fact);
-							}
-							// -------------
-
-							// Workaround for 4.1.6, because the $fact is an object now not an array as before
-							// [TODO] check if this relevant at all - seems to be from PHPGedView
-							if (is_array($fact))
-							{
-
-								if (substr_count($fact[1], "1 ADOP") >0) {
-									$adop = preg_split("/\n/", $fact[1]);
-									foreach ($adop as $adopline) {
-										if (substr_count($adopline, "2 FAMC") >0) {
-											$adopfamcline = preg_split("/@/", $adopline);
-											$adopfamid = $adopfamcline[1];
-
-											// Adopter family found
-											if ($adopfamid == $fid) {
-												$adopfam_found = TRUE;
-												// ---DEBUG---
-												if ($this->settings["debug"]) {
-													$this->printDebug("($pid) -- ADOP record: " . preg_replace("/\n/", " | ", $fact[1]) . "\n", $ind);
-												}
-												// -----------
-											}
-										}
-
-										if ($adopfam_found && substr_count($adopline, "3 ADOP") >0) {
-											$adopfamcadopline = preg_split("/ /", $adopline);
-											$adopfamcadoptype = $adopfamcadopline[2];
-										}
-									}
-								}
-
-							}
-						}
+						// Work out if indi has adoptive relationship to this family
+						$adopfamcadoptype = $this->checkIndiAdopted($i, $fam);
 
 						// Add father & mother
 						$h = $f->husband();
@@ -1209,7 +1217,7 @@ class Dot {
 							$this->families[$fid]["has_children"] = TRUE;
 							$this->families[$fid]["husb_id"] = $husb_id;
 
-							if ($adopfam_found && ($adopfamcadoptype == "BOTH" || $adopfamcadoptype == "HUSB")) {
+							if ($adopfamcadoptype == "BOTH" || $adopfamcadoptype == "HUSB") {
 								// --- DEBUG ---
 								if ($this->settings["debug"]) {
 									$this->printDebug("($pid) -- adding an _ADOPTING_ PARENT /FATHER/ with INDI id ($husb_id) from FAM ($fid):\n", $ind);
@@ -1231,7 +1239,7 @@ class Dot {
 							$this->families[$fid]["has_children"] = TRUE;
 							$this->families[$fid]["wife_id"] = $wife_id;
 
-							if ($adopfam_found && ($adopfamcadoptype == "BOTH" || $adopfamcadoptype == "WIFE")) {
+							if ($adopfamcadoptype == "BOTH" || $adopfamcadoptype == "WIFE") {
 								// --- DEBUG ---
 								if ($this->settings["debug"]) {
 									$this->printDebug("($pid) -- adding an _ADOPTING_ PARENT /MOTHER/ with INDI id ($wife_id) from FAM ($fid):\n", $ind);
@@ -1340,10 +1348,19 @@ class Dot {
 								//var_dump($fams);
 							}
 							// -------------
+
+							// Work out if indi has adoptive relationship to this family
+							$adopfamcadoptype = $this->checkIndiAdopted($child, $f);
+							if ($adopfamcadoptype != "") {
+								$related = false;
+							} else {
+								$related = $rel;
+							}
+
 							if ($this->indi_search_method["any"]) {
 								$this->addIndiToList($pid."|Code 14", $child_id, TRUE, FALSE, $this->indi_search_method["spou"], FALSE, FALSE, $ind, $level-1);
 							}
-							$this->addIndiToList($pid."|Code 5", $child_id, FALSE, TRUE, $this->indi_search_method["spou"], FALSE, $rel, $ind, $level-1);
+							$this->addIndiToList($pid."|Code 5", $child_id, FALSE, TRUE, $this->indi_search_method["spou"], FALSE, $related, $ind, $level-1);
 
 						}
 					}
@@ -1475,11 +1492,19 @@ class Dot {
 							}
 							// -------------
 
+							// Work out if indi has adoptive relationship to this family
+							$adopfamcadoptype = $this->checkIndiAdopted($i, $fam);
+							if ($adopfamcadoptype != "") {
+								$related = false;
+							} else {
+								$related = $rel;
+							}
+
 							// If searching for cousins, then the descendants of ancestors' siblings should be added
 							if ($this->indi_search_method["cous"]) {
-								$this->addIndiToList($pid."|Code 8", $child_id, TRUE, TRUE, $this->indi_search_method["spou"], FALSE, $rel, $ind, $level);
+								$this->addIndiToList($pid."|Code 8", $child_id, TRUE, TRUE, $this->indi_search_method["spou"], FALSE, $related, $ind, $level);
 							} else {
-								$this->addIndiToList($pid."|Code 9", $child_id, TRUE, FALSE, $this->indi_search_method["spou"], FALSE, $rel, $ind, $level);
+								$this->addIndiToList($pid."|Code 9", $child_id, TRUE, FALSE, $this->indi_search_method["spou"], FALSE, $related, $ind, $level);
 							}
 
 						}
