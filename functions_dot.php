@@ -281,7 +281,7 @@ class Dot {
 							$adopfam_found = TRUE;
 							// ---DEBUG---
 							if ($this->settings["debug"]) {
-								$this->printDebug("($i->xref()) -- ADOP record: " . preg_replace("/\n/", " | ", $fact->gedcom()) . "\n", $ind);
+									$this->printDebug("(".$i->xref().") -- ADOP record: " . preg_replace("/\n/", " | ", $fact->gedcom()) . "\n");
 							}
 							// -----------
 						}
@@ -1037,7 +1037,6 @@ class Dot {
 		} else {
 			return false;
 		}
-
 		// --- DEBUG ---
 		if ($this->settings["debug"]) {
 			$individual = $this->getUpdatedPerson($pid);
@@ -1177,6 +1176,13 @@ class Dot {
 						$fid = $fam->xref();
 						// Get the family object
 						$f = $this->getUpdatedFamily($fid);
+
+						// First check if we are related to our own family
+						$adopfamcadoptype = $this->checkIndiAdopted($i, $f);
+						// Not related - so overide the initial setting
+						if ($adopfamcadoptype != "") {
+							$rel = false;
+						}
 
 						if (isset($this->families[$fid]["fid"]) && ($this->families[$fid]["fid"]== $fid)) {
 							// Family ID already added
@@ -1493,7 +1499,7 @@ class Dot {
 							// -------------
 
 							// Work out if indi has adoptive relationship to this family
-							$adopfamcadoptype = $this->checkIndiAdopted($i, $fam);
+							$adopfamcadoptype = $this->checkIndiAdopted($child, $fam);
 							if ($adopfamcadoptype != "") {
 								$related = false;
 							} else {
