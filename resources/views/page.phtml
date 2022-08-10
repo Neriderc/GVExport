@@ -171,7 +171,7 @@ use Fisharebest\Webtrees\Tree;
                     </div>
                     <div class="col-auto mx-3">
                         <input type="hidden" name="vars[indiany]" value="no">
-                        <input type="checkbox" onclick="updateRelationOption('indiany')" name="vars[indiany]" id="vars[indiany]" value="any" <?= $vars["indiany"] == "any" ? 'checked' : '' ?> <?= !$cartempty ? "disabled" : ""; ?>>
+                        <input class="cart_toggle" type="checkbox" onclick="updateRelationOption('indiany')" name="vars[indiany]" id="vars[indiany]" value="any" <?= $vars["indiany"] == "any" ? 'checked' : '' ?> <?= !$cartempty ? "disabled" : ""; ?>>
                         <label for="vars[indiany]"><?= I18N::translate('Anyone') ?></label>
                     </div>
                 </div>
@@ -485,7 +485,9 @@ use Fisharebest\Webtrees\Tree;
 
     document.addEventListener("DOMContentLoaded", function(e) {
         // Load browser render when page has loaded
-        updateRender();
+        // Timeout needed as function is in file added to page
+        // by javascript so doesn't exist the instant page loads.
+        setTimeout(updateRender,5);
         // Remove reset parameter from URL when page loaded, to prevent
         // further resets when page reloaded
         let url=document.location.href.split("?")[0];
