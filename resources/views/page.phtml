@@ -493,8 +493,15 @@ use Fisharebest\Webtrees\Tree;
         let url=document.location.href.split("?")[0];
         let args=document.location.href.split("?")[1];
         let params = new URLSearchParams(args);
-        params.delete('reset');
-        history.pushState(null, '', url+"?"+params.toString())
+        if (params.toString().search("reset") != -1) {
+            params.delete('reset');
+            history.pushState(null, '', url + "?" + params.toString())
+        }
+    });
+    document.querySelector('.update-browser-rendering').addEventListener('click', function(e) {
+        updateRender();
+            history.pushState(null, '', url + "?" + params.toString())
+        }
     });
     document.querySelector('.update-browser-rendering').addEventListener('click', function(e) {
         updateRender();
