@@ -232,10 +232,6 @@ msgid "Abbreviated place names"
 msgstr "Verkorte plaatsnamen"
 
 #: 
-msgid "You have items in the clippings cart, so clippings cart items will be used for the diagram instead of the below options."
-msgstr "U heeft items in de stamboomknipsels, daarom worden die stamboomknipsels gebruikt voor het diagram in plaats van de onderstaande opties."
-
-#: 
 msgid "People to be included"
 msgstr "Inclusief de volgende personen"
 
@@ -250,4 +246,20 @@ msgstr "Opties beperkt omdat GraphViz niet op de server is geïnstalleerd"
 #: 
 msgid "Anyone"
 msgstr "Iedereen"
+
+#: 
+msgid "All relatives"
+msgstr "Alle verwanten"
+
+#: 
+msgid "You have items in the clippings cart, which can be used for the diagram instead of the below options."
+msgstr "U heeft items in de stamboomknipsels, die gebruikt kunnen worden voor het diagram in plaats van de onderstaande opties."
+
+#: 
+msgid "Use clippings cart"
+msgstr "Gebruik stamboomknipsels"
+
+#: 
+msgid "Ignore clippings cart"
+msgstr "Negeer stamboomknipsels"
 

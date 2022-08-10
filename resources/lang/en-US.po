@@ -232,10 +232,6 @@ msgid "Abbreviated place names"
 msgstr "Abbreviated place names"
 
 #: 
-msgid "You have items in the clippings cart, so clippings cart items will be used for the diagram instead of the below options."
-msgstr "You have items in the clippings cart, so clippings cart items will be used for the diagram instead of the below options."
-
-#: 
 msgid "People to be included"
 msgstr "People to be included"
 
@@ -250,4 +246,20 @@ msgstr "Options limited as GraphViz not installed on server"
 #: 
 msgid "Anyone"
 msgstr "Anyone"
+
+#: 
+msgid "All relatives"
+msgstr "All relatives"
+
+#: 
+msgid "You have items in the clippings cart, which can be used for the diagram instead of the below options."
+msgstr "You have items in the clippings cart, which can be used for the diagram instead of the below options."
+
+#: 
+msgid "Use clippings cart"
+msgstr "Use clippings cart"
+
+#: 
+msgid "Ignore clippings cart"
+msgstr "Ignore clippings cart"
 

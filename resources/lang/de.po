@@ -232,10 +232,6 @@ msgid "Abbreviated place names"
 msgstr "Abgekürzte Ortsnamen"
 
 #: 
-msgid "You have items in the clippings cart, so clippings cart items will be used for the diagram instead of the below options."
-msgstr "Sie haben Datensätze im Sammelbehälter. Diese werden hier dargestellt und damit werden die untenstehenden Optionen ausgeblendet."
-
-#: 
 msgid "People to be included"
 msgstr "Einzubeziehende Personen"
 
@@ -245,9 +241,25 @@ msgstr "Zeige XREF einer Person"
 
 #: 
 msgid "Options limited as GraphViz not installed on server"
-msgstr "Optionen sind eingeschränkt, da Graphviz nicht auf dem Server installiert ist"
+msgstr "Optionen sind eingeschränkt, da GraphViz nicht auf dem Server installiert ist"
 
 #: 
 msgid "Anyone"
-msgstr ""
+msgstr "Jeder"
+
+#: 
+msgid "All relatives"
+msgstr "Alle Verwandten"
+
+#: 
+msgid "You have items in the clippings cart, which can be used for the diagram instead of the below options."
+msgstr "Es gibt Datensätze im Sammelbehälter, die für das Diagramm - statt der unten stehenden Optionen - verwendet werden können."
+
+#: 
+msgid "Use clippings cart"
+msgstr "Verwende den Sammelbehälter"
+
+#: 
+msgid "Ignore clippings cart"
+msgstr "Ignoriere den Sammelbehälter"
 
