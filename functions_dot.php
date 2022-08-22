@@ -311,24 +311,19 @@ class Dot {
 					}
 				}
 			}
-			// Find foster relationships between records
-			$gedcom = $fact->gedcom();
-			if (substr_count($gedcom, "2 PEDI FOSTER") > 0) {
-				$adop = preg_split("/\n/", $gedcom);
-				foreach ($adop as $line) {
-					if (substr_count($line, "1 FAMC") > 0) {
-						$fosterFAMCLine = explode("@", $line);
-						$adopfamid = $fosterFAMCLine[1];
+			// Find other relationships between records
+			foreach ($facts as $fact) {
+				$gedcom =  strtoupper($fact->gedcom());
+				if (substr_count($gedcom, "2 PEDI") > 0 && substr_count($gedcom, "2 PEDI BIRTH") == 0) {
+					$adop = preg_split("/\n/", $gedcom);
+					foreach ($adop as $line) {
+						if (substr_count($line, "1 FAMC") > 0) {
+							$adopfamid = explode("@", $line)[1];
 
-						// Adopter family found
-						if ($adopfamid == $fid) {
-							$adopfamcadoptype = "FOSTER";
-							// ---DEBUG---
-							if ($this->settings["debug"]) {
-								$this->printDebug("(".$i->xref().") -- FOSTER record: " . preg_replace("/\n/", " | ", $gedcom) . "\n", $ind);
+							// Adopter family found
+							if ($adopfamid == $fid) {
+								$adopfamcadoptype = "OTHER";
 							}
-							// -----------
-							break;
 						}
 					}
 				}
