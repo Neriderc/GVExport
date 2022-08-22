@@ -265,47 +265,71 @@ class Dot {
 	}
 
 	/** Checks if provided individual is related by
-	 * adoption to the provided family record
-	 * @param individual $i webtrees individual object for the person to check
-	 * @param family $f webtrees family object for the family to check against
+	 * adoption or foster to the provided family record
+	 * @param Individual $i webtrees individual object for the person to check
+	 * @param Family $f webtrees family object for the family to check against
 	 * @param integer $ind the indent level for printing the debug log
 	 * @return string
 	 */
-	function checkIndiAdopted($i, $f, $ind) {
+	function checkIfBloodRelative($i, $f, int $ind): string
+	{
 		$fid = $f->xref();
 		$facts = $i->facts();
-		$adopfam_found = FALSE;
+		$famFound = FALSE;
 
 		// --- DEBUG ---
 		if ($this->settings["debug"]) {
-			$this->printDebug("-- Checking if link between individual ".$i->xref()." and family ".$fid." is by adoption.\n", $ind);
+			$this->printDebug("-- Checking if link between individual ".$i->xref()." and family ".$fid." is by blood.\n", $ind);
 		}
 		// -------------
 
-
-		// Find out that actual family has adopters or not
+		// Find out if individual has adoption record
 		foreach ($facts as $fact) {
-			if (substr_count($fact->gedcom(), "1 ADOP") > 0) {
-				$adop = preg_split("/\n/", $fact->gedcom());
-				foreach ($adop as $adopline) {
-					if (substr_count($adopline, "2 FAMC") > 0) {
-						$adopfamcline = preg_split("/@/", $adopline);
-						$adopfamid = $adopfamcline[1];
+			$gedcom = $fact->gedcom();
+			if (substr_count($gedcom, "1 ADOP") > 0) {
+				// If adoption record found, check for family link
+				$adop = preg_split("/\n/", $gedcom);
+				foreach ($adop as $line) {
+					if (substr_count($line, "2 FAMC") > 0) {
+						$adopfamid = explode("@", $line)[1];
 
-						// Adopter family found
+						// Check if link is to the family we are looking for
 						if ($adopfamid == $fid) {
-							$adopfam_found = TRUE;
+							$famFound = TRUE;
 							// ---DEBUG---
 							if ($this->settings["debug"]) {
-									$this->printDebug("(".$i->xref().") -- ADOP record: " . preg_replace("/\n/", " | ", $fact->gedcom()) . "\n", $ind);
+									$this->printDebug("(".$i->xref().") -- ADOP record: " . preg_replace("/\n/", " | ", $gedcom) . "\n", $ind);
 							}
 							// -----------
 						}
 					}
 
-					if ($adopfam_found && substr_count($adopline, "3 ADOP") > 0) {
-						$adopfamcadopline = preg_split("/ /", $adopline);
+					if ($famFound && substr_count($line, "3 ADOP") > 0) {
+						$adopfamcadopline = explode(" ", $line);
 						$adopfamcadoptype = $adopfamcadopline[2];
+						break;
+					}
+				}
+			}
+			// Find foster relationships between records
+			$gedcom = $fact->gedcom();
+			if (substr_count($gedcom, "2 PEDI FOSTER") > 0) {
+				$adop = preg_split("/\n/", $gedcom);
+				foreach ($adop as $line) {
+					if (substr_count($line, "1 FAMC") > 0) {
+						$fosterFAMCLine = explode("@", $line);
+						$adopfamid = $fosterFAMCLine[1];
+
+						// Adopter family found
+						if ($adopfamid == $fid) {
+							$adopfamcadoptype = "FOSTER";
+							// ---DEBUG---
+							if ($this->settings["debug"]) {
+								$this->printDebug("(".$i->xref().") -- FOSTER record: " . preg_replace("/\n/", " | ", $gedcom) . "\n", $ind);
+							}
+							// -----------
+							break;
+						}
 					}
 				}
 			}
@@ -1233,7 +1257,7 @@ class Dot {
 						$f = $this->getUpdatedFamily($fid);
 
 						// First check if we are related to our own family
-						$adopfamcadoptype = $this->checkIndiAdopted($i, $f, $ind);
+						$adopfamcadoptype = $this->checkIfBloodRelative($i, $f, $ind);
 						// Not related - so overide the initial setting
 						if ($adopfamcadoptype != "") {
 							$rel = false;
@@ -1260,7 +1284,7 @@ class Dot {
 						}
 
 						// Work out if indi has adoptive relationship to this family
-						$adopfamcadoptype = $this->checkIndiAdopted($i, $fam, $ind);
+						$adopfamcadoptype = $this->checkIfBloodRelative($i, $fam, $ind);
 						// Add father & mother
 						$h = $f->husband();
 						$w = $f->wife();
@@ -1410,7 +1434,7 @@ class Dot {
 							// -------------
 
 							// Work out if indi has adoptive relationship to this family
-							$adopfamcadoptype = $this->checkIndiAdopted($child, $f, $ind);
+							$adopfamcadoptype = $this->checkIfBloodRelative($child, $f, $ind);
 							if ($adopfamcadoptype != "") {
 								$related = false;
 							} else {
@@ -1553,7 +1577,7 @@ class Dot {
 							// -------------
 
 							// Work out if indi has adoptive relationship to this family
-							$adopfamcadoptype = $this->checkIndiAdopted($child, $fam, $ind);
+							$adopfamcadoptype = $this->checkIfBloodRelative($child, $fam, $ind);
 							if ($adopfamcadoptype != "") {
 								$related = false;
 							} else {
