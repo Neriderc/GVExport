@@ -271,7 +271,7 @@ class Dot {
 	 * @param integer $ind the indent level for printing the debug log
 	 * @return string
 	 */
-	function checkIfBloodRelative($i, $f, int $ind): string
+	function getRelationshipType($i, $f, int $ind): string
 	{
 		$fid = $f->xref();
 		$facts = $i->facts();
@@ -285,16 +285,16 @@ class Dot {
 
 		// Find out if individual has adoption record
 		foreach ($facts as $fact) {
-			$gedcom = $fact->gedcom();
+			$gedcom = strtoupper($fact->gedcom());
+			// If adoption record found, check for family link
 			if (substr_count($gedcom, "1 ADOP") > 0) {
-				// If adoption record found, check for family link
-				$adop = preg_split("/\n/", $gedcom);
-				foreach ($adop as $line) {
+				$GEDLines = preg_split("/\n/", $gedcom);
+				foreach ($GEDLines as $line) {
 					if (substr_count($line, "2 FAMC") > 0) {
-						$adopfamid = explode("@", $line)[1];
+						$GEDFamID = explode("@", $line)[1];
 
 						// Check if link is to the family we are looking for
-						if ($adopfamid == $fid) {
+						if ($GEDFamID == $fid) {
 							$famFound = TRUE;
 							// ---DEBUG---
 							if ($this->settings["debug"]) {
@@ -305,34 +305,35 @@ class Dot {
 					}
 
 					if ($famFound && substr_count($line, "3 ADOP") > 0) {
-						$adopfamcadopline = explode(" ", $line);
-						$adopfamcadoptype = $adopfamcadopline[2];
+						$adopfamcadoptype = explode(" ", $line)[2];
 						break;
 					}
 				}
 			}
-			// Find other relationships between records
-			foreach ($facts as $fact) {
-				$gedcom =  strtoupper($fact->gedcom());
-				if (substr_count($gedcom, "2 PEDI") > 0 && substr_count($gedcom, "2 PEDI BIRTH") == 0) {
-					$adop = preg_split("/\n/", $gedcom);
-					foreach ($adop as $line) {
-						if (substr_count($line, "1 FAMC") > 0) {
-							$adopfamid = explode("@", $line)[1];
 
-							// Adopter family found
-							if ($adopfamid == $fid) {
-								$adopfamcadoptype = "OTHER";
-							}
+			// Find other non-blood relationships between records
+			if (substr_count($gedcom, "2 PEDI") > 0 && substr_count($gedcom, "2 PEDI BIRTH") == 0) {
+				$GEDLines = preg_split("/\n/", $gedcom);
+				foreach ($GEDLines as $line) {
+					if (substr_count($line, "1 FAMC") > 0) {
+						$GEDFamID = explode("@", $line)[1];
+
+						// Adopter family found
+						if ($GEDFamID == $fid) {
+							$adopfamcadoptype = "OTHER";
+							break;
 						}
 					}
 				}
 			}
 		}
+		// If we found no record of non-blood relationship, return blank
+		// Otherwise return the type ("BOTH/HUSB/WIFE for adoptions, "OTHER" for anything else)
 		if (!isset($adopfamcadoptype)) {
-			$adopfamcadoptype = "";
+			return "";
+		} else {
+			return $adopfamcadoptype;
 		}
-		return $adopfamcadoptype;
 	}
 
 	function createIndiList (&$individuals, &$families, $full, $relList) {
@@ -1252,7 +1253,7 @@ class Dot {
 						$f = $this->getUpdatedFamily($fid);
 
 						// First check if we are related to our own family
-						$adopfamcadoptype = $this->checkIfBloodRelative($i, $f, $ind);
+						$adopfamcadoptype = $this->getRelationshipType($i, $f, $ind);
 						// Not related - so overide the initial setting
 						if ($adopfamcadoptype != "") {
 							$rel = false;
@@ -1279,7 +1280,7 @@ class Dot {
 						}
 
 						// Work out if indi has adoptive relationship to this family
-						$adopfamcadoptype = $this->checkIfBloodRelative($i, $fam, $ind);
+						$adopfamcadoptype = $this->getRelationshipType($i, $fam, $ind);
 						// Add father & mother
 						$h = $f->husband();
 						$w = $f->wife();
@@ -1429,7 +1430,7 @@ class Dot {
 							// -------------
 
 							// Work out if indi has adoptive relationship to this family
-							$adopfamcadoptype = $this->checkIfBloodRelative($child, $f, $ind);
+							$adopfamcadoptype = $this->getRelationshipType($child, $f, $ind);
 							if ($adopfamcadoptype != "") {
 								$related = false;
 							} else {
@@ -1572,7 +1573,7 @@ class Dot {
 							// -------------
 
 							// Work out if indi has adoptive relationship to this family
-							$adopfamcadoptype = $this->checkIfBloodRelative($child, $fam, $ind);
+							$adopfamcadoptype = $this->getRelationshipType($child, $fam, $ind);
 							if ($adopfamcadoptype != "") {
 								$related = false;
 							} else {
