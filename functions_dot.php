@@ -1253,9 +1253,9 @@ class Dot {
 						$f = $this->getUpdatedFamily($fid);
 
 						// First check if we are related to our own family
-						$adopfamcadoptype = $this->getRelationshipType($i, $f, $ind);
+						$relationshipType = $this->getRelationshipType($i, $f, $ind);
 						// Not related - so overide the initial setting
-						if ($adopfamcadoptype != "") {
+						if ($relationshipType != "") {
 							$rel = false;
 						}
 
@@ -1280,7 +1280,7 @@ class Dot {
 						}
 
 						// Work out if indi has adoptive relationship to this family
-						$adopfamcadoptype = $this->getRelationshipType($i, $fam, $ind);
+						$relationshipType = $this->getRelationshipType($i, $fam, $ind);
 						// Add father & mother
 						$h = $f->husband();
 						$w = $f->wife();
@@ -1297,14 +1297,14 @@ class Dot {
 							$families[$fid]["has_children"] = TRUE;
 							$families[$fid]["husb_id"] = $husb_id;
 
-							if ($adopfamcadoptype == "BOTH" || $adopfamcadoptype == "HUSB") {
+							if ($relationshipType == "BOTH" || $relationshipType == "HUSB") {
 								// --- DEBUG ---
 								if ($this->settings["debug"]) {
 									$this->printDebug("($pid) -- adding an _ADOPTING_ PARENT /FATHER/ with INDI id ($husb_id) from FAM ($fid):\n", $ind);
 									//var_dump($fams);
 								}
 								// -------------
-								$this->addIndiToList($pid."|Code 1", $husb_id, TRUE, FALSE, $this->indi_search_method["spou"] && $adopfamcadoptype !== "BOTH", $this->indi_search_method["sibl"], FALSE, $ind, $level+1, $individuals, $families, $full, $relList);
+								$this->addIndiToList($pid."|Code 1", $husb_id, TRUE, FALSE, $this->indi_search_method["spou"] && $relationshipType !== "BOTH", $this->indi_search_method["sibl"], FALSE, $ind, $level+1, $individuals, $families, $full, $relList);
 							} else {
 								// --- DEBUG ---
 								if ($this->settings["debug"]) {
@@ -1319,14 +1319,14 @@ class Dot {
 							$families[$fid]["has_children"] = TRUE;
 							$families[$fid]["wife_id"] = $wife_id;
 
-							if ($adopfamcadoptype == "BOTH" || $adopfamcadoptype == "WIFE") {
+							if ($relationshipType == "BOTH" || $relationshipType == "WIFE") {
 								// --- DEBUG ---
 								if ($this->settings["debug"]) {
 									$this->printDebug("($pid) -- adding an _ADOPTING_ PARENT /MOTHER/ with INDI id ($wife_id) from FAM ($fid):\n", $ind);
 									//var_dump($fams);
 								}
 								// -------------
-								$this->addIndiToList($pid."|Code 3", $wife_id, TRUE, FALSE, $this->indi_search_method["spou"] && $adopfamcadoptype !== "BOTH", $this->indi_search_method["sibl"], FALSE, $ind, $level+1, $individuals, $families, $full, $relList);
+								$this->addIndiToList($pid."|Code 3", $wife_id, TRUE, FALSE, $this->indi_search_method["spou"] && $relationshipType !== "BOTH", $this->indi_search_method["sibl"], FALSE, $ind, $level+1, $individuals, $families, $full, $relList);
 							} else {
 								// --- DEBUG ---
 								if ($this->settings["debug"]) {
@@ -1430,8 +1430,8 @@ class Dot {
 							// -------------
 
 							// Work out if indi has adoptive relationship to this family
-							$adopfamcadoptype = $this->getRelationshipType($child, $f, $ind);
-							if ($adopfamcadoptype != "") {
+							$relationshipType = $this->getRelationshipType($child, $f, $ind);
+							if ($relationshipType != "") {
 								$related = false;
 							} else {
 								$related = $rel;
@@ -1573,8 +1573,8 @@ class Dot {
 							// -------------
 
 							// Work out if indi has adoptive relationship to this family
-							$adopfamcadoptype = $this->getRelationshipType($child, $fam, $ind);
-							if ($adopfamcadoptype != "") {
+							$relationshipType = $this->getRelationshipType($child, $fam, $ind);
+							if ($relationshipType != "") {
 								$related = false;
 							} else {
 								$related = $rel;
