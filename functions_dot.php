@@ -335,14 +335,14 @@ class Dot {
 		return $adopfamcadoptype;
 	}
 
-	function createIndiList (&$individuals, &$families, $full, $relList) {
+	function createIndiList (&$individuals, &$families, $full) {
 		if ($this->settings["multi_indi"] == FALSE) {
-			$this->addIndiToList("Start | Code 15", $this->settings["indi"], $this->indi_search_method["ance"], $this->indi_search_method["desc"], $this->indi_search_method["spou"], $this->indi_search_method["sibl"], TRUE, 0, 0, $individuals, $families, $full, $relList);
+			$this->addIndiToList("Start | Code 15", $this->settings["indi"], $this->indi_search_method["ance"], $this->indi_search_method["desc"], $this->indi_search_method["spou"], $this->indi_search_method["sibl"], TRUE, 0, 0, $individuals, $families, $full);
 		} else {
 			// if multiple indis are defined
 			$indis = explode(",", $this->settings["indi"]);
 			for ($i=0;$i<count($indis);$i++) {
-				$this->addIndiToList("Start | Code 16", trim($indis[$i]), $this->indi_search_method["ance"], $this->indi_search_method["desc"], $this->indi_search_method["spou"], $this->indi_search_method["sibl"], TRUE, 0, 0, $individuals, $families, $full, $relList);
+				$this->addIndiToList("Start | Code 16", trim($indis[$i]), $this->indi_search_method["ance"], $this->indi_search_method["desc"], $this->indi_search_method["spou"], $this->indi_search_method["sibl"], TRUE, 0, 0, $individuals, $families, $full);
 			}
 		}
 		// -- DEBUG ---
@@ -356,7 +356,7 @@ class Dot {
 		// If no individuals in the clippings cart (or option chosen to overide), use standard method
 		if (!functionsClippingsCart::isIndividualInCart($this->tree) || !$this->settings["usecart"] ) {
 			// Create our tree
-			$this->createIndiList($this->individuals, $this->families, false, null);
+			$this->createIndiList($this->individuals, $this->families, false);
 			// If option to display related in another colour is selected,
 			// check if any non-related persons in tree
 			$relList = array();
@@ -376,7 +376,7 @@ class Dot {
 					$save = $this->indi_search_method;
 					$this->indi_search_method = array("ance" => TRUE, "desc" => TRUE, "spou" => FALSE, "sibl" => TRUE, "cous" => TRUE, "any" => FALSE);
 					// Generate full tree of relatives
-					$this->createIndiList($relList, $relFams, true, null);
+					$this->createIndiList($relList, $relFams, true);
 					// Restore settings
 					$this->indi_search_method = $save;
 					// Update our relative statuses on the main tree
@@ -1094,20 +1094,25 @@ class Dot {
 	 * @param boolean $rel whether to treat this individual as related
 	 * @param integer $ind indent level - used for debug output
 	 * @param integer $level the current generation - 0 is starting generation, negative numbers are descendants, positive are ancestors
-	 * @param array $individuals array of individuals to be updated (passed by referrence)
+	 * @param array $individuals array of individuals to be updated (passed by reference)
+	 * @param array $families array of families to be updated (passed by reference)
 	 * @param boolean $full whether we are scanning full tree of relatives, ignoring settings
+	 * @param array $relList A list of relatives to be highlighted as blood relatives
 	 */
-	function addIndiToList($sourcePID, $pid, $ance = FALSE, $desc = FALSE, $spou = FALSE, $sibl = FALSE, $rel = TRUE, $ind = 0, $level = 0, &$individuals, &$families, $full, $relList) {
+	function addIndiToList($sourcePID, $pid, bool $ance, bool $desc, bool $spou, bool $sibl, bool $rel, int $ind, int $level, array &$individuals, array &$families, bool $full) {
 		global $GVE_CONFIG, $pgv_changes, $GEDCOM;
 		$ance_level = $this->indi_search_method["ance"] ? $this->settings["ance_level"] : 0;
 		$desc_level = $this->indi_search_method["desc"] ? $this->settings["desc_level"] : 0;
 
-		$individuals[$pid]['pid'] = $pid;
-		if ($relList != null) {
-			if (isset($relList[$pid]) && $relList[$pid]['rel']) {
-				$rel = TRUE;
-			}
+		// Get updated INDI data
+		$i = $this->getUpdatedPerson($pid);
+		// If PID invalid, skip this person
+		if ($i == null) {
+			return false;
 		}
+
+		$individuals[$pid]['pid'] = $pid;
+
 		// Overwrite the 'related' status if it was not set before or it's 'false' (for those people who are added as both related and non-related)
 		if (!isset($individuals[$pid]['rel']) || (!$individuals[$pid]['rel'] && $rel)) {
 			$individuals[$pid]['rel'] = $rel;
@@ -1130,9 +1135,6 @@ class Dot {
 		if ($this->settings["diagram_type_combined_with_photo"] && $this->isPhotoRequired()) {
 			$individuals[$pid]["pic"] = $this->addPhotoToIndi($pid);
 		}
-
-		// Get updated INDI data
-		$i = $this->getUpdatedPerson($pid);
 
 		// Add the family nr which he/she belongs to as spouse (needed when "combined" mode is used)
 		if ($this->settings["diagram_type"] == "combined") {
@@ -1300,7 +1302,7 @@ class Dot {
 									//var_dump($fams);
 								}
 								// -------------
-								$this->addIndiToList($pid."|Code 1", $husb_id, TRUE, FALSE, $this->indi_search_method["spou"] && $relationshipType !== "BOTH", $this->indi_search_method["sibl"], FALSE, $ind, $level+1, $individuals, $families, $full, $relList);
+								$this->addIndiToList($pid."|Code 1", $husb_id, TRUE, FALSE, $this->indi_search_method["spou"] && $relationshipType !== "BOTH", $this->indi_search_method["sibl"], FALSE, $ind, $level+1, $individuals, $families, $full);
 							} else {
 								// --- DEBUG ---
 								if ($this->settings["debug"]) {
@@ -1308,7 +1310,8 @@ class Dot {
 									//var_dump($fams);
 								}
 								// -------------
-								$this->addIndiToList($pid."|Code 2", $husb_id, TRUE, FALSE, $this->indi_search_method["spou"], $this->indi_search_method["sibl"], $rel && $relationshipType == "", $ind, $level+1, $individuals, $families, $full, $relList);
+								$this->addIndiToList($pid."|Code 2", $husb_id, TRUE, FALSE, $this->indi_search_method["spou"], $this->indi_search_method["sibl"], $rel && $relationshipType == "", $ind, $level+1, $individuals, $families, $full);
+
 							}
 						}
 						if (!empty($wife_id)) {
@@ -1322,7 +1325,7 @@ class Dot {
 									//var_dump($fams);
 								}
 								// -------------
-								$this->addIndiToList($pid."|Code 3", $wife_id, TRUE, FALSE, $this->indi_search_method["spou"] && $relationshipType !== "BOTH", $this->indi_search_method["sibl"], FALSE, $ind, $level+1, $individuals, $families, $full, $relList);
+								$this->addIndiToList($pid."|Code 3", $wife_id, TRUE, FALSE, $this->indi_search_method["spou"] && $relationshipType !== "BOTH", $this->indi_search_method["sibl"], FALSE, $ind, $level+1, $individuals, $families, $full);
 							} else {
 								// --- DEBUG ---
 								if ($this->settings["debug"]) {
@@ -1330,7 +1333,8 @@ class Dot {
 									//var_dump($fams);
 								}
 								// -------------
-								$this->addIndiToList($pid."|Code 4", $wife_id, TRUE, FALSE, $this->indi_search_method["spou"], $this->indi_search_method["sibl"], $rel && $relationshipType == "", $ind, $level+1, $individuals, $families, $full, $relList);
+								$this->addIndiToList($pid."|Code 4", $wife_id, TRUE, FALSE, $this->indi_search_method["spou"], $this->indi_search_method["sibl"], $rel && $relationshipType == "", $ind, $level+1, $individuals, $families, $full);
+
 							}
 						}
 
@@ -1434,9 +1438,9 @@ class Dot {
 							}
 
 							if ($this->indi_search_method["any"]) {
-								$this->addIndiToList($pid."|Code 14", $child_id, TRUE, FALSE, $this->indi_search_method["spou"], FALSE, FALSE, $ind, $level-1, $individuals, $families, $full, $relList);
+								$this->addIndiToList($pid."|Code 14", $child_id, TRUE, FALSE, $this->indi_search_method["spou"], FALSE, FALSE, $ind, $level-1, $individuals, $families, $full);
 							}
-							$this->addIndiToList($pid."|Code 5", $child_id, FALSE, TRUE, $this->indi_search_method["spou"], FALSE, $related, $ind, $level-1, $individuals, $families, $full, $relList);
+							$this->addIndiToList($pid."|Code 5", $child_id, FALSE, TRUE, $this->indi_search_method["spou"], FALSE, $related, $ind, $level-1, $individuals, $families, $full);
 
 						}
 					}
@@ -1511,9 +1515,9 @@ class Dot {
 						// -------------
 
 						if ($this->settings["mark_not_related"] == TRUE) {
-							$this->addIndiToList($pid."|Code 6", $spouse_id, $this->indi_search_method["any"] && $ance, $this->indi_search_method["any"] && $desc, $this->indi_search_method["any"], $this->indi_search_method["any"], FALSE, $ind, $level, $individuals, $families, $full, $relList);
+							$this->addIndiToList($pid."|Code 6", $spouse_id, $this->indi_search_method["any"] && $ance, $this->indi_search_method["any"] && $desc, $this->indi_search_method["any"], $this->indi_search_method["any"], FALSE, $ind, $level, $individuals, $families, $full);
 						} else {
-							$this->addIndiToList($pid."|Code 7", $spouse_id, $this->indi_search_method["any"], $this->indi_search_method["any"], $this->indi_search_method["any"], $this->indi_search_method["any"], TRUE, $ind, $level, $individuals, $families, $full, $relList);
+							$this->addIndiToList($pid."|Code 7", $spouse_id, $this->indi_search_method["any"], $this->indi_search_method["any"], $this->indi_search_method["any"], $this->indi_search_method["any"], TRUE, $ind, $level, $individuals, $families, $full);
 						}
 					}
 
@@ -1578,9 +1582,9 @@ class Dot {
 
 							// If searching for cousins, then the descendants of ancestors' siblings should be added
 							if ($this->indi_search_method["cous"]) {
-								$this->addIndiToList($pid."|Code 8", $child_id, TRUE, TRUE, $this->indi_search_method["spou"], FALSE, $related, $ind, $level, $individuals, $families, $full, $relList);
+								$this->addIndiToList($pid."|Code 8", $child_id, TRUE, TRUE, $this->indi_search_method["spou"], FALSE, $related, $ind, $level, $individuals, $families, $full);
 							} else {
-								$this->addIndiToList($pid."|Code 9", $child_id, TRUE, FALSE, $this->indi_search_method["spou"], FALSE, $related, $ind, $level, $individuals, $families, $full, $relList);
+								$this->addIndiToList($pid."|Code 9", $child_id, TRUE, FALSE, $this->indi_search_method["spou"], FALSE, $related, $ind, $level, $individuals, $families, $full);
 							}
 
 						}
@@ -1627,9 +1631,9 @@ class Dot {
 
 							// If searching for step-cousins, then the descendants of ancestors' siblings should be added
 							if ($this->indi_search_method["cous"]) {
-								$this->addIndiToList($pid."|Code 10", $child_id, FALSE, TRUE, $this->indi_search_method["spou"], FALSE, $rel, $ind, $level, $individuals, $families, $full, $relList);
+								$this->addIndiToList($pid."|Code 10", $child_id, FALSE, TRUE, $this->indi_search_method["spou"], FALSE, $rel, $ind, $level, $individuals, $families, $full);
 							} else {
-								$this->addIndiToList($pid."|Code 11", $child_id, TRUE, FALSE, $this->indi_search_method["spou"], FALSE, $rel, $ind, $level, $individuals, $families, $full, $relList);
+								$this->addIndiToList($pid."|Code 11", $child_id, TRUE, FALSE, $this->indi_search_method["spou"], FALSE, $rel, $ind, $level, $individuals, $families, $full);
 							}
 						}
 					}
