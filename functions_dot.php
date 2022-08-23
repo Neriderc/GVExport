@@ -276,13 +276,6 @@ class Dot {
 		$fid = $f->xref();
 		$facts = $i->facts();
 		$famFound = FALSE;
-
-		// --- DEBUG ---
-		if ($this->settings["debug"]) {
-			$this->printDebug("-- Checking if link between individual ".$i->xref()." and family ".$fid." is by blood.\n", $ind);
-		}
-		// -------------
-
 		// Find out if individual has adoption record
 		foreach ($facts as $fact) {
 			$gedcom = strtoupper($fact->gedcom());
@@ -331,9 +324,15 @@ class Dot {
 		// Otherwise return the type ("BOTH/HUSB/WIFE for adoptions, "OTHER" for anything else)
 		if (!isset($adopfamcadoptype)) {
 			return "";
-		} else {
-			return $adopfamcadoptype;
 		}
+
+		// --- DEBUG ---
+		if ($this->settings["debug"]) {
+			$this->printDebug("-- Link between individual ".$i->xref()." and family ".$fid." is ".($adopfamcadoptype=="" ? "blood" : $adopfamcadoptype).".\n", $ind);
+		}
+		// -------------
+
+		return $adopfamcadoptype;
 	}
 
 	function createIndiList (&$individuals, &$families, $full, $relList) {
@@ -1254,10 +1253,7 @@ class Dot {
 
 						// First check if we are related to our own family
 						$relationshipType = $this->getRelationshipType($i, $f, $ind);
-						// Not related - so overide the initial setting
-						if ($relationshipType != "") {
-							$rel = false;
-						}
+
 
 						if (isset($families[$fid]["fid"]) && ($families[$fid]["fid"]== $fid)) {
 							// Family ID already added
@@ -1312,7 +1308,7 @@ class Dot {
 									//var_dump($fams);
 								}
 								// -------------
-								$this->addIndiToList($pid."|Code 2", $husb_id, TRUE, FALSE, $this->indi_search_method["spou"], $this->indi_search_method["sibl"], $rel, $ind, $level+1, $individuals, $families, $full, $relList);
+								$this->addIndiToList($pid."|Code 2", $husb_id, TRUE, FALSE, $this->indi_search_method["spou"], $this->indi_search_method["sibl"], $rel && $relationshipType == "", $ind, $level+1, $individuals, $families, $full, $relList);
 							}
 						}
 						if (!empty($wife_id)) {
@@ -1334,7 +1330,7 @@ class Dot {
 									//var_dump($fams);
 								}
 								// -------------
-								$this->addIndiToList($pid."|Code 4", $wife_id, TRUE, FALSE, $this->indi_search_method["spou"], $this->indi_search_method["sibl"], $rel, $ind, $level+1, $individuals, $families, $full, $relList);
+								$this->addIndiToList($pid."|Code 4", $wife_id, TRUE, FALSE, $this->indi_search_method["spou"], $this->indi_search_method["sibl"], $rel && $relationshipType == "", $ind, $level+1, $individuals, $families, $full, $relList);
 							}
 						}
 
