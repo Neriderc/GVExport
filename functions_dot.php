@@ -336,7 +336,7 @@ class Dot {
 	}
 
 	function createIndiList (&$individuals, &$families, $full) {
-		if ($this->settings["multi_indi"] == FALSE) {
+		if (!$this->settings["multi_indi"]) {
 			$this->addIndiToList("Start | Code 15", $this->settings["indi"], $this->indi_search_method["ance"], $this->indi_search_method["desc"], $this->indi_search_method["spou"], $this->indi_search_method["sibl"], TRUE, 0, 0, $individuals, $families, $full);
 		} else {
 			// if multiple indis are defined
@@ -352,11 +352,36 @@ class Dot {
 		// -------------
 	}
 
+	/**
+	 * This function updates our family and individual arrays to remove records that mess up
+	 * the "combined" mode. This is particularly important when including a "stop" individual,
+	 * as this can cause half a family record to be shown. So we attempt to remove these.
+	 *
+	 * @param array $individuals // List of individual records
+	 * @param array $families // List of family records
+	 * @return void
+	 */
+	function removeGhosts(array &$individuals, array &$families) {
+		foreach ($individuals as $i) {
+			foreach ($i["fams"] as $f) {
+				// If not dummy family, the family has no children, and one of the spouse records are missing
+				if (substr($f, 0, 2) != "F_" && !isset($families[$f]["has_children"]) && (!isset($f["husb_id"]) || !isset($f["wife_id"]))) {
+					// Remove this family from both the individual record of families and from the family list
+					unset($families[$f]);
+					unset($individuals[$i["pid"]]["fams"][$f]);
+				}
+			}
+		}
+	}
+
 	function createDOTDump() {
 		// If no individuals in the clippings cart (or option chosen to overide), use standard method
 		if (!functionsClippingsCart::isIndividualInCart($this->tree) || !$this->settings["usecart"] ) {
 			// Create our tree
 			$this->createIndiList($this->individuals, $this->families, false);
+			if ($this->settings["diagram_type"] == "combined") {
+				$this->removeGhosts($this->individuals, $this->families);
+			}
 			// If option to display related in another colour is selected,
 			// check if any non-related persons in tree
 			$relList = array();
@@ -441,9 +466,8 @@ class Dot {
 						// Draw an arrow from FAM to each CHIL
 						foreach ($f->children() as $child) {
 							if (!empty($child) && (isset($this->individuals[$child->xref()]))) {
-								//$this->families[$fid]["has_children"] = TRUE;
 								$fams = isset($this->individuals[$child->xref()]["fams"]) ? $this->individuals[$child->xref()]["fams"] : [];
-								foreach ($fams as $fam_nr=>$fam) {
+								foreach ($fams as $fam) {
 									$out .= $this->convertID($fid) . " -> " . $this->convertID($fam) . ":" . $this->convertID($child->xref()) . "\n";
 								}
 							}
@@ -1100,7 +1124,6 @@ class Dot {
 	 * @param array $relList A list of relatives to be highlighted as blood relatives
 	 */
 	function addIndiToList($sourcePID, $pid, bool $ance, bool $desc, bool $spou, bool $sibl, bool $rel, int $ind, int $level, array &$individuals, array &$families, bool $full) {
-		global $GVE_CONFIG, $pgv_changes, $GEDCOM;
 		$ance_level = $this->indi_search_method["ance"] ? $this->settings["ance_level"] : 0;
 		$desc_level = $this->indi_search_method["desc"] ? $this->settings["desc_level"] : 0;
 
@@ -1150,9 +1173,6 @@ class Dot {
 				foreach ($fams as $fam) {
 					$fid = $fam->xref();
 					$individuals[$pid]["fams"][$fid] = $fid;
-
-					//$this->families[$fid]["husb_id"] = $fam->getHusbId();
-					//$this->families[$fid]["wife_id"] = $fam->wifeId();
 
 					if (isset($families[$fid]["fid"]) && ($families[$fid]["fid"] == $fid)) {
 						// Family ID already added
