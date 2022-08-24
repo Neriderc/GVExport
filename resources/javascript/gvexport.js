@@ -251,11 +251,10 @@ function getBase64Image(img) {
 
 // Find image URLs and replace with embedded versions
 function replaceImageURLs(svg, type, img) {
-    let protocol = "http";
-    let start = '<image xlink:href="'+protocol;
     let startPos, len, url;
-    if (svg.indexOf(start) !== -1) {
-        startPos = svg.indexOf(start)+start.length-protocol.length;
+    let match = /<image.*xlink:href="http/.exec(svg);
+    if (match != null) {
+        startPos = match.index+match[0].length-4;
         len = svg.substring(startPos).indexOf("\"");
         url = svg.substring(startPos,startPos+len);
         const img2 = document.createElement("img");
