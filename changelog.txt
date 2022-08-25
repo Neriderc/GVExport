@@ -2,7 +2,42 @@
 	Change Log
 	GVExport module for Webtrees
 =====================================================================
-Version 2.1.2 (2022-06-22):
+
+Version 2.1.8 (2022-08-21):
+  - New         : Export to SVG, PNG, and JPG without needing GraphViz installed
+  - New         : Add language Norwegian Bokmål (thanks POEditor user Thomas Rindal)
+
+Version 2.1.7.2 (2022-08-13):
+  - Fixed       : Change method for detecting if exec available to resolve error with PHP safe mode
+
+Version 2.1.7.1 (2022-08-12):
+  - Fixed       : Fix for toast not being translated
+
+Version 2.1.7 (2022-08-12):
+  - New         : Add "toast" message to say how many individuals and families included - groundwork for other messages
+  - New         : Validation of fields to try to prevent invalid data causing errors
+
+Version 2.1.6 (2022-08-10):
+  - New         : "Anybody" option - you can now opt for the tree to trace any links, no longer limited to relatives and spouses (for example, the family of a spouse can now be included)
+  - New         : The browser rendering is now loaded immediately when the page loads
+  - New         : An individual's preferred name is now underlined
+  - Changed     : Respect XREF settings with Vesta and GVExport
+  - Changed     : Treat cart as empty if no individual records
+  - Fixed       : Fix adopted records being wrong colour
+  - Fixed       : Fix related colours when starting from adopted individual
+
+Version 2.1.5.1 (2022-07-26):
+  - Fixed       : Error when using PHP7.4
+
+Version 2.1.5 (2022-07-24):
+  - New         : Added ability to override clippings cart. i.e. if items are in clippings cart, you can now ignore them and use the settings instead.
+  - New         : Add translations for Spanish (Thanks @yako1984), Dutch (Thanks @TheDutchJewel), Russian (Thanks to POEditor user "oleg"), and Catalan (Thanks to POEditor user "Bernat Josep Banyuls i Sala").
+  - Changed     : Change to how output is handled if GraphViz not installed on server. Now only DOT will be shown as available, removed message saying to use DOT if not installed on server and replaced with message explaining why options are limited if GraphViz not installed.
+
+Version 2.1.4.3 (2022-06-23):
+  - Fixed       : Changed to support FPM version of PHP
+
+Version 2.1.4 (2022-06-22):
   - New         : The clippings cart can now be used as a source for the items in the tree
   - New         : GVExport is now fully translatable, and we have a full translation for German
   - New         : More place name abbreviation options, adding options for two or three-letter ISO codes
@@ -197,6 +232,5 @@ Version 0.1 (2007-11-15)
 	- Cleanup code
 	- Comment code
 	- PS export
-	- Using pictures in Decorated style diagram
 	- Customisable containers
 	- PHP coding style (mainly ' and ")
