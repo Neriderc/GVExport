@@ -1,3 +1,4 @@
+const ERROR_CHAR = "E:";
 const appendPidTo = function (sourceId, targetId) {
     const ids = [];
     document.getElementById(targetId).value.split(",").forEach(function (id) {
@@ -175,13 +176,20 @@ function showHide(css_class, show) {
 // Show a toast message
 // message - the message to show
 function showToast(message) {
-    const x = document.getElementById("toast");
-    if (x !== null) {
-        x.innerText = message;
-        x.className = "show";
+    const toastParent = document.getElementById("toast-container");
+    if (toastParent !== null) {
+        const toast = document.createElement("div");
+        toast.setAttribute("id", "toast");
+        if (message.substring(0, ERROR_CHAR.length) === ERROR_CHAR) {
+            toast.className += "error";
+            message = message.substring(ERROR_CHAR.length);
+        }
+        toast.innerText = message;
+        toast.className += " show";
         setTimeout(function () {
-            x.className = x.className.replace("show", "");
+            toast.remove();
         }, 5500);
+        toastParent.appendChild(toast);
     }
 }
 

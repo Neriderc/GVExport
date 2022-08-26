@@ -577,7 +577,13 @@ class GVExport extends AbstractModule implements ModuleCustomInterface, ModuleCh
             // Add in our counts of individuals and families so we can show a message
             $indinum = sizeof($dot->individuals);
             $famnum = sizeof($dot->families);
-            $r = $indinum . "|" . $famnum . "|" . $out;
+            // Add any error messages or other messages for showing toast
+            $messageString = "";
+            foreach ($dot->messages as $message) {
+                $messageString .= "^".$message;
+            }
+            // Send our string of information
+            $r = substr($messageString, 1) . "|". $indinum . "|" . $famnum . "|" . $out;
         } else {
             $r = $out;
         }

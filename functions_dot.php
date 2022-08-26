@@ -47,13 +47,15 @@ use Fisharebest\Webtrees\Registry;
  */
 class Dot {
 	var $individuals = array();
+	var $skipList = array();
 	var $families = array();
 	var $indi_search_method = array("ance" => FALSE, "desc" => FALSE, "spou" => FALSE, "sibl" => FALSE, "cous" => FALSE, "any" => FALSE);
 	var $font_size;
 	var $colors = array();
 	var $settings = array();
 	var $pagesize = array();
-
+    var $messages = array(); // messages for toast system
+	private const ERROR_CHAR = "E:"; // Messages that start with this will be highlighted
 	/**
 	 * Constructor of Dot class
 	 */
@@ -1124,22 +1126,33 @@ class Dot {
 	 * @param array $relList A list of relatives to be highlighted as blood relatives
 	 */
 	function addIndiToList($sourcePID, $pid, bool $ance, bool $desc, bool $spou, bool $sibl, bool $rel, int $ind, int $level, array &$individuals, array &$families, bool $full) {
+		// Seen this XREF before and skipped, so just skip again without further checks
+		if (isset($this->skipList[$pid])) {
+			return false;
+		}
+
+		// Set ancestor/descendant levels in case these options disabled
 		$ance_level = $this->indi_search_method["ance"] ? $this->settings["ance_level"] : 0;
 		$desc_level = $this->indi_search_method["desc"] ? $this->settings["desc_level"] : 0;
 
 		// Get updated INDI data
 		$i = $this->getUpdatedPerson($pid);
+
 		// If PID invalid, skip this person
 		if ($i == null) {
+			$this->messages[] = self::ERROR_CHAR . I18N::translate("Invalid starting individual:") . " " . $pid;
+			$this->skipList[$pid] = TRUE;
 			return false;
 		}
 
 		$individuals[$pid]['pid'] = $pid;
 
 		// Overwrite the 'related' status if it was not set before or it's 'false' (for those people who are added as both related and non-related)
-		if (!isset($individuals[$pid]['rel']) || (!$individuals[$pid]['rel'] && $rel)) {
+		if (!isset($individuals[$pid]['rel'])) {
 			$individuals[$pid]['rel'] = $rel;
 		} else {
+			// We've already added this person, add to our skip list and exit function
+			$this->skipList[$pid] = TRUE;
 			return false;
 		}
 		// --- DEBUG ---

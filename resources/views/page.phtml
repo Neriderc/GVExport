@@ -565,7 +565,7 @@ use Fisharebest\Webtrees\Tree;
         document.getElementById("browser").value = "false";
 
         document.getElementById('vars[otype]').value = oldOtype;
-        var lastDotStr, indiNum, famNum;
+        var lastDotStr, indiNum, famNum, messages;
 
         rendering.innerHTML = '<div class="d-flex justify-content-center h-100"><div class="spinner-border align-self-center" role="status"><span class="sr-only">Loading...</span></div></div>';
         rendering.hidden = false;
@@ -589,9 +589,11 @@ use Fisharebest\Webtrees\Tree;
             }
             return response.text();
         }).then(function (dotStr) {
-            // Grab our individual and family record counts from
-            // our return string - and remove them before passing
-            // the rest of the string to DOT processor
+            // Grab our messages and individual and family record counts from
+            // our return string - and remove them before passing the rest
+            // of the string to DOT processor
+            messages = dotStr.substring(0,dotStr.indexOf("|"));
+            dotStr = dotStr.substring(dotStr.indexOf("|")+1);
             indiNum = dotStr.substring(0,dotStr.indexOf("|"));
             dotStr = dotStr.substring(dotStr.indexOf("|")+1);
             famNum = dotStr.substring(0,dotStr.indexOf("|"));
@@ -632,7 +634,13 @@ use Fisharebest\Webtrees\Tree;
                 minZoom: fullZoom / 2,
                 initialZoom: fullZoom
             });
-            showToast(`<?= I18N::translate('Generated ${indiNum} individuals and ${famNum} family records'); ?>`,5000);
+            showToast(`<?= I18N::translate('Generated ${indiNum} individuals and ${famNum} family records'); ?>`, 5000);
+            if (messages !== "") {
+                let message = messages.split("^");
+                for (let i = 0; i < message.length; i++) {
+                    showToast(message[i]);
+                }
+            }
             return element;
         }).catch(function (error) {
             rendering.innerHTML = '<div class="alert alert-danger" role="alert"><?= I18N::translate('Error running GVExport in Browser mode') ?>:<br>' + error + '</div>';
@@ -669,7 +677,7 @@ use Fisharebest\Webtrees\Tree;
     }
 </script>
 
-<div id="toast"></div>
+<div id="toast-container"></div>
 
 <template id=dropdown>
     <div style="position: relative; z-index: 10000">
