@@ -1151,8 +1151,7 @@ class Dot {
 		if (!isset($individuals[$pid]['rel'])) {
 			$individuals[$pid]['rel'] = $rel;
 		} else {
-			// We've already added this person, add to our skip list and exit function
-			$this->skipList[$pid] = TRUE;
+			// We've already added this person
 			return false;
 		}
 		// --- DEBUG ---
