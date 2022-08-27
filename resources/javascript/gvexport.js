@@ -185,11 +185,12 @@ function showToast(message) {
             message = message.substring(ERROR_CHAR.length);
         }
         toast.innerText = message;
-        toast.className += " show";
         setTimeout(function () {
             toast.remove();
         }, 5500);
         toastParent.appendChild(toast);
+        toast.setAttribute("style", " margin-left: -"+toast.clientWidth/2 + "px");
+        toast.className += " show";
     }
 }
 
