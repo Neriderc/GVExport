@@ -187,9 +187,9 @@ function showToast(message) {
         toast.innerText = message;
         setTimeout(function () {
             toast.remove();
-        }, 5500);
+        }, 550000);
         toastParent.appendChild(toast);
-        toast.setAttribute("style", " margin-left: -"+toast.clientWidth/2 + "px");
+        toast.setAttribute("style", " margin-left: -"+toast.clientWidth/2 + "px; width:" + toast.clientWidth + "px");
         toast.className += " show";
     }
 }
