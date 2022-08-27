@@ -546,18 +546,18 @@ use Fisharebest\Webtrees\Tree;
     });
 
     function updateRender() {
-        var oldOtype = document.getElementById('vars[otype]').value;
+        const oldOtype = document.getElementById('vars[otype]').value;
         document.getElementById('vars[otype]').value = 'dot';
         // Set value to true so we can return other info with DOT file
         // that can't be included with downloaded file
         document.getElementById("browser").value = "true";
         // Enable disabled fields so they are included in serialised data - this means the values are remembered
-        var el = document.getElementsByClassName("cart_toggle");
-        for (var i = 0; i < el.length; i++) {
+        const el = document.getElementsByClassName("cart_toggle");
+        for (let i = 0; i < el.length; i++) {
             el.item(i).disabled = false;
         }
         // Get the form data
-        var data = jQuery(form).serialize();
+        const data = jQuery(form).serialize();
         // Disable our fields again by indicating cart is enabled (only if items in cart)
         if (!cartempty && document.getElementById("vars[usecart]_yes").checked) {
             toggleCart(true);
@@ -565,12 +565,12 @@ use Fisharebest\Webtrees\Tree;
         document.getElementById("browser").value = "false";
 
         document.getElementById('vars[otype]').value = oldOtype;
-        var lastDotStr, indiNum, famNum, messages;
+        let lastDotStr, indiNum, famNum, messages;
 
         rendering.innerHTML = '<div class="d-flex justify-content-center h-100"><div class="spinner-border align-self-center" role="status"><span class="sr-only">Loading...</span></div></div>';
         rendering.hidden = false;
 
-        var h = window.innerHeight - document.querySelector('.wt-header-wrapper').getBoundingClientRect().height - document.querySelector('.wt-footers').getBoundingClientRect().height;
+        const h = window.innerHeight - document.querySelector('.wt-header-wrapper').getBoundingClientRect().height - document.querySelector('.wt-footers').getBoundingClientRect().height;
         rendering.style.height = h + "px";
 
 
@@ -599,13 +599,13 @@ use Fisharebest\Webtrees\Tree;
             famNum = dotStr.substring(0,dotStr.indexOf("|"));
             dotStr = dotStr.substring(dotStr.indexOf("|")+1);
             lastDotStr = dotStr;
-            var images = [...lastDotStr.matchAll(/<IMG[^>]+SRC="([^"]*)/gmi)].map(function (matches) {
+            const images = [...lastDotStr.matchAll(/<IMG[^>]+SRC="([^"]*)/gmi)].map(function (matches) {
                 return {
                     path: matches[1],
                     width: '150px',
                     height: '150px'
                 };
-            })
+            });
             console.log("Starting render (found " + images.length + " images)");
             return viz.renderSVGElement(dotStr, {
                 images: images
@@ -613,7 +613,7 @@ use Fisharebest\Webtrees\Tree;
         }).then(function (element) {
             // Now we have to clean up the generated SVG.
 
-            // remove title tags so we don't get weird data on hover,
+            // remove title tags, so we don't get weird data on hover,
             // instead this defaults to the XREF of the record
             const a = element.getElementsByTagName("a");
             for (let i = 0; i < a.length; i++) {
@@ -623,12 +623,11 @@ use Fisharebest\Webtrees\Tree;
             element.innerHTML = element.innerHTML.replaceAll("%26", "&amp;");
             // Don't show anything when hovering on blank space
             element.innerHTML = element.innerHTML.replaceAll("<title>WT_Graph</title>", "");
-
             console.log("Appending SVG", element);
             // Clear current rendering then append new element to the page
             rendering.innerHTML = "";
             rendering.appendChild(element);
-            var fullZoom = Math.min(2, rendering.getBoundingClientRect().width / element.getBBox().width);
+            const fullZoom = Math.min(2, rendering.getBoundingClientRect().width / element.getBBox().width);
             panzoom(element, {
                 maxZoom: 2,
                 minZoom: fullZoom / 2,
