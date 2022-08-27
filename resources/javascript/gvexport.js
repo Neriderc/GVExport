@@ -242,7 +242,11 @@ function downloadSVGAsImage(type) {
         context.drawImage(img, 0, 0, img.width, img.height);
         // Download it
         const dataURL = canvas.toDataURL('image/'+type);
-        downloadLink(dataURL, "gvexport."+type);
+        if (dataURL.length < 10) {
+            showToast("E:"+CLIENT_ERRORS[0]); // Canvas too big
+        } else {
+            downloadLink(dataURL, "gvexport." + type);
+        }
     }
 
 }

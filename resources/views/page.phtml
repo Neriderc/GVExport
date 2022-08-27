@@ -41,7 +41,10 @@ use Fisharebest\Webtrees\Tree;
 </script>
 <script src="<?= $module->assetUrl('javascript/viz.js'); ?>"></script>
 <script src="<?= $module->assetUrl('javascript/panzoom.min.js'); ?>"></script>
-<script type="text/javascript">const cartempty = <?= $cartempty ? "true" : "false" ?>;</script>
+<script type="text/javascript">
+    const cartempty = <?= $cartempty ? "true" : "false" ?>;
+    const CLIENT_ERRORS = ["<?= I18N::translate('Your browser does not support exporting images this large. Please reduce number of records or DPI setting.') ?>"];
+</script>
 
 <h2 class="wt-page-title">
     <?= $title ?>
