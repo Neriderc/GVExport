@@ -631,7 +631,7 @@ use Fisharebest\Webtrees\Tree;
             rendering.appendChild(element);
             const fullZoom = Math.min(2, rendering.getBoundingClientRect().width / element.getBBox().width);
             panzoom(element, {
-                maxZoom: 2,
+                maxZoom: 4,
                 minZoom: fullZoom / 2,
                 initialZoom: fullZoom
             });
