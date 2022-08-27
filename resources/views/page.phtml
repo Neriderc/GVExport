@@ -623,6 +623,8 @@ use Fisharebest\Webtrees\Tree;
             element.innerHTML = element.innerHTML.replaceAll("%26", "&amp;");
             // Don't show anything when hovering on blank space
             element.innerHTML = element.innerHTML.replaceAll("<title>WT_Graph</title>", "");
+            // Set SVG viewBox to height/width so image is not cut off
+            element.setAttribute("viewBox", "0 0 "+element.getAttribute("width")+" "+element.getAttribute("height"));
             console.log("Appending SVG", element);
             // Clear current rendering then append new element to the page
             rendering.innerHTML = "";
