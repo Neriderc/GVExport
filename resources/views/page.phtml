@@ -549,9 +549,7 @@ use Fisharebest\Webtrees\Tree;
     });
 
     function updateRender() {
-        const oldOtype = document.getElementById('vars[otype]').value;
-        document.getElementById('vars[otype]').value = 'dot';
-        // Set value to true so we can return other info with DOT file
+        // Set browser value to true so we can return other info with DOT file
         // that can't be included with downloaded file
         document.getElementById("browser").value = "true";
         // Enable disabled fields so they are included in serialised data - this means the values are remembered
@@ -566,8 +564,6 @@ use Fisharebest\Webtrees\Tree;
             toggleCart(true);
         }
         document.getElementById("browser").value = "false";
-
-        document.getElementById('vars[otype]').value = oldOtype;
         let lastDotStr, indiNum, famNum, messages;
 
         rendering.innerHTML = '<div class="d-flex justify-content-center h-100"><div class="spinner-border align-self-center" role="status"><span class="sr-only">Loading...</span></div></div>';

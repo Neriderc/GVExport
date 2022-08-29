@@ -275,7 +275,13 @@ class GVExport extends AbstractModule implements ModuleCustomInterface, ModuleCh
             return $this->showDOTFile($individual->tree(), $individual);
         } else {
             $temp_dir = $this->saveDOTFile($individual->tree(), $individual, $_REQUEST["vars"]["otype"] == 'svg' || $_REQUEST["vars"]["otype"] == 'dot');
-            return $this->downloadFile($temp_dir, $_REQUEST["vars"]["otype"]);
+            // If browser mode, output dot instead of selected file
+            if (isset($_POST["browser"]) && $_POST["browser"] == "true") {
+                $browser = true;
+            } else {
+                $browser = false;
+            }
+            return $this->downloadFile($temp_dir, $browser ? "dot" : $_REQUEST["vars"]["otype"]);
         }
     }
 
