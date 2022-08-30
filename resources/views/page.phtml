@@ -34,16 +34,20 @@ use Fisharebest\Webtrees\Tree;
     document.head.appendChild(newSheet);
 
     // Javascript functions
-    newSheet = document.createElement("script");
-    newSheet.setAttribute("type","text/javascript");
-    newSheet.setAttribute("src","<?= $gvexport_js ?>");
-    document.head.appendChild(newSheet);
+    var newScript = document.createElement("script");
+    newScript.onload = function() {
+        pageLoaded();
+    };
+    newScript.setAttribute("type","text/javascript");
+    newScript.setAttribute("src","<?= $gvexport_js ?>");
+    document.head.appendChild(newScript);
 </script>
 <script src="<?= $module->assetUrl('javascript/viz.js'); ?>"></script>
 <script src="<?= $module->assetUrl('javascript/panzoom.min.js'); ?>"></script>
 <script type="text/javascript">
     const cartempty = <?= $cartempty ? "true" : "false" ?>;
     const CLIENT_ERRORS = ["<?= I18N::translate('Your browser does not support exporting images this large. Please reduce number of records, reduce DPI setting, or use SVG option.') ?>"];
+    const translations = {"Show advanced settings":"<?= I18N::translate('Show fart advanced settings');?>"};
 </script>
 
 <h2 class="wt-page-title">
@@ -122,23 +126,6 @@ use Fisharebest\Webtrees\Tree;
         </div>
 
         <div class="row form-group">
-            <label class=" col-sm-4 col-form-label wt-page-options-label" for="vars[other_stop_pids]"><?= I18N::translate('Stop processing on') ?></label>
-            <div class="col-sm-8 wt-page-options-value">
-                <div class="cart_toggle_hide" <?php if ($greypeople) { echo 'style="display: none"'; } ?>>
-                <?php
-                    echo view('components/select-individual', ['name' => 'vars[stop_pid]', 'id' => 'vars[stop_pid]', 'tree' => $tree, 'xref' => $vars['stop_pid']]);
-                ?>
-                </div>
-                <div class="input-group mt-1">
-                    <input class="cart_toggle" type="text" class="form-control" name="vars[other_stop_pids]" id="vars[other_stop_pids]" value="<?= $vars['other_stop_pids'] ?>" <?= $greypeople ? "disabled" : ""; ?>>
-                    <div class="input-group-append">
-                        <button type="button" class="btn btn-outline-secondary" onclick="appendPidTo('vars[stop_pid]', 'vars[other_stop_pids]')">⏎</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row form-group">
             <label class="col-sm-4 col-form-label wt-page-options-label" for="vars[indiance]"><?= I18N::translate('Include Ancestors') ?></label>
             <div class="col-sm-8 wt-page-options-value">
                 <div class="row">
@@ -197,14 +184,32 @@ use Fisharebest\Webtrees\Tree;
                 </div>
             </div>
         </div>
-
-        <div class="row form-group">
-            <label class="col-sm-4 col-form-label wt-page-options-label" for="vars[marknr]"><?= I18N::translate('Mark not blood-related people with different color') ?></label>
-            <div class="col-sm-8 wt-page-options-value">
-                <input type="hidden" name="vars[marknr]" value="no">
-                <input class="cart_toggle" type="checkbox" name="vars[marknr]" id="vars[marknr]" value="marknr" <?= $vars["marknr"] == "marknr" ? 'checked' : '' ?> <?= $greypeople ? "disabled" : ""; ?>>
+        <div id="people-advanced" <?= $vars["adv_people"] == "show" ? '' : 'style="display:none"'; ?>>
+            <div class="row form-group">
+                <label class=" col-sm-4 col-form-label wt-page-options-label" for="vars[other_stop_pids]"><?= I18N::translate('Stop processing on') ?></label>
+                <div class="col-sm-8 wt-page-options-value">
+                    <div class="cart_toggle_hide" <?php if ($greypeople) { echo 'style="display: none"'; } ?>>
+                        <?php
+                        echo view('components/select-individual', ['name' => 'vars[stop_pid]', 'id' => 'vars[stop_pid]', 'tree' => $tree, 'xref' => $vars['stop_pid']]);
+                        ?>
+                    </div>
+                    <div class="input-group mt-1">
+                        <input class="cart_toggle" type="text" class="form-control" name="vars[other_stop_pids]" id="vars[other_stop_pids]" value="<?= $vars['other_stop_pids'] ?>" <?= $greypeople ? "disabled" : ""; ?>>
+                        <div class="input-group-append">
+                            <button type="button" class="btn btn-outline-secondary" onclick="appendPidTo('vars[stop_pid]', 'vars[other_stop_pids]')">⏎</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row form-group">
+                <label class="col-sm-4 col-form-label wt-page-options-label" for="vars[marknr]"><?= I18N::translate('Mark not blood-related people with different color') ?></label>
+                <div class="col-sm-8 wt-page-options-value">
+                    <input type="hidden" name="vars[marknr]" value="no">
+                    <input class="cart_toggle" type="checkbox" name="vars[marknr]" id="vars[marknr]" value="marknr" <?= $vars["marknr"] == "marknr" ? 'checked' : '' ?> <?= $greypeople ? "disabled" : ""; ?>>
+                </div>
             </div>
         </div>
+        <a href="#" onclick="toggleAdvanced(this, 'people-advanced')"><div class="wt-page-options-label advanced-settings-btn"><?= ($vars["adv_people"] == "show" ? '↑ ' : '↓ ') . I18N::translate('Toggle advanced settings') . ($vars["adv_people"] == "show" ? '↑ ' : '↓ '); ?></div></a>
 
 
         <h3><?= /* I18N: Appearance heading */ I18N::translate('Appearance') ?></h3>
@@ -263,195 +268,196 @@ use Fisharebest\Webtrees\Tree;
                 <small class="form-text text-muted"></small>
             </div>
         </div>
-
-        <div class="row form-group">
-            <label class="col-sm-4 col-form-label wt-page-options-label" for="vars[show_pid]"><?= I18N::translate('Show Individual ID') ?></label>
-            <div class="col-sm-8 wt-page-options-value">
-                <input type="hidden" name="vars[show_pid]" value="no">
-                <input type="checkbox" name="vars[show_pid]" id="vars[show_pid]" value="show_pid" <?= $vars["show_pid"] == "show_pid" || $overridePID ? 'checked' : '' ?>>
+        <div id="appearance-advanced" <?= $vars["adv_appear"] == "show" ? '' : 'style="display:none"' ?>>
+            <div class="row form-group">
+                <label class="col-sm-4 col-form-label wt-page-options-label" for="vars[show_pid]"><?= I18N::translate('Show Individual ID') ?></label>
+                <div class="col-sm-8 wt-page-options-value">
+                    <input type="hidden" name="vars[show_pid]" value="no">
+                    <input type="checkbox" name="vars[show_pid]" id="vars[show_pid]" value="show_pid" <?= $vars["show_pid"] == "show_pid" || $overridePID ? 'checked' : '' ?>>
+                </div>
             </div>
-        </div>
 
-        <div class="row form-group">
-            <label class="col-sm-4 col-form-label wt-page-options-label" for="vars[show_by]"><?= I18N::translate('Show Birth Date') ?></label>
-            <div class="col-sm-8 wt-page-options-value">
-                <div class="row">
-                    <div class="col-auto mx-3">
-                        <input type="hidden" name="vars[show_by]" value="no">
-                        <input type="checkbox" name="vars[show_by]" id="vars[show_by]" value="show_by" <?= $vars["show_by"] == "show_by" ? 'checked' : '' ?>>
-                    </div>
-                    <div class="col-auto mx-3">
-                        <input type="radio" name="vars[bd_type]" id="vars[bd_type]_y" value="y" <?= $vars["bd_type"] == "y" ? 'checked' : '' ?>>
-                        <label for="vars[bd_type]_y"><?= I18N::translate('Year') ?></label>
-                    </div>
-                    <div class="col-auto mx-3">
-                        <input type="radio" name="vars[bd_type]" id="vars[bd_type]_gedcom" value="gedcom" <?= $vars["bd_type"] == "gedcom" ? 'checked' : '' ?>>
-                        <label for="vars[bd_type]_gedcom"><?= I18N::translate('Full Date') ?></label>
+            <div class="row form-group">
+                <label class="col-sm-4 col-form-label wt-page-options-label" for="vars[show_by]"><?= I18N::translate('Show Birth Date') ?></label>
+                <div class="col-sm-8 wt-page-options-value">
+                    <div class="row">
+                        <div class="col-auto mx-3">
+                            <input type="hidden" name="vars[show_by]" value="no">
+                            <input type="checkbox" name="vars[show_by]" id="vars[show_by]" value="show_by" <?= $vars["show_by"] == "show_by" ? 'checked' : '' ?>>
+                        </div>
+                        <div class="col-auto mx-3">
+                            <input type="radio" name="vars[bd_type]" id="vars[bd_type]_y" value="y" <?= $vars["bd_type"] == "y" ? 'checked' : '' ?>>
+                            <label for="vars[bd_type]_y"><?= I18N::translate('Year') ?></label>
+                        </div>
+                        <div class="col-auto mx-3">
+                            <input type="radio" name="vars[bd_type]" id="vars[bd_type]_gedcom" value="gedcom" <?= $vars["bd_type"] == "gedcom" ? 'checked' : '' ?>>
+                            <label for="vars[bd_type]_gedcom"><?= I18N::translate('Full Date') ?></label>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="row form-group">
-            <label class="col-sm-4 col-form-label wt-page-options-label" for="vars[show_bp]"><?= I18N::translate('Show Birth Place') ?></label>
-            <div class="col-sm-8 wt-page-options-value">
-                <input type="hidden" name="vars[show_bp]" value="no">
-                <input type="checkbox" name="vars[show_bp]" id="vars[show_bp]" value="show_bp" <?= $vars["show_bp"] == "show_bp" ? 'checked' : '' ?>>
+            <div class="row form-group">
+                <label class="col-sm-4 col-form-label wt-page-options-label" for="vars[show_bp]"><?= I18N::translate('Show Birth Place') ?></label>
+                <div class="col-sm-8 wt-page-options-value">
+                    <input type="hidden" name="vars[show_bp]" value="no">
+                    <input type="checkbox" name="vars[show_bp]" id="vars[show_bp]" value="show_bp" <?= $vars["show_bp"] == "show_bp" ? 'checked' : '' ?>>
+                </div>
             </div>
-        </div>
 
-        <div class="row form-group">
-            <label class="col-sm-4 col-form-label wt-page-options-label" for="vars[show_dy]"><?= I18N::translate('Show Death Date') ?></label>
-            <div class="col-sm-8 wt-page-options-value">
-                <div class="row">
-                    <div class="col-auto mx-3">
-                        <input type="hidden" name="vars[show_dy]" value="no">
-                        <input type="checkbox" name="vars[show_dy]" id="vars[show_dy]" value="show_dy" <?= $vars["show_dy"] == "show_dy" ? 'checked' : '' ?>>
-                    </div>
-                    <div class="col-auto mx-3">
-                        <input type="radio" name="vars[dd_type]" id="vars[dd_type]_y" value="y" <?= $vars["dd_type"] == "y" ? 'checked' : '' ?>>
-                        <label for="vars[dd_type]_y"><?= I18N::translate('Year') ?></label>
-                    </div>
-                    <div class="col-auto mx-3">
-                        <input type="radio" name="vars[dd_type]" id="vars[dd_type]_gedcom" value="gedcom" <?= $vars["dd_type"] == "gedcom" ? 'checked' : '' ?>>
-                        <label for="vars[dd_type]_gedcom"><?= I18N::translate('Full Date') ?></label>
+            <div class="row form-group">
+                <label class="col-sm-4 col-form-label wt-page-options-label" for="vars[show_dy]"><?= I18N::translate('Show Death Date') ?></label>
+                <div class="col-sm-8 wt-page-options-value">
+                    <div class="row">
+                        <div class="col-auto mx-3">
+                            <input type="hidden" name="vars[show_dy]" value="no">
+                            <input type="checkbox" name="vars[show_dy]" id="vars[show_dy]" value="show_dy" <?= $vars["show_dy"] == "show_dy" ? 'checked' : '' ?>>
+                        </div>
+                        <div class="col-auto mx-3">
+                            <input type="radio" name="vars[dd_type]" id="vars[dd_type]_y" value="y" <?= $vars["dd_type"] == "y" ? 'checked' : '' ?>>
+                            <label for="vars[dd_type]_y"><?= I18N::translate('Year') ?></label>
+                        </div>
+                        <div class="col-auto mx-3">
+                            <input type="radio" name="vars[dd_type]" id="vars[dd_type]_gedcom" value="gedcom" <?= $vars["dd_type"] == "gedcom" ? 'checked' : '' ?>>
+                            <label for="vars[dd_type]_gedcom"><?= I18N::translate('Full Date') ?></label>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="row form-group">
-            <label class="col-sm-4 col-form-label wt-page-options-label" for="vars[show_dp]"><?= I18N::translate('Show Death Place') ?></label>
-            <div class="col-sm-8 wt-page-options-value">
-                <input type="hidden" name="vars[show_dp]" value="no">
-                <input type="checkbox" name="vars[show_dp]" id="vars[show_dp]" value="show_dp" <?= $vars["show_dp"] == "show_dp" ? 'checked' : '' ?>>
+            <div class="row form-group">
+                <label class="col-sm-4 col-form-label wt-page-options-label" for="vars[show_dp]"><?= I18N::translate('Show Death Place') ?></label>
+                <div class="col-sm-8 wt-page-options-value">
+                    <input type="hidden" name="vars[show_dp]" value="no">
+                    <input type="checkbox" name="vars[show_dp]" id="vars[show_dp]" value="show_dp" <?= $vars["show_dp"] == "show_dp" ? 'checked' : '' ?>>
+                </div>
             </div>
-        </div>
 
 
-        <div class="row form-group">
-            <label class="col-sm-4 col-form-label wt-page-options-label" for="vars[show_fid]"><?= I18N::translate('Show Family ID') ?></label>
-            <div class="col-sm-8 wt-page-options-value">
-                <input type="hidden" name="vars[show_fid]" value="no">
-                <input type="checkbox" name="vars[show_fid]" id="vars[show_fid]" value="show_fid" <?= $vars["show_fid"] == "show_fid" ? 'checked' : '' ?>>
+            <div class="row form-group">
+                <label class="col-sm-4 col-form-label wt-page-options-label" for="vars[show_fid]"><?= I18N::translate('Show Family ID') ?></label>
+                <div class="col-sm-8 wt-page-options-value">
+                    <input type="hidden" name="vars[show_fid]" value="no">
+                    <input type="checkbox" name="vars[show_fid]" id="vars[show_fid]" value="show_fid" <?= $vars["show_fid"] == "show_fid" ? 'checked' : '' ?>>
+                </div>
             </div>
-        </div>
 
-        <div class="row form-group">
-            <label class="col-sm-4 col-form-label wt-page-options-label" for="vars[show_my]"><?= I18N::translate('Show Marriage Date') ?></label>
-            <div class="col-sm-8 wt-page-options-value">
-                <div class="row">
-                    <div class="col-auto mx-3">
-                        <input type="hidden" name="vars[show_my]" value="no">
-                        <input type="checkbox" name="vars[show_my]" id="vars[show_my]" value="show_my" <?= $vars["show_my"] == "show_my" ? 'checked' : '' ?>>
-                    </div>
-                    <div class="col-auto mx-3">
-                        <input type="radio" name="vars[md_type]" id="vars[md_type]_y" value="y" <?= $vars["md_type"] == "y" ? 'checked' : '' ?>>
-                        <label for="vars[md_type]_y"><?= I18N::translate('Year') ?></label>
-                    </div>
-                    <div class="col-auto mx-3">
-                        <input type="radio" name="vars[md_type]" id="vars[md_type]_gedcom" value="gedcom" <?= $vars["md_type"] == "gedcom" ? 'checked' : '' ?>>
-                        <label for="vars[md_type]_gedcom"><?= I18N::translate('Full Date') ?></label>
+            <div class="row form-group">
+                <label class="col-sm-4 col-form-label wt-page-options-label" for="vars[show_my]"><?= I18N::translate('Show Marriage Date') ?></label>
+                <div class="col-sm-8 wt-page-options-value">
+                    <div class="row">
+                        <div class="col-auto mx-3">
+                            <input type="hidden" name="vars[show_my]" value="no">
+                            <input type="checkbox" name="vars[show_my]" id="vars[show_my]" value="show_my" <?= $vars["show_my"] == "show_my" ? 'checked' : '' ?>>
+                        </div>
+                        <div class="col-auto mx-3">
+                            <input type="radio" name="vars[md_type]" id="vars[md_type]_y" value="y" <?= $vars["md_type"] == "y" ? 'checked' : '' ?>>
+                            <label for="vars[md_type]_y"><?= I18N::translate('Year') ?></label>
+                        </div>
+                        <div class="col-auto mx-3">
+                            <input type="radio" name="vars[md_type]" id="vars[md_type]_gedcom" value="gedcom" <?= $vars["md_type"] == "gedcom" ? 'checked' : '' ?>>
+                            <label for="vars[md_type]_gedcom"><?= I18N::translate('Full Date') ?></label>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="row form-group">
-            <label class="col-sm-4 col-form-label wt-page-options-label" for="vars[show_mp]"><?= I18N::translate('Show Marriage Place') ?></label>
-            <div class="col-sm-8 wt-page-options-value">
-                <input type="hidden" name="vars[show_mp]" value="no">
-                <input type="checkbox" name="vars[show_mp]" id="vars[show_mp]" value="show_mp" <?= $vars["show_mp"] == "show_mp" ? 'checked' : '' ?>>
+            <div class="row form-group">
+                <label class="col-sm-4 col-form-label wt-page-options-label" for="vars[show_mp]"><?= I18N::translate('Show Marriage Place') ?></label>
+                <div class="col-sm-8 wt-page-options-value">
+                    <input type="hidden" name="vars[show_mp]" value="no">
+                    <input type="checkbox" name="vars[show_mp]" id="vars[show_mp]" value="show_mp" <?= $vars["show_mp"] == "show_mp" ? 'checked' : '' ?>>
+                </div>
             </div>
-        </div>
 
-        <div class="row form-group">
-            <label class=" col-sm-4 col-form-label wt-page-options-label" for="vars[grdir]"><?= I18N::translate('Number of iterations (MCLIMIT)') ?></label>
-            <div class="col-sm-8 wt-page-options-value">
-                <?= view('components/select', ['name' => 'vars[mclimit]', 'selected' => $vars['mclimit'], 'options' => $gve_config["mclimits"]]) ?>
-                <small class="form-text text-muted"><?= I18N::translate('helps to reduce the crossings on the graph. This can be really slow (up to 10..15x compared to the 20 setting)') ?></small>
+            <div class="row form-group">
+                <label class=" col-sm-4 col-form-label wt-page-options-label" for="vars[grdir]"><?= I18N::translate('Number of iterations (MCLIMIT)') ?></label>
+                <div class="col-sm-8 wt-page-options-value">
+                    <?= view('components/select', ['name' => 'vars[mclimit]', 'selected' => $vars['mclimit'], 'options' => $gve_config["mclimits"]]) ?>
+                    <small class="form-text text-muted"><?= I18N::translate('helps to reduce the crossings on the graph. This can be really slow (up to 10..15x compared to the 20 setting)') ?></small>
+                </div>
             </div>
-        </div>
 
-        <div class="row form-group">
-            <label class=" col-sm-4 col-form-label wt-page-options-label" for="vars[dpi]"><?= I18N::translate('DPI') ?></label>
-            <div class="col-sm-8 wt-page-options-value">
-                <div class="row">
-                    <div class="col-auto">
-                        <input type="text" onblur="defaultValueWhenBlank(this, 72)" class="form-control" size="10" name="vars[dpi]" id="vars[dpi]" value="<?= $vars["dpi"] ?>">
+            <div class="row form-group">
+                <label class=" col-sm-4 col-form-label wt-page-options-label" for="vars[dpi]"><?= I18N::translate('DPI') ?></label>
+                <div class="col-sm-8 wt-page-options-value">
+                    <div class="row">
+                        <div class="col-auto">
+                            <input type="text" onblur="defaultValueWhenBlank(this, 72)" class="form-control" size="10" name="vars[dpi]" id="vars[dpi]" value="<?= $vars["dpi"] ?>">
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="row form-group">
-            <label class=" col-sm-4 col-form-label wt-page-options-label" for="vars[dpi]"><?= I18N::translate('Space') ?></label>
-            <div class="col-sm-8 wt-page-options-value">
-                <div class="row">
-                    <div class="col-auto row">
-                        <label for="vars[ranksep]"><?= I18N::translate('Between generations') ?>:</label>
-                        <input type="text" onclick="togglePercent(this, false)" onblur="togglePercent(this, true)" class="form-control col-sm-6" size="10" name="vars[ranksep]" id="vars[ranksep]" value="<?= $vars["ranksep"] ?>">
-                    </div>
-                    <div class="col-auto row">
-                        <label for="vars[nodesep]"><?= I18N::translate('Between individuals on the same level') ?>:</label>
-                        <input type="text" onclick="togglePercent(this, false)" onblur="togglePercent(this, true)" class="form-control col-sm-6" size="10" name="vars[nodesep]" id="vars[nodesep]" value="<?= $vars["nodesep"] ?>">
+            <div class="row form-group">
+                <label class=" col-sm-4 col-form-label wt-page-options-label" for="vars[dpi]"><?= I18N::translate('Space') ?></label>
+                <div class="col-sm-8 wt-page-options-value">
+                    <div class="row">
+                        <div class="col-auto row">
+                            <label for="vars[ranksep]"><?= I18N::translate('Between generations') ?>:</label>
+                            <input type="text" onclick="togglePercent(this, false)" onblur="togglePercent(this, true)" class="form-control col-sm-6" size="10" name="vars[ranksep]" id="vars[ranksep]" value="<?= $vars["ranksep"] ?>">
+                        </div>
+                        <div class="col-auto row">
+                            <label for="vars[nodesep]"><?= I18N::translate('Between individuals on the same level') ?>:</label>
+                            <input type="text" onclick="togglePercent(this, false)" onblur="togglePercent(this, true)" class="form-control col-sm-6" size="10" name="vars[nodesep]" id="vars[nodesep]" value="<?= $vars["nodesep"] ?>">
+                        </div>
                     </div>
                 </div>
             </div>
+            <!--
+                <input type=" checkbox" name="vars[no_fams]" id="no_fams_var" value="no_fams\"" . ((isset($userDefaultVars[" no_fams"]) and $userDefaultVars["no_fams"]=="no_fams" ) ? " checked=" checked\"" : "" ) . " />" . "No family containers, just individuals
+                $out .= '</td></tr>';
+
+                // Font name
+                <tr><td class=" descriptionbox wrap\">" . "Font Name" . "
+                                </td>
+                                <td class="optionbox" style="text-align: left;\">
+                                    <input type="text" name="vars[fontname]" id="fontname_var" value="" . $GVE_CONFIG["default_fontname"] . "" />
+                                </td>
+                            </tr>
+
+                            // Font size
+                            <tr>
+                                <td class="descriptionbox wrap\">" . "Font Size" . "</td>
+                                <td class="optionbox" style="text-align: left;\">
+                                    <input type="text" size="2" name="vars[fontsize]" id="fontsize_var" value="" . (isset($userDefaultVars["fontsize"]) ? $userDefaultVars["fontsize"] : $GVE_CONFIG["dot"]["fontsize"]) . "" />
+                                </td>
+                            </tr>
+
+                            // Custom colors
+                            $out .= '<tr>
+                                <td class="descriptionbox wrap">' . "Color code of male individuals" . '</td>';
+                                <td class="optionbox" style="text-align: left;\">
+                                    $out .= '<input type="radio" name="vars[colorm]" id="colorm_var" value="default" onclick="document.setup_gvexport_allinontree.colorm_custom_var.disabled=true;"' . ((isset($userDefaultVars[' colorm']) and $userDefaultVars['colorm']=="custom" ) ? '' : ' checked="checked"' ) . ' />' ; $out .='<input type="text" name="colorm_default_var" id="colorm_default_var" value="' . "Default" . '" readonly="readonly" style="background: ' . $GVE_CONFIG['dot']['colorm'] . ';"/>' ; $out .='<input type="radio" name="vars[colorm]" id="colorm_var" value="custom" onclick="gve_enablecustomcolor(\' colorm_custom_var\');"' . ((isset($userDefaultVars['colorm']) and $userDefaultVars['colorm']=="custom" ) ? ' checked="checked"' : '' ) . ' />' ; $defcustcol=isset($userDefaultVars['colorm_custom']) ? $userDefaultVars['colorm_custom'] : $GVE_CONFIG["dot"]["colorm"]; <input type="text" name="colorm_custom_var" id="colorm_custom_var" value="$defcustcol" style="background-color: $defcustcol\"" . ((isset($userDefaultVars['colorm']) and $userDefaultVars['colorm'] == " custom") ? '' : ' disabled="disabled"' ) . " onblur=" document.setup_gvexport_allinontree.colorm_custom_var.style.backgroundColor=document.setup_gvexport_allinontree.colorm_custom_var.value;" />
+                                    $out .= '</td>
+                            </tr>';
+                            $out .= '<tr>
+                                <td class="descriptionbox wrap">' . "Color code of female individuals" . '</td>';
+                                <td class="optionbox" style="text-align: left;\">
+                                    $out .= '<input type="radio" name="vars[colorf]" id="colorf_var" value="default" onclick="document.setup_gvexport_allinontree.colorf_custom_var.disabled=true;"' . ((isset($userDefaultVars[' colorf']) and $userDefaultVars['colorf']=="custom" ) ? '' : ' checked="checked"' ) . ' />' ; $out .='<input type="text" name="colorf_default_var" id="colorf_default_var" value="' . "Default" . '" readonly="readonly" style="background: ' . $GVE_CONFIG['dot']['colorf'] . ';"/>' ; $out .='<input type="radio" name="vars[colorf]" id="colorf_var" value="custom" onclick="gve_enablecustomcolor(\' colorf_custom_var\');"' . ((isset($userDefaultVars['colorf']) and $userDefaultVars['colorf']=="custom" ) ? ' checked="checked"' : '' ) . ' />' ; $defcustcol=isset($userDefaultVars['colorf_custom']) ? $userDefaultVars['colorf_custom'] : $GVE_CONFIG["dot"]["colorf"]; <input type="text" name="colorf_custom_var" id="colorf_custom_var" value="$defcustcol" style="background-color: $defcustcol\"" . ((isset($userDefaultVars['colorf']) and $userDefaultVars['colorf'] == " custom") ? '' : ' disabled="disabled"' ) . " onblur=" document.setup_gvexport_allinontree.colorf_custom_var.style.backgroundColor=document.setup_gvexport_allinontree.colorf_custom_var.value;" />
+                                    $out .= '</td>
+                            </tr>';
+                            $out .= '<tr>
+                                <td class="descriptionbox wrap">' . "Color code of unknown individuals" . '</td>';
+                                <td class="optionbox" style="text-align: left;\">
+                                    $out .= '<input type="radio" name="vars[coloru]" id="coloru_var" value="default" onclick="document.setup_gvexport_allinontree.coloru_custom_var.disabled=true;"' . ((isset($userDefaultVars[' coloru']) and $userDefaultVars['coloru']=="custom" ) ? '' : ' checked="checked"' ) . ' />' ; $out .='<input type="text" name="coloru_default_var" id="coloru_default_var" value="' . "Default" . '" readonly="readonly" style="background: ' . $GVE_CONFIG['dot']['coloru'] . ';"/>' ; $out .='<input type="radio" name="vars[coloru]" id="coloru_var" value="custom" onclick="gve_enablecustomcolor(\' coloru_custom_var\');"' . ((isset($userDefaultVars['coloru']) and $userDefaultVars['coloru']=="custom" ) ? ' checked="checked"' : '' ) . ' />' ; $defcustcol=isset($userDefaultVars['coloru_custom']) ? $userDefaultVars['coloru_custom'] : $GVE_CONFIG["dot"]["coloru"]; <input type="text" name="coloru_custom_var" id="coloru_custom_var" value="$defcustcol" style="background-color: $defcustcol\"" . ((isset($userDefaultVars['coloru']) and $userDefaultVars['coloru'] == " custom") ? '' : ' disabled="disabled"' ) . " onblur=" document.setup_gvexport_allinontree.coloru_custom_var.style.backgroundColor=document.setup_gvexport_allinontree.coloru_custom_var.value;" />
+                                    $out .= '</td>
+                            </tr>';
+                            $out .= '<tr>
+                                <td class="descriptionbox wrap">' . "Color code of families" . '</td>';
+                                <td class="optionbox" style="text-align: left;\">
+                                    $out .= '<input type="radio" name="vars[colorfam]" id="colorfam_var" value="default" onclick="document.setup_gvexport_allinontree.colorfam_custom_var.disabled=true;"' . ((isset($userDefaultVars[' colorfam']) and $userDefaultVars['colorfam']=="custom" ) ? '' : ' checked="checked"' ) . ' />' ; $out .='<input type="text" name="colorfam_default_var" id="colorfam_default_var" value="' . "Default" . '" readonly="readonly" style="background: ' . $GVE_CONFIG['dot']['colorfam'] . ';"/>' ; $out .='<input type="radio" name="vars[colorfam]" id="colorfam_var" value="custom" onclick="gve_enablecustomcolor(\' colorfam_custom_var\');"' . ((isset($userDefaultVars['colorfam']) and $userDefaultVars['colorfam']=="custom" ) ? ' checked="checked"' : '' ) . ' />' ; $defcustcol=isset($userDefaultVars['colorfam_custom']) ? $userDefaultVars['colorfam_custom'] : $GVE_CONFIG["dot"]["colorfam"]; <input type="text" name="colorfam_custom_var" id="colorfam_custom_var" value="$defcustcol" style="background-color: $defcustcol\"" . ((isset($userDefaultVars['colorfam']) and $userDefaultVars['colorfam'] == " custom") ? '' : ' disabled="disabled"' ) . " onblur=" document.setup_gvexport_allinontree.colorfam_custom_var.style.backgroundColor=document.setup_gvexport_allinontree.colorfam_custom_var.value;" />
+                                    $out .= '</td>
+                            </tr>';
+
+                        </table>
+                    </div>
+                </td>
+            </tr>
+
+            -->
         </div>
-        <!--
-            <input type=" checkbox" name="vars[no_fams]" id="no_fams_var" value="no_fams\"" . ((isset($userDefaultVars[" no_fams"]) and $userDefaultVars["no_fams"]=="no_fams" ) ? " checked=" checked\"" : "" ) . " />" . "No family containers, just individuals
-            $out .= '</td></tr>';
-
-            // Font name
-            <tr><td class=" descriptionbox wrap\">" . "Font Name" . "
-                            </td>
-                            <td class="optionbox" style="text-align: left;\">
-                                <input type="text" name="vars[fontname]" id="fontname_var" value="" . $GVE_CONFIG["default_fontname"] . "" />
-                            </td>
-                        </tr>
-
-                        // Font size
-                        <tr>
-                            <td class="descriptionbox wrap\">" . "Font Size" . "</td>
-                            <td class="optionbox" style="text-align: left;\">
-                                <input type="text" size="2" name="vars[fontsize]" id="fontsize_var" value="" . (isset($userDefaultVars["fontsize"]) ? $userDefaultVars["fontsize"] : $GVE_CONFIG["dot"]["fontsize"]) . "" />
-                            </td>
-                        </tr>
-
-                        // Custom colors
-                        $out .= '<tr>
-                            <td class="descriptionbox wrap">' . "Color code of male individuals" . '</td>';
-                            <td class="optionbox" style="text-align: left;\">
-                                $out .= '<input type="radio" name="vars[colorm]" id="colorm_var" value="default" onclick="document.setup_gvexport_allinontree.colorm_custom_var.disabled=true;"' . ((isset($userDefaultVars[' colorm']) and $userDefaultVars['colorm']=="custom" ) ? '' : ' checked="checked"' ) . ' />' ; $out .='<input type="text" name="colorm_default_var" id="colorm_default_var" value="' . "Default" . '" readonly="readonly" style="background: ' . $GVE_CONFIG['dot']['colorm'] . ';"/>' ; $out .='<input type="radio" name="vars[colorm]" id="colorm_var" value="custom" onclick="gve_enablecustomcolor(\' colorm_custom_var\');"' . ((isset($userDefaultVars['colorm']) and $userDefaultVars['colorm']=="custom" ) ? ' checked="checked"' : '' ) . ' />' ; $defcustcol=isset($userDefaultVars['colorm_custom']) ? $userDefaultVars['colorm_custom'] : $GVE_CONFIG["dot"]["colorm"]; <input type="text" name="colorm_custom_var" id="colorm_custom_var" value="$defcustcol" style="background-color: $defcustcol\"" . ((isset($userDefaultVars['colorm']) and $userDefaultVars['colorm'] == " custom") ? '' : ' disabled="disabled"' ) . " onblur=" document.setup_gvexport_allinontree.colorm_custom_var.style.backgroundColor=document.setup_gvexport_allinontree.colorm_custom_var.value;" />
-                                $out .= '</td>
-                        </tr>';
-                        $out .= '<tr>
-                            <td class="descriptionbox wrap">' . "Color code of female individuals" . '</td>';
-                            <td class="optionbox" style="text-align: left;\">
-                                $out .= '<input type="radio" name="vars[colorf]" id="colorf_var" value="default" onclick="document.setup_gvexport_allinontree.colorf_custom_var.disabled=true;"' . ((isset($userDefaultVars[' colorf']) and $userDefaultVars['colorf']=="custom" ) ? '' : ' checked="checked"' ) . ' />' ; $out .='<input type="text" name="colorf_default_var" id="colorf_default_var" value="' . "Default" . '" readonly="readonly" style="background: ' . $GVE_CONFIG['dot']['colorf'] . ';"/>' ; $out .='<input type="radio" name="vars[colorf]" id="colorf_var" value="custom" onclick="gve_enablecustomcolor(\' colorf_custom_var\');"' . ((isset($userDefaultVars['colorf']) and $userDefaultVars['colorf']=="custom" ) ? ' checked="checked"' : '' ) . ' />' ; $defcustcol=isset($userDefaultVars['colorf_custom']) ? $userDefaultVars['colorf_custom'] : $GVE_CONFIG["dot"]["colorf"]; <input type="text" name="colorf_custom_var" id="colorf_custom_var" value="$defcustcol" style="background-color: $defcustcol\"" . ((isset($userDefaultVars['colorf']) and $userDefaultVars['colorf'] == " custom") ? '' : ' disabled="disabled"' ) . " onblur=" document.setup_gvexport_allinontree.colorf_custom_var.style.backgroundColor=document.setup_gvexport_allinontree.colorf_custom_var.value;" />
-                                $out .= '</td>
-                        </tr>';
-                        $out .= '<tr>
-                            <td class="descriptionbox wrap">' . "Color code of unknown individuals" . '</td>';
-                            <td class="optionbox" style="text-align: left;\">
-                                $out .= '<input type="radio" name="vars[coloru]" id="coloru_var" value="default" onclick="document.setup_gvexport_allinontree.coloru_custom_var.disabled=true;"' . ((isset($userDefaultVars[' coloru']) and $userDefaultVars['coloru']=="custom" ) ? '' : ' checked="checked"' ) . ' />' ; $out .='<input type="text" name="coloru_default_var" id="coloru_default_var" value="' . "Default" . '" readonly="readonly" style="background: ' . $GVE_CONFIG['dot']['coloru'] . ';"/>' ; $out .='<input type="radio" name="vars[coloru]" id="coloru_var" value="custom" onclick="gve_enablecustomcolor(\' coloru_custom_var\');"' . ((isset($userDefaultVars['coloru']) and $userDefaultVars['coloru']=="custom" ) ? ' checked="checked"' : '' ) . ' />' ; $defcustcol=isset($userDefaultVars['coloru_custom']) ? $userDefaultVars['coloru_custom'] : $GVE_CONFIG["dot"]["coloru"]; <input type="text" name="coloru_custom_var" id="coloru_custom_var" value="$defcustcol" style="background-color: $defcustcol\"" . ((isset($userDefaultVars['coloru']) and $userDefaultVars['coloru'] == " custom") ? '' : ' disabled="disabled"' ) . " onblur=" document.setup_gvexport_allinontree.coloru_custom_var.style.backgroundColor=document.setup_gvexport_allinontree.coloru_custom_var.value;" />
-                                $out .= '</td>
-                        </tr>';
-                        $out .= '<tr>
-                            <td class="descriptionbox wrap">' . "Color code of families" . '</td>';
-                            <td class="optionbox" style="text-align: left;\">
-                                $out .= '<input type="radio" name="vars[colorfam]" id="colorfam_var" value="default" onclick="document.setup_gvexport_allinontree.colorfam_custom_var.disabled=true;"' . ((isset($userDefaultVars[' colorfam']) and $userDefaultVars['colorfam']=="custom" ) ? '' : ' checked="checked"' ) . ' />' ; $out .='<input type="text" name="colorfam_default_var" id="colorfam_default_var" value="' . "Default" . '" readonly="readonly" style="background: ' . $GVE_CONFIG['dot']['colorfam'] . ';"/>' ; $out .='<input type="radio" name="vars[colorfam]" id="colorfam_var" value="custom" onclick="gve_enablecustomcolor(\' colorfam_custom_var\');"' . ((isset($userDefaultVars['colorfam']) and $userDefaultVars['colorfam']=="custom" ) ? ' checked="checked"' : '' ) . ' />' ; $defcustcol=isset($userDefaultVars['colorfam_custom']) ? $userDefaultVars['colorfam_custom'] : $GVE_CONFIG["dot"]["colorfam"]; <input type="text" name="colorfam_custom_var" id="colorfam_custom_var" value="$defcustcol" style="background-color: $defcustcol\"" . ((isset($userDefaultVars['colorfam']) and $userDefaultVars['colorfam'] == " custom") ? '' : ' disabled="disabled"' ) . " onblur=" document.setup_gvexport_allinontree.colorfam_custom_var.style.backgroundColor=document.setup_gvexport_allinontree.colorfam_custom_var.value;" />
-                                $out .= '</td>
-                        </tr>';
-
-                    </table>
-                </div>
-            </td>
-        </tr>
-
-        -->
-
+        <a href="#" onclick="toggleAdvanced(this, 'appearance-advanced')"><div class="wt-page-options-label advanced-settings-btn"><?= ($vars["adv_people"] == "show" ? '↑ ' : '↓ ') . I18N::translate('Toggle advanced settings') . ($vars["adv_people"] == "show" ? '↑ ' : '↓ '); ?></div></a>
         <h3><?= /* I18N: Appearance heading */ I18N::translate('Output Settings') ?></h3>
         <div class="row form-group">
             <label class="col-sm-4 col-form-label wt-page-options-label" for="vars[otype]"><?= I18N::translate('Output File Type') ?></label>
@@ -470,6 +476,8 @@ use Fisharebest\Webtrees\Tree;
     </div>
 
     <input type="hidden" id="browser" name="browser" value="false">
+    <input type="hidden" id="people-advanced-hidden" name="vars[adv_people]" value="<?= $vars["adv_people"] === "show" ? 'show' : '' ?>">
+    <input type="hidden" id="appearance-advanced-hidden" name="vars[adv_appear]" value="<?= $vars["adv_appear"] === "show" ? 'show' : '' ?>">
 </form>
 
 <div class="sidebar__toggler" hidden>
@@ -491,9 +499,10 @@ use Fisharebest\Webtrees\Tree;
     var form = document.getElementById('gvexport');
     var rendering = document.getElementById('rendering');
 
-    document.addEventListener("DOMContentLoaded", function(e) {
+    function pageLoaded() {
         // Load browser render when page has loaded
-        updateRender();
+        updateRender()
+
         // Remove reset parameter from URL when page loaded, to prevent
         // further resets when page reloaded
         let url=document.location.href.split("?")[0];
@@ -503,7 +512,7 @@ use Fisharebest\Webtrees\Tree;
             params.delete('reset');
             history.pushState(null, '', url + "?" + params.toString())
         }
-    });
+    }
 
     // Trigger action when "Update" button clicked
     document.querySelector('.update-browser-rendering').addEventListener('click', function(e) {

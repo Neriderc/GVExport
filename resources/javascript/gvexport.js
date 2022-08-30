@@ -155,21 +155,29 @@ function toggleCart(enable) {
     for (let i = 0; i < el.length; i++) {
         el.item(i).disabled = enable;
     }
-    showHide("cart_toggle_hide", enable);
-    showHide("cart_toggle_show", !enable);
+    showHideClass("cart_toggle_hide", !enable);
+    showHideClass("cart_toggle_show", enable);
 }
+
 // This function is used in toggleCart to show or hide all elements with a certain class,
 // by adding or removing "display: none"
 // css_class - the class to search for
 // show - true to show the elements and false to hide them
-function showHide(css_class, show) {
+function showHideClass(css_class, show) {
     let el = document.getElementsByClassName(css_class);
     for (let i = 0; i < el.length; i++) {
-        if (show) {
-            el.item(i).style.display = "none";
-        } else {
-            el.item(i).style.removeProperty("display");
-        }
+        showHide(el.item(i), show)
+    }
+}
+
+// Show or hide an element on the page
+// element - the element to affect
+// show - whether to show (true) or hide (false) the element
+function showHide(element, show) {
+    if (show) {
+        element.style.removeProperty("display");
+    } else {
+        element.style.display = "none";
     }
 }
 
@@ -297,4 +305,22 @@ function downloadLink(URL, filename) {
     document.body.appendChild(downloadLink);
     downloadLink.click();
     document.body.removeChild(downloadLink);
+}
+
+// Toggle the showing of an advanced settings section
+// id - the id of the element we are toggling
+function toggleAdvanced(caller, id) {
+    const el = document.getElementById(id);
+    const visible = el.style.display !== "none";
+    showHide(el, !visible);
+    if (visible) {
+        caller.innerHTML = caller.innerHTML.replaceAll("↑","↓");
+        // Update our hidden field for saving the state
+        const hidden = document.getElementById(id+"-hidden");
+        hidden.value = "";
+    } else {
+        caller.innerHTML = caller.innerHTML.replaceAll("↓","↑");
+        const hidden = document.getElementById(id+"-hidden");
+        hidden.value = "show";
+    }
 }

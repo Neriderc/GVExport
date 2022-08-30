@@ -197,7 +197,9 @@ class GVExport extends AbstractModule implements ModuleCustomInterface, ModuleCh
             "stop_pid" => "",
             "other_stop_pids" => "",
             "download" => TRUE,
-            "usecart" => $GVE_CONFIG["settings"]["usecart"]
+            "usecart" => $GVE_CONFIG["settings"]["usecart"],
+            "adv_people" => $GVE_CONFIG["settings"]["adv_people"],
+            "adv_appear" => $GVE_CONFIG["settings"]["adv_appear"]
         ];
         if (!isset($_REQUEST['reset']) and isset($_COOKIE["GVEUserDefaults"]) and $_COOKIE["GVEUserDefaults"] != "") {
             foreach (explode("|", $_COOKIE["GVEUserDefaults"]) as $s) {
@@ -535,6 +537,12 @@ class GVExport extends AbstractModule implements ModuleCustomInterface, ModuleCh
             } else {
                 $dot->setSettings("usecart", FALSE);
             }
+        }
+        if (isset($vars['adv_people'])) {
+            $dot->setSettings("adv_people", $vars['adv_people']);
+        }
+        if (isset($vars['adv_appear'])) {
+            $dot->setSettings("adv_appear", $vars['adv_appear']);
         }
 
         if (isset($vars['debug'])) {

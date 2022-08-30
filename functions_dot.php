@@ -123,6 +123,9 @@ class Dot {
 		$this->settings["ranksep"] = $GVE_CONFIG["settings"]["ranksep"];
 		$this->settings["nodesep"] = $GVE_CONFIG["settings"]["nodesep"];
 		$this->settings["space_base"] = $GVE_CONFIG["settings"]["space_base"];
+
+		$this->settings["adv_people"] = $GVE_CONFIG["settings"]["adv_people"];
+		$this->settings["adv_appear"] = $GVE_CONFIG["settings"]["adv_appear"];
 	}
 
 	function setPageSize($pagesize, $size_x = FALSE, $size_y = FALSE) {
