@@ -393,11 +393,11 @@ use Fisharebest\Webtrees\Tree;
                 <label class=" col-sm-4 col-form-label wt-page-options-label" for="vars[dpi]"><?= I18N::translate('Space') ?></label>
                 <div class="col-sm-8 wt-page-options-value">
                     <div class="row">
-                        <div class="col-auto row">
+                        <div class="col-auto">
                             <label for="vars[ranksep]"><?= I18N::translate('Between generations') ?>:</label>
                             <input type="text" onclick="togglePercent(this, false)" onblur="togglePercent(this, true)" class="form-control col-sm-6" size="10" name="vars[ranksep]" id="vars[ranksep]" value="<?= $vars["ranksep"] ?>">
                         </div>
-                        <div class="col-auto row">
+                        <div class="col-auto">
                             <label for="vars[nodesep]"><?= I18N::translate('Between individuals on the same level') ?>:</label>
                             <input type="text" onclick="togglePercent(this, false)" onblur="togglePercent(this, true)" class="form-control col-sm-6" size="10" name="vars[nodesep]" id="vars[nodesep]" value="<?= $vars["nodesep"] ?>">
                         </div>
