@@ -161,9 +161,10 @@ $GVE_CONFIG["debug"] = FALSE;
 // particularly around commercial use. Though all data sources providing ISO data have this problem.
 $string = file_get_contents(dirname(__FILE__)."/resources/data/country-codes_json.json");
 $json = json_decode($string, true);
+
 foreach ($json as $row) {
-	$GVE_CONFIG["countries"]["iso2"][strtolower($row["CLDR display name"])] = $row["ISO3166-1-Alpha-2"];
-	$GVE_CONFIG["countries"]["iso3"][strtolower($row["CLDR display name"])] = $row["ISO3166-1-Alpha-3"];
+	$GVE_CONFIG["countries"]["iso2"][strtolower($row["Name"])] = $row["ISO3166-1-Alpha-2"];
+	$GVE_CONFIG["countries"]["iso3"][strtolower($row["Name"])] = $row["ISO3166-1-Alpha-3"];
 }
 // Options for abbreviating place names
 $GVE_CONFIG["settings"]["use_abbr_places"] = [0 => "Full place name", 10 => "City and Country" ,  20 => "City and 2 Letter ISO Country Code", 30 => "City and 3 Letter ISO Country Code"];
