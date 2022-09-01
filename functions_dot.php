@@ -91,6 +91,7 @@ class Dot {
 		$this->settings["page_margin"] = $GVE_CONFIG["default_margin"];
 		$this->settings["show_lt_editor"] = FALSE;
 		$this->settings["mark_not_related"] = FALSE;
+		$this->settings["fast_not_related"] = FALSE;
 		$this->settings["graph_dir"] = $GVE_CONFIG["default_direction"];
 		$this->settings["mclimit"] = $GVE_CONFIG["default_mclimit"];
 
@@ -391,7 +392,7 @@ class Dot {
 			// check if any non-related persons in tree
 			$relList = array();
 			$relFams = array();
-			if ($this->settings["mark_not_related"]) {
+			if ($this->settings["mark_not_related"] && !$this->settings["fast_not_related"]) {
 				$NonrelativeExists = FALSE;
 				foreach ($this->individuals as $indi) {
 					if (!$indi['rel']) {

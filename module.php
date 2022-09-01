@@ -184,7 +184,8 @@ class GVExport extends AbstractModule implements ModuleCustomInterface, ModuleCh
             "desc_level" => $GVE_CONFIG["settings"]["desc_level"],
             "indispou" => "spou",
             "indiany" => "",
-            "marknr" => "marknr",
+            "marknr" => "",
+            "fastnr" => "",
             "show_url" => "show_url",
             "show_pid" => "DEFAULT", // This is set to DEFAULT so we can tell if it was loaded from cookie or not
             "show_fid" => "",
@@ -465,6 +466,9 @@ class GVExport extends AbstractModule implements ModuleCustomInterface, ModuleCh
 
         if ($vars['marknr'] == 'marknr') {
             $dot->setSettings("mark_not_related", TRUE);
+        }
+        if ($vars['fastnr'] == 'fastnr') {
+            $dot->setSettings("fast_not_related", TRUE);
         }
 
         if (isset($vars['show_lt_editor'])) {

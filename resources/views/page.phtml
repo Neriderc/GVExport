@@ -90,7 +90,7 @@ use Fisharebest\Webtrees\Tree;
         ?>
 
             <div class="row form-group">
-                <label class="col-sm-4 col-form-label wt-page-options-label" for="vars[marknr]"><?= I18N::translate('Warning') ?></label>
+                <label class="col-sm-4 col-form-label wt-page-options-label"><?= I18N::translate('Warning') ?></label>
                 <div class="col-sm-8 wt-page-options-value">
                     <?= I18N::translate('You have items in the clippings cart, which can be used for the diagram instead of the below options.') ?>
                     <div class="col-sm-8 wt-page-options-value">
@@ -117,7 +117,7 @@ use Fisharebest\Webtrees\Tree;
                     <div class="red-text" id="indi-error"></div>
                 </div>
                 <div class="input-group mt-1">
-                    <input class="cart_toggle" type="text" class="form-control" name="vars[other_pids]" id="vars[other_pids]" value="<?= $vars['other_pids'] ?>" <?= $greypeople ? "disabled" : ""; ?>>
+                    <input class="cart_toggle" type="text" class="form-control" name="vars[other_pids]" id="vars[other_pids]" value="<?= $vars['other_pids'] ?>">
                     <div class="input-group-append">
                         <button type="button" class="btn btn-outline-secondary" onclick="appendPidTo('pid', 'vars[other_pids]')">⏎</button>
                     </div>
@@ -131,11 +131,11 @@ use Fisharebest\Webtrees\Tree;
                 <div class="row">
                     <div class="col-auto mx-3">
                         <input type="hidden" name="vars[indiance]" value="no">
-                        <input class="cart_toggle" type="checkbox" name="vars[indiance]" id="vars[indiance]" value="ance" <?= $vars["indiance"] == "ance" ? 'checked' : '' ?>  <?= $greypeople ? "disabled" : ""; ?>>
+                        <input class="cart_toggle" type="checkbox" name="vars[indiance]" id="vars[indiance]" value="ance" <?= $vars["indiance"] == "ance" ? 'checked' : '' ?>>
                     </div>
                     <div class="col-auto row">
                         <label for="vars[ance_level]" class="col-sm-6"><?= I18N::translate('Max Levels') ?>:</label>
-                        <input class="cart_toggle" onblur="defaultValueWhenBlank(this, 0)" type="text" class="form-control col-sm-6" size="10" name="vars[ance_level]" id="vars[ance_level]" value="<?= $vars["ance_level"] ?>" <?= $greypeople ? "disabled" : ""; ?>>
+                        <input class="cart_toggle" onblur="defaultValueWhenBlank(this, 0)" type="text" class="form-control col-sm-6" size="10" name="vars[ance_level]" id="vars[ance_level]" value="<?= $vars["ance_level"] ?>">
                     </div>
                 </div>
             </div>
@@ -147,17 +147,17 @@ use Fisharebest\Webtrees\Tree;
                 <div class="row">
                     <div class="col-auto mx-3">
                         <input type="hidden" name="vars[indisibl]" value="no">
-                        <input class="cart_toggle" type="checkbox" onclick="updateRelationOption('indisibl')" name="vars[indisibl]" id="vars[indisibl]" value="sibl" <?= $vars["indisibl"] == "sibl" ? 'checked' : '' ?> <?= $greypeople ? "disabled" : ""; ?>>
+                        <input class="cart_toggle" type="checkbox" onclick="updateRelationOption('indisibl')" name="vars[indisibl]" id="vars[indisibl]" value="sibl" <?= $vars["indisibl"] == "sibl" ? 'checked' : '' ?>>
                         <label for="vars[indisibl]"><?= I18N::translate('Siblings') ?></label>
                     </div>
                     <div class="col-auto mx-3">
                         <input type="hidden" name="vars[indicous]" value="no">
-                        <input class="cart_toggle" onclick="updateRelationOption('indicous')" type="checkbox" name="vars[indicous]" id="vars[indicous]" value="cous" <?= $vars["indicous"] == "cous" ? 'checked' : '' ?> <?= $greypeople ? "disabled" : ""; ?>>
+                        <input class="cart_toggle" onclick="updateRelationOption('indicous')" type="checkbox" name="vars[indicous]" id="vars[indicous]" value="cous" <?= $vars["indicous"] == "cous" ? 'checked' : '' ?>>
                         <label for="vars[indicous]"><?= I18N::translate('All relatives') ?></label>
                     </div>
                     <div class="col-auto mx-3">
                         <input type="hidden" name="vars[indispou]" value="no">
-                        <input class="cart_toggle" type="checkbox" onclick="updateRelationOption('indispou')" name="vars[indispou]" id="vars[indispou]" value="spou" <?= $vars["indispou"] == "spou" ? 'checked' : '' ?> <?= $greypeople ? "disabled" : ""; ?>>
+                        <input class="cart_toggle" type="checkbox" onclick="updateRelationOption('indispou')" name="vars[indispou]" id="vars[indispou]" value="spou" <?= $vars["indispou"] == "spou" ? 'checked' : '' ?>>
                         <label for="vars[indispou]"><?= I18N::translate('Spouses') ?></label>
                     </div>
                     <div class="col-auto mx-3">
@@ -175,11 +175,11 @@ use Fisharebest\Webtrees\Tree;
                 <div class="row">
                     <div class="col-auto mx-3">
                         <input type="hidden" name="vars[indidesc]" value="no">
-                        <input class="cart_toggle" type="checkbox" name="vars[indidesc]" id="vars[indidesc]" value="desc" <?= $vars["indidesc"] == "desc" ? 'checked' : '' ?> <?= $greypeople ? "disabled" : ""; ?>>
+                        <input class="cart_toggle" type="checkbox" name="vars[indidesc]" id="vars[indidesc]" value="desc" <?= $vars["indidesc"] == "desc" ? 'checked' : '' ?>>
                     </div>
                     <div class="col-auto row">
                         <label for="vars[desc_level]" class="col-sm-6"><?= I18N::translate('Max Levels') ?>:</label>
-                        <input class="cart_toggle"  onblur="defaultValueWhenBlank(this, 0)" type="text" class="form-control col-sm-6" size="10" name="vars[desc_level]" id="vars[desc_level]" value="<?= $vars["desc_level"] ?>" <?= $greypeople ? "disabled" : ""; ?>>
+                        <input class="cart_toggle"  onblur="defaultValueWhenBlank(this, 0)" type="text" class="form-control col-sm-6" size="10" name="vars[desc_level]" id="vars[desc_level]" value="<?= $vars["desc_level"] ?>">
                     </div>
                 </div>
             </div>
@@ -194,7 +194,7 @@ use Fisharebest\Webtrees\Tree;
                         ?>
                     </div>
                     <div class="input-group mt-1">
-                        <input class="cart_toggle" type="text" class="form-control" name="vars[other_stop_pids]" id="vars[other_stop_pids]" value="<?= $vars['other_stop_pids'] ?>" <?= $greypeople ? "disabled" : ""; ?>>
+                        <input class="cart_toggle" type="text" class="form-control" name="vars[other_stop_pids]" id="vars[other_stop_pids]" value="<?= $vars['other_stop_pids'] ?>">
                         <div class="input-group-append">
                             <button type="button" class="btn btn-outline-secondary" onclick="appendPidTo('vars[stop_pid]', 'vars[other_stop_pids]')">⏎</button>
                         </div>
@@ -202,12 +202,18 @@ use Fisharebest\Webtrees\Tree;
                 </div>
             </div>
             <div class="row form-group">
-                <label class="col-sm-4 col-form-label wt-page-options-label" for="vars[marknr]"><?= I18N::translate('Mark not blood-related people with different color') ?></label>
+                <label class="col-sm-4 col-form-label wt-page-options-label" for="vars[marknr]"><?= I18N::translate('Non-relatives') ?></label>
                 <div class="col-sm-8 wt-page-options-value">
                     <input type="hidden" name="vars[marknr]" value="no">
-                    <input class="cart_toggle" type="checkbox" name="vars[marknr]" id="vars[marknr]" value="marknr" <?= $vars["marknr"] == "marknr" ? 'checked' : '' ?> <?= $greypeople ? "disabled" : ""; ?>>
+                    <input class="cart_toggle" onclick="setStateFastRelationCheck();"  type="checkbox" name="vars[marknr]" id="vars[marknr]" value="marknr" <?= $vars["marknr"] == "marknr" ? 'checked' : '' ?>>
+                    <label class="check-list" for="vars[marknr]"><?= I18N::translate('Mark not blood-related people with different color') ?></label>
+                    <br/>
+                    <input type="hidden" name="vars[fastnr]" value="no">
+                    <input class="cart_toggle" type="checkbox" name="vars[fastnr]" id="vars[fastnr]" value="fastnr" <?= $vars["fastnr"] == "fastnr" ? 'checked' : '' ?>>
+                    <label class="check-list" for="vars[fastnr]"><?= I18N::translate('Ignore unseen links to speed up relative check') ?></label>
                 </div>
             </div>
+
         </div>
         <a href="#" onclick="toggleAdvanced(this, 'people-advanced')"><div class="wt-page-options-label advanced-settings-btn"><?= ($vars["adv_people"] == "show" ? '↑ ' : '↓ ') . I18N::translate('Toggle advanced settings') . ($vars["adv_people"] == "show" ? ' ↑' : ' ↓'); ?></div></a>
 
@@ -393,12 +399,12 @@ use Fisharebest\Webtrees\Tree;
                 <label class=" col-sm-4 col-form-label wt-page-options-label" for="vars[dpi]"><?= I18N::translate('Space') ?></label>
                 <div class="col-sm-8 wt-page-options-value">
                     <div class="row">
+                        <label for="vars[ranksep]"><?= I18N::translate('Between generations') ?>:</label>
                         <div class="col-auto">
-                            <label for="vars[ranksep]"><?= I18N::translate('Between generations') ?>:</label>
                             <input type="text" onclick="togglePercent(this, false)" onblur="togglePercent(this, true)" class="form-control col-sm-6" size="10" name="vars[ranksep]" id="vars[ranksep]" value="<?= $vars["ranksep"] ?>">
                         </div>
+                        <label for="vars[nodesep]"><?= I18N::translate('Between individuals on the same level') ?>:</label>
                         <div class="col-auto">
-                            <label for="vars[nodesep]"><?= I18N::translate('Between individuals on the same level') ?>:</label>
                             <input type="text" onclick="togglePercent(this, false)" onblur="togglePercent(this, true)" class="form-control col-sm-6" size="10" name="vars[nodesep]" id="vars[nodesep]" value="<?= $vars["nodesep"] ?>">
                         </div>
                     </div>
@@ -572,6 +578,7 @@ use Fisharebest\Webtrees\Tree;
         if (!cartempty && document.getElementById("vars[usecart]_yes").checked) {
             toggleCart(true);
         }
+        setStateFastRelationCheck();
         document.getElementById("browser").value = "false";
         let lastDotStr, indiNum, famNum, messages;
 

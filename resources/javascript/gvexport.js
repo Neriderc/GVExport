@@ -324,3 +324,12 @@ function toggleAdvanced(caller, id) {
         hidden.value = "show";
     }
 }
+
+function setStateFastRelationCheck() {
+    if ((!cartempty && document.getElementById("vars[usecart]_yes").checked) || !document.getElementById("vars[marknr]").checked)
+    {
+        document.getElementById("vars[fastnr]").disabled = true;
+    } else {
+        document.getElementById("vars[fastnr]").disabled = false;
+    }
+}
