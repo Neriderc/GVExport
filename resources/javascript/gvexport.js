@@ -1114,7 +1114,10 @@ function setSvgImageClipPath(element, clipPath) {
 }
 
 // Tidies SVG before embedding in page
-function cleanSVG(element) {
+function cleanSVG() {
+    const element = document.getElementById('new-element');
+    const div = d3.select(element);
+    const svg = d3.select(div.node().querySelector('svg'));
     const SHAPE_OVAL = '10';
     const SHAPE_CIRCLE = '20';
     const SHAPE_SQUARE = '30';
@@ -1142,14 +1145,25 @@ function cleanSVG(element) {
     // instead this defaults to the XREF of the record
     const a = element.getElementsByTagName("a");
     for (let i = 0; i < a.length; i++) {
-        a[i].removeAttribute("xlink:title");
+        a[i].removeAttribute("title");
     }
-    //half of bug fix for photos not showing in browser - we change & to %26 in functions_dot.php
-    element.innerHTML = element.innerHTML.replaceAll("%26", "&amp;");
+
+    //half of bug fix for photos not showing in browser - we change & to %26 in Dot.php
+    const img = element.getElementsByTagName("image");
+    for (let i = 0; i < img.length; i++) {
+        img[i].setAttribute('href', img[i].getAttribute('href').replaceAll("%26", "&"));
+    }
+
     // Don't show anything when hovering on blank space
-    element.innerHTML = element.innerHTML.replaceAll("<title>WT_Graph</title>", "");
+    const t = document.getElementById('graph0').getElementsByTagName('title');
+    for (let i = 0; i < a.length; i++) {
+        if (t[i].innerHTML === 'WT_Graph') {
+            t[i].innerHTML = "";
+        }
+    }
+
     // Set SVG viewBox to height/width so image is not cut off
-    element.setAttribute("viewBox", "0 0 " + element.getAttribute("width").replace("pt", "") + " " + element.getAttribute("height").replace("pt", ""));
+    //element.setAttribute("viewBox", "0 0 " + element.getAttribute("width").replace("pt", "") + " " + element.getAttribute("height").replace("pt", ""));
 }
 
 function diagramSearchBoxChange(e) {

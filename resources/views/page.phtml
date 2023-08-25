@@ -153,7 +153,10 @@ $usegraphviz = $vars['graphviz_bin'] != "";
     </div>
 </div>
 <script src="<?= $module->assetUrl('javascript/viz.js'); ?>"></script>
-<script src="<?= $module->assetUrl('javascript/panzoom.min.js'); ?>"></script>
+<script src="//d3js.org/d3.v5.min.js"></script>
+<script src="https://unpkg.com/@hpcc-js/wasm@0.3.11/dist/index.min.js"></script>
+<script src="https://unpkg.com/d3-graphviz@3.0.5/build/d3-graphviz.js"></script>
+<!--<script src="--><?php //= $module->assetUrl('javascript/panzoom.min.js'); ?><!--"></script>-->
 <script src="<?= $module->assetUrl('javascript/gvexport.js'); ?>"></script>
 <script src="<?= $module->assetUrl('javascript/MainPage/UI.js'); ?>"></script>
 <script src="<?= $module->assetUrl('javascript/MainPage/Form.js'); ?>"></script>
@@ -161,11 +164,11 @@ $usegraphviz = $vars['graphviz_bin'] != "";
 <?= $usegraphviz ? "" : "<script src=\"" . $module->assetUrl('javascript/jspdf.umd.min.js') . "\"></script>"; ?>
 <script type="text/javascript">
     let graphvizAvailable = <?= $usegraphviz ? "true" : "false" ?>;
-    let panzoomInst = null;
-    const workerURL = '<?= $module->assetUrl('javascript/full.renderer.js'); ?>';
-    let viz = new Viz({
-        workerURL: workerURL
-    });
+    // let panzoomInst = null;
+    //const workerURL = '<?php //= $module->assetUrl('javascript/full.renderer.js'); ?>//';
+    // let viz = new Viz({
+    //     workerURL: workerURL
+    // });
 
     const form = document.getElementById('gvexport');
     const rendering = document.getElementById('rendering');
@@ -238,7 +241,7 @@ $usegraphviz = $vars['graphviz_bin'] != "";
         }
         Form.showHideMatchCheckbox('mark_not_related', 'mark_related_subgroup');
         document.getElementById("browser").value = "false";
-        let lastDotStr, indiNum, famNum, messages;
+        let lastDotStr, messages;
 
         rendering.innerHTML = '<div class="d-flex justify-content-center h-100"><div class="spinner-border align-self-center" role="status"><span class="sr-only">Loading...</span></div></div>';
         rendering.hidden = false;
@@ -257,6 +260,33 @@ $usegraphviz = $vars['graphviz_bin'] != "";
         // Set size of container element so webtrees footer is in the right place
         const totalHeight = MARGIN + wtTitle.getBoundingClientRect().height + getComputedProperty(wtTitle, 'margin-bottom') + h + getComputedProperty(wtMainContainer, 'padding-top');
         wtMainContainer.style.height = totalHeight + "px";
+
+        function dotGenerated() {
+            let graphviz = this;
+            //half of bug fix for photos not showing in browser - we change & to %26 in Dot.php
+            // const img = element.getElementsByTagName("image");
+            // for (let i = 0; i < img.length; i++) {
+            //     img[i].setAttribute('href', img[i].getAttribute('href').replaceAll("%26", "&"));
+            // }
+            graphviz.render();
+            cleanSVG();
+            if (messages !== "") {
+                for (let i = 0; i < messages.length; i++) {
+                    UI.showToast(messages[i]);
+                }
+            }
+            // // Scroll render to last starting individual
+            // let indiList = document.getElementById('xref_list').value.split(",");
+            // for (let i = indiList.length-1; i>=0; i--) {
+            //     if (indiList[i].trim() !== "") {
+            //         scrollToRecord(indiList[i].trim());
+            //         break;
+            //     }
+            // }
+
+            handleTileClick();
+            createXrefListFromSvg();
+        }
 
         window.fetch(form.getAttribute('action'), {
             method: form.getAttribute('method'),
@@ -302,42 +332,19 @@ $usegraphviz = $vars['graphviz_bin'] != "";
                     height: '150px'
                 };
             });
-            return viz.renderSVGElement(lastDotStr, {
-                images: images
-            });
-        }).then(function (element) {
-            // Now we have to clean up the generated SVG.
-            cleanSVG(element);
-
-            // Clear current rendering then append new element to the page
+            let el = document.createElement('div');
+            el.setAttribute('id', 'new-element')
+            for(i=0; i<images.length; i++) {
+                d3.select(el).graphviz().addImage(images[i].path, images[i].width, images[i].height);
+            }
             rendering.innerHTML = "";
-            rendering.appendChild(element);
-            const fullZoom = Math.min(4, rendering.getBoundingClientRect().width / element.getBBox().width);
-            panzoomInst = panzoom(element, {
-                maxZoom: 4,
-                minZoom: fullZoom / 10,
-                initialZoom: fullZoom,
-                onTouch: function() {
-                    // Fix links not working on mobile
-                    return false; // tells the library to not preventDefault.
-                }
-            });
-            if (messages !== "") {
-                for (let i = 0; i < messages.length; i++) {
-                    UI.showToast(messages[i]);
-                }
-            }
-            // Scroll render to last starting individual
-            let indiList = document.getElementById('xref_list').value.split(",");
-            for (let i = indiList.length-1; i>=0; i--) {
-                if (indiList[i].trim() !== "") {
-                    scrollToRecord(indiList[i].trim());
-                    break;
-                }
-            }
+            rendering.appendChild(el);
+            d3.select(el)
+                .graphviz()
+                .renderDot(lastDotStr, dotGenerated);
+            return el;
+        }).then(function (element) {
 
-            handleTileClick();
-            createXrefListFromSvg();
             return element;
         }).catch(function (error) {
             if (error.message.includes("TOTAL_MEMORY")) {
@@ -356,9 +363,9 @@ $usegraphviz = $vars['graphviz_bin'] != "";
             }
 
             // Create a new Viz instance (@see Caveats page for more info)
-            viz = new Viz({
-                workerURL: workerURL
-            });
+            // viz = new Viz({
+            //     workerURL: workerURL
+            // });
         });
         return false;
     }
