@@ -359,17 +359,21 @@ class Dot {
 
 					// Draw an arrow from HUSB to FAM
 					if (!empty($husb_id) && (isset($this->individuals[$husb_id]))) {
-						$out .= $this->convertID($husb_id) . " -> " . $this->convertID($fid) ." [color=\"" . $this->settings["arrows_default"] . "\", arrowsize=0.3]\n";
+						$out .= $this->convertID($husb_id) . " -> " . $this->convertID($fid) ." [color=\"" . $this->settings["arrows_default"] . "\", arrowsize=0.3, weight=1]\n";
 					}
 					// Draw an arrow from WIFE to FAM
 					if (!empty($wife_id) && (isset($this->individuals[$wife_id]))) {
-						$out .= $this->convertID($wife_id) . " -> ". $this->convertID($fid) ." [color=\"" . $this->settings["arrows_default"] . "\", arrowsize=0.3]\n";
+						$out .= $this->convertID($wife_id) . " -> ". $this->convertID($fid) ." [color=\"" . $this->settings["arrows_default"] . "\", arrowsize=0.3, weight=1]\n";
 					}
+                    // Draw an arrow from HUSB to WIFE
+                    if (!empty($wife_id) && (isset($this->individuals[$wife_id])) && !empty($husb_id) && (isset($this->individuals[$husb_id]))) {
+                        $out .= '{rank=same;    ' . $this->convertID($wife_id) . " -> ". $this->convertID($husb_id) ." [style=invis, weight=10]}\n";
+                    }
 					// Draw an arrow from FAM to each CHIL
 					foreach ($f->children() as $child) {
 						if (!empty($child) && (isset($this->individuals[$child->xref()]))) {
                             $arrow_colour = $this->getArrowColour($child, $fid);
-							$out .= $this->convertID($fid) . " -> " . $this->convertID($child->xref()) . " [color=\"$arrow_colour\", arrowsize=0.3]\n";
+							$out .= $this->convertID($fid) . " -> " . $this->convertID($child->xref()) . " [color=\"$arrow_colour\", arrowsize=0.3, weight=1]\n";
 						}
 					}
 				}
