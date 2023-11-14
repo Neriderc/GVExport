@@ -230,7 +230,7 @@ class Dot {
 	function createDOTDump(): string
     {
 		// If no individuals in the clippings cart (or option chosen to override), use standard method
-		if (!functionsClippingsCart::isIndividualInCart($this->tree) || !$this->settings["use_cart"] ) {
+		if (!$this->settings["use_cart"] || !functionsClippingsCart::isIndividualInCart($this->tree)) {
 			// Create our tree
 			$this->createIndiList($this->individuals, $this->families, false);
 			if ($this->settings["diagram_type"] == "combined") {
