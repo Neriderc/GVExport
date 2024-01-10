@@ -1230,3 +1230,83 @@ function handleSimpleDiagram() {
     // Set diagram type to separated (referred to as decorated in code) as simple doesn't exist anymore
     document.getElementById("diagtype_decorated").checked = true;
 }
+
+
+// worker.js
+/**
+ * Lazy-loads Viz.js message handler
+ * @returns {(event: MessageEvent) => Promise<any>}
+ */
+function getVizMesssageHandler() {
+    if (this._messageHandler === undefined) {
+        const vizDistFolder = "https://unpkg.com/@aduh95/viz.js/dist";
+        const Module = {
+            // locateFile is used by render module to locate WASM file.
+            locateFile: (fileName) => `${vizDistFolder}/${fileName}`,
+        };
+        this._messageHandler = import(Module.locateFile("render.browser.js")).then(
+            ({ default: init, onmessage }) => {
+                // to avoid conflicts, disable viz.js message handler
+                self.removeEventListener("message", onmessage);
+
+                return init(Module).then(() => onmessage);
+            }
+        );
+    }
+    return this._messageHandler;
+}
+
+self.addEventListener("message", (event) => {
+    if (event.data.id) {
+        // handling event sent by viz.js
+        getVizMessageHandler()
+            .then((onmessage) => onmessage(event))
+            .catch((error) => {
+                // handle dynamic import error here
+                console.error(error);
+
+                // Note: If an error is emitted by Viz.js internals (dot syntax error,
+                // WASM file initialization error, etc.), the error is catch and sent
+                // directly through postMessage.
+                // If you think this behavior is not ideal, please open an issue.
+            });
+    } else {
+        // handle other messages
+    }
+});
+
+const locateFile = (fileName) =>
+    "https://unpkg.com/@aduh95/viz.js/dist/" + fileName;
+const onmessage = async function (event) {
+    if (this.messageHandler === undefined) {
+        // Lazy loading actual handler
+        const { default: init, onmessage } = await import(
+            Module.locateFile("render.browser.js")
+            );
+        // Removing default MessageEvent handler
+        removeEventListener("message", onmessage);
+        await init(Module);
+        this.messageHandler = onmessage;
+    }
+    return this.messageHandler(event);
+};
+const vizOptions = {
+    workerURL: URL.createObjectURL(
+        new Blob(
+            [
+                "const Module = { locateFile:",
+                locateFile.toString(),
+                "};",
+                "onmessage=",
+                onmessage.toString(),
+            ],
+            { type: "application/javascript" }
+        )
+    ),
+};
+
+async function dot2svg(dot, options) {
+    const viz = new Viz(vizOptions);
+
+    return viz.renderString(dot, options);
+}

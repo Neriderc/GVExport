@@ -303,12 +303,18 @@ $usegraphviz = $vars['graphviz_bin'] != "";
                     height: '150px'
                 };
             });
-            return viz.renderSVGElement(lastDotStr, {
-                images: images
-            });
-        }).then(function (element) {
+            // return viz.renderSVGElement(lastDotStr, {
+            //     images: images
+            // });
+
+            return dot2svg(lastDotStr, {});
+        }).then(function (svgString) {
+            const span = document.createElement('span');
+            span.innerHTML = svgString;
+            let element = span.querySelector('svg');
+            alert(element);
             // Now we have to clean up the generated SVG.
-            cleanSVG(element);
+            //cleanSVG(element);
 
             // Clear current rendering then append new element to the page
             rendering.innerHTML = "";
