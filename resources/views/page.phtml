@@ -34,6 +34,7 @@ $usegraphviz = $vars['graphviz_bin'] != "";
     let url_xref_treatment = "<?= e($vars['url_xref_treatment']); ?>";
     let shared_note_default = "<?= $vars['sharednote_col_default']; ?>";
     let firstRender = <?= $vars['first_render'] ? 'true' : 'false'; ?>;
+    let messages = [];
     const TREE_NAME = "<?= e($tree->name()); ?>";
     const TREE_FAVORITES_MODULE_ACTIVE = <?= $module->module_service->findByInterface(FamilyTreeFavoritesModule::class)->first() === null || !Auth::isManager($tree) ? "false" : "true" ?>;
     const MY_FAVORITES_MODULE_ACTIVE = <?= $module->module_service->findByInterface(UserFavoritesModule::class)->first() === null ? "false" : "true" ?>;
@@ -217,6 +218,13 @@ $usegraphviz = $vars['graphviz_bin'] != "";
                 e.preventDefault();
             }
         }
+
+        // Replay messages from when diagram was generated, since we can't re-fetch
+        if (messages !== []) {
+            for (let i = 0; i < messages.length; i++) {
+                UI.showToast(messages[i]);
+            }
+        }
     });
 
     function updateRender(scrollX = null, scrollY = null, zoom = null, xref = null) {
@@ -250,7 +258,7 @@ $usegraphviz = $vars['graphviz_bin'] != "";
         }
         Form.showHideMatchCheckbox('mark_not_related', 'mark_related_subgroup');
         document.getElementById("browser").value = "false";
-        let lastDotStr, messages;
+        let lastDotStr;
 
         // Show loading message unless we are doing some nice dynamic tree growing stuff
         if (!scrollX || !scrollY) {
@@ -347,7 +355,7 @@ $usegraphviz = $vars['graphviz_bin'] != "";
                     return false; // tells the library to not preventDefault.
                 }
             });
-            if (messages !== "") {
+            if (messages !== []) {
                 for (let i = 0; i < messages.length; i++) {
                     UI.showToast(messages[i]);
                 }
