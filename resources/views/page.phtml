@@ -166,7 +166,7 @@ $usegraphviz = $vars['graphviz_bin'] != "";
 <script src="<?= $module->assetUrl('javascript/MainPage/UI.js'); ?>"></script>
 <script src="<?= $module->assetUrl('javascript/MainPage/Form.js'); ?>"></script>
 <script src="<?= $module->assetUrl('javascript/MainPage/Data.js'); ?>"></script>
-<?= $usegraphviz ? "" : "<script src=\"" . $module->assetUrl('javascript/jspdf.umd.min.js') . "\"></script>"; ?>
+<script src="<?= $module->assetUrl('javascript/jspdf.umd.min.js') ?>"></script>
 <script type="text/javascript">
     let graphvizAvailable = <?= $usegraphviz ? "true" : "false" ?>;
     let panzoomInst = null;
