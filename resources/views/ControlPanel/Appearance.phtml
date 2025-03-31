@@ -29,5 +29,5 @@ use vendor\WebtreesModules\gvexport\GVExport;
 </div>
 <hr>
 <div class="row no-right-margin form-group">
-    <?= view($module->name() . '::MainPage/Appearance/DiagramAdvanced',['vars' => $vars, 'settings' => $settings, 'admin' => $admin]); ?>
+    <?= view($module->name() . '::MainPage/Appearance/DiagramAdvanced',['module' => $module, 'vars' => $vars, 'settings' => $settings, 'admin' => $admin]); ?>
 </div>

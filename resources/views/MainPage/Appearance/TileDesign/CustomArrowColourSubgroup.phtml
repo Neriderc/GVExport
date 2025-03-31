@@ -1,0 +1,27 @@
+<?php
+
+use Fisharebest\Webtrees\I18N;
+use vendor\WebtreesModules\gvexport\GVExport;
+use vendor\WebtreesModules\gvexport\Settings;
+
+/**
+ * @var GVExport    $module                 this module
+ * @var array       $vars           array of saved settings
+ * @var bool        $admin          whether this is for the admin page (remove functions that aren't settings)
+ * @var bool        $group          the group this belongs to, for naming
+ * @var string      $select_id      the ID of the dropdown list that shows this section
+ * @var string      $option_id      the ID of the option that means this should be shown
+ * @var array       $picker_list    list of colour pickers to create as key pairs (id => label)
+ */
+
+?>
+<?= view($module->name() . '::MainPage/Appearance/TileDesign/ColourPickerList',['vars' => $vars, 'admin' => $admin, 'id' => 'subgroup_' . $group . '_custom', 'select_id' => $select_id, 'option_id' => $option_id, 'picker_list' => $picker_list]); ?>
+<div class="padding-left-10">
+    <input type="checkbox" name="vars[colour_arrow_related]" onclick="Form.showHide(document.getElementById('arrow_group'),this.checked)" id="colour_arrow_related" value="colour_arrow_related" <?= $vars["colour_arrow_related"] ? 'checked' : '' ?>><label for="colour_arrow_related" class="check-list width-90pc"><?= I18N::translate('Show blood relationship in different colour') ?></label>
+    <div id="arrow_group" class="setting_subgroup col-auto options-panel-background" <?= !$vars["colour_arrow_related"] ? 'style="display:none;"' : '' ?>>
+        <div class="sub-group">
+            <input type="color" class="picker" name="vars[arrows_related]" id="arrows_related" value="<?= e($vars["arrows_related"]); ?>" /><label for="arrows_related" class="picker-label"><?= I18N::translate('Related by birth') ?></label>
+            <input type="color" class="picker" name="vars[arrows_not_related]" id="arrows_not_related" value="<?= e($vars["arrows_not_related"]); ?>" /><label for="arrows_not_related" class="picker-label"><?= I18N::translate('Related other than by birth') ?></label>
+        </div>
+    </div>
+</div>

@@ -35,7 +35,7 @@ use vendor\WebtreesModules\gvexport\GVExport;use vendor\WebtreesModules\gvexport
     </div>
 
     <div class="row no-right-margin form-group">
-        <?= view($module->name() . '::MainPage/Appearance/DiagramAdvanced',['vars' => $vars, 'settings' => $settings, 'usegraphviz' => $usegraphviz, 'individual' => $individual, 'admin' => $admin]); ?>
+        <?= view($module->name() . '::MainPage/Appearance/DiagramAdvanced',['module' => $module, 'vars' => $vars, 'settings' => $settings, 'usegraphviz' => $usegraphviz, 'individual' => $individual, 'admin' => $admin]); ?>
     </div>
 </div>
 <a id="appearance-advanced-button" onclick="Form.toggleAdvanced(this, 'appearance-advanced')"><div class="sidebar-labels advanced-settings-btn"><?= ($vars["show_adv_appear"] ? '↑ ' : '↓ ') . I18N::translate('Toggle advanced settings') . ($vars["show_adv_appear"] ? ' ↑' : ' ↓'); ?></div></a>

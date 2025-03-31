@@ -83,6 +83,7 @@ return array(
 	'arrows_not_related' => '#226622',	// Default colour for arrows from family records to child other than birth (adopted, etc)
 	'colour_arrow_related' => false, // If arrows should be coloured based on blood-relationship or not
 	'arrow_style' => 0, // Style of arrows, solid (0), dotted (10), dashed (20), bold (30), tapered (40), random (50), or none (60)
+	'arrow_colour_type' => 350, // Colour of arrows, custom (350), Random (360)
     'indi_tile_shape' => 0, // Shape of the individual tiles, rectangle (0), rounded rectangle (10), based on sex (20), or based on living/deceased (30)
     'shape_sex_male' => 0, // Shape option for male when based on sex option chosen for indi_tile_shape above
     'shape_sex_female' => 10, // Shape option for female when based on sex option chosen for indi_tile_shape above

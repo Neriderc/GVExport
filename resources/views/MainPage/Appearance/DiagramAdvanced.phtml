@@ -1,9 +1,12 @@
 <?php
 
+use vendor\WebtreesModules\gvexport\GVExport;
 use vendor\WebtreesModules\gvexport\MainPage;
 use Fisharebest\Webtrees\I18N;
+use vendor\WebtreesModules\gvexport\Settings;
 
 /**
+ * @var GVExport    $module         this module
  * @var array       $vars           array of saved settings
  * @var array       $settings       full settings data including dropdown options
  * @var bool        $admin          whether this is for the admin page (remove functions that aren't settings)
@@ -62,23 +65,16 @@ use Fisharebest\Webtrees\I18N;
     <div id="diagram_colours_subgroup" class="setting_subgroup col-auto options-panel-background" style="display: none">
         <div class="row">
             <div class="col-sm-12 col-auto">
-                <label for="click_action_indi"><?= I18N::translate('Arrow style'); ?></label>
+                <label for="arrow_style"><?= I18N::translate('Arrow style'); ?></label>
                 <?= view('components/select', ['name' => 'vars[arrow_style]', 'id' => 'arrow_style', 'selected' => I18N::digits($vars['arrow_style']), 'options' => MainPage::updateTranslations($settings["arrow_style_options"])]) ?>
             </div>
             <div class="col-sm-12 col-auto">
-                <input type="color" class="picker" name="vars[background_col]" id="background_col" value="<?= e($vars["background_col"]); ?>" /><label for="background_col" class="picker-label"><?= I18N::translate('Diagram background colour') ?></label>
+                <label for="arrow_colour_type"><?= I18N::translate('Arrow colour'); ?></label>
+                <?= view('components/select', ['name' => 'vars[arrow_colour_type]', 'id' => 'arrow_colour_type', 'selected' => I18N::digits($vars['arrow_colour_type']), 'options' => MainPage::updateTranslations($settings["arrow_colour_type_options"])]) ?>
+                <?= view($module->name() . '::MainPage/Appearance/TileDesign/Subgroup',['view' => $module->name() . '::MainPage/Appearance/TileDesign/CustomArrowColourSubgroup', 'view_options' => ['module' => $module, 'vars' => $vars, 'admin' => $admin, 'group' => 'arrow_colour_type', 'field' => 'custom', 'select_id' => 'arrow_colour_type', 'option_id' => Settings::OPTION_ARROW_CUSTOM_COLOUR, 'picker_list' => ['arrows_default' => 'Relationship arrow colour']]]); ?>
             </div>
             <div class="col-sm-12 col-auto">
-                <input type="color" class="picker" name="vars[arrows_default]" id="arrows_default" value="<?= e($vars["arrows_default"]); ?>" /><label for="arrows_default" class="picker-label"><?= I18N::translate('Relationship arrow colour') ?></label>
-            </div>
-            <div class="padding-left-10">
-                <input type="checkbox" name="vars[colour_arrow_related]" onclick="Form.showHide(document.getElementById('arrow_group'),this.checked)" id="colour_arrow_related" value="colour_arrow_related" <?= $vars["colour_arrow_related"] ? 'checked' : '' ?>><label for="colour_arrow_related" class="check-list width-90pc"><?= I18N::translate('Show blood relationship in different colour') ?></label>
-                <div id="arrow_group" class="setting_subgroup col-auto options-panel-background" <?= !$vars["colour_arrow_related"] ? 'style="display:none;"' : '' ?>>
-                    <div class="sub-group">
-                        <input type="color" class="picker" name="vars[arrows_related]" id="arrows_related" value="<?= e($vars["arrows_related"]); ?>" /><label for="arrows_related" class="picker-label"><?= I18N::translate('Related by birth') ?></label>
-                        <input type="color" class="picker" name="vars[arrows_not_related]" id="arrows_not_related" value="<?= e($vars["arrows_not_related"]); ?>" /><label for="arrows_not_related" class="picker-label"><?= I18N::translate('Related other than by birth') ?></label>
-                    </div>
-                </div>
+                <input type="color" class="picker" name="vars[background_col]" id="background_col" value="<?= e($vars["background_col"]); ?>" /><label for="background_col" class="picker-label"><?= I18N::translate('Diagram background colour') ?></label>
             </div>
         </div>
     </div>
