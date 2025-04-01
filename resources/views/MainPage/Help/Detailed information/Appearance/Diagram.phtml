@@ -57,17 +57,19 @@ $page_name = Help::DIAGRAM_APPEARANCE;
 </p>
 <h5><?= I18N::translate('Arrow style'); ?></h5>
 <p>
-    <?= I18N::translate('This allows you to select the arrow style from the various available styles. The \'Random\' option will randomly select a style for each arrow, making it easier to follow overlapping arrows on complex diagrams.'); ?>
+    <?= I18N::translate('This allows you to select the arrow style from the various available styles. The \\\'Random\\\' option will randomly select a style for each arrow, making it easier to follow overlapping arrows on complex diagrams.'); ?>
 </p>
-<h5><?= I18N::translate('Diagram background colour'); ?></h5>
+<h5><?= I18N::translate('Arrow colour'); ?></h5>
 <p>
-    <?= I18N::translate('This is the colour of the area behind the family tree.'); ?>
+    <?= I18N::translate('This allows you to select the method for colouring arrows that link the different nodes. The \'Random\' option will randomly select a colour for each arrow, making it easier to follow overlapping arrows on complex diagrams.'); ?>
+</p><p>
+    <?= I18N::translate('If selecting \'Custom\', you are presented with further options'); ?>:
 </p>
-<h5><?= I18N::translate('Relationship arrow colour'); ?></h5>
+<b><?= I18N::translate('Relationship arrow colour'); ?></b>
 <p>
     <?= I18N::translate('The colour of the arrows that show relationships between individuals and families.'); ?>
 </p>
-<h5><?= I18N::translate('Show blood relationship in different colour'); ?></h5>
+<b><?= I18N::translate('Show blood relationship in different colour'); ?></b>
 <p>
 <?= I18N::translate('This shows blood relationships in a different colour than other relationships (e.g. adoption). Selecting this option will provide two colours that can be customised'); ?>:
 </p>
@@ -75,3 +77,7 @@ $page_name = Help::DIAGRAM_APPEARANCE;
     <li><?= I18N::translate('Related by birth'); ?> - <?= I18N::translate('The arrow colour to use for children related by birth'); ?></li>
     <li><?= I18N::translate('Related other than by birth'); ?> - <?= I18N::translate('The arrow colour to use for children not related by birth'); ?></li>
 </ul>
+<h5><?= I18N::translate('Diagram background colour'); ?></h5>
+<p>
+    <?= I18N::translate('This is the colour of the area behind the family tree.'); ?>
+</p>
