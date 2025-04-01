@@ -144,6 +144,7 @@ return array(
 	'limit_levels_manager' => '25', // How many ancestor or descendant levels a user with this privilege can select up to
     'save_settings_name' => '', // Default value for text field where name of settings can be entered
     'settings_sort_order' => 0, // Default value sorting the settings - default of 0 means the oldest items are first, new items go on the bottom of the list.
+    'only_save_diagram_settings' => false, // Whether to save only settings that affect the diagram, or also save other settings (such as the sort order of the settings list)
     'show_diagram_panel' => false, // If set to true, a "Saved diagrams" section is shown at the top, that lists settings saved using the feature to save multiple versions of settings
     'auto_update' => true, // If auto-updating browser render on change is enabled or not
     'click_action_indi' => 0, // When clicking an individual, which action to do. Default of 0 means open link to their user page

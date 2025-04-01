@@ -29,4 +29,8 @@ use Fisharebest\Webtrees\I18N;
         <input type="checkbox" <?php if (!$admin) echo 'onclick="setSavedDiagramsPanel()"'; ?> name="vars[show_diagram_panel]" id="show_diagram_panel" value="show_diagram_panel" <?= $vars["show_diagram_panel"] ? 'checked' : '' ?>>
         <label for="show_diagram_panel"><?= I18N::translate('Show saved diagrams panel') ?></label>
     </div>
+    <div class="col-auto margin-top ">
+        <input type="checkbox" name="vars[only_save_diagram_settings]" id="only_save_diagram_settings" value="only_save_diagram_settings" <?= $vars["only_save_diagram_settings"] ? 'checked' : '' ?>>
+        <label for="only_save_diagram_settings"><?= I18N::translate('Only save settings that affect diagram') ?></label>
+    </div>
 </div>

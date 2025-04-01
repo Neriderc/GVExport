@@ -417,6 +417,7 @@ class FormSubmission
         if (isset($vars['settings_sort_order'])) {
             $settings['settings_sort_order'] = I18N::digits($vars['settings_sort_order']);
         }
+        $settings['only_save_diagram_settings'] = isset($vars['only_save_diagram_settings']);
         $settings['show_diagram_panel'] = isset($vars['show_diagram_panel']);
         $settings['updated_date'] = date("Y-m-d H:i:s");
         return $settings;
