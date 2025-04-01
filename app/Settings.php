@@ -24,6 +24,7 @@ class Settings
     private const CONTEXT_NAMED_SETTING = 10;
     public const CONTEXT_COOKIE = 20;
     public const CONTEXT_MAIN_SETTINGS = 30;
+    private const CONTEXT_NAMED_SETTING_DIAGRAM_ONLY = 40;
     public const PREFERENCE_PREFIX = "GVE";
     public const SETTINGS_LIST_PREFERENCE_NAME = "_id_list";
     public const SAVED_SETTINGS_LIST_PREFERENCE_NAME = "_shared_settings_list";
@@ -297,7 +298,15 @@ class Settings
         } else {
             $s = [];
             foreach ($settings as $preference => $value) {
-                $context = ($id == self::ID_MAIN_SETTINGS) ? self::CONTEXT_USER : self::CONTEXT_NAMED_SETTING;
+                if ($id === self::ID_MAIN_SETTINGS) {
+                    $context = self::CONTEXT_USER;
+                } else {
+                    if ($settings['only_save_diagram_settings']) {
+                        $context = self::CONTEXT_NAMED_SETTING_DIAGRAM_ONLY;
+                    } else {
+                        $context = self::CONTEXT_NAMED_SETTING;
+                    }
+                }
                 if (self::shouldSaveSetting($preference, $context)) {
                     if (gettype($value) == 'boolean') {
                         $s[$preference] = ($value ? 'true' : 'false');
@@ -533,10 +542,25 @@ class Settings
             case 'limit_levels_editor':
             case 'limit_levels_moderator':
             case 'limit_levels_manager':
-                return $context == self::CONTEXT_ADMIN;
+                return $context === self::CONTEXT_ADMIN;
             case 'show_diagram_panel':
-                return $context != self::CONTEXT_NAMED_SETTING;
-                // Include these in everything (especially including cookie)
+                return $context !== self::CONTEXT_NAMED_SETTING || $context !== self::CONTEXT_NAMED_SETTING_DIAGRAM_ONLY;
+
+            // Include these in most things but not in cookie and not in saved settings if option
+            // to only save diagram settings is enabled
+            case 'click_action_indi':
+            case 'auto_update':
+            case 'convert_photos_jpeg':
+            case 'photo_quality':
+            case 'settings_sort_order':
+            return ($context !== self::CONTEXT_COOKIE && $context !== self::CONTEXT_NAMED_SETTING_DIAGRAM_ONLY);
+
+            // Include these in everything (including cookie), except not in saved settings if option
+            // to only save diagram settings is enabled
+            case 'output_type':
+            case 'url_xref_treatment':
+                return $context !== (self::CONTEXT_NAMED_SETTING_DIAGRAM_ONLY);
+            // Include these in everything (especially including cookie)
             case 'include_ancestors':
             case 'include_descendants':
             case 'ancestor_levels':
@@ -549,11 +573,9 @@ class Settings
             case 'stop_xref_list':
             case 'mark_not_related':
             case 'faster_relation_check':
-            case 'url_xref_treatment':
             case 'graph_dir':
             case 'diagtype_decorated':
             case 'diagtype_combined':
-            case 'output_type':
             case 'show_adv_people':
             case 'show_adv_appear':
             case 'show_adv_files':
