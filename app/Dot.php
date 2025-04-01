@@ -343,7 +343,7 @@ class Dot {
 								$fams = isset($this->individuals[$child->xref()]["fams"]) ? $this->individuals[$child->xref()]["fams"] : [];
 								foreach ($fams as $fam) {
                                     $family_name = $this->generateFamilyNodeName($fam);
-                                    $arrow_colour = $this->getArrowColour($child, $fid);
+                                    $arrow_colour = $this->getChildArrowColour($child, $fid);
                                     $line_style = $this->getLineStyle();
                                     $out .= $nodeName . " -> " . $family_name . ":" . $this->convertID($child->xref()) . " [color=\"$arrow_colour\", style=\"" . $line_style . "\", arrowsize=0.3] \n";
                                 }
@@ -366,20 +366,21 @@ class Dot {
                     else
                         $wife_id = null;
 
+                    $parent_arrow_colour = $this->getParentArrowColour();
 					// Draw an arrow from HUSB to FAM
 					if (!empty($husb_id) && (isset($this->individuals[$husb_id]))) {
                         $line_style = $this->getLineStyle();
-                        $out .= $this->convertID($husb_id) . " -> " . $this->convertID($fid) ." [color=\"" . $this->settings["arrows_default"] . "\", style=\"" . $line_style . "\", arrowsize=0.3]\n";
+                        $out .= $this->convertID($husb_id) . " -> " . $this->convertID($fid) ." [color=\"" . $parent_arrow_colour . "\", style=\"" . $line_style . "\", arrowsize=0.3]\n";
 					}
 					// Draw an arrow from WIFE to FAM
 					if (!empty($wife_id) && (isset($this->individuals[$wife_id]))) {
                         $line_style = $this->getLineStyle();
-						$out .= $this->convertID($wife_id) . " -> ". $this->convertID($fid) ." [color=\"" . $this->settings["arrows_default"] . "\", style=\"" . $line_style . "\", arrowsize=0.3]\n";
+						$out .= $this->convertID($wife_id) . " -> ". $this->convertID($fid) ." [color=\"" . $parent_arrow_colour . "\", style=\"" . $line_style . "\", arrowsize=0.3]\n";
 					}
 					// Draw an arrow from FAM to each CHIL
 					foreach ($f->children() as $child) {
 						if (!empty($child) && (isset($this->individuals[$child->xref()]))) {
-                            $arrow_colour = $this->getArrowColour($child, $fid);
+                            $arrow_colour = $this->getChildArrowColour($child, $fid);
                             $line_style = $this->getLineStyle();
 							$out .= $this->convertID($fid) . " -> " . $this->convertID($child->xref()) . " [color=\"$arrow_colour\", style=\"" . $line_style . "\", arrowsize=0.3]\n";
 						}
@@ -1442,20 +1443,25 @@ class Dot {
 	}
 
 
-    public function getArrowColour($i, $fid)
+    public function getChildArrowColour($i, $fid)
     {
-        $relationshipType = "";
-        if (substr($fid, 0, 2) != "F_") {
-            $f = $this->getUpdatedFamily($fid);
-            $relationshipType = $this->getRelationshipType($i, $f);
-        }
+        if ((int) $this->settings["arrow_colour_type"] === Settings::OPTION_ARROW_RANDOM_COLOUR) {
+            return $this->getRandomColour();
+        } elseif ((int) $this->settings["arrow_colour_type"] === Settings::OPTION_ARROW_CUSTOM_COLOUR) {
+            $relationshipType = "";
+            if (substr($fid, 0, 2) !== "F_") {
+                $f = $this->getUpdatedFamily($fid);
+                $relationshipType = $this->getRelationshipType($i, $f);
+            }
 
-        if ($relationshipType != "") {
-            $arrow_colour = $this->settings["colour_arrow_related"] == "colour_arrow_related" ? $this->settings["arrows_not_related"] : $this->settings["arrows_default"];
-        } else {
-            $arrow_colour = $this->settings["colour_arrow_related"] == "colour_arrow_related" ? $this->settings["arrows_related"] : $this->settings["arrows_default"];
+            if ($relationshipType != "") {
+                $arrow_colour = $this->settings["colour_arrow_related"] == "colour_arrow_related" ? $this->settings["arrows_not_related"] : $this->settings["arrows_default"];
+            } else {
+                $arrow_colour = $this->settings["colour_arrow_related"] == "colour_arrow_related" ? $this->settings["arrows_related"] : $this->settings["arrows_default"];
+            }
+            return $arrow_colour;
         }
-        return $arrow_colour;
+        return $this->settings["arrows_default"];
     }
 
     /**
@@ -1701,5 +1707,32 @@ class Dot {
                 break;
         }
         return $style;
+    }
+
+    private function getRandomColour()
+    {
+        $colours = [
+            "#E51616", "#E52316", "#E52F16", "#E53C16", "#E54816", "#E55416", "#E56116", "#E56D16", "#E57A16", "#E58616",
+            "#E59216", "#E59F16", "#E5AB16", "#E5B816", "#E5C416", "#E5D016", "#E5DD16", "#E1E516", "#D4E516", "#C8E516",
+            "#BCE516", "#AFE516", "#A3E516", "#97E516", "#8AE516", "#7EE516", "#71E516", "#65E516", "#59E516", "#4CE516",
+            "#40E516", "#33E516", "#27E516", "#1BE516", "#16E51F", "#16E52B", "#16E537", "#16E544", "#16E550", "#16E55D",
+            "#16E569", "#16E575", "#16E582", "#16E58E", "#16E59B", "#16E5A7", "#16E5B3", "#16E5C0", "#16E5CC", "#16E5D9",
+            "#16E5E5", "#16D9E5", "#16CCE5", "#16C0E5", "#16B3E5", "#16A7E5", "#169BE5", "#168EE5", "#1682E5", "#1675E5",
+            "#1669E5", "#165DE5", "#1650E5", "#1644E5", "#1637E5", "#162BE5", "#161FE5", "#1B16E5", "#2716E5", "#3316E5",
+            "#4016E5", "#4C16E5", "#5916E5", "#6516E5", "#7116E5", "#7E16E5", "#8A16E5", "#9716E5", "#A316E5", "#AF16E5",
+            "#BC16E5", "#C816E5", "#D416E5", "#E116E5", "#E516DD", "#E516D0", "#E516C4", "#E516B8", "#E516AB", "#E5169F",
+            "#E51692", "#E51686", "#E5167A", "#E5166D", "#E51661", "#E51654", "#E51648", "#E5163C", "#E5162F", "#E51623"
+        ];
+        return $colours[array_rand($colours)];
+    }
+
+    private function getParentArrowColour()
+    {
+        if ((int) $this->settings["arrow_colour_type"] === Settings::OPTION_ARROW_RANDOM_COLOUR) {
+            return $this->getRandomColour();
+        } elseif ((int) $this->settings["arrow_colour_type"] === Settings::OPTION_ARROW_CUSTOM_COLOUR) {
+            return $this->settings["arrows_default"];
+        }
+        return $this->settings["arrows_default"];
     }
 }

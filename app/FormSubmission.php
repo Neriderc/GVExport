@@ -117,6 +117,10 @@ class FormSubmission
             $settings['typeface'] = I18N::digits($vars['typeface']);
         }
 
+        if (isset($vars['arrow_colour_type']) && I18N::digits(($vars['arrow_colour_type']))) {
+            $settings['arrow_colour_type'] = $vars['arrow_colour_type'];
+        }
+
         if (isset($vars['arrows_default']) && $this->isValidColourHex($vars['arrows_default'])) {
             $settings['arrows_default'] = $vars['arrows_default'];
         }

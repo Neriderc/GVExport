@@ -41,6 +41,8 @@ class Settings
     public const OPTION_BORDER_FAMILY = 320;
     public const OPTION_BORDER_VITAL_COLOUR = 330;
     public const OPTION_BORDER_AGE_COLOUR = 340;
+    public const OPTION_ARROW_CUSTOM_COLOUR = 350;
+    public const OPTION_ARROW_RANDOM_COLOUR = 360;
     public const USER_ROLES = ['Visitor', 'Member', 'Editor', 'Moderator', 'Manager'];
     const TREE_PREFIX = "_t";
     const USER_PREFIX = "_u";
@@ -78,6 +80,7 @@ class Settings
         $this->defaultSettings['settings_sort_order_options'] = [0 => 'Oldest first', 10 => 'Newest first', 20 => 'Alphabetical order', 30 => 'Reverse alphabetical order'];
         $this->defaultSettings['click_action_indi_options'] = [0 => 'Open individual\'s page', 10 => 'Add individual to list of starting individuals', 20 => 'Replace starting individuals with this individual', 30 => 'Add this individual to the list of stopping individuals', 40 => 'Replace stopping individuals with this individual', 70 => 'Add to list of individuals to highlight', 50 => 'Show menu', 60 => 'Do nothing'];
         $this->defaultSettings['arrow_style_options'] = [0 => 'Solid', 10 => 'Dotted', 20 => 'Dashed', 30 => 'Bold', 40 => 'Tapered', 50 => 'Random', 60 => 'None'];
+        $this->defaultSettings['arrow_colour_type_options'] = [Settings::OPTION_ARROW_CUSTOM_COLOUR => 'Custom', Settings::OPTION_ARROW_RANDOM_COLOUR => 'Random'];
         $this->defaultSettings['countries'] = $this->getCountryAbbreviations();
         if (!$this->isGraphvizAvailable($this->defaultSettings['graphviz_bin'])) {
             $this->defaultSettings['graphviz_bin'] = "";
@@ -514,6 +517,7 @@ class Settings
             case 'settings_sort_order_options':
             case 'click_action_indi_options':
             case 'arrow_style_options':
+            case 'arrow_colour_type_options':
             case 'limit_levels':
             case 'time_token':
                 return false;
