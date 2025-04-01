@@ -2307,3 +2307,33 @@ msgstr "Alleen plaats"
 msgid "only the first section of the place name is used, up to the first comma. For example, &quot;London, England, United Kingdom&quot; would be shortened to &quot;London&quot;"
 msgstr "alleen het eerste deel van de plaatsnaam wordt gebruikt, tot aan de eerste komma. Bijvoorbeeld, &quot;Londen, Engeland, Verenigd Koninkrijk&quot; wordt afgekort tot &quot;Londen&quot;"
 
+#. Part of help text that explains about colouring arrows:
+#. https://s3.eu-west-1.amazonaws.com/po-pub/i/TiRwd6hEnd2Fh8g6agiMJabm.png
+#: 
+msgid "This allows you to select the method for colouring arrows that link the different nodes. The 'Random' option will randomly select a colour for each arrow, making it easier to follow overlapping arrows on complex diagrams."
+msgstr "Hiermee kunt u de methode selecteren voor het kleuren van pijlen die de verschillende knooppunten met elkaar verbinden. De optie 'Willekeurig' selecteert willekeurig een kleur voor elke pijl, waardoor het gemakkelijker wordt om overlappende pijlen te volgen in complexe diagrammen."
+
+#. Added new section for Arrow colour that incorporates existing option splus new Random option:
+#. https://s3.eu-west-1.amazonaws.com/po-pub/i/2FChiaVMAKU4XrD6hAjWpo5u.png  https://s3.eu-west-1.amazonaws.com/po-pub/i/H0UG96EvyeAOsiax2QbDpjFz.png
+#: 
+msgid "Arrow colour"
+msgstr "Pijlkleur"
+
+#. Part of help text explaining setting arrow colours for the diagram:
+#. https://s3.eu-west-1.amazonaws.com/po-pub/i/eL2Watu303E3miIjWjepkCm1.png
+#: 
+msgid "If selecting 'Custom', you are presented with further options"
+msgstr "Als u 'Aangepast' selecteert, krijgt u meer opties te zien"
+
+#. Added new option to the saved settings list that allows only saving settings that will affect the diagram:
+#. https://s3.eu-west-1.amazonaws.com/po-pub/i/lk2HC9wbC8GP52hP8jQPbca5.png
+#: 
+msgid "Only save settings that affect diagram"
+msgstr "Sla alleen instellingen op die diagrammen beïnvloeden"
+
+#. Help text that explains new option "Only save settings that affect diagram":
+#. https://s3.eu-west-1.amazonaws.com/po-pub/i/s8JE1JCBUG1WTEzqCv5UxB4R.png
+#: 
+msgid "If you select this option, saving settings to the saved settings list will only save the settings that directly affect the diagram. When unchecked, other settings such as the 'Output file type' and 'Show saved diagrams panel' will also be saved."
+msgstr "Als u deze optie selecteert, worden bij het opslaan van instellingen in de lijst met opgeslagen instellingen alleen de instellingen opgeslagen die direct van invloed zijn op het diagram. Als deze optie niet is aangevinkt, worden andere instellingen zoals 'Type uitvoerbestand' en 'Toon paneel met opgeslagen diagrammen' ook opgeslagen."
+
