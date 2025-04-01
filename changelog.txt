@@ -3,6 +3,12 @@
 	GVExport module for Webtrees
 =====================================================================
 
+Version 2.2.3 (2025-04-02)
+  - New       : Added option to use random arrow colours
+  - New       : Added option to exclude settings from saved settings that don't affect the diagram
+  - Fix       : Resolved issue with loading the individual from the URL (e.g. when coming from page of individual)
+  - Fix       : Resolved issue where you cannot use the PDF export option if you enable photo shapes and also have Graphviz installed on the server
+
 Version 2.2.2 (2024-11-26)
   - Change    : Versions of webtrees below 2.2.0 are now supported again
 
