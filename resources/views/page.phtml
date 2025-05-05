@@ -30,7 +30,7 @@ $usegraphviz = $vars['graphviz_bin'] != "";
     let autoUpdate = <?= $vars["auto_update"] ? 'true' : 'false' ?>;
     let debug_string = "";
     let TOMSELECT_URL = "";
-    let download_file_name = "<?= e($settings['filename']); ?>";
+    let download_file_name = "<?= e($vars['filename']); ?>";
     let url_xref_treatment = "<?= e($vars['url_xref_treatment']); ?>";
     let shared_note_default = "<?= $vars['sharednote_col_default']; ?>";
     let firstRender = <?= $vars['first_render'] ? 'true' : 'false'; ?>;
