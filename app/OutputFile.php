@@ -52,6 +52,7 @@ class OutputFile
         $filename = $this->tempDir . "/" . $this->baseName;
         if (!empty($this->settings['graphviz_config']['output'][$this->fileType]['exec'])) {
             $shell_cmd = str_replace($this->settings['filename'],  $this->tempDir . "/" .$this->settings['filename'], $this->settings['graphviz_config']['output'][$this->fileType]['exec']);
+            putenv("GV_FILE_PATH=/");
             exec($shell_cmd." 2>&1", $stdout_output, $return_var);
             if ($return_var !== 0)
             {
