@@ -310,6 +310,12 @@ span.NAME {
     right: 10px;
     text-align: center;
 }
+#render_menu_container {
+    position: absolute;
+    top: 0;
+    left: 10px;
+    text-align: center;
+}
 
 .fullscreen {
     font-size: 2.8em;
@@ -320,6 +326,10 @@ span.NAME {
 }
 
 .search_icon {
+    font-size: 1.8em;
+}
+
+.menu-fullscreen {
     font-size: 1.8em;
 }
 @media screen and (max-device-width:480px) {

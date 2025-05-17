@@ -1034,5 +1034,12 @@ const UI = {
             this.classList.remove('over');
             return false;
         }
+    },
+
+    mainOptions: {
+        showOptionsFullscreen() {
+            let menu = document.getElementsByClassName('sidebar').item(0);
+            alert(menu);
+        }
     }
 };

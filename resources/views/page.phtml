@@ -144,6 +144,11 @@ $usegraphviz = $vars['graphviz_bin'] != "";
 
 <div id="render-container">
     <div id="rendering" hidden style="background-color: <?= $vars["background_col"] ?>;"></div>
+    <div id="render_menu_container">
+        <div>
+            <a title="<?= I18N::translate('Show menu') ?>" onclick="" class="menu-fullscreen pointer" id="fullscreenShowMenu" style="display:   ;"><i class="fa-solid fa-bars"></i></a>
+        </div>
+    </div>
     <div id="render_button_container">
         <div>
             <a title="<?= I18N::translate('Fullscreen') ?>" onclick="toggleFullscreen()" class="fullscreen pointer" id="fullscreenButton">⛶</a>
