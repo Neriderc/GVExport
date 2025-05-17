@@ -1039,7 +1039,11 @@ const UI = {
     mainOptions: {
         showOptionsFullscreen() {
             let menu = document.getElementsByClassName('sidebar').item(0);
-            alert(menu);
+            if (menu.hidden) {
+                UI.showSidebar();
+            } else {
+                UI.hideSidebar();
+            }
         }
     }
 };

@@ -1,0 +1,111 @@
+<?php
+
+use vendor\WebtreesModules\gvexport\GVExport;
+use vendor\WebtreesModules\gvexport\MainPage;
+use Fisharebest\Webtrees\I18N;
+
+/**
+ * @var Tree        $tree                   the webtrees tree instance of the current tree
+ * @var Individual  $individual             the webtrees individual object instance of the XREF in the URL
+ * @var array       $settings               wider array of settings and options
+ * @var array       $vars                   array of saved settings
+ * @var array       $otypes                 output file type options
+ * @var bool        $cartempty              are there any individuals (INDI records) in the clippings cart?
+ * @var GVExport    $module                 instance of this module
+ * @var bool        $admin                  whether this is for the admin page (remove functions that aren't settings)
+ * @var bool        $usegraphviz            whether graphviz is enabled or available
+ */
+
+?>
+<form action="<?= $module->chartUrl($individual) ?>" method="post" class="sidebar d-print-none" id="gvexport">
+    <div class="pull-right btn-hover">
+        <a class="hide-form btn btn-secondary pointer"><i class="fa-solid fa-xmark"></i></a>
+    </div>
+
+    <div class="sidebar__formfields col">
+
+        <?= csrf_field() ?>
+
+        <input type="hidden" id="time_token" name="vars[time_token]" value="">
+        <div id="saved_diagrams_panel" <?php if (!$vars["show_diagram_panel"]) echo 'style="display: none"'; ?>>
+            <div class="d-flex">
+                <h3><?= I18N::translate('Saved diagrams') ?></h3>
+            </div>
+
+            <div class="row no-right-margin form-group">
+                <?= MainPage::addLabel('simple_settings_list', 'List of diagrams'); ?>
+                <div class="col-sm-8 options-panel-background">
+                    <select id="simple_settings_list" class="form-select">
+                        <option value="-">-</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex">
+            <h3><?= I18N::translate('People to be included') ?></h3>
+        </div>
+
+        <?php
+        // Include the "People to be included" section of the settings
+        echo view($module->name() . '::MainPage/PeopleToInclude',
+            [
+                'vars' => $vars,
+                'tree' => $tree,
+                'cartempty' => $cartempty,
+                'module' => $module,
+                'settings' => $settings,
+                'admin' => false
+            ]); ?>
+
+        <h3><?= I18N::translate('Appearance') ?></h3>
+
+        <?php
+        // Include the "Appearance" section of the settings
+        echo view($module->name() . '::MainPage/Appearance',
+            [
+                'vars' => $vars,
+                'tree' => $tree,
+                'module' => $module,
+                'settings' => $settings,
+                'usegraphviz' => $usegraphviz,
+                'individual' => $individual,
+                'admin' => false
+            ]); ?>
+
+        <h3><?= I18N::translate('General settings') ?></h3>
+        <?php
+        // Include the "General Settings" section of the settings
+        echo view($module->name() . '::MainPage/GeneralSettings',
+            [
+                'vars' => $vars,
+                'module' => $module,
+                'settings' => $settings,
+                'usegraphviz' => $usegraphviz,
+                'otypes' => $otypes,
+                'admin' => false
+            ]); ?>
+        <?php if ($vars["show_debug_panel"]) { ?>
+            <h3><?= I18N::translate('Debug') ?></h3>
+            <?php
+            // Include the "General Settings" section of the settings
+            echo view($module->name() . '::MainPage/DebugPanel',
+                [
+                    'vars' => $vars,
+                    'admin' => false
+                ]); ?>
+        <?php } ?>
+    </div>
+
+    <div class="sidebar__buttons">
+        <button type="submit" class="btn btn-primary update-browser-rendering" id="update-browser" <?php if ($vars["auto_update"]) { echo 'style="display: none"'; } ?>><?= I18N::translate('Update') ?></button>
+        <button type="submit" class="btn btn-secondary main-action" name="download"><?= I18N::translate('Download') ?></button>
+        <a href="<?= $module->chartUrl($individual, ['reset' => '1']) ?>" class="btn btn-outline-secondary"><?= I18N::translate('Reset') ?></a>
+        <button id="help-about" class="btn btn-outline-secondary" name="help"><?= I18N::translate('Help') ?></button>
+    </div>
+
+    <input type="hidden" id="browser" name="browser" value="false">
+    <input type="hidden" id="people-advanced-hidden" name="vars[show_adv_people]" value="<?= $vars["show_adv_people"] ? 'show' : '' ?>">
+    <input type="hidden" id="appearance-advanced-hidden" name="vars[show_adv_appear]" value="<?= $vars["show_adv_appear"] ? 'show' : '' ?>">
+    <input type="hidden" id="files-advanced-hidden" name="vars[show_adv_files]" value="<?= $vars["show_adv_files"] ? 'show' : '' ?>">
+    <div id="toast-container"></div>
+</form>
