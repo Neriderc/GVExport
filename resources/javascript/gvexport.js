@@ -222,9 +222,11 @@ function handleFullscreenExit()
     {
         Form.showHide(document.getElementById("fullscreenButton"), true);
         Form.showHide(document.getElementById("fullscreenClose"), false);
+        Form.showHide(document.getElementById("fullscreenShowMenu"), false);
     } else {
         Form.showHide(document.getElementById("fullscreenButton"), false);
         Form.showHide(document.getElementById("fullscreenClose"), true);
+        Form.showHide(document.getElementById("fullscreenShowMenu"), true);
     }
 }
 
