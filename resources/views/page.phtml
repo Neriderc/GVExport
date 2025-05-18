@@ -52,9 +52,6 @@ $usegraphviz = $vars['graphviz_bin'] != "";
 <div id="render-container">
     <div id="rendering" hidden style="background-color: <?= $vars["background_col"] ?>;"></div>
     <div id="render_menu_container">
-        <div>
-            <a title="<?= I18N::translate('Show menu') ?>" onclick="UI.mainOptions.showOptionsFullscreen()" class="menu-fullscreen pointer" id="fullscreenShowMenu" style="display: none;"><i class="fa-solid fa-bars"></i></a>
-        </div>
         <?php
         // Include the options sidebar menu
         echo view($module->name() . '::MainPage/Sidebar',
@@ -78,6 +75,9 @@ $usegraphviz = $vars['graphviz_bin'] != "";
         <div>
             <a title="<?= I18N::translate('Search diagram') ?>" onclick="" class="search_icon pointer" id="searchButton"><?= view('icons/search'); ?></a>
             <div id="diagram_search_box_container" style="display: none"><?= view('components/select-individual', ['name' => 'diagram_search_box', 'id' => 'diagram_search_box', 'tree' => $tree, 'individual' => "", 'required'=>false]); ?></div>
+        </div>
+        <div>
+            <a title="<?= I18N::translate('Show menu') ?>" onclick="UI.mainOptions.showOptionsFullscreen()" class="menu-fullscreen pointer" id="fullscreenShowMenu" style="display: none;"><i class="fa-solid fa-wrench"></i></a>
         </div>
     </div>
     <div id="context_menu" style="display: none">
