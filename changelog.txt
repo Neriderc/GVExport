@@ -3,6 +3,12 @@
 	GVExport module for Webtrees
 =====================================================================
 
+Version 2.2.4 (2025-05-19)
+  - New       : Menu now accessible in full screen
+  - New       : Now translated into Chinese (simplified)
+  - Fix       : Resolved issue where Graphviz on server won't run when SERVER_NAME environment variable is set
+  - Fix       : Resolved issue where download file name control panel setting wasn't used if Graphviz not installed on server
+
 Version 2.2.3 (2025-04-02)
   - New       : Added option to use random arrow colours
   - New       : Added option to exclude settings from saved settings that don't affect the diagram
