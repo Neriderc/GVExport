@@ -5,371 +5,368 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: POEditor.com\n"
 "Project-Id-Version: GVExport\n"
-"Language: ca\n"
+"Language: zh-Hans\n"
 
 #: 
 msgid "Update"
-msgstr "Actualitzar"
+msgstr "更新"
 
 #: 
 msgid "Reset"
-msgstr "Reinicialitzar"
+msgstr "重置"
 
 #: 
 msgid "Appearance"
-msgstr "Aparença"
+msgstr "外观"
 
 #: 
 msgid "Output settings"
-msgstr "Configuració d'eixida"
+msgstr "输出设置"
 
 #: 
 msgid "Include anyone related to"
-msgstr "Incloure a qualsevol persona relacionada amb"
+msgstr "包含与...相关的任何人"
 
 #: 
 msgid "Stop processing on"
-msgstr "Detindre el processament en"
+msgstr "停止处理在"
 
 #: 
 msgid "Include ancestors"
-msgstr "Incloure avantpassats"
+msgstr "包括祖先"
 
 #. Section that allows setting various options around how the diagram is expanded from the starting individuals. This section now merges some previous settings into one:  https://s3.eu-west-1.amazonaws.com/po-pub/i/Z1PzXOjHnmuiy8DMV4tSWRPn.png
 #: 
-#, fuzzy
 msgid "Connections to include"
-msgstr "Incloure"
+msgstr "要包含的连接"
 
 #: 
 msgid "Siblings"
-msgstr "germans"
+msgstr "兄弟姐妹"
 
 #: 
 msgid "Include descendants"
-msgstr "Incloure descendents"
+msgstr "包括后代"
 
 #: 
 msgid "Max levels"
-msgstr "Nivells màxims"
+msgstr "最大层数"
 
 #: 
 msgid "Mark not blood-related people with different colour"
-msgstr "Marcar persones no consanguínies amb diferent color"
+msgstr "用不同颜色标记非血亲关系的人"
 
 #. SVG links no longer work (and seem to have been broken for 3+ years), and it's not trivial to fix. Instead, I have updated this to clarify that it works only with PDF, and it will be hidden if Graphviz is not installed on the server.
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/SEzk1B1h5LwyvxiJ9liuAwLX.png
 #: 
-#, fuzzy
 msgid "Add link to individuals and families in PDF output"
-msgstr "Agregar URL a individus i famílies"
+msgstr "在PDF输出中添加个人和家庭的链接"
 
 #: 
 msgid "Show birthdate"
-msgstr "Mostrar data de naixement"
+msgstr "显示出生日期"
 
 #: 
 msgid "Show birthplace"
-msgstr "Mostrar indret de naixement"
+msgstr "显示出生地"
 
 #: 
 msgid "Show death date"
-msgstr "Mostrar data de defunció"
+msgstr "显示死亡日期"
 
 #: 
 msgid "Full date"
-msgstr "Data completa"
+msgstr "完整日期"
 
 #: 
 msgid "Year"
-msgstr "Any"
+msgstr "年份"
 
 #: 
 msgid "Show death place"
-msgstr "Mostrar lloc de defunció"
+msgstr "显示死亡地点"
 
 #: 
 msgid "Show family XREF"
-msgstr "Mostrar XREF familiar"
+msgstr "显示家庭交叉引用"
 
 #: 
 msgid "Show marriage date"
-msgstr "Mostrar data de casament"
+msgstr "显示结婚日期"
 
 #: 
 msgid "Show marriage place"
-msgstr "Mostrar indret de casament"
+msgstr "显示结婚地点"
 
 #: 
 msgid "Graph direction"
-msgstr "Direcció del gràfic"
+msgstr "图形方向"
 
 #: 
 msgid "Diagram type"
-msgstr "Tipus de diagrama"
+msgstr "图表类型"
 
 #. Diagram type is now called "Separated" (previously "Decorated"). Simple option removed.  https://s3.eu-west-1.amazonaws.com/po-pub/i/lO1dVSZE4z0z2WQD3NI7TWPV.png
 #: 
-#, fuzzy
 msgid "Separated"
-msgstr "Decorat"
+msgstr "分离式"
 
 #: 
 msgid "Combined"
-msgstr "Combinat"
+msgstr "组合式"
 
 #. This is the name of the section that photo related settings can be changed: https://s3.eu-west-1.amazonaws.com/po-pub/i/fklNi5Hq6dbxZd3ktRneP8jW.png
 #: 
 msgid "Photos"
-msgstr "Afegir fotos"
+msgstr "照片"
 
 #: 
 msgid "Output file type"
-msgstr "Tipus d'arxiu d'eixida"
+msgstr "输出文件类型"
 
 #: 
 msgid "Number of iterations (MCLIMIT)"
-msgstr "Nombre d'iteracions (MCLIMIT)"
+msgstr "迭代次数（MCLIMIT）"
 
 #: 
 msgid "DPI"
-msgstr "PPP"
+msgstr "每英寸点数"
 
 #: 
 msgid "Show options"
-msgstr "Mostrar opcions"
+msgstr "显示选项"
 
 #: 
 msgid "Top-to-bottom"
-msgstr "De d'alt a baix"
+msgstr "从上到下"
 
 #: 
 msgid "Left-to-right"
-msgstr "D'esquerra a dreta"
+msgstr "从左到右"
 
 #: 
 msgid "Space between generations"
-msgstr "Espai entre generacions"
+msgstr "代与代之间的间距"
 
 #: 
 msgid "Space between individuals on the same level"
-msgstr "Espai entre individus del mateix nivell"
+msgstr "同一层级个体之间的间距"
 
 #: 
 msgid "Error running GVExport in browser mode"
-msgstr "Error en executar GVExport en manera navegador"
+msgstr "在浏览器模式下运行GVExport时出错"
 
 #: 
 msgid "Download"
-msgstr "Descarregar"
+msgstr "下载"
 
 #: 
 msgid "Full place name"
-msgstr "Topònim complet"
+msgstr "完整地名"
 
 #: 
 msgid "City and country"
-msgstr "Ciutat i país"
+msgstr "城市和国家"
 
 #: 
 msgid "City and 2 letter ISO country code"
-msgstr "Ciutat i codi de país ISO de dues lletres"
+msgstr "城市和两位字母的ISO国家代码"
 
 #: 
 msgid "City and 3 letter ISO country code"
-msgstr "Ciutat i codi de país ISO de tres lletres"
+msgstr "城市和三位字母的ISO国家代码"
 
 #: 
 msgid "Space"
-msgstr "Espai"
+msgstr "间距"
 
 #: 
 msgid "Between generations"
-msgstr "Entre generacions"
+msgstr "代与代之间"
 
 #: 
 msgid "Between individuals on the same level"
-msgstr "Entre individus del mateix nivell"
+msgstr "同一层级个体之间"
 
 #: 
 msgid "Abbreviated place names"
-msgstr "Topònims abreujats"
+msgstr "缩写地名"
 
 #: 
 msgid "People to be included"
-msgstr "Persones a incloure"
+msgstr "要包含的人员"
 
 #: 
 msgid "Show individual XREF"
-msgstr "Mostrar XREF individual"
+msgstr "显示个人交叉引用"
 
 #: 
 msgid "Options limited as Graphviz not installed on server"
-msgstr "Opcions limitades, perquè Graphviz no està instal·lat al servidor"
+msgstr "由于服务器上未安装Graphviz，选项受限"
 
 #: 
 msgid "Anyone"
-msgstr "Ningú"
+msgstr "任何人"
 
 #: 
 msgid "All relatives"
-msgstr "Tots els familiars"
+msgstr "所有亲属"
 
 #: 
 msgid "You have items in the clippings cart, which can be used for the diagram instead of the below options."
-msgstr "Té elements en el carret de retallades, que es poden utilitzar per al diagrama en lloc de les següents opcions."
+msgstr "剪报车中有项目，可用于图表，而不是以下选项。"
 
 #: 
 msgid "Use clippings cart"
-msgstr "Utilitzar el carret de retallades"
+msgstr "使用剪报车"
 
 #: 
 msgid "Ignore clippings cart"
-msgstr "Ignorar el carret de retallades"
+msgstr "忽略剪报车"
 
 #: 
 msgid "Warning"
-msgstr "Atenció"
+msgstr "警告"
 
 #: 
 msgid "Individual required"
-msgstr "Es requereix individu"
+msgstr "需要个人信息"
 
 #: 
 msgid "Generated %s individuals and %s family records"
-msgstr "Generació de %s individus i %s registres familiars"
+msgstr "生成了 %s 个个人信息和 %s 条家庭记录"
 
 #: 
 msgid "Invalid starting individual:"
-msgstr "l'individu inicial no és vàlid:"
+msgstr "无效的起始个人："
 
 #: 
 msgid "Your browser does not support exporting images this large. Please reduce number of records, reduce DPI setting, or use SVG option."
-msgstr "El seu navegador no admet l'exportació d'imatges tan grans. Reduïsca el nombre de registres, reduïsca la configuració de DPI o utilitze l'opció SVG."
+msgstr "您的浏览器不支持导出这么大的图像。请减少记录数量、降低DPI设置或使用SVG选项。"
 
 #: 
 msgid "Toggle advanced settings"
-msgstr "Alternar la configuració avançada"
+msgstr "切换高级设置"
 
 #: 
 msgid "Ignore unseen links to speed up relative check"
-msgstr "Ignorar els enllaços invisibles per a accelerar la comprovació relativa"
+msgstr "忽略不可见链接以加快亲属关系检查"
 
 #: 
 msgid "Non-relatives"
-msgstr "No familiars"
+msgstr "非亲属"
 
 #: 
 msgid "Font"
-msgstr "Font"
+msgstr "字体"
 
 #: 
 msgid "Typeface"
-msgstr "Tipus de lletra"
+msgstr "字体系列"
 
 #: 
 msgid "Font colour for names"
-msgstr "Color de la font per a noms"
+msgstr "姓名的字体颜色"
 
 #: 
 msgid "Font colour for details"
-msgstr "Color de la font per a més detalls"
+msgstr "详细信息的字体颜色"
 
 #. When you are no longer logged in, GVExport can't load the browser render until the page is refreshed. This message is shown before automatically reloading the page.
 #: 
 msgid "Login expired. Reloading page..."
-msgstr "Inici de la sessió caducada. Recarregant pàgina.."
+msgstr "登录已过期。正在重新加载页面..."
 
 #. Label for section that lets you change the colour of arrows that represent relationships between records
 #: 
 msgid "Relationship arrows"
-msgstr "Fletxes de relació"
+msgstr "关系箭头"
 
 #. When enabled makes arrows from family to child different colours based on if the child is related to the family by birth or otherwise (e.g. adoption)
 #: 
 msgid "Show blood relationship in different colour"
-msgstr "Mostra la consanguinitat de diferent color"
+msgstr "用不同颜色显示血亲关系"
 
 #. Label for colour picker to select colour of arrow for children related by birth
 #: 
 msgid "Related by birth"
-msgstr "Relacionat per naiximent"
+msgstr "血亲关系"
 
 #. Label for colour picker to select colour of arrow for children not related by birth (e.g. adoption)
 #: 
 msgid "Related other than by birth"
-msgstr "Relacionats que no siguin per naixement"
+msgstr "非血亲关系"
 
 #. Option for abbreviating name, see: https://github.com/Neriderc/GVExport/issues/158
 #: 
 msgid "Full name"
-msgstr "Nom complet"
+msgstr "全名"
 
 #. Option for abbreviating name, see: https://github.com/Neriderc/GVExport/issues/158
 #: 
 msgid "Given and surnames"
-msgstr "Nom i cognoms"
+msgstr "名和姓"
 
 #. Option for abbreviating name, see: https://github.com/Neriderc/GVExport/issues/158
 #: 
 msgid "Given names"
-msgstr "Nom"
+msgstr "名"
 
 #. Option for abbreviating name, see: https://github.com/Neriderc/GVExport/issues/158
 #: 
 msgid "Surnames"
-msgstr "Cognoms"
+msgstr "姓"
 
 #. Option for abbreviating name, see: https://github.com/Neriderc/GVExport/issues/158
 #: 
 msgid "Don't show names"
-msgstr "No mostris noms"
+msgstr "不显示姓名"
 
 #. Option for abbreviating name, see: https://github.com/Neriderc/GVExport/issues/158
 #: 
 msgid "First given name only"
-msgstr "Nom i cognoms només"
+msgstr "仅显示第一个名"
 
 #. Option for abbreviating name, see: https://github.com/Neriderc/GVExport/issues/158
 #: 
 msgid "Initials only"
-msgstr "Nomès Inicials"
+msgstr "仅显示首字母"
 
 #. Option for abbreviating name, see: https://github.com/Neriderc/GVExport/issues/158
 #: 
 msgid "Given name initials and surname"
-msgstr "Inicials del nom i cognoms"
+msgstr "名的首字母和姓"
 
 #. This is to replace "Spouses" in the options of people to include - "Spouses" implies marriage but the couples are not necessarily married.
 #: 
 msgid "Partners"
-msgstr "Parella"
+msgstr "伴侣"
 
 #. Option section where option to auto-update is presented
 #: 
 msgid "Browser render"
-msgstr "Renderització del navegador"
+msgstr "浏览器渲染"
 
 #. Whether to automatically update the diagram in the browser whenever something is changed. If unselected, user must click "Update" button before browser render is refreshed after a change.
 #: 
 msgid "Auto-update"
-msgstr "Actualització automàtica"
+msgstr "自动更新"
 
 #. Button to clear all selected individuals (in new individual selection functionality) https://s3.eu-west-1.amazonaws.com/po-pub/i/EsrRESKU3YALMqSOyVudt0L1.png
 #: 
 msgid "Clear all"
-msgstr "Esborra-ho tot"
+msgstr "全部清除"
 
 #. With the new way of showing the selected starting individuals, the XREF list is now moved to the advanced section. This is the description of this field that lists the XREFs of the starting individuals that used to be under the person select dropdown.
 #: 
 msgid "XREFs of included individuals"
-msgstr "XREF de persones incloses"
+msgstr "所包含个人的交叉引用"
 
 #. Option to show given or surnames, initials, or to hide names completely:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/5r0R5U4uGRS1qz8NuOCtuIN1.png
 #: 
 msgid "Abbreviated names"
-msgstr "Noms abreujats"
+msgstr "缩写姓名"
 
 #. This is shown when hovering over the new "Fullscreen" button. 
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/FNnRXD7QT9BrgV0wMgPIdrY2.png 
@@ -378,305 +375,294 @@ msgstr "Noms abreujats"
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/f2Rt9T3BJXkNbeqoeazeDJkE.png
 #: 
 msgid "Fullscreen"
-msgstr "Pantalla completa"
+msgstr "全屏"
 
 #. Option allowing user to change colour used for male individuals (default is a light blue)
 #: 
 msgid "Male individuals"
-msgstr "Individus masculins"
+msgstr "男性个体"
 
 #. Option allowing user to change colour of female individuals (default is pink)
 #: 
 msgid "Female individuals"
-msgstr "Individus femenins"
+msgstr "女性个体"
 
 #. Option allowing user to change colour of individuals where gender is "Other"
 #: 
 msgid "Other gender individuals"
-msgstr "Altres identitats sexuals"
+msgstr "其他性别个体"
 
 #. Option allowing user to change the colour of individuals where the gender is unknown (default is light green)
 #: 
 msgid "Unknown gender individuals"
-msgstr "Individus de sexe desconegut"
+msgstr "性别未知个体"
 
 #. Option allowing user to change colour of non-blood related male individuals (if the option to display in a different colour is selected). Default is a very pale blue.
 #: 
 msgid "Not blood-related male individuals"
-msgstr "Individus masculins no consanguinis"
+msgstr "非血亲关系的男性个体"
 
 #. Option allowing user to change colour of non-blood related female individuals (if the option to display in a different colour is selected). Default is a very pale pink.
 #: 
 msgid "Not blood-related female individuals"
-msgstr "Individus femenins no consanguinis"
+msgstr "非血亲关系的女性个体"
 
 #. Option allowing user to change colour of non-blood related other gender individuals (if the option to display in a different colour is selected). Default is a very pale yellow.
 #: 
 msgid "Not blood-related other gender individuals"
-msgstr "No relacionats consanguinis amb altres identitats sexuals"
+msgstr "非血亲关系的其他性别个体"
 
 #. Option allowing user to change colour of non-blood related unknown gender individuals (if the option to display in a different colour is selected). Default is a very pale green.
 #: 
 msgid "Not blood-related unknown gender individuals"
-msgstr "Individus de sexe desconegut no consanguinis"
+msgstr "非血亲关系的性别未知个体"
 
 #. Option allowing user to change the background colour of individual tiles (decorated and combined modes)
 #: 
 msgid "Individual background colour"
-msgstr "Color de fons individual"
+msgstr "个体背景颜色"
 
 #. Option where user can change the background colour of the family record (ovals in simple/decorated mode, attached rectangle in combined mode). Default is a light yellow.
 #: 
 msgid "Family background"
-msgstr "Antecedents familiars"
+msgstr "家庭背景颜色"
 
 #. Option where user can change the colour of the borders of the tiles and family records.
 #: 
 msgid "Outline colour"
-msgstr "Color del contorn"
+msgstr "轮廓颜色"
 
 #. Option where user can change the colour of the background behind the diagram
 #: 
 msgid "Diagram background colour"
-msgstr "Color del fons del diagrama"
+msgstr "图表背景颜色"
 
 #. Shown in tooltip when hovering over close button in fullscreen mode
 #: 
 msgid "Exit fullscreen"
-msgstr "Eixir de la pantalla completa"
+msgstr "退出全屏"
 
 #. This is a section title on the control panel settings page where the default values can be configured by the admin.
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/oc2QJRdngdisManSLq1kEN2g.png
 #: 
 msgid "Default values for GVExport"
-msgstr "Valors predeterminats per a GVExport"
+msgstr "GVExport的默认值"
 
 #. A description at the top of the control panel page where the admin can set default values.
 #. 
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/oc2QJRdngdisManSLq1kEN2g.png
 #: 
 msgid "Values here are used as default values for new users of GVExport, and are used when users choose to reset the settings."
-msgstr "Els valors aquí s'utilitzen com a valors predeterminats per als nous usuaris de GVExport, i s'utilitzen quan els usuaris trien restablir la configuració."
+msgstr "此处的值用作GVExport新用户的默认值，并在用户选择重置设置时使用。"
 
 #. In the control panel the admin can set default values for GVExport. This button resets these values to the GVExport defaults.  https://s3.eu-west-1.amazonaws.com/po-pub/i/RaXrJonKH38DYcc5TcU1PLSv.png
 #: 
 msgid "reset to defaults"
-msgstr "Restablir als valors predeterminats"
+msgstr "重置为默认值"
 
 #. Option to change font size. This affects (at the time of writing) all diagram text except for names which have their own setting:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/IdWIcmNdrOj4l1yTgxv6MpVW.png
 #: 
 msgid "Font size for details"
-msgstr "Mida de font per als detalls"
+msgstr "详细信息的字体大小"
 
 #. The font size to use for the names of individuals:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/IdWIcmNdrOj4l1yTgxv6MpVW.png
 #: 
 msgid "Font size for names"
-msgstr "Mida de font per als nms"
+msgstr "姓名的字体大小"
 
 #. Note limitation for adding URLs:  https://s3.eu-west-1.amazonaws.com/po-pub/i/ativPbmheBQQboYLANZmlHYY.png
 #: 
 msgid "browser and SVG only"
-msgstr "Només navegador i SVG"
+msgstr "仅限浏览器和SVG"
 
 #. This help message is displayed when the user clicks the help icon next to "Include anyone related to". https://s3.eu-west-1.amazonaws.com/po-pub/i/4sXDKFJMwoE5PBYZqEPOIV7W.png
 #: 
-#, fuzzy
 msgid "This is our starting point. Choose a person to base the diagram around. You might choose yourself.</p><p>You can choose as many starting individuals as you wish. A tree will be created for each starting individual based on the settings, then the trees are merged to create one tree for the diagram.</p><p>Click the X to remove a record from the list. If two or more records are listed, a &quot;Clear all&quot; option will appear to allow you to remove all records.</p><p>You can also click on an individual in this list to have the diagram in the browser scroll to that person.</p><p>When you next come to the page, the default individual or the last individual you were looking at in webtrees will be loaded. If there was just one saved individual then it will be replaced with the individual provided by webtrees on coming to the page. If there were multiple in the list, then the individual provided by webtrees will be added to the list (if not already in it). So be sure to double-check you are only including individuals you are looking for when first loading the page. This default behaviour can be changed with the option &quot;Treatment of source individuals&quot; in the advanced section."
-msgstr "Per tant, assegureu-vos de comprovar que només incloeu les persones que busqueu quan carregueu la pàgina per primera vegada. Aquest comportament per defecte es pot canviar amb l'opció \"Tractament d'individus d'origen\" de l'apartat avançat.Aquest és el nostre punt de partida. Trie una persona per a basar el diagrama. Pot triar-se a si mateix.</p><p>Pot triar tantes persones inicials com desitge. Es crearà un arbre per a cada individu inicial basat en la configuració, després els arbres es fusionaran per a crear un arbre per al diagrama.</p><p>Faça clic en la X per a eliminar un registre de la llista. Si s'enumeren dos o més registres, apareixerà l'opció \"Esborrar tot\" per a permetre-li eliminar tots els registres.</p><p>També pot fer clic en un individu d'aquesta llista perquè el diagrama en el navegador es desplace fins a aquesta persona.</p><p>La pròxima vegada que arribe a la pàgina, es carregarà l'individu predeterminat o l'últim individu que estava mirant en WebTrees. Si només hi havia un individu guardat, llavors serà reemplaçat per l'individu proporcionat per webtrees en arribar a la pàgina. Si hi havia varis en la llista, llavors l'individu proporcionat per webtrees s'agregarà a la llista (si no està ja en ella). Així que assegures de verificar que només està incloent a les persones que està buscant quan carregue la pàgina per primera vegada."
+msgstr "这是我们的起点。选择一个人作为图表的基础。你可以选择自己。</p><p>你可以选择任意数量的起始个体。将根据设置为每个起始个体创建一棵树，然后将这些树合并为一个图表树。</p><p>点击X从列表中删除一条记录。如果列出了两条或更多记录，将出现“全部清除”选项，让你删除所有记录。</p><p>你也可以点击此列表中的某个个体，使浏览器中的图表滚动到该人。</p><p>当你下次访问该页面时，将加载默认个体或你在webtrees中最后查看的个体。如果只有一个保存的个体，那么它将被webtrees在进入页面时提供的个体所取代。如果列表中有多个个体，那么webtrees提供的个体将被添加到列表中（如果尚未在列表中）。因此，在首次加载页面时，请务必仔细检查你只包含了你要查找的个体。这种默认行为可以通过高级部分中的“源个体处理”选项进行更改。"
 
 #. This help message is displayed when the user clicks the help icon next to "Include".  https://s3.eu-west-1.amazonaws.com/po-pub/i/G2LwgKcPjaAwzcCXllEaXa13.png
 #: 
-#, fuzzy
 msgid "This section includes options that let you decide how to build the tree from your starting individual(s).</p><b>Include ancestors</b><p>Tick this option to include ancestors of your starting individual(s) and anyone in the tree.</p><b>Max levels</b><p>The number of generations of ancestors to include. For example, if you chose yourself as your starting person, you may want the diagram to include relatives back to your great-grandparents. In this case, you would type &quot;3&quot; in the Max levels box under Include ancestors, to include your parents&apos; generation, your grandparents&apos; generation, and your great-grandparents&apos; generation.</p><b>Include descendants</b><p>Whether to include children, grandchildren, etc. of people listed in the tree.</p><b>Max levels</b><p>Similar to the same option for &quot;Include ancestors&quot;, this option indicates how many descendant generations should be included.<h4>Relation types to include</h4><p>The type of relatives to include when generating the diagram.</p><b>Siblings</b><p>Include brothers and sisters of anyone in the tree.</p><b>All relations</b><p>Include cousins, nieces, nephews, and their descendants when generating the tree. Requires &quot;Siblings&quot; to be selected.</p><b>Partners</b><p>Include the husbands, wives, and partners of those in the tree even if they aren&apos;t blood-relatives. There is another option &quot;Mark not blood-related people with different color&quot; that allows these people to be marked in a different colour.</p><b>Anyone</b><p>Follow all links regardless of whether the person is related. In practice, this generally means that the family of non-relatives (i.e. spouses) are included in the tree.</p><p>Use this option to include all records of the selected generations. Note that only records with a link are included, so you may need to include more ancestor or descendant generations (or more starting individuals) to get all your records to show."
-msgstr "Aquesta secció li permet decidir quin tipus de parents incloure en generar el diagrama.</p><h4>Germans</h4><p>Incloure germans i germanes de qualsevol persona en l'arbre.</p><h4>Totes les relacions</h4><p>Inclou cosins, nebodes, nebots i els seus descendents en generar l'arbre. Requereix que se seleccione \"Germans\".</p><h4>Socis</h4><p>Inclou als esposos, esposes i parelles que estan en l'arbre, fins i tot si no són parents consanguinis. Hi ha una altra opció \"Marcar persones no consanguinis amb diferent color\" que permet marcar a aquestes persones en un color diferent.</p><h4>Anyone</h4><p>Seguisca tots els enllaços independentment de si la persona està emparentada. En la pràctica, això generalment significa que la família dels no parents (és a dir, els cònjuges) estan inclosos en l'arbre.</p><p>Utilitze aquesta opció per a incloure tots els registres de les generacions seleccionades. Tinga en compte que només s'inclouen registres amb un enllaç, per la qual cosa és possible que haja d'incloure més generacions d'avantpassats (o més individus inicials) per a mostrar tots els seus registres."
+msgstr "此部分包含一些选项，可让你决定如何从起始个体构建家族树。</p><b>包括祖先</b><p>勾选此选项以包括起始个体的祖先以及树中的任何人。</p><b>最大层数</b><p>要包括的祖先代数。例如，如果你选择自己作为起始人，你可能希望图表包括追溯到你曾祖父母的亲属。在这种情况下，你应在“包括祖先”下的“最大层数”框中输入“3”，以包括你父母一代、祖父母一代和曾祖父母一代。</p><b>包括后代</b><p>是否包括树中列出人员的子女、孙子女等。</p><b>最大层数</b><p>与“包括祖先”的相同选项类似，此选项指示应包括多少代后代。<h4>要包括的关系类型</h4><p>生成图表时要包括的亲属类型。</p><b>兄弟姐妹</b><p>包括树中任何人的兄弟姐妹。</p><b>所有关系</b><p>生成树时包括表亲、侄女、侄子及其后代。需要选择“兄弟姐妹”。</p><b>伴侣</b><p>包括树中人员的丈夫、妻子和伴侣，即使他们不是血亲。还有另一个选项“用不同颜色标记非血亲关系的人”，可让这些人以不同颜色标记。</p><b>任何人</b><p>无论关系如何，跟随所有链接。实际上，这通常意味着非亲属（即配偶）的家庭将包含在树中。</p><p>使用此选项可包括所选世代的所有记录。请注意，仅包括有链接的记录，因此你可能需要包括更多代的祖先或后代（或更多起始个体）才能显示所有记录。"
 
 #. This help message is displayed when the user clicks the help icon next to "Graph direction". https://s3.eu-west-1.amazonaws.com/po-pub/i/MpbVhXyRxeLgMO8FZVXHZhHG.png
 #: 
 msgid "There are two display options here:<ul><li>Left to right - The default option, columns of generations are created with the older generations to the left and younger to the right.<li>Top to bottom - Rows of generations are created, with the older generations at the top and the younger at the bottom."
-msgstr "Hi ha dues opcions de visualització ací:<ul><li>D'esquerra a dreta: l'opció predeterminada, les columnes de generacions es creen amb les generacions majors a l'esquerra i les més joves a la dreta.<li>De dalt a baix: es creen files de generacions, amb les generacions més antigues en la part superior i les més joves en la part inferior."
+msgstr "这里有两个显示选项：<ul><li>从左到右 - 默认选项，创建代际列，较老的代在左边，较年轻的代在右边。<li>从上到下 - 创建代际行，较老的代在顶部，较年轻的代在底部。"
 
 #. This help message is displayed when the user clicks the help icon next to "Diagram type". https://s3.eu-west-1.amazonaws.com/po-pub/i/dt2T4x9RshJsWKWZ7fQ4zFlu.png
 #: 
-#, fuzzy
 msgid "The options here are:<ul><li>Separated - Individuals each have their own tile, connected by arrows. Family records are separate and also connected by arrows.</li><li>Combined - Each couple is one box instead of one per person. Marriage records are connected under the couple. There are no family records if there are no marriage details to show.</li></ul></p><p>There was previously a third option &quot;Simple&quot;, but this has been removed. The advanced settings in the appearance section now contain all the settings needed to recreate this. Loading a simple diagram should set the appropriate settings to recreate the same look."
-msgstr "Les opcions ací són:<ul><li>Simple - Una caixa per persona, acolorida segons el sexe. No es permeten fotos.<li>Decorat - Una caixa més refinada, que també permet incloure fotos.<li>Combinat - Cada parella és una caixa en lloc d'una per persona. També permet fotos.</ul>"
+msgstr "这里的选项如下：<ul><li>分离式 - 每个个体都有自己的图块，通过箭头连接。家庭记录是分开的，也通过箭头连接。</li><li>组合式 - 每对夫妇是一个框，而不是每人一个。婚姻记录连接在夫妇下方。如果没有婚姻细节可显示，则没有家庭记录。</li></ul></p><p>以前还有第三个选项“简单”，但已被移除。外观部分的高级设置现在包含重现此选项所需的所有设置。加载简单图表应设置适当的设置以重现相同外观。"
 
 #. This help message is displayed when the user clicks the help icon next to "Output file type". https://s3.eu-west-1.amazonaws.com/po-pub/i/apq6Tgv91ZGJTGcUfFH3V1VE.png
 #: 
 msgid "This section lets you choose the output file type when downloading the diagram. Some additional settings are available under some circumstances.<h4>Output file type</h4>The output file type you want. This is ignored when rendering in the browser, it is only used when you download a file. File types SVG, PNG, JPG, and PDF can be downloaded, in addition to the Graphviz DOT format.</p><p>There are some minor differences if you have Graphviz installed on the server:<ul><li>There are two more file types, GIF and PostScript (PS). Most people would not need these.</li><li>PDF and SVG files may be smaller and can include URLs</li><li>You may be able to include more records</li></ul><p>In addition, if you have Graphviz installed on the server there are additional quality settings that are available. The following settings are only available when Graphviz is installed on the server, and the output type is set to SVG or PDF:</p><h4>Quality of JPG photos</h4><p>This setting lets you change the quality of embedded JPG photos. This uses the quality setting that is part of the JPG standard. Reducing this can reduce the file size of the output, while increasing it may increase the quality. Also see the DPI setting to change the resolution of the diagram including photos.</p><h4>Convert photos to JPG where possible</h4><p>If enabled, GVExport will attempt to convert PNG, BMP, and GIF files to JPG and will apply the above quality setting."
-msgstr "Aquesta secció us permet triar el tipus de fitxer de sortida quan baixeu el diagrama. Hi ha algunes configuracions addicionals disponibles en algunes circumstàncies.<h4>Tipus de fitxer d'inici</h4>El tipus de fitxer de sortida que vulgueu. Això s'ignora quan es representa al navegador, només s'utilitza quan descarregueu un fitxer. Els tipus de fitxers SVG, PNG, JPG i PDF es poden descarregar, a més del graphviz DOT format.</p><p>Hi ha algunes diferències menors si teniu Graphviz instal·lat al servidor: ⁣<ul><li>Hi ha dos tipus de fitxers més, GIF i PostScript (PS). La majoria de la gent no necessitaria aquests fitxers.</li><li>PDF i SVG poden ser més petits i poden incloure URL</li><li>Podeu incloure més registres</li></ul><p>A més, si teniu Graphviz instal·lat al servidor, hi ha configuracions de qualitat addicionals disponibles. Els paràmetres següents només estan disponibles quan Graphviz està instal·lat al servidor i el tipus de sortida s'estableix en SVG o PDF:</p><h4>Qualitat de les fotos JPG</h4><p>Aquesta configuració us permet canviar la qualitat de les fotos JPG incrustades. Això utilitza la configuració de qualitat que forma part de l'estàndard JPG. Reduir-ho pot reduir la mida del fitxer de la sortida, mentre que augmentar-lo pot augmentar la qualitat. Vegeu també la configuració DPI per canviar la resolució del diagrama, incloses fotos.</p><h4>Convertir fotos a JPG sempre que sigui possible</h4><p>Si habilitat, GVExport intentarà convertir png, BMP i GIF a JPG i aplicarà la configuració de qualitat anterior.\n"
-""
+msgstr "此部分允许你在下载图表时选择输出文件类型。在某些情况下会有一些额外设置。<h4>输出文件类型</h4>你想要的输出文件类型。在浏览器中渲染时此设置将被忽略，仅在下载文件时使用。除Graphviz DOT格式外，还可下载SVG、PNG、JPG和PDF文件类型。</p><p>如果服务器上安装了Graphviz，会有一些细微差别：<ul><li>还有另外两种文件类型，GIF和PostScript（PS）。大多数人不需要这些。</li><li>PDF和SVG文件可能更小，并且可以包含URL</li><li>你可能能够包含更多记录</li></ul><p>此外，如果服务器上安装了Graphviz，还有一些额外的质量设置可用。以下设置仅在服务器上安装了Graphviz且输出类型设置为SVG或PDF时可用：</p><h4>JPG照片质量</h4><p>此设置可让你更改嵌入JPG照片的质量。这使用了JPG标准中的质量设置。降低此设置可减小输出文件大小，而增加它可能会提高质量。另请参阅DPI设置以更改包括照片在内的图表分辨率。</p><h4>尽可能将照片转换为JPG</h4><p>如果启用，GVExport将尝试将PNG、BMP和GIF文件转换为JPG，并应用上述质量设置。"
 
 #. This help message is displayed when the user clicks the help icon next to "Browser render". https://s3.eu-west-1.amazonaws.com/po-pub/i/obqZqWV3JxLlYqmWek7FPMfW.png
 #: 
 msgid "If the option &quot;Auto-update&quot; is selected, the browser rendered diagram will automatically update when any option is changed. This will also hide the &quot;Update&quot; button."
-msgstr "Si se selecciona l'opció \"Actualització automàtica\", el diagrama renderitzat del navegador s'actualitzarà automàticament quan es canvie qualsevol opció. Això també ocultarà el botó \"Actualitzar\"."
+msgstr "如果选择了“自动更新”选项，当任何选项更改时，浏览器渲染的图表将自动更新。这也将隐藏“更新”按钮。"
 
 #. Help button that will show a help page when clicked
 #: 
 msgid "Help"
-msgstr "Ajuda"
+msgstr "帮助"
 
 #. This message is shown when clicking a new "Help" button. It links to English pages, so this may need some customising for each language. Link to the German page in the German language (possibly with an additional link to the English one), add some sort of note that the linked pages are in English, feel free to be flexible in what you write to keep it helpful. 
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/bDIbs7uTn254cSfZeqaATIBr.png 
 #. 
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/vyDHWXC9qcax65t9gW4YjvMv.png
 #: 
-#, fuzzy
 msgid "GVExport is a webtrees module that allows you to create complex visual family trees, using a tool called Graphviz to display the tree. Select a starting person, adjust the settings, and see that person&apos;s family tree.</p><p>Some fields have an icon <span class=\\\"info-icon btn btn-primary\\\">i</span> next to them, clicking this will give you some more information about that field.</p><p>Advanced configurations are possible by toggling advanced settings by clicking the &quot;Toggle advanced settings&quot; option at the end of each section. Clicking the ⛶ in the top right corner of the browser rendering will display the browser rendering in full screen. Clicking the magnifying glass allows you to search the diagram for an individual.</p><p>You can also use the webtrees &quot;Clippings Cart&quot; feature to select records, which GVExport can then use instead of the &quot;People to be included&quot; settings.</p><p>There are several buttons that take action based on the settings that you have chosen:<ul><li>Update: Clicking this updates the browser render (this is hidden if auto-update is enabled).<li>Download: Clicking this will download the diagram in the format chosen in the &quot;Output file type&quot; option. <li>Reset: Clicking this will reset the settings to the default values. Default values can be changed by an administrator in the webtrees Control Panel.<li>Help: Shows this help message.</ul></p><p>For more information, see the <a href=\\\"https://github.com/Neriderc/GVExport/wiki\\\" class=\\\"help-link\\\">GVExport Wiki</a>.</p><p>You can also ask a question, provide feedback, or suggest features on our <a href=\\\"https://github.com/Neriderc/GVExport\\\" class=\\\"help-link\\\">GitHub page</a>. Just <a href=\\\"https://github.com/Neriderc/GVExport/issues/new\\\" class=\\\"help-link\\\">open an issue</a>, or <a href=\\\"https://github.com/Neriderc/GVExport/issues\\\" class=\\\"help-link\\\">browse existing issues</a>."
-msgstr "GVExport és un mòdul de webtrees que li permet crear arbres genealògics visuals complexos, utilitzant una eina anomenada Graphviz per a mostrar l'arbre. Seleccione una persona inicial, ajuste la configuració i veja l'arbre genealògic d'aqueixa persona.</p><p>Alguns camps tenen una icona <span class=\"info-icon btn btn-primary\">i</span> al costat d'ells, en fer clic li donarà més informació sobre aqueix camp. No tots els camps estan coberts (encara).</p><p>Les configuracions avançades són possibles alternant la configuració avançada fent clic en l'opció \"Alternar configuració avançada\" al final de cada secció. En fer clic ⛶ a la cantonada superior dreta de la representació del navegador, es mostrarà la representació del navegador en pantalla completa. També pot usar la funció \"Cistella de retallades\" de webtrees per a seleccionar registres, que GVExport pot usar en lloc de la configuració de \"Persones a incloure\".</p><p>Hi ha diversos botons que prenen mesures en funció de la configuració que haja triat:<ul><li>Update: En fer clic aquí, s'actualitza el renderitzat del navegador (això s'oculta si l'actualització automàtica està habilitada).<li>Descarregar: En fer clic aquí, es descarregarà el diagrama en el format triat en l'opció \"Tipus d'arxiu d'eixida\". <li>Restablir: En fer clic aquí, es restablirà la configuració als valors predeterminats. Els valors predeterminats poden ser canviats per un administrador en el Panell de control de webtrees.<li>Help: Mostra aquest missatge d'ajuda.</ul></p><p>Per a obtindre més informació, consulte el <a href=\"https://github.com/Neriderc/gvexport/wiki\" class=\"help-link\">GVExport Wiki</a>.</p><p>També pot fer una pregunta, proporcionar comentaris o suggerir característiques en la nostra <a href=\"https://github.com/Neriderc/gvexport\" class=\"help-link\">GitHub page</a>. Simplement <a href=\"https://github.com/Neriderc/gvexport/issues/new\" class=\"help-link\">obrir un problema</a>, o <a href=\"https://github.com/Neriderc/gvexport/issues\" class=\"help-link\">examinar problemes existents</a>."
+msgstr "GVExport是一个webtrees模块，可让您使用名为Graphviz的工具创建复杂的可视化家谱。选择一个起始人物，调整设置，即可查看该人物的家谱。</p><p>一些字段旁边有一个图标<span class=\\\\\\\"info-icon btn btn-primary\\\\\\\">i</span>，点击它将为您提供有关该字段的更多信息。</p><p>通过点击每个部分末尾的“切换高级设置”选项来切换高级设置，即可进行高级配置。点击浏览器渲染界面右上角的 ⛶ 可将浏览器渲染界面全屏显示。点击放大镜可在图表中搜索某个个体。</p><p>您还可以使用webtrees的“剪报车”功能选择记录，GVExport可使用这些记录来替代“要包含的人员”设置中的条件。</p><p>有几个按钮会根据您选择的设置执行相应操作：<ul><li>更新：点击此按钮可更新浏览器渲染（如果启用了自动更新，此按钮将隐藏）。<li>下载：点击此按钮将以下载“输出文件类型”选项中选择的格式下载图表。 <li>重置：点击此按钮将设置重置为默认值。默认值可由管理员在webtrees控制面板中更改。<li>帮助：显示此帮助信息。</ul></p><p>如需更多信息，请查看<a href=\\\\\\\"https://github.com/Neriderc/GVExport/wiki\\\\\\\" class=\\\\\\\"help-link\\\\\\\">GVExport维基</a>。</p><p>您也可以在我们的<a href=\\\\\\\"https://github.com/Neriderc/GVExport\\\\\\\" class=\\\\\\\"help-link\\\\\\\">GitHub页面</a>上提问、提供反馈或提出功能建议。只需<a href=\\\\\\\"https://github.com/Neriderc/GVExport/issues/new\\\\\\\" class=\\\\\\\"help-link\\\\\\\">新建一个问题</a>，或<a href=\\\\\\\"https://github.com/Neriderc/GVExport/issues\\\\\\\" class=\\\\\\\"help-link\\\\\\\">浏览现有问题</a>。"
 
 #. This message should never be shown, but it is a backup message for the help messages in the case that the text cannot be found - it's effectively an error message.
 #: 
 msgid "Help information not found"
-msgstr "Informació d'ajuda no trobada"
+msgstr "未找到帮助信息"
 
 #. This is the help text that the user will see if they click the i next to the Clippings cart message that shows only when there is an item in the clippings cart:  https://s3.eu-west-1.amazonaws.com/po-pub/i/lzypnHfQAPcoljhGbgSsaEVb.png
 #: 
-#, fuzzy
 msgid "Within webtrees, you can add items to the clippings cart. This is usually done by navigating to a record within webtrees then selecting the &quot;Clippings cart&quot; option near the top of the screen.</p><p> If you have added individuals and the related family and media records to the clippings cart, these can be used to display the diagram instead of the criteria in the &quot;People to be included&quot; section.</p><p>If you have individuals in the clippings cart but don&apos;t wish to use these, you have the option to ignore the clippings cart."
-msgstr "Dins dels arbres web, pot agregar articles al carret de retallades. Això generalment es fa navegant a un registre dins dels arbres web i després seleccionant l'opció \"Carro de retallades\" prop de la part superior de la pantalla.</p><p>Si ha agregat individus al carret de retallades, aquests es poden usar per a mostrar el diagrama en lloc dels criteris en la secció \"Persones a incloure\".</p><p>Si té persones en el carret de retallades, però no desitja utilitzar, tens l'opció d'ignorar el carret de retallades."
+msgstr "在webtrees中，您可以将项目添加到剪报车。这通常通过在webtrees中导航到一条记录，然后选择屏幕顶部附近的“剪报车”选项来完成。</p><p>如果您已将个人、相关家庭和媒体记录添加到剪报车，则可以使用这些记录来显示图表，而无需使用“要包含的人员”部分中的条件。</p><p>如果剪报车中有个人记录，但您不想使用这些记录，您可以选择忽略剪报车。"
 
 #. This is help text shown when the user clicks the "i" button next to the "XREFs of included individuals" option:   https://s3.eu-west-1.amazonaws.com/po-pub/i/YVGpSuKpIAjyOMoLTigbrzcU.png
 #: 
-#, fuzzy
 msgid "This is a list of XREFs that represents the records listed in the &quot;Include anyone related to&quot; section. You may edit this box and click the refresh button in order to load your list of XREFs into the selection list."
-msgstr "Aquesta és una llista de XREF que representa els registres enumerats en la secció \"Incloure a qualsevol persona relacionada amb\". Pot editar aquest quadre i fer clic en el botó d'actualització per a carregar la seua llista de XREF en la llista de selecció."
+msgstr "这是一个XREF列表，代表“包含与……相关的任何人”部分中列出的记录。您可以编辑此框，然后点击刷新按钮，将您的XREF列表加载到选择列表中。"
 
 #. Help text shown when user clicks "i" next to "Stop processing on":  https://s3.eu-west-1.amazonaws.com/po-pub/i/aVjMepnhrUVmbSJnm5JjsdOp.png
 #: 
-#, fuzzy
 msgid "If the module reaches one of these people, don&apos;t grow the tree from here. For example, if you chose yourself as the starting point, you might want to include all of your blood relatives except your mother&apos;s side of the family. Add your mother as a person to &quot;Stop processing on&quot;. The tree will still include your mother, but it won&apos;t include her parents, siblings, etc.</p><p>Choose a person in the top box, and they will be added to the list. Their XREF will also be included in the bottom box (which can be edited directly if needed)."
-msgstr "Si el mòdul arriba a una d'aquestes persones, no inicie l'arbre des d'ací. Per exemple, si et vas elegir tu mateix com a punt de partida, és possible que desitges incloure a tots els teus parents consanguinis, excepte al costat matern de la família. Agregue a la seua mare com a persona a \"Deixar de processar\". L'arbre continuarà incloent a la teua mare, però no inclourà als seus pares, germans, etc.</p><p>Trie una persona en el quadre superior, i s'agregaran a la llista. El seu XREF també s'inclourà en el quadre inferior (que es pot editar directament si és necessari)."
+msgstr "如果模块遇到这些人中的一个，就不再从这里扩展家族树。例如，如果您选择自己作为起点，您可能希望包含所有血亲，但不包括您母亲一方的亲属。将您的母亲添加为“停止处理”的人员。家族树仍将包含您的母亲，但不会包含她的父母、兄弟姐妹等。</p><p>在顶部框中选择一个人，他们将被添加到列表中。他们的XREF也将包含在底部框中（如有需要，可直接编辑）。"
 
 #. Help text shown when user clicks "i" next to option "Non-relatives":  https://s3.eu-west-1.amazonaws.com/po-pub/i/Lq1O4swJShMh36BPEhJiSujt.png
 #: 
-#, fuzzy
 msgid "This section has two related options.<h4>Mark not blood-related people with different color</h4><p>Where spouses are included and are not blood-related to anyone in the &quot;Include anyone related to&quot; field, if this option is selected they will be highlighted in a much duller color than the standard blue/pink for relatives.</p><p>Note that when this option is selected, and non-relatives are found in the selected records, then a full tree scan is performed to identify if an individual is related by a more distant link (see next option).</p><h4>Ignore unseen links to speed up relative check</h4><p>This option is only available when the previous option is selected. When the option to display non-relatives in a different colour is selected, normally a scan is performed starting from the starting individuals and branching to all relatives regardless of display settings. This ensures that if a person is related via a link not displayed, they will still show as related.</p><p>Enabling this option prevents the full scan of the tree which can greatly speed up the generation of the diagram on larger trees, but may reduce accuracy of the colouring of non-relatives."
-msgstr "Aquesta secció té dues opcions relacionades.<h4>Marcar a les persones no relacionades consanguíniament amb diferent color</h4><p> Quan els cònjuges estan inclosos i no estan relacionats consanguíniament amb ningú en el camp \"Incloure a algú relacionat amb\", si se selecciona aquesta opció, es ressaltaran en un color molt més apagat que el blau / rosa estàndard per a familiars.⁣</p><p>Tinga en compte que quan se selecciona aquesta opció, i els no parents es troben en els registres seleccionats, després es realitza un escaneig d'arbre complet per a identificar si un individu està relacionat per un enllaç més distant (veure següent opció).</p><h4>Ignore enllaços no vistos per a accelerar la verificació relativa</h4><p>Aquesta opció només està disponible quan se selecciona l'opció anterior. Quan se selecciona l'opció de mostrar als no parents en un color diferent, normalment es du a terme un escaneig a partir dels individus inicials i es ramifica a tots els parents, independentment de la configuració de visualització. Això assegura que si una persona està relacionada a través d'un enllaç que no es mostra, continuarà mostrant-se com relacionada.</p><p> Habilitar aquesta opció evita l'escaneig complet de l'arbre, la qual cosa pot accelerar en gran manera la generació del diagrama en arbres més grans, però pot reduir la precisió de la coloració dels no parents."
+msgstr "如果模块遇到这些人中的一个，就不再从这里扩展家族树。例如，如果您选择自己作为起点，您可能希望包含所有血亲，但不包括您母亲一方的亲属。将您的母亲添加为“停止处理”的人员。家族树仍将包含您的母亲，但不会包含她的父母、兄弟姐妹等。</p><p>在顶部框中选择一个人，他们将被添加到列表中。他们的XREF也将包含在底部框中（如有需要，可直接编辑）。"
 
 #. "Output settings" was renamed to "File settings".
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/zY6fWYDbmG93zn0ODfvgtr3y.png
 #: 
-#, fuzzy
 msgid "General settings"
-msgstr "Configuració d'arxius"
+msgstr "常规设置"
 
 #. Name of section for saving settings to file and loading again:  https://s3.eu-west-1.amazonaws.com/po-pub/i/YRg7L3jSSfj41FX0tHDSUY4M.png
 #: 
 msgid "Settings file"
-msgstr "Arxiu de configuració"
+msgstr "设置文件"
 
 #. Text to explain what happens when you click Download button:  https://s3.eu-west-1.amazonaws.com/po-pub/i/binGwth9kTmNWFiKZra36B1E.png
 #: 
 msgid "Save settings to file"
-msgstr "Guardar la configuració en l'arxiu"
+msgstr "将设置保存到文件"
 
 #. Text to explain what happens when you choose to upload file. Note that the actual file upload is provided by the browser and will use the browser's (or operating system) language.  https://s3.eu-west-1.amazonaws.com/po-pub/i/2woaCucdJquUy6lUnQYS8k51.png
 #: 
 msgid "Load settings from file"
-msgstr "Carregar la configuració des de l'arxiu"
+msgstr "从文件加载设置"
 
 #. Help text for downloading saved settings to a file, and uploading these settings:  https://s3.eu-west-1.amazonaws.com/po-pub/i/HfxRre2VQe9TVyl8dtX3RhVj.png
 #: 
-#, fuzzy
 msgid "If you have saved settings to a file, using the menu on the above saved settings, you can load the settings from the file here."
-msgstr "Aquí podeu desar la configuració escollida en un fitxer i carregar aquest fitxer en un moment posterior.</p><p>Per exemple, és possible que tingueu molts diagrames que creeu des del vostre arbre. És possible que vulgueu desar la configuració utilitzada per a cada diagrama perquè en el futur pugueu regenerar el diagrama per incloure qualsevol informació nova.</p><p>Also vegeu l'opció de desar la configuració dins de GVExport."
+msgstr "如果您已将设置保存到文件，可使用上述保存设置的菜单，在此处从文件加载设置。"
 
 #. For development use, you can now enable a debug panel. Needs translation as option will appear on Control Panel page:  https://s3.eu-west-1.amazonaws.com/po-pub/i/UzABfGKv12F3PBzS3wVzoHCm.png 
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/36sF1oj0dbyyJzl0meXi1ixY.png
 #: 
 msgid "Debug mode"
-msgstr "Mode de depuració"
+msgstr "调试模式"
 
 #. For development use, you can now enable a debug panel. Needs translation as option will appear on Control Panel page:  https://s3.eu-west-1.amazonaws.com/po-pub/i/UzABfGKv12F3PBzS3wVzoHCm.png 
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/36sF1oj0dbyyJzl0meXi1ixY.png
 #: 
 msgid "Show debug panel"
-msgstr "Mostra el panell de depuració"
+msgstr "显示调试面板"
 
 #. For development use, you can now disable debug mode easily. Needs translation as option will appear on Control Panel page:  https://s3.eu-west-1.amazonaws.com/po-pub/i/UzABfGKv12F3PBzS3wVzoHCm.png 
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/36sF1oj0dbyyJzl0meXi1ixY.png
 #: 
 msgid "Enable debug mode"
-msgstr "Activar el mode de depuració"
+msgstr "启用调试模式"
 
 #. For development use, you can now disable Graphviz on server even if you have it installed. Needs translation as option will appear on Control Panel page:  https://s3.eu-west-1.amazonaws.com/po-pub/i/UzABfGKv12F3PBzS3wVzoHCm.png 
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/36sF1oj0dbyyJzl0meXi1ixY.png
 #: 
 msgid "Use Graphviz on server"
-msgstr "Utilitzar Graphviz al servidor"
+msgstr "在服务器上使用Graphviz"
 
 #. Section heading. You can now enable a debug panel for development use. Needs translation as option will appear on Control Panel page:  https://s3.eu-west-1.amazonaws.com/po-pub/i/UzABfGKv12F3PBzS3wVzoHCm.png 
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/36sF1oj0dbyyJzl0meXi1ixY.png
 #: 
 msgid "Debug"
-msgstr "Depurar"
+msgstr "调试"
 
 #. If browser-renderer can't generate a diagram this large, show an error message. This message is shown when Graphviz is installed on server.  https://s3.eu-west-1.amazonaws.com/po-pub/i/5MKDjkAnfKKolIoTeVqEBaKp.png
 #: 
 msgid "Memory limit reached. Please reduce number of records or use download option."
-msgstr "Límit de memòria assolit. Reduïu el nombre de registres o utilitzeu l'opció de descàrrega."
+msgstr "内存限制已达到。请减少记录数量或使用下载选项。"
 
 #. If browser-renderer can't generate a diagram this large, show an error message. This message is shown when Graphviz is NOT installed on server.   https://s3.eu-west-1.amazonaws.com/po-pub/i/1cmo1QxxPNuy3bjgntERYAOC.png
 #: 
 msgid "Memory limit reached. Please reduce number of records or install Graphviz on server and use download option."
-msgstr "Límit de memòria assolit. Reduïu el nombre de registres o instal·leu Graphviz al servidor i utilitzeu l'opció de descàrrega."
+msgstr "内存限制已达到。请减少记录数量，或在服务器上安装Graphviz并使用下载选项。"
 
 #. This message is shown when loading a settings file and a setting in the file doesn't match up to what we are looking for. The name of the setting is appended on the end:  https://s3.eu-west-1.amazonaws.com/po-pub/i/Mrqls4UxxHPlbZzEE4gz2qgj.png
 #: 
 msgid "Unable to load setting"
-msgstr "No es pot carregar la configuració"
+msgstr "无法加载设置"
 
 #. Heading for section in Control Panel for settings that are only available to the administrator: https://s3.eu-west-1.amazonaws.com/po-pub/i/6ZCINR8ZbXR3Wpis2IuYp20i.png
 #: 
 msgid "Settings for GVExport"
-msgstr "Configuració per a GVExport"
+msgstr "GVExport设置"
 
 #. Group heading for settings only available in control panel: https://s3.eu-west-1.amazonaws.com/po-pub/i/4xkAK3jvXYzWAsk3q7faIpbK.png
 #: 
 msgid "Administrator settings"
-msgstr "Configuració de l'administrador"
+msgstr "管理员设置"
 
 #. Setting that sets the name of the downloaded file. E.g. when downloading JPG format, if you set the file name to "gvexport" then the file will be called "gvexport.jpg":   https://s3.eu-west-1.amazonaws.com/po-pub/i/jg1noFw1w55jgfEMyLD5oc8f.png
 #: 
 msgid "Download file name"
-msgstr "Descarregar nom del fitxer"
+msgstr "下载文件名"
 
 #. The MCLIMIT setting that is directly sent to Graphviz. Higher numbers result in fewer arrows crossing on the diagram but take longer to process.  https://s3.eu-west-1.amazonaws.com/po-pub/i/ayvZCoGAoyQIbE8v60cIVcIz.png
 #: 
 msgid "Graphviz MCLIMIT setting"
-msgstr "Configuració de Graphviz MCLIMIT"
+msgstr "Graphviz MCLIMIT设置"
 
 #. Birth date setting in Control Panel. By default, birth dates on the diagram start with a * prefix. This setting can change this:  https://s3.eu-west-1.amazonaws.com/po-pub/i/uF5UdfYXLFGLQ4TLZysMUpNd.png
 #: 
 msgid "Birthdate prefix"
-msgstr "Prefix de la data de naixement"
+msgstr "出生日期前缀"
 
 #. Death date setting in Control Panel. By default, death dates on the diagram start with a + prefix. This setting can change this:  
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/uF5UdfYXLFGLQ4TLZysMUpNd.png
 #: 
 msgid "Death date prefix"
-msgstr "Prefix de la data de defunció"
+msgstr "死亡日期前缀"
 
 #. Area name for option to save a version of the settings for future use:  https://s3.eu-west-1.amazonaws.com/po-pub/i/n1salnZcGP6xC187FO1dAjpE.png
 #: 
 msgid "Save settings"
-msgstr "Desa la configuració"
+msgstr "保存设置"
 
 #. Text on save button in option to save a version of the settings for future use:  
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/n1salnZcGP6xC187FO1dAjpE.png
 #: 
 msgid "Save"
-msgstr "Guardar"
+msgstr "保存"
 
 #. Placeholder text in text field in option to save a version of the settings for future use. Users will type a name here to call this saved version of the settings:  
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/n1salnZcGP6xC187FO1dAjpE.png
 #: 
 msgid "Settings name"
-msgstr "Nom de la coniguració"
+msgstr "设置名称"
 
 #. Error message shown when API was not able to assign an ID when saving a version of settings.  https://s3.eu-west-1.amazonaws.com/po-pub/i/SF4w8yDqZ9D7PGWdqvq2cOzq.png 
 #. User may see this when clicking Save button: https://s3.eu-west-1.amazonaws.com/po-pub/i/n1salnZcGP6xC187FO1dAjpE.png
@@ -684,1685 +670,1671 @@ msgstr "Nom de la coniguració"
 #. Most likely reason for this is that there are too many settings saved.
 #: 
 msgid "Failed to assign new settings ID"
-msgstr "No s'ha pogut assignar l'identificador de configuració nou"
+msgstr "未能分配新的设置ID"
 
 #. Error message shown to user when an API request to get the settings fails because the settings version ID is invalid.  https://s3.eu-west-1.amazonaws.com/po-pub/i/09WTPGgXqx1UJ4awI72JPxgh.png 
 #. 
 #. Settings IDs are used when saving multiple versions of settings: https://s3.eu-west-1.amazonaws.com/po-pub/i/n1salnZcGP6xC187FO1dAjpE.png
 #: 
 msgid "Invalid settings ID"
-msgstr "Identificador de configuració no vàlid"
+msgstr "无效的设置ID"
 
 #. Error message shown when an invalid API request type is sent (users would never see this unless something broke):  https://s3.eu-west-1.amazonaws.com/po-pub/i/UigW1X1hdrkKdbkztZ5cwXBd.png
 #: 
 msgid "Invalid request"
-msgstr "Sol·licitud no vàlida"
+msgstr "无效请求"
 
 #. Error message for if API call has invalid structure. Error message is appended to the end. Users would never see this unless something is broken:  
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/0RAGuKLhRU4gotkMYaeu8RdX.png
 #: 
 msgid "Invalid JSON"
-msgstr "JSON no vàlid"
+msgstr "无效的JSON"
 
 #. If you click to save a version of settings, but haven't entered a name, then the default name is "Settings":  https://s3.eu-west-1.amazonaws.com/po-pub/i/1RrJep5HGIKYDumc26xR9kCo.png
 #: 
 msgid "Settings"
-msgstr "Configuració"
+msgstr "设置"
 
 #. This message is shown when clicking the help button in the "Saved diagrams" section (this section is hidden by default): https://s3.eu-west-1.amazonaws.com/po-pub/i/CViHSJI40OkSwCEyVHs79jOh.png  https://s3.eu-west-1.amazonaws.com/po-pub/i/PuoBsz04pts2DU9CAWou7nyc.png
 #: 
-#, fuzzy
 msgid "You can select from the list to load some saved settings. Settings can be added or changed using the options in the advanced section of the &quot;General settings&quot; section."
-msgstr "Podeu seleccionar de la llista per carregar alguns paràmetres desats. La configuració es pot afegir o canviar mitjançant les opcions de la secció avançada de la secció \"Configuració del fitxer\"."
+msgstr "您可以从列表中选择加载一些已保存的设置。可以使用“常规设置”部分高级选项中的设置来添加或更改设置。"
 
 #. When you have saved a named version of settings using the advanced save settings functionality, this is the option to delete the settings:  https://s3.eu-west-1.amazonaws.com/po-pub/i/QHkbIB7B8ZRpp5IVdKiVu1F6.png
 #: 
 msgid "Delete"
-msgstr "Esborrar"
+msgstr "删除"
 
 #. When you have saved a named version of settings using the advanced save settings functionality, this is the option to copy a link to the settings, where if the user visits this link the settings will be automatically loaded:  
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/QHkbIB7B8ZRpp5IVdKiVu1F6.png
 #: 
 msgid "Copy link"
-msgstr "Copia l'enllaç"
+msgstr "复制链接"
 
 #. After clicking option to copy link to clipboard for sharing saved settings, this message shows on a toast popup:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/QHkbIB7B8ZRpp5IVdKiVu1F6.png
 #: 
 msgid "Copied link to clipboard"
-msgstr "Enllaç copiat al porta-retalls"
+msgstr "链接已复制到剪贴板"
 
 #. If copying shared settings link to clipboard fails (e.g. browser blocks this or not supported), then this message is shown. https://s3.eu-west-1.amazonaws.com/po-pub/i/QHkbIB7B8ZRpp5IVdKiVu1F6.png
 #: 
 msgid "Failed to copy link to clipboard"
-msgstr "No s'ha pogut copiar l'enllaç al porta-retalls"
+msgstr "链接复制到剪贴板失败"
 
 #. As well as toast message, if copying shared settings link to clipboard fails (e.g. browser blocks this or not supported), then a popup will allow copying URL. 
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/lhdGkODdwA7aL5isgWiqR726.png
 #: 
 msgid "Copy manually below"
-msgstr "Copia manualment a continuació"
+msgstr "请在下方手动复制"
 
 #. If you save a version of the settings using the advanced settings saving option, if you select the same name as existing settings you will be prompted to overwrite the settings with this message:  https://s3.eu-west-1.amazonaws.com/po-pub/i/DTqDJMZW4xZejUnrsbe5H5fE.png
 #: 
 msgid "Overwrite settings '%s'?"
-msgstr "Sobreescriviu els paràmetres \\\"%s\\\"?"
+msgstr "覆盖设置 '%s' 吗？"
 
 #. Cancel button for modal prompt, for example:  https://s3.eu-west-1.amazonaws.com/po-pub/i/ftZQPpCgap1VOJEArq1KsL66.png
 #: 
 msgid "Cancel"
-msgstr "Cancel·lar"
+msgstr "取消"
 
 #. If you save a version of the settings using the advanced settings saving option, if you select the same name as existing settings you will be prompted to overwrite the settings, and this is one of the buttons (confirming you wish to overwrite the settings):  
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/DTqDJMZW4x
 #: 
 msgid "Overwrite"
-msgstr "Sobreescriure"
+msgstr "覆盖"
 
 #. After choosing to create a sharing link by clicking "Copy link", you can then revoke the link, making the link and token invalid so it can no longer be used.  https://s3.eu-west-1.amazonaws.com/po-pub/i/WZzRNgfk3QNg2yHSJNVgcmOJ.png
 #: 
 msgid "Revoke link"
-msgstr "Revocar enllaç"
+msgstr "撤销链接"
 
 #. Added option to enable an additional panel that lists the available saved settings records:  https://s3.eu-west-1.amazonaws.com/po-pub/i/T42StJjy5G8xo8TPGst42wuA.png 
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/CViHSJI40OkSwCEyVHs79jOh.png
 #: 
 msgid "Show saved diagrams panel"
-msgstr "Mostra el tauler de diagrames desats"
+msgstr "显示保存的图表面板"
 
 #. Option to share settings to an entry in the webtrees user favourites module (on the 'My page' page):  https://s3.eu-west-1.amazonaws.com/po-pub/i/jBnrBz5yEIe6NdBhAUvjuUTU.png
 #: 
 msgid "Add to My favourites"
-msgstr "Afegir a els meus favorits"
+msgstr "添加到我的收藏夹"
 
 #. Option to share settings to an entry in the webtrees tree favorites module (on the tree home page):  
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/jBnrBz5yEIe6NdBhAUvjuUTU.png
 #: 
 msgid "Add to Tree favourites"
-msgstr "Afegir als preferits de l'arbre"
+msgstr "添加到树状收藏夹"
 
 #. Option where you can add XREFs to override the option to highlight starting individuals. i.e. when you add XREFs to this list, those individuals will not be highlighted even if option to highlight starting individuals is selected.  https://s3.eu-west-1.amazonaws.com/po-pub/i/peZeLRwsxZTG8ZgMRLTKV8ph.png
 #: 
 msgid "Don't colour these XREFs:"
-msgstr "No acoloriu aquests XREFs:"
+msgstr "不要为这些XREF上色："
 
 #. If option enabled to show the extra diagram panel, this is the name of that panel. https://s3.eu-west-1.amazonaws.com/po-pub/i/CViHSJI40OkSwCEyVHs79jOh.png
 #: 
 msgid "Saved diagrams"
-msgstr "Diagrames desats"
+msgstr "已保存的图表"
 
 #. If option enabled to show the extra diagram panel, this is the group name for the diagram dropdown list: https://s3.eu-west-1.amazonaws.com/po-pub/i/CViHSJI40OkSwCEyVHs79jOh.png
 #: 
 msgid "List of diagrams"
-msgstr "Llista de diagrames"
+msgstr "图表列表"
 
 #. Option that allows only some starting individuals to be highlighted:  https://s3.eu-west-1.amazonaws.com/po-pub/i/rsS48w1rUU4xnkLH4WDmeK3d.png
 #: 
 msgid "Colour these individuals:"
-msgstr "Color d'aquests individus:"
+msgstr "为这些人上色："
 
 #. Option for what to do with XREF provided from webtrees via URL:  
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/vzqSdDBFSfjBF2bkTbkT1G8Z.png
 #: 
 msgid "Treatment of source individuals"
-msgstr "Tractament d'individus d'origen"
+msgstr "对来源个体的处理方式"
 
 #. One of the options for what to do with XREF provided from webtrees via URL:  
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/vzqSdDBFSfjBF2bkTbkT1G8Z.png
 #: 
 msgid "Default"
-msgstr "Omissió"
+msgstr "默认"
 
 #. One of the options for what to do with XREF provided from webtrees via URL:  
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/vzqSdDBFSfjBF2bkTbkT1G8Z.png
 #: 
 msgid "Add to list"
-msgstr "Afegir a la llista"
+msgstr "添加到列表"
 
 #. Help text for option for what to do with XREF provided by webtrees via URL:  https://s3.eu-west-1.amazonaws.com/po-pub/i/PF663q9RtqlHI4hKopBs8KEa.png
 #: 
 msgid "When you open GVExport, webtrees provides the record of an individual to the chart. This setting dictates what GVExport should do with this individual.</p><p>The options behave as follows:<ul><li>Default - if there is only one record in the starting individuals list, it will be overwritten. Otherwise, the new individual will be added to the list.</li><li>Add to list - The individual is always added to the list of starting individuals.</li><li>Don&apos;t add to list - Ignore the individual.</li><li>Overwrite - Clear the list of starting individuals and only add the new individual to the list.</li></ul></p><h4>Individual record</h4><p>The individual provided is decided by webtrees. If you select GVExport while on the page of an individual, this individual is provided to GVExport. When you come from another page, if the tree has a default individual this person is provided, otherwise the first individual in the tree is provided."
-msgstr "Quan obriu GVExport, webtrees proporciona el registre d'una persona al gràfic. Aquesta configuració dicta què ha de fer GVExport amb aquesta persona.</p><p>Les opcions es comporten de la manera següent:<ul><li>Default- si només hi ha un registre a la llista d'individus inicials, se sobreescriurà. En cas contrari, el nou individu s'afegirà a la llista.</li><li>Add a la llista - L'individu sempre s'afegeix a la llista d'individus inicials.</li><li>No afegiu a la llista - Ignoreu el fitxer individual.</li><li>Overwrite - Esborreu la llista d'individus inicials i només afegiu el nou individu a la llista.</li></ul></p><h4>Registre individual</h4><p>La persona proporcionada es decideix per webtrees. Si seleccioneu GVExport mentre esteu a la pàgina d'una persona, aquesta persona es proporcionarà a GVExport. Quan veniu d'una altra pàgina, si l'arbre té una persona per defecte es proporciona aquesta persona, en cas contrari es proporciona la primera persona de l'arbre."
+msgstr "当您打开GVExport时，webtrees会向图表提供一个人的记录。此设置决定GVExport应如何处理这个人。</p><p>这些选项的行为如下：<ul><li>默认 - 如果起始人员列表中只有一条记录，它将被覆盖。否则，新的人员将被添加到列表中。</li><li>添加到列表 - 该人员总是被添加到起始人员列表中。</li><li>不添加到列表 - 忽略该人员。</li><li>覆盖 - 清空起始人员列表，仅将新人员添加到列表中。</li></ul></p><h4>个人记录</h4><p>所提供的人员由webtrees决定。如果您在某个人的页面上选择GVExport，这个人将被提供给GVExport。当您从其他页面进入时，如果树有默认人员，则提供这个人，否则提供树中的第一个人员。"
 
 #. One of the options for what to do with XREF provided from webtrees via URL:  
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/vzqSdDBFSfjBF2bkTbkT1G8Z.png
 #: 
 msgid "Don't add to list"
-msgstr "No afegeixis a la llist"
+msgstr "不添加到列表"
 
 #. When loading a person from the XREF in the URL (e.g. when coming to GVExport from an individual's page), this message is shown if the person is added to the list of individuals.  https://s3.eu-west-1.amazonaws.com/po-pub/i/Geo7uHM7LtBJeDh5Ae9jXTu3.png
 #: 
-#, fuzzy
 msgid "One new source individual added to %s existing individuals"
-msgstr "Una nova persona afegida a %s persones existents"
+msgstr "已将一位新的来源人员添加到 %s 位现有人员中"
 
 #. This is a message that is shown if the user both has Graphviz installed on the server AND has used the photo shape setting (e.g. to make photos circle). The photo shapes are not supported by Graphviz, and are manipulated into the diagram after Graphviz has generated it. This is not possible with server-rendered diagrams, so if this option is used we automatically use the browser generation and show this message.
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/Rq4HsawCjQ0CuWW3I2SoDIJM.png
 #: 
-#, fuzzy
 msgid "Diagram will be rendered in browser as server doesn't support photo shapes"
-msgstr "Representat al navegador com a servidor, no admet formes de fotos"
+msgstr "由于服务器不支持照片形状，图表将在浏览器中渲染"
 
 #. One of the options in the new feature to change the shape of photos:  https://s3.eu-west-1.amazonaws.com/po-pub/i/xt0dCFkQXFZVcva3B9ae0WOL.png
 #: 
 msgid "No change"
-msgstr "Sense canvis"
+msgstr "不改变"
 
 #. One of the options in the new feature to change the shape of photos:  https://s3.eu-west-1.amazonaws.com/po-pub/i/xt0dCFkQXFZVcva3B9ae0WOL.png
 #: 
 msgid "Oval"
-msgstr "Oval"
+msgstr "椭圆形"
 
 #. One of the options in the new feature to change the shape of photos:  https://s3.eu-west-1.amazonaws.com/po-pub/i/xt0dCFkQXFZVcva3B9ae0WOL.png
 #: 
 msgid "Circle"
-msgstr "Cercle"
+msgstr "圆形"
 
 #. One of the options in the new feature to change the shape of photos:  https://s3.eu-west-1.amazonaws.com/po-pub/i/xt0dCFkQXFZVcva3B9ae0WOL.png
 #: 
 msgid "Square"
-msgstr "Quadrat"
+msgstr "正方形"
 
 #. One of the options in the new feature to change the shape of photos:  https://s3.eu-west-1.amazonaws.com/po-pub/i/xt0dCFkQXFZVcva3B9ae0WOL.png
 #: 
 msgid "Rounded rectangle"
-msgstr "Rectangle arrodonit"
+msgstr "圆角矩形"
 
 #. New option allowing user to change the shape of the photos of individuals on the diagram:  https://s3.eu-west-1.amazonaws.com/po-pub/i/m1OnWy0suuc9ZfVnzjRGm2fT.png
 #: 
 msgid "Photo shape"
-msgstr "Forma de foto"
+msgstr "照片形状"
 
 #. New option allowing the user to change the size of photos in the diagram relative to the default size:  https://s3.eu-west-1.amazonaws.com/po-pub/i/tJTfdr6obmGkybNdVWvjF1ee.png
 #: 
 msgid "Photo size"
-msgstr "Mida de la foto"
+msgstr "照片大小"
 
 #. Tooltip for icon of search button that is used for searching the diagram:  https://s3.eu-west-1.amazonaws.com/po-pub/i/W9UjPX7uP7V9TvL0mRAow0ev.png
 #: 
 msgid "Search diagram"
-msgstr "Diagrama de cerca"
+msgstr "搜索图表"
 
 #. Name of a new section allowing you to change some parts of the design of a tile, currently whether an individual tile is a rounded rectangle, and how sex of the individual is conveyed (coloured stripe, coloured border, written as text, or not displayed):  https://s3.eu-west-1.amazonaws.com/po-pub/i/RkX8ulBdesvP93Q43VXjka0f.png
 #: 
 msgid "Tile design"
-msgstr "Disseny de plafons"
+msgstr "图块设计"
 
 #. A setting that lets you choose if the tiles of individuals are rectangle or rounded rectangle (possibly other options at a later date):  https://s3.eu-west-1.amazonaws.com/po-pub/i/RkX8ulBdesvP93Q43VXjka0f.png
 #: 
 msgid "Individual tile shape"
-msgstr "Forma de `lafó individual"
+msgstr "个人图块形状"
 
 #. An option letting the user choose how sex of individuals are conveyed (coloured stripe, coloured border, written as text, or not displayed):  https://s3.eu-west-1.amazonaws.com/po-pub/i/RkX8ulBdesvP93Q43VXjka0f.png
 #: 
 msgid "Display sex of individual"
-msgstr "Mostra el sexe d'un individu"
+msgstr "显示个人性别"
 
 #. One of the options for the individual tile shapes. This option specifies a tile will be a rectangle (default):  https://s3.eu-west-1.amazonaws.com/po-pub/i/RkX8ulBdesvP93Q43VXjka0f.png
 #: 
 msgid "Rectangle"
-msgstr "Rectangle"
+msgstr "矩形"
 
 #. One of the options for how the sex of an individual is conveyed. This is a stripe of colour across the top of the box, currently the default:  https://s3.eu-west-1.amazonaws.com/po-pub/i/coer7wEpXQxPG7szEFPxGA7J.png
 #: 
 msgid "Coloured stripe"
-msgstr "Ratlla de colors"
+msgstr "彩色条纹"
 
 #. One of the options for how the sex of an individual is conveyed. This is a border that is the colour of the sex (e.g. pink for female, blue for male, etc):  https://s3.eu-west-1.amazonaws.com/po-pub/i/coer7wEpXQxPG7szEFPxGA7J.png
 #: 
 msgid "Coloured border"
-msgstr "Vora de colors"
+msgstr "彩色边框"
 
 #. One of the options for how the sex of an individual is conveyed. This is a text option, where it simply says "Male", "Female", "Other", or "Unknown":  https://s3.eu-west-1.amazonaws.com/po-pub/i/coer7wEpXQxPG7szEFPxGA7J.png
 #: 
 msgid "Text"
-msgstr "SMS"
+msgstr "文本"
 
 #. One of the options for how the sex of an individual is conveyed. This option does not convey the sex (i.e. all of the other options are disabled):  https://s3.eu-west-1.amazonaws.com/po-pub/i/coer7wEpXQxPG7szEFPxGA7J.png
 #: 
 msgid "Don't display sex"
-msgstr "No mostris sexe"
+msgstr "不显示性别"
 
 #. Additional option for colouring based on sex - this is the same idea as selecting Simple diagram type, which will now be removed.  https://s3.eu-west-1.amazonaws.com/po-pub/i/unanqM7u3enenLfGiB1yZGzj.png
 #: 
 msgid "Background colour"
-msgstr "Color de fons"
+msgstr "背景颜色"
 
 #. Help text for new option to show message history:  https://s3.eu-west-1.amazonaws.com/po-pub/i/Sb4Ds5YwWa1nQ7XJLUmn6gXg.png  https://s3.eu-west-1.amazonaws.com/po-pub/i/pnsTCwNXDSkjZiJOxfWkHbnq.png  https://s3.eu-west-1.amazonaws.com/po-pub/i/m4IM4qfa16y5Ij82V2VdrsF0.png
 #: 
 msgid "This button shows the history of the pop up notifications. Note that this history is not saved, so it is lost if you leave the page or the page is reloaded."
-msgstr "Aquest botó mostra l'historial de les notificacions emergents. Tingueu en compte que aquest historial no es desa, de manera que es perd si sortiu de la pàgina o es torna a carregar la pàgina."
+msgstr "此按钮可显示弹出通知的历史记录。请注意，此历史记录不会保存，因此如果您离开页面或重新加载页面，记录将会丢失。"
 
 #. Name of section that has button for showing message history (list of pop-up messages shown since page loaded): https://s3.eu-west-1.amazonaws.com/po-pub/i/Sb4Ds5YwWa1nQ7XJLUmn6gXg.png
 #. 
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/pnsTCwNXDSkjZiJOxfWkHbnq.png
 #: 
 msgid "Message history"
-msgstr "Historial de missatges"
+msgstr "消息历史记录"
 
 #. Words on button that shows message history (list of pop-up messages shown since page loaded): https://s3.eu-west-1.amazonaws.com/po-pub/i/Sb4Ds5YwWa1nQ7XJLUmn6gXg.png
 #. 
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/pnsTCwNXDSkjZiJOxfWkHbnq.png
 #: 
 msgid "View message history"
-msgstr "Veure l'historial de missatges"
+msgstr "查看消息历史记录"
 
 #. New message for when individual loaded from URL replaces the existing individual:  https://s3.eu-west-1.amazonaws.com/po-pub/i/ZGop7iFU7ZJIudUNJFmyfGWl.png
 #: 
 msgid "Source individual has replaced existing individual"
-msgstr "L'individu d'origen ha substituït l'individu existent"
+msgstr "来源个体已替换现有个体"
 
 #. This is the name of the options that allow you to choose to include Siblings, Partners, etc. The section has been updated and merged with the option to include ancestors and the option to include descendants: https://s3.eu-west-1.amazonaws.com/po-pub/i/Z1PzXOjHnmuiy8DMV4tSWRPn.png
 #: 
 msgid "Relation types to include"
-msgstr "Tipus de relacions a incloure"
+msgstr "要包含的关系类型"
 
 #. New section that has subgroups, where many settings have been moved (e.g. whether to include date of birth, date of death, XREFs, URLs, etc):  https://s3.eu-west-1.amazonaws.com/po-pub/i/RGFYcUVaqmUTE8qEMq42VQkZ.png
 #: 
 msgid "Tile contents"
-msgstr "Contingut del quadre"
+msgstr "图块内容"
 
 #. New section to combine some general diagram settings:  https://s3.eu-west-1.amazonaws.com/po-pub/i/fXJwOPFeNExfAPrBjyabVej9.png   https://s3.eu-west-1.amazonaws.com/po-pub/i/OVcGk9fXLCrNYmgGTI25lMpH.png
 #: 
 msgid "Diagram"
-msgstr "Diagrama"
+msgstr "图表"
 
 #. One of the names of a new settings group under the Tile design section:  https://s3.eu-west-1.amazonaws.com/po-pub/i/BIVXgbgOvNma3KB1dlsuu2oX.png
 #: 
 msgid "Shape"
-msgstr "Formes"
+msgstr "形状"
 
 #. One of the names of a new settings group under the Tile design section:  https://s3.eu-west-1.amazonaws.com/po-pub/i/BIVXgbgOvNma3KB1dlsuu2oX.png
 #: 
 msgid "Colours"
-msgstr "Colors"
+msgstr "颜色"
 
 #. New term referring to existing setting that allows you to change the background of individuals:  https://s3.eu-west-1.amazonaws.com/po-pub/i/pA1VCZGWJqInDUP5UrRq7oMQ.png
 #: 
 msgid "Custom background colour"
-msgstr "Color de fons personalitzat"
+msgstr "自定义背景颜色"
 
 #. New option for setting the colour of the stripe on individual tiles:  https://s3.eu-west-1.amazonaws.com/po-pub/i/foB5NxsPsztrvQxIxo0R7HvG.png
 #: 
 msgid "Individual stripe colour"
-msgstr "Color de ratlles individuals"
+msgstr "个人图块条纹颜色"
 
 #. Option to set the border colour of individuals:  https://s3.eu-west-1.amazonaws.com/po-pub/i/U91BOGzE90DmKPN8uGvur5k9.png
 #: 
 msgid "Individual border colour"
-msgstr "Color de la vora individual"
+msgstr "个人图块边框颜色"
 
 #. New name for existing option to set the border colour of tiles:  https://s3.eu-west-1.amazonaws.com/po-pub/i/JBcfI43E8P0ZCxLo51Bhpa8U.png
 #: 
 msgid "Family border colour"
-msgstr "Color de la vora familiar"
+msgstr "家庭图块边框颜色"
 
 #. Option in dropdown box for stripe, border, and background colour option: https://s3.eu-west-1.amazonaws.com/po-pub/i/foB5NxsPsztrvQxIxo0R7HvG.png
 #: 
 msgid "Based on individual&apos;s sex"
-msgstr "Segons el sexe de l'individu"
+msgstr "基于个人性别"
 
 #. Option in dropdown menu that disables the stripe on individuals:  https://s3.eu-west-1.amazonaws.com/po-pub/i/ml179UE7h6IKDNGsex2uUMwm.png
 #: 
 msgid "No stripe"
-msgstr "Sense ratlla"
+msgstr "无条纹"
 
 #. Option to set individuals border colour to the same as families (this is the default): https://s3.eu-west-1.amazonaws.com/po-pub/i/U91BOGzE90DmKPN8uGvur5k9.png
 #: 
 msgid "Same as family border"
-msgstr "El mateix que la frontera familiar"
+msgstr "与家庭图块边框相同"
 
 #. New grouping of settings within new Tile contents section:   https://s3.eu-west-1.amazonaws.com/po-pub/i/vjxGtnJth5ODT2NSpQ8tm7WB.png
 #: 
 msgid "Page links"
-msgstr "Enllaços a pàgines"
+msgstr "页面链接"
 
 #. New grouping of settings within new Tile contents section:   https://s3.eu-west-1.amazonaws.com/po-pub/i/vjxGtnJth5ODT2NSpQ8tm7WB.png
 #: 
 msgid "Abbreviations"
-msgstr "Abreviatures"
+msgstr "缩写"
 
 #. New grouping of settings within new Tile contents section:   https://s3.eu-west-1.amazonaws.com/po-pub/i/vjxGtnJth5ODT2NSpQ8tm7WB.png
 #: 
 msgid "Information on individuals"
-msgstr "Informació sobre persones físiques"
+msgstr "个人信息"
 
 #. New grouping of settings within new Tile contents section:   https://s3.eu-west-1.amazonaws.com/po-pub/i/vjxGtnJth5ODT2NSpQ8tm7WB.png
 #: 
 msgid "Information on families"
-msgstr "Informació a les famílies"
+msgstr "家庭信息"
 
 #. New settings group within new Diagram settings section:  https://s3.eu-west-1.amazonaws.com/po-pub/i/wzNlOBmhEznFGDQbErllBaRt.png
 #: 
 msgid "Diagram DPI"
-msgstr "Diagrama DPI"
+msgstr "图表DPI"
 
 #. New settings group within new Diagram settings section:  https://s3.eu-west-1.amazonaws.com/po-pub/i/wzNlOBmhEznFGDQbErllBaRt.png
 #: 
 msgid "Spacing"
-msgstr "Espaiat"
+msgstr "间距"
 
 #. New settings group within new Diagram settings section:  https://s3.eu-west-1.amazonaws.com/po-pub/i/wzNlOBmhEznFGDQbErllBaRt.png
 #: 
 msgid "Diagram colours"
-msgstr "Colors del diagrama"
+msgstr "图表颜色"
 
 #. New name for existing setting in new grouping:  https://s3.eu-west-1.amazonaws.com/po-pub/i/xjpt3QnjvhJDgamsBl7l7w5J.png
 #: 
 msgid "Relationship arrow colour"
-msgstr "Color de la fletxa de relació"
+msgstr "关系箭头颜色"
 
 #. One of the options for the shape of photos:  https://s3.eu-west-1.amazonaws.com/po-pub/i/KboDUiZZMpjNBYmj0b8Bz0bC.png
 #: 
 msgid "Rounded square"
-msgstr "Cantons arredonits"
+msgstr "圆角正方形"
 
 #. Option that if enabled will display the gender as part of the text on an individual's tile:  https://s3.eu-west-1.amazonaws.com/po-pub/i/MPjAdVB2RY2cCNFfRSxK3oOP.png  https://s3.eu-west-1.amazonaws.com/po-pub/i/1S1f2VAUdQBg1UkhCmrqzkV4.png
 #: 
 msgid "Show sex of individuals"
-msgstr "\n"
-"Mostrar sexe d'individus"
+msgstr "显示个人性别"
 
 #. Slightly changed section name to differ from setting name, as new options in this section are sometimes shown in specific circumstances:  https://s3.eu-west-1.amazonaws.com/po-pub/i/h0TLndD3SONc4XkscpLP7tvE.png
 #: 
 msgid "Output file"
-msgstr "Fitxa de sortida"
+msgstr "输出文件"
 
 #. New options in Output file section are sometimes shown in specific circumstances:  https://s3.eu-west-1.amazonaws.com/po-pub/i/h0TLndD3SONc4XkscpLP7tvE.png
 #: 
 msgid "Quality of JPG photos"
-msgstr "Qualitat de les fotos JPG"
+msgstr "JPG照片质量"
 
 #. New options in Output file section are sometimes shown in specific circumstances:  https://s3.eu-west-1.amazonaws.com/po-pub/i/h0TLndD3SONc4XkscpLP7tvE.png
 #: 
 msgid "Convert photos to JPG where possible"
-msgstr "\n"
-"Converteix fotos a JPG sempre que sigui possible"
+msgstr "尽可能将照片转换为JPG格式"
 
 #. One of the quality settings for JPG shown only when Graphviz installed on server and SVG or PDF option chosen:  https://s3.eu-west-1.amazonaws.com/po-pub/i/h0TLndD3SONc4XkscpLP7tvE.png
 #: 
 msgid "Lowest"
-msgstr "Més baix"
+msgstr "最低"
 
 #. One of the quality settings for JPG shown only when Graphviz installed on server and SVG or PDF option chosen:  https://s3.eu-west-1.amazonaws.com/po-pub/i/h0TLndD3SONc4XkscpLP7tvE.png
 #: 
 msgid "Low"
-msgstr "Baix"
+msgstr "低"
 
 #. One of the quality settings for JPG shown only when Graphviz installed on server and SVG or PDF option chosen:  https://s3.eu-west-1.amazonaws.com/po-pub/i/h0TLndD3SONc4XkscpLP7tvE.png
 #: 
 msgid "Medium"
-msgstr "Mitjà"
+msgstr "中等"
 
 #. One of the quality settings for JPG shown only when Graphviz installed on server and SVG or PDF option chosen:  https://s3.eu-west-1.amazonaws.com/po-pub/i/h0TLndD3SONc4XkscpLP7tvE.png
 #: 
 msgid "High"
-msgstr "Alt"
+msgstr "高"
 
 #. One of the quality settings for JPG shown only when Graphviz installed on server and SVG or PDF option chosen:  https://s3.eu-west-1.amazonaws.com/po-pub/i/h0TLndD3SONc4XkscpLP7tvE.png
 #: 
 msgid "Highest"
-msgstr "Màxima"
+msgstr "最高"
 
 #. Label for colour picker, shown when you choose "Custom" in the border colour option:  https://s3.eu-west-1.amazonaws.com/po-pub/i/hSuaDbMqsm6pmK47oJ5B6o88.png
 #: 
 msgid "Custom border colour"
-msgstr "Color de la vora personalitzat"
+msgstr "自定义边框颜色"
 
 #. Option to adjust the resolution of the photos:  https://s3.eu-west-1.amazonaws.com/po-pub/i/7up12u4AeoKs4iMyZFo5VLD3.png
 #: 
 msgid "Photo resolution"
-msgstr "Resolució de les fotos"
+msgstr "照片分辨率"
 
 #. This option exists in multiple places, allowing setting the shape or colours based on whether a person is living or deceased:  https://s3.eu-west-1.amazonaws.com/po-pub/i/58WaEOwngUvsVIpkiAhZS9a0.png
 #: 
 msgid "Based on vital status"
-msgstr "Basat en l'estat vital\n"
-""
+msgstr "基于生命状态"
 
 #. Option to set colour based on the individual's age. This option is available for background, stripe, and border colours.  https://s3.eu-west-1.amazonaws.com/po-pub/i/BUaDKtuIq1mVp37UrEPwDs5c.png
 #: 
 msgid "Based on age"
-msgstr "Segons l'edat"
+msgstr "基于年龄"
 
 #. There is an option to set colour based on the individual's age, this term is the colour used for young individuals. This option is available for background, stripe, and border colours.  https://s3.eu-west-1.amazonaws.com/po-pub/i/BUaDKtuIq1mVp37UrEPwDs5c.png
 #: 
 msgid "Low age colour"
-msgstr "Color dels menors d'edat"
+msgstr "低龄颜色"
 
 #. There is an option to set colour based on the individual's age, this term is the colour used for old individuals. This option is available for background, stripe, and border colours.  https://s3.eu-west-1.amazonaws.com/po-pub/i/BUaDKtuIq1mVp37UrEPwDs5c.png
 #: 
 msgid "High age colour"
-msgstr "Color del majors d'edat"
+msgstr "高龄颜色"
 
 #. There is an option to set colour based on the individual's age, this term is the colour used for individuals with an unknown age. This option is available for background, stripe, and border colours.  https://s3.eu-west-1.amazonaws.com/po-pub/i/BUaDKtuIq1mVp37UrEPwDs5c.png
 #: 
 msgid "Unknown age colour"
-msgstr "Color per a edat desconeguda"
+msgstr "未知年龄颜色"
 
 #. There is an option to set colour based on the individual's age, this term is the setting for the age at the young end of the spectrum (i.e. individuals this age and younger will have the low age colour. individuals older than the high age colour will have the high age colour, and those inbetween will be on a gradient between these two, depending on their age within the range). This option is available for background, stripe, and border colours.  https://s3.eu-west-1.amazonaws.com/po-pub/i/BUaDKtuIq1mVp37UrEPwDs5c.png
 #: 
 msgid "Age for low colour"
-msgstr "Edat límit per la minoria d'edat"
+msgstr "低龄颜色对应的年龄"
 
 #. There is an option to set colour based on the individual's age, this term is the setting for the age at the old end of the spectrum (i.e. individuals older than this age will have the high age colour, individuals younger than the low age with have the low age colour, and those in between will be on a gradient between these two, depending on their age within the range). This option is available for background, stripe, and border colours.  https://s3.eu-west-1.amazonaws.com/po-pub/i/BUaDKtuIq1mVp37UrEPwDs5c.png
 #: 
 msgid "Age for high colour"
-msgstr "Edat límit per a majoria d'edat"
+msgstr "高龄颜色对应的年龄"
 
 #. This is the main text of the home page of the new help sysetm.  https://s3.eu-west-1.amazonaws.com/po-pub/i/uau23Gj30erKyyuZ4ZbKj39j.png
 #: 
-#, fuzzy
 msgid "This help contains detailed information on the options available in GVExport. You can navigate by clicking the options below."
-msgstr "Aquesta ajuda conté informació detallada sobre les opcions disponibles en GVExport. Podeu navegar fent clic a les opcions següents, cercant amb la icona de la lupa de dalt o fent clic en un paràmetre per mostrar la informació d'aquest paràmetre."
+msgstr "本帮助文档包含GVExport中可用选项的详细信息。您可以通过点击下方选项进行导航。"
 
 #. Title of new page in help, that shows the content you get clicking the "Help" button at the bottom of the screen. Page looks like this:  https://s3.eu-west-1.amazonaws.com/po-pub/i/Sv6raxfmlt8hZJKIpMurNhXt.png
 #: 
 msgid "About GVExport"
-msgstr "Quant a GVExport"
+msgstr "关于GVExport"
 
 #. A new page in the new help system. This is a starting page for getting detailed information about different functions. It links to other pages that are separated based on section in the menu:  https://s3.eu-west-1.amazonaws.com/po-pub/i/oNhAAp94FCBeaFoafJoSEocg.png
 #: 
 msgid "Detailed information"
-msgstr "Informació detallada"
+msgstr "详细信息"
 
 #. This is the main text for a new page "Detailed information" in the new help system. This is a starting page for getting detailed information about different functions. It links to other pages that are separated based on section in the menu:  
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/oNhAAp94FCBeaFoafJoSEocg.png
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/oNhAAp94FCBeaFoafJoSEocg.png
 #: 
 msgid "This section has detailed information on each of the options in GVExport."
-msgstr "En aquesta secció es disposa d'informació detallada de cadascuna de les opcions de GVExport."
+msgstr "本节详细介绍了GV导出中的每个选项。"
 
 #. A new page that the new help system has, as there is one page for each of the settings panel sections.  https://s3.eu-west-1.amazonaws.com/po-pub/i/ytEK3zg5EZjWw4yiEobnE0MO.png
 #: 
 msgid "This panel is only shown when the \"Show saved diagrams\" option is enabled in the \"Save settings\" section. It has just the following option:"
-msgstr "Aquest quadre només es mostra quan l'opció \"Mostra els diagrames desats\" està habilitada a la secció \"Desa la configuració\". Té la següent opció:"
+msgstr "仅当在“保存设置”部分启用“显示已保存的图表”选项时，才会显示此面板。它只有以下选项："
 
 #. A help page for the "People to be included" section, that links to other pages for the detail of each setting:  https://s3.eu-west-1.amazonaws.com/po-pub/i/A4F0GU78Aw3zlN1iod5acwCm.png
 #: 
 msgid "The \"People to be included\" section lets you choose criteria for who to include in the diagram. Within this section, there are several setting groups:"
-msgstr "La secció \"Persones que s'inclouran\" us permet triar els criteris sobre qui voleu incloure al diagrama. Dins d'aquesta secció, hi ha diversos grups de configuració:"
+msgstr "“要包含的人员”部分允许您选择要包含在图表中的人员的标准。在此部分中，有几个设置组："
 
 #. A help page for the "Appearance" section, that links to other pages for the detail of each setting:   https://s3.eu-west-1.amazonaws.com/po-pub/i/nAJVK6eZ4ZM15ghaKTURbImI.png
 #: 
 msgid "The \"Appearance\" section lets you customise the look of the diagram. Within this section, there are several setting groups:"
-msgstr "La secció \"Aparença\" us permet personalitzar l'aspecte del diagrama. Dins d'aquesta secció, hi ha diversos grups de configuració:"
+msgstr "“外观”部分允许您自定义图表的外观。在此部分中，有几个设置组："
 
 #. A help page for the "General settings" section, that links to other pages for the detail of each setting:    https://s3.eu-west-1.amazonaws.com/po-pub/i/RyexFlprm5V3QI35jRlNyJGA.png
 #: 
 msgid "The \"General settings\" section has options that don&apos;t fit in the other sections. Within this section, there are several settings groups:"
-msgstr "La secció \"Configuració general\" té opcions que no encaixen en les altres seccions. Dins d'aquesta secció, hi ha diversos grups de configuració:"
+msgstr "“常规设置”部分具有其他部分不适合的选项。在此部分中，有几个设置组："
 
 #. Description of the "Tile design" settings section, as listed in the help:  https://s3.eu-west-1.amazonaws.com/po-pub/i/fATQDj3Cuq0pdLquOOt0Bvan.png
 #: 
 msgid "This section allows for some changes to the design of tiles, including the shape, photos, colours, and fonts."
-msgstr "Aquesta secció permet alguns canvis en el disseny dels plafons, com ara la forma, les fotos, els colors i les lletres tipogràfiques."
+msgstr "本节允许对图块的设计进行一些更改，包括形状、照片、颜色和字体。"
 
 #. Part of the help text for the "Individual tile shape" option:  https://s3.eu-west-1.amazonaws.com/po-pub/i/7f9BFZbMmpL5IUEFjtkmDgN6.png
 #: 
 msgid "This option lets you choose the shape for tiles for individuals. There are two options:"
-msgstr "Aquesta opció us permet triar la forma per als plafons per a particulars. Hi ha tres opcions:"
+msgstr "此选项允许您为个人选择瓷砖的形状。有两个选项："
 
 #. Part of the help text for the "Individual tile shape" option:  https://s3.eu-west-1.amazonaws.com/po-pub/i/7f9BFZbMmpL5IUEFjtkmDgN6.png
 #: 
 msgid "The default option, the tile is a rectangle shape."
-msgstr "L'opció per defecte, el plafó és un rectangle."
+msgstr "默认选项，磁贴是矩形形状。"
 
 #. Part of the help text for the "Individual tile shape" option:  https://s3.eu-west-1.amazonaws.com/po-pub/i/7f9BFZbMmpL5IUEFjtkmDgN6.png
 #: 
 msgid "The tile has rounded corners"
-msgstr "El plafó té cantonades arrodonides"
+msgstr "该图块有圆角。"
 
 #. Part of the help text for the "Individual tile shape" option:  https://s3.eu-west-1.amazonaws.com/po-pub/i/7f9BFZbMmpL5IUEFjtkmDgN6.png
 #: 
 msgid "This lets you assign a shape based on the sex of individuals. For example, you can set male individuals to have rectangle tiles and female individuals to have rounded rectangle tiles."
-msgstr "Basat en el sexe de l'individu- això us permet assignar una forma en funció del sexe dels individus. Per exemple, podeu definir que els individus masculins tinguin plafons rectangles i que els individus femenins tinguin plafons rectangles arrodonides."
+msgstr "这使您可以根据个体的性别分配形状。例如，您可以将男性个体设置为矩形图块，将女性个体设置为圆形矩形图块。"
 
 #. Part of the Photos help text:  https://s3.eu-west-1.amazonaws.com/po-pub/i/LnybW6GMtDH0UDez4Z0flfpW.png
 #: 
-#, fuzzy
 msgid "This option lets you enable or disable showing photos on the tiles of individuals."
-msgstr "Aquesta opció us permet activar o desactivar la visualització de fotos a les fitxes dels individus."
+msgstr "此选项允许您启用或禁用在个人磁贴上显示照片。"
 
 #. Part of the Photos help text:  https://s3.eu-west-1.amazonaws.com/po-pub/i/LnybW6GMtDH0UDez4Z0flfpW.png
 #: 
 msgid "This option lets you choose the shape of photos. Note that if you have Graphviz installed on the server, using these options will disable generating the diagram on the server, which may prevent large diagrams from being created."
-msgstr "Aquesta opció us permet triar la forma de les fotos. Tingueu en compte que si teniu Graphviz instal·lat al servidor, l'ús d'aquestes opcions desactivarà la generació del diagrama al servidor, cosa que pot impedir que es creïn diagrames grans."
+msgstr "此选项允许您选择照片的形状。请注意，如果您在服务器上安装了Graphviz，使用这些选项将禁用在服务器上生成图表，这可能会阻止创建大型图表。"
 
 #. Part of the Photos help text:  https://s3.eu-west-1.amazonaws.com/po-pub/i/LnybW6GMtDH0UDez4Z0flfpW.png
 #: 
 msgid "This option lets you change the size of photos as they are displayed, which is done as a percentage of the default size. 100&percnt; is the default size, 50&percnt; is half sized and 200&percnt; is double sized."
-msgstr "Aquesta opció us permet canviar la mida de les fotos a mesura que es mostren, que es fa com a percentatge de la mida per defecte. 100&percnt; és la mida per defecte, 50&percnt; és de mida mitjana i 200&percnt; és de doble mida."
+msgstr "此选项允许您在显示照片时更改照片的大小，这是按默认大小的百分比完成的。100%是默认大小，50%是一半大小，200%是双倍大小。"
 
 #. Part of the Photos help text:  https://s3.eu-west-1.amazonaws.com/po-pub/i/LnybW6GMtDH0UDez4Z0flfpW.png
 #: 
 msgid "This option lets you change the resolution of photos, which is done by adjusting the width as a percentage of the default width. 100&percnt; is the default resolution, 50&percnt; is half the pixels wide and 200&percnt; is double the pixels wide. Because the aspect ratio is maintained, doubling the resolution will increase the size of the file to around 4 times larger (depending on the exact shape of the photo)."
-msgstr "Aquesta opció us permet canviar la resolució de les fotos, cosa que es fa ajustant l'amplada com a percentatge de l'amplada predeterminada. 100&percnt; és la resolució per defecte, 50&percnt; té la meitat dels píxels d'amplada i 200&percnt; és el doble dels píxels d'amplada. Com que la relació d'aspecte es manté, duplicar la resolució crearà la mida del fitxer a unes 4 vegades més gran (depenent de la forma exacta de la foto)."
+msgstr "此选项允许您更改照片的分辨率，这是通过调整宽度作为默认宽度的百分比来完成的。100%是默认分辨率，50%是像素宽的一半，200%是像素宽的两倍。因为长宽比保持不变，分辨率加倍将使文件大小增加到大约4倍（取决于照片的确切形状）。"
 
 #. Part of the "Individual background colour" help text:  https://s3.eu-west-1.amazonaws.com/po-pub/i/eDQV6JV3JvDtByvCWafKETjD.png
 #: 
 msgid "This option lets you set the background colour of an individual&apos;s tile. The options are:"
-msgstr "Aquesta opció us permet establir el color de fons del plafó d'un individu. Les opcions són:"
+msgstr "此选项允许您设置个人磁贴的背景颜色。选项有："
 
 #. Part of the "Individual background colour" help text:  https://s3.eu-west-1.amazonaws.com/po-pub/i/eDQV6JV3JvDtByvCWafKETjD.png
 #: 
 msgid "The background will be set to the chosen colour."
-msgstr "el fons s'ajustarà al color escollit"
+msgstr "背景将设置为所选颜色。"
 
 #. Part of the "Individual background colour" help text:  https://s3.eu-west-1.amazonaws.com/po-pub/i/eDQV6JV3JvDtByvCWafKETjD.png
 #: 
 msgid "The background will be coloured based on the sex of the individual."
-msgstr "el fons s'acolorirà en funció del sexe de l'individu."
+msgstr "背景将根据个人的性别着色。"
 
 #. Part of the "Individual background colour" help text:  https://s3.eu-west-1.amazonaws.com/po-pub/i/eDQV6JV3JvDtByvCWafKETjD.png
 #: 
 msgid "The background will be coloured based on whether the individual is living or deceased."
-msgstr "El fons s'acolorirà en funció de si la persona és viva o morta."
+msgstr "背景将根据个人是活着还是死去而着色。"
 
 #. Part of the "Individual background colour" help text:  https://s3.eu-west-1.amazonaws.com/po-pub/i/eDQV6JV3JvDtByvCWafKETjD.png
 #: 
 msgid "The background will be coloured using a scale between two chosen colours, based on the age of the individual."
-msgstr "El fons s'acolorirà mitjançant una escala entre dos colors escollits, en funció de l'edat de l'individu."
+msgstr "背景将根据个人的年龄使用两种选定颜色之间的比例着色。"
 
 #. Part of the "Individual stripe colour" help text:  https://s3.eu-west-1.amazonaws.com/po-pub/i/tFOIYjO4UCOK7GNOe5XPiLvS.png
 #: 
 msgid "This option lets you set the colour of the stripe across the top of an individual&apos;s tile. The options are:"
-msgstr "Aquesta opció us permet establir el color de la ratlla a la part superior del plafó d'un individu. Les opcions són:"
+msgstr "此选项允许您设置个人图块顶部条纹的颜色。选项有："
 
 #. Part of the "Individual stripe colour" help text:  https://s3.eu-west-1.amazonaws.com/po-pub/i/tFOIYjO4UCOK7GNOe5XPiLvS.png
 #: 
 msgid "No stripe is shown."
-msgstr "no es mostra cap ratlla"
+msgstr "未显示条纹。"
 
 #. Part of the "Individual stripe colour" help text:  https://s3.eu-west-1.amazonaws.com/po-pub/i/tFOIYjO4UCOK7GNOe5XPiLvS.png
 #: 
 msgid "The stripe will be coloured based on the sex of the individual."
-msgstr "la ratlla es pintarà en funció del sexe de l'individu."
+msgstr "条纹将根据个人的性别着色。"
 
 #. Part of the "Individual stripe colour" help text:  https://s3.eu-west-1.amazonaws.com/po-pub/i/tFOIYjO4UCOK7GNOe5XPiLvS.png
 #: 
 msgid "The stripe will be coloured based on whether the individual is living or deceased."
-msgstr "La ratlla s'acolorirà en funció de si l'individu és viu o mort."
+msgstr "条纹将根据个人是活着还是死去而着色。"
 
 #. Part of the "Individual stripe colour" help text:  https://s3.eu-west-1.amazonaws.com/po-pub/i/tFOIYjO4UCOK7GNOe5XPiLvS.png
 #: 
 msgid "The stripe will be coloured using a scale between two chosen colours, based on the age of the individual."
-msgstr "\n"
-"La franja s'acolorirà mitjançant una escala entre dos colors escollits, en funció de l'edat de l'individu."
+msgstr "条纹将根据个人的年龄使用两种选定颜色之间的比例着色。"
 
 #. Part of the help text for "Individual border colour": https://s3.eu-west-1.amazonaws.com/po-pub/i/h5HCQt6yIARSk0971BK0vAaq.png
 #: 
 msgid "This option lets you set the border colour of an individual&apos;s tile. The options are:"
-msgstr "Aquesta opció us permet establir el color de la vora del plafó d'un individu. Les opcions són:"
+msgstr "此选项可让您设置个人图块的边框颜色。选项如下："
 
 #. Part of the help text for "Individual border colour": https://s3.eu-west-1.amazonaws.com/po-pub/i/h5HCQt6yIARSk0971BK0vAaq.png
 #: 
 msgid "The border will be set to the chosen colour."
-msgstr "la vora s'establirà amb el color escollit"
+msgstr "边框将设置为所选颜色。"
 
 #. Part of the help text for "Individual border colour": https://s3.eu-west-1.amazonaws.com/po-pub/i/h5HCQt6yIARSk0971BK0vAaq.png
 #: 
 msgid "The border will be coloured based on the sex of the individual."
-msgstr "la vora s'acolorirà en funció del sexe de l'individu."
+msgstr "边框将根据个人性别进行着色。"
 
 #. Part of the help text for "Individual border colour": https://s3.eu-west-1.amazonaws.com/po-pub/i/h5HCQt6yIARSk0971BK0vAaq.png
 #: 
 msgid "The family border colour will be used for the border of individuals."
-msgstr "el color de la vora familiar s'utilitzarà per a la frontera dels individus."
+msgstr "个人图块的边框将使用家庭图块的边框颜色。"
 
 #. Part of the help text for "Individual border colour": https://s3.eu-west-1.amazonaws.com/po-pub/i/h5HCQt6yIARSk0971BK0vAaq.png
 #: 
 msgid "The border will be coloured based on whether the individual is living or deceased."
-msgstr "La vora s'acolorirà en funció de si l'individu és viu o mort."
+msgstr "边框将根据个人的生死状态进行着色。"
 
 #. Part of the help text for "Individual border colour": https://s3.eu-west-1.amazonaws.com/po-pub/i/h5HCQt6yIARSk0971BK0vAaq.png
 #: 
 msgid "The border will be coloured using a scale between two chosen colours, based on the age of the individual."
-msgstr "La vora s'acolorirà mitjançant una escala entre dos colors escollits, en funció de l'edat de l'individu."
+msgstr "边框将根据个人年龄，在两种所选颜色之间按比例进行着色。"
 
 #. Part of the help information around the colours used for each sex:  https://s3.eu-west-1.amazonaws.com/po-pub/i/zFeY1IbEuF4U8dILeiQUuV99.png
 #: 
 msgid "Set the colour for Male individuals, used in above settings for background, stripe, border if selected."
-msgstr "El color per a individus masculins, utilitzat en la configuració anterior per a les escenes anteriors per al fons, la ratlla, la vora si se selecciona."
+msgstr "设置男性个体的颜色，若在上述背景、条纹、边框设置中选择了该颜色，则会应用。"
 
 #. Part of the help information around the colours used for each sex:  https://s3.eu-west-1.amazonaws.com/po-pub/i/zFeY1IbEuF4U8dILeiQUuV99.png
 #: 
 msgid "Set the colour for Female individuals, used in above settings for background, stripe, border if selected."
-msgstr "Configureu el color per a les persones femenines, que s'utilitza a la configuració anterior per al fons, la ratlla, la vora si se selecciona."
+msgstr "设置女性个体的颜色，若在上述背景、条纹、边框设置中选择了该颜色，则会应用。"
 
 #. Part of the help information around the colours used for each sex:  https://s3.eu-west-1.amazonaws.com/po-pub/i/zFeY1IbEuF4U8dILeiQUuV99.png
 #: 
 msgid "Set the colour for Other gender individuals, used in above settings for background, stripe, border if selected."
-msgstr "Configureu el color per a Altres individus de gènere, que s'utilitza a la configuració anterior per a les escenes de fons, ratlla, vora si se selecciona."
+msgstr "设置其他性别个体的颜色，若在上述背景、条纹、边框设置中选择了该颜色，则会应用。"
 
 #. Part of the help information around the colours used for each sex:  https://s3.eu-west-1.amazonaws.com/po-pub/i/zFeY1IbEuF4U8dILeiQUuV99.png
 #: 
 msgid "Set the colour for Unknown gender individuals, used in above settings for background, stripe, border if selected."
-msgstr "Configureu el color per a individus de gènere desconegut, que s'utilitza a la configuració anterior per al fons, la ratlla, la vora si se selecciona."
+msgstr "设置未知性别个体的颜色，若在上述背景、条纹、边框设置中选择了该颜色，则会应用。"
 
 #. Help text for the option to set non-related sex colours:  https://s3.eu-west-1.amazonaws.com/po-pub/i/aX1DPFZeEFtV4VGaEqUB05mY.png
 #: 
 msgid "There are four options here for non-blood related individuals, if the &quot;Mark not blood-related people with different colour&quot; option is enabled in the &quot;People to be included&quot; section."
-msgstr "Hi ha quatre opcions aquí per a persones no relacionades amb la sang, si la \" Marca persones no relacionades amb la sang amb diferent color”; l'opció està habilitada al \" Persones a incloure”;. Secció"
+msgstr "如果在“要包含的人员”部分中启用了“用不同颜色标记非血亲人员”选项，这里有四个针对非血亲人员的选项。"
 
 #. Part of the help text for family tile colours:  https://s3.eu-west-1.amazonaws.com/po-pub/i/YJInMp5brj9vY9iKPUQTX3rF.png
 #: 
 msgid "The background colour of family records."
-msgstr "El color de fons dels registres familiars."
+msgstr "家庭记录的背景颜色。"
 
 #. Part of the help text for family tile colours:  https://s3.eu-west-1.amazonaws.com/po-pub/i/YJInMp5brj9vY9iKPUQTX3rF.png
 #: 
 msgid "The border colour of family records."
-msgstr "El color de la vora dels registres familiars."
+msgstr "家庭记录的边框颜色。"
 
 #. Part of the help text for the Font settings:  https://s3.eu-west-1.amazonaws.com/po-pub/i/qUGC7vhTTAbXfKTFjzeZHy4x.png
 #: 
 msgid "This list lets you pick from a number of known web-safe font typefaces. They must be installed on the system or a fallback typeface will be used. These options are known to be installed on almost all desktop systems and that is why they have been chosen. Mobile browsers will likely use a fallback font."
-msgstr "Aquesta llista us permet triar entre diverses tipografies de lletra websafe conegudes. S'han d'instal·lar al sistema o s'utilitzarà una tipografia alternativa. Se sap que aquestes opcions s'instal·len en gairebé tots els sistemes d'escriptori i per això s'han escollit. És probable que els navegadors mòbils utilitzin una font."
+msgstr "此列表可让您从一些已知的网络安全字体中进行选择。这些字体必须安装在系统上，否则将使用备用字体。选择这些选项是因为它们几乎在所有桌面系统上都已安装。移动浏览器可能会使用备用字体。"
 
 #. Part of the help text for the Font settings:  https://s3.eu-west-1.amazonaws.com/po-pub/i/qUGC7vhTTAbXfKTFjzeZHy4x.png
 #: 
 msgid "Set the font point size for the names of individuals."
-msgstr "Configureu la mida del punt de lletra per als noms de les persones."
+msgstr "设置个人姓名的字体磅值。"
 
 #. Part of the help text for the Font settings:  https://s3.eu-west-1.amazonaws.com/po-pub/i/qUGC7vhTTAbXfKTFjzeZHy4x.png
 #: 
 msgid "This changes the font point size for all text except for names. For example, the date and place of marriage, and the date and place of birth and death."
-msgstr "Aquest canvia la mida del punt de lletra per a tot el text, excepte per als noms. Per exemple, la data i el lloc del matrimoni, i la data i el lloc de naixement i defunció."
+msgstr "这会更改除姓名外所有文本的字体磅值。例如，结婚日期和地点，以及出生和死亡的日期与地点。"
 
 #. Part of the help text for the Font settings:  https://s3.eu-west-1.amazonaws.com/po-pub/i/qUGC7vhTTAbXfKTFjzeZHy4x.png
 #: 
 msgid "This changes the colour of the font for names. Note that the colour picker is provided by your browser, and is handled differently depending on which browser you are using."
-msgstr "Aquest canvia el color de la font per als noms. Tingueu en compte que el selector de colors el proporciona el vostre navegador i es gestiona de manera diferent en funció del navegador que utilitzeu."
+msgstr "这会更改姓名的字体颜色。请注意，颜色选择器由您的浏览器提供，不同浏览器的处理方式可能不同。"
 
 #. Part of the help text for the Font settings:  https://s3.eu-west-1.amazonaws.com/po-pub/i/qUGC7vhTTAbXfKTFjzeZHy4x.png
 #: 
 msgid "This changes the colour of the font of all text except for names, for example, the date and place of marriage, and the date and place of birth and death. Note that the colour picker is provided by your browser, and is handled differently depending on which browser you are using."
-msgstr "Això canvia el color de la font de tot el text excepte els noms, per exemple, la data i el lloc del matrimoni, i la data i el lloc de naixement i defunció. Tingueu en compte que el selector de color el proporciona el vostre navegador i es gestiona de manera diferent en funció del navegador que utilitzeu."
+msgstr "这会更改除姓名外所有文本的字体颜色，例如，结婚日期和地点，以及出生和死亡的日期与地点。请注意，颜色选择器由您的浏览器提供，不同浏览器的处理方式可能不同。"
 
 #. Help text for the option to set non-related sex colours:  
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/aX1DPFZeEFtV4VGaEqUB05mY.png
 #: 
 msgid "Non-blood related individuals"
-msgstr "Persones no relacionades amb la consanguinitat"
+msgstr "非血亲人员"
 
 #. This is used in the help, at the bottom of some pages there are links to other related pages:  https://s3.eu-west-1.amazonaws.com/po-pub/i/0wOhL0YsV7g80be9ferU1VAT.png
 #: 
 msgid "Related links"
-msgstr "Enllaços relacionats"
+msgstr "相关链接"
 
 #. In the help, there are "bread crumbs" that show the location of the current help page with respect to the rest of the help pages. The first item in this page is "Home", which is the main starting page.  https://s3.eu-west-1.amazonaws.com/po-pub/i/RRYo6DWRWtrAiE1hRscAxY7W.png
 #: 
 msgid "Home"
-msgstr "Inici"
+msgstr "首页"
 
 #. Text on button that shows the help panel:  https://s3.eu-west-1.amazonaws.com/po-pub/i/l1Z2zKsAgMx4VL6XVNJGrCWz.png
 #: 
 msgid "Show help"
-msgstr "Mostra ajuda"
+msgstr "显示帮助"
 
 #. Success message after change made:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/gb2OPlL3T6lhv55iNvD3V1AZ.png
 #: 
 msgid "Update successful"
-msgstr "Actualització finalitzada correcta"
+msgstr "更新成功"
 
 #. Message asking for new setting name after user chooses option to rename a saved setting item:  https://s3.eu-west-1.amazonaws.com/po-pub/i/ASjGVATs1oZVmZ0ev2LTYXhY.png
 #: 
 msgid "Enter new setting name"
-msgstr "Introduïu un nom de configuració nou"
+msgstr "请输入新的设置名称"
 
 #. Option to rename a saved settings item. Used in both the option and the button that triggers renaming:
 #. 
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/5FITlle641isw1Cgwa3HOlXs.png  https://s3.eu-west-1.amazonaws.com/po-pub/i/bTWnf8PzS5sPeG5D1FWGI0aG.png
 #: 
 msgid "Rename"
-msgstr "Reanomenar"
+msgstr "重命名"
 
 #. Part of the help text:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/Oemo1QWV9iDy7QJ1ue3YJ26u.png
 #: 
 msgid "Here you are able to save the chosen settings within GVExport. The settings are only accessible within the same user and tree. Click a settings record to load it."
-msgstr "Aquí podeu desar la configuració escollida dins de GVExport. La configuració només és accessible dins del mateix usuari i arbre. Feu clic en un registre de configuració per carregar-lo."
+msgstr "在此处，您可以在GVExport中保存所选设置。这些设置仅在同一用户和树状结构内可访问。点击设置记录即可加载。"
 
 #. Part of the help text:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/Oemo1QWV9iDy7QJ1ue3YJ26u.png
 #: 
 msgid "For example, you may have many diagrams you create from your tree. You may want to save the settings used for each diagram so that in future you can regenerate the diagram to include any new information."
-msgstr "Per exemple, és possible que tingueu molts diagrames que creeu des de l'arbre. És possible que vulgueu desar la configuració utilitzada per a cada diagrama de manera que en el futur pugueu regenerar el diagrama per incloure qualsevol informació nova."
+msgstr "例如，您可能从您的树状结构创建了许多图表。您可能希望保存每个图表使用的设置，以便将来可以重新生成图表以包含任何新信息。"
 
 #. Part of the help text:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/Oemo1QWV9iDy7QJ1ue3YJ26u.png
 #: 
 msgid "If you click the ellipsis on a record, you will see several options."
-msgstr "Si feu clic als punts suspensius d'un registre, veureu diverses opcions."
+msgstr "如果您点击记录上的省略号，将看到几个选项。"
 
 #. Part of the help text:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/Oemo1QWV9iDy7QJ1ue3YJ26u.png
 #: 
 msgid "remove these settings"
-msgstr "Suprimeix aquesta configuració"
+msgstr "删除这些设置"
 
 #. Part of the help text:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/Oemo1QWV9iDy7QJ1ue3YJ26u.png
 #: 
 msgid "download a file holding the settings, which can be loaded at a later date"
-msgstr "Baixeu un fitxer que contingui la configuració, que es pot carregar més endavant"
+msgstr "下载包含设置的文件，以便日后加载"
 
 #. Part of the help text:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/Oemo1QWV9iDy7QJ1ue3YJ26u.png
 #: 
 msgid "if logged in, this allows you to share the settings with others by creating a URL to share with them, which is copied to the clipboard of your device"
-msgstr "si heu iniciat la sessió, això us permet compartir la configuració amb altres persones creant un URL per compartir-lo amb ells, que es copia al porta-retalls del dispositiu"
+msgstr "如果已登录，这允许您通过创建一个URL与他人共享设置，该URL将复制到您设备的剪贴板中。"
 
 #. Part of the help text:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/Oemo1QWV9iDy7QJ1ue3YJ26u.png
 #: 
 msgid "if a sharing link has been created, this will show to allow you to revoke the link, so it can no longer be accessed"
-msgstr "Si s'ha creat un enllaç per compartir, es mostrarà que us permetrà revocar l'enllaç, de manera que ja no s'hi podrà accedir."
+msgstr "如果已创建共享链接，将显示此选项，允许您撤销该链接，使其无法再被访问。"
 
 #. Part of the help text:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/Oemo1QWV9iDy7QJ1ue3YJ26u.png
 #: 
 msgid "if logged in, this will create a sharing link and add this to the webtrees favourites on your &quot;My page&quot; page"
-msgstr "Si heu iniciat la sessió, això crearà un enllaç per compartir i afegir-lo als favorits de Webtrees al vostre \"La meva pàgina\" pàgina."
+msgstr "如果已登录，这将创建一个共享链接，并将其添加到您“我的页面”上的webtrees收藏夹中。"
 
 #. Part of the help text:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/Oemo1QWV9iDy7QJ1ue3YJ26u.png
 #: 
 msgid "if logged in as a tree manager, this will create a sharing link and add this to the webtrees favourites on the tree home page"
-msgstr "Si s'inicia sessió com a administrador d'arbre, es crearà un enllaç per compartir i s'afegirà als favorits de Webtrees a la pàgina d'inici de l'arbre"
+msgstr "如果以树管理员身份登录，这将创建一个共享链接，并将其添加到树主页上的webtrees收藏夹中。"
 
 #. Part of the help text:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/Oemo1QWV9iDy7QJ1ue3YJ26u.png
 #: 
 msgid "When logged out, only the Delete and Download options will be available"
-msgstr "Quan es tanqui la sessió, només estaran disponibles les opcions Suprimeix i Descarrega"
+msgstr "注销后，将仅显示删除和下载选项。"
 
 #. Part of the help text:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/Oemo1QWV9iDy7QJ1ue3YJ26u.png
 #: 
 msgid "The &quot;Show saved diagrams panel&quot; option adds a new section to the settings that makes the saved settings available as a dropdown list. You may wish to use webtrees&apos; ability for an administrator to &quot;Masquerade as user&quot; to set up some settings for another user, then enable this option, so they can easily choose different prepared diagrams without needed to delve into the advanced settings."
-msgstr "Els \"Mostra els diagrames desats panel\" L'opció afegeix una secció nova a la configuració que fa que la configuració desada estigui disponible com a llista desplegable. És possible que vulgueu utilitzar la capacitat de Webtrees per a un administrador de \"Disfressar-se d'usuari\" Per configurar alguns paràmetres per a un altre usuari, activeu aquesta opció, de manera que pugui triar fàcilment diferents diagrames preparats sense necessitat d'aprofundir en la configuració avançada."
+msgstr "“显示已保存的图表面板”选项会在设置中添加一个新部分，将已保存的设置以下拉列表形式呈现。您可以利用webtrees管理员“伪装成用户”的功能为其他用户设置一些设置，然后启用此选项，这样他们就可以轻松选择不同的预设图表，而无需深入研究高级设置。"
 
 #. Part of the help text:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/Oemo1QWV9iDy7QJ1ue3YJ26u.png
 #: 
 msgid "change the name of a saved setting"
-msgstr "Canviar el nom d'una opció de configuració desada"
+msgstr "更改已保存设置的名称"
 
 #. Message shown in popup after successfully adding settings link to favourites section webtrees My Page:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/WqaE1p5myQ7yL5g1ANXCKNrd.png
 #: 
 msgid "Added to My favourites"
-msgstr "Afegit a Els meus favorits"
+msgstr "已添加到我的收藏夹"
 
 #. Message shown in notification after link to saved setting is successfully added to the favourites widget on the webtrees tree home page:  https://s3.eu-west-1.amazonaws.com/po-pub/i/3qVoAL2efzJQ5RkKZlo0kIHZ.png
 #: 
 msgid "Added to Tree favourites"
-msgstr "Afegit als favorits de l'arbre"
+msgstr "已添加到树状收藏夹"
 
 #. Part of the help text for the Diagram appearance settings:  https://s3.eu-west-1.amazonaws.com/po-pub/i/Vbjoek76Ojvq1rcmEumPnmgJ.png
 #: 
 msgid "For output such as JPG and PNG, the DPI setting will produce higher quality output when it is larger, but will also increase the file size. Smaller values will produce smaller files, but the quality will be worse and if the value is too low you may not be able to read text."
-msgstr "Per a sortides com JPG i PNG, la configuració DPI produirà una sortida de més qualitat quan sigui més gran, però també augmentarà la mida del fitxer. Els valors més petits produiran fitxers més petits, però la qualitat serà pitjor i si el valor és massa baix és possible que no pugueu llegir text."
+msgstr "对于JPG和PNG等输出格式，DPI设置值越大，输出质量越高，但文件大小也会增加。较小的值会生成较小的文件，但质量会变差，如果值过低，您可能无法读取文本。"
 
 #. Part of the help text for the Diagram appearance settings:  https://s3.eu-west-1.amazonaws.com/po-pub/i/Vbjoek76Ojvq1rcmEumPnmgJ.png
 #: 
 msgid "These options affect the distance between nodes on the diagram."
-msgstr "Les opcions afecten la distància entre nodes del diagrama."
+msgstr "这些选项会影响图表上节点之间的距离。"
 
 #. Part of the help text for the Diagram appearance settings:  https://s3.eu-west-1.amazonaws.com/po-pub/i/Vbjoek76Ojvq1rcmEumPnmgJ.png
 #: 
 msgid "How close you want generations on the output. For example, for left to right output, smaller numbers will bring the columns of individuals closer together, while larger numbers would push them further apart."
-msgstr "Com a prop vulgueu generacions a la sortida. Per exemple, per a la sortida d'esquerra a dreta, els nombres més petits aproparan les columnes dels individus, mentre que els nombres més grans els separarien encara més."
+msgstr "您希望输出中各代之间的距离有多近。例如，对于从左到右的输出，较小的数字会使各列人员靠得更近，而较大的数字会使它们分得更远。"
 
 #. Part of the help text for the Diagram appearance settings:  https://s3.eu-west-1.amazonaws.com/po-pub/i/Vbjoek76Ojvq1rcmEumPnmgJ.png
 #: 
 msgid "How close you want the individuals of the same generation on the output. For example, for left to right output, smaller numbers will mean less space vertically between the boxes, while larger numbers would push them further apart."
-msgstr "Com a prop voleu els individus de la mateixa generació a la sortida. Per exemple, per a la sortida d'esquerra a dreta, els nombres més petits significaran menys espai verticalment entre les caselles, mentre que els nombres més grans els separarien encara més."
+msgstr "您希望输出中同一代的人员之间距离有多近。例如，对于从左到右的输出，较小的数字意味着框与框之间的垂直空间更小，而较大的数字会使它们分得更远。"
 
 #. Part of the help text for the Diagram appearance settings:  https://s3.eu-west-1.amazonaws.com/po-pub/i/Vbjoek76Ojvq1rcmEumPnmgJ.png
 #: 
 msgid "This section lets you change settings related to the layout of the diagram."
-msgstr "Aquesta secció us permet canviar els paràmetres relacionats amb la disposició del diagrama."
+msgstr "此部分可让您更改与图表布局相关的设置。"
 
 #. Part of the help text for the Diagram appearance settings:  https://s3.eu-west-1.amazonaws.com/po-pub/i/Vbjoek76Ojvq1rcmEumPnmgJ.png
 #: 
 msgid "When you have selected the \"Combined\" layout option, this option lets you choose whether the partners should be shown size by side (default), or in Stacked mode, which places them on top of each other. Stacked mode reduces the width of the diagram, which can be helpful in some situations."
-msgstr "Quan hàgiu seleccionat l'opció de disposició \"Combinada\", aquesta opció us permet triar si els socis s'han de mostrar mida per costat (per defecte) o en mode apilat, que els col·loca l'un sobre l'altre. El mode apilat redueix l'amplada del diagrama, cosa que pot ser útil en algunes situacions."
+msgstr "当您选择“组合”布局选项时，此选项可让您选择是将伴侣并排显示（默认），还是以堆叠模式显示，即将它们上下放置。堆叠模式可减小图表宽度，在某些情况下可能会有所帮助。"
 
 #. Part of the help text for the Diagram appearance settings:  https://s3.eu-west-1.amazonaws.com/po-pub/i/Vbjoek76Ojvq1rcmEumPnmgJ.png
 #: 
 msgid "This section allows you to change colours associated with the diagram that are not directly related to the individual or family tiles. Click the coloured box to change the colour. This uses your browser&apos;s colour picker, so will look different depending on what browser you are using."
-msgstr "Aquesta secció permet canviar els colors associats al diagrama que no estan directament relacionats amb les fitxes individuals o familiars. Feu clic al quadre de colors per canviar el color. Això utilitza el selector de color del vostre navegador, de manera que es veurà diferent en funció del navegador que utilitzeu."
+msgstr "此部分允许您更改与图表相关但与个人或家庭图块无直接关系的颜色。点击有色框可更改颜色。这会使用您浏览器的颜色选择器，因此外观会因所用浏览器而异。"
 
 #. Part of the help text for the Diagram appearance settings:  https://s3.eu-west-1.amazonaws.com/po-pub/i/Vbjoek76Ojvq1rcmEumPnmgJ.png
 #: 
 msgid "This is the colour of the area behind the family tree."
-msgstr "Aquest és el color de la zona que hi ha darrere de l'arbre genealògic."
+msgstr "这是家谱背后区域的颜色。"
 
 #. Part of the help text for the Diagram appearance settings:  https://s3.eu-west-1.amazonaws.com/po-pub/i/Vbjoek76Ojvq1rcmEumPnmgJ.png
 #: 
 msgid "The colour of the arrows that show relationships between individuals and families."
-msgstr "El color de les fletxes que mostren les relacions entre individus i famílies."
+msgstr "这是显示个人与家庭之间关系的箭头的颜色。"
 
 #. Part of the help text for the Diagram appearance settings:  https://s3.eu-west-1.amazonaws.com/po-pub/i/Vbjoek76Ojvq1rcmEumPnmgJ.png
 #: 
 msgid "This shows blood relationships in a different colour than other relationships (e.g. adoption). Selecting this option will provide two colours that can be customised"
-msgstr "Aquesta mostra les relacions sanguínies en un color diferent que altres relacions (p. ex., adopció). Seleccionant aquesta opció es proporcionaran dos colors que es poden personalitzar"
+msgstr "这会将血缘关系以与其他关系（如收养）不同的颜色显示。选择此选项将提供两种可自定义的颜色。"
 
 #. Part of the help text for the Diagram appearance settings:  https://s3.eu-west-1.amazonaws.com/po-pub/i/Vbjoek76Ojvq1rcmEumPnmgJ.png
 #: 
 msgid "The arrow colour to use for children related by birth"
-msgstr "el color de la fletxa a utilitzar per als nens relacionats per naixement"
+msgstr "用于亲生子女的箭头颜色"
 
 #. Part of the help text for the Diagram appearance settings:  https://s3.eu-west-1.amazonaws.com/po-pub/i/Vbjoek76Ojvq1rcmEumPnmgJ.png
 #: 
 msgid "The arrow colour to use for children not related by birth"
-msgstr "el color de la fletxa a utilitzar per a nens no relacionats per naixement"
+msgstr "用于非亲生子女的箭头颜色"
 
 #. Name of settings group in appearance section:  https://s3.eu-west-1.amazonaws.com/po-pub/i/nM6gmf4vpCnqLFguqMJgW87Z.png
 #: 
 msgid "Layout"
-msgstr "Traçat"
+msgstr "布局"
 
 #. Name of setting in appearance section:  https://s3.eu-west-1.amazonaws.com/po-pub/i/nM6gmf4vpCnqLFguqMJgW87Z.png
 #: 
 msgid "Partner position"
-msgstr "Posició de soci"
+msgstr "伴侣位置"
 
 #. Specifies this setting only works for the Combined diagram type:  https://s3.eu-west-1.amazonaws.com/po-pub/i/nM6gmf4vpCnqLFguqMJgW87Z.png
 #: 
 msgid "Combined diagram type only"
-msgstr "Només tipus de diagrama combinat"
+msgstr "仅适用于组合图表类型"
 
 #. One of the options for "Partner position" layout option. Indicates that husband and wife are side by side (default)  https://s3.eu-west-1.amazonaws.com/po-pub/i/nM6gmf4vpCnqLFguqMJgW87Z.png 
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/tqlYF2RCUpH3CtrsFC4pFdHI.png
 #: 
 msgid "Side by side"
-msgstr "Colze a colze"
+msgstr "并排"
 
 #. One of the options for "Partner position" layout option. Indicates that husband and wife are on top of each other  https://s3.eu-west-1.amazonaws.com/po-pub/i/nM6gmf4vpCnqLFguqMJgW87Z.png 
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/5INseuMeLcdcqQiImjA3CAkS.png
 #: 
 msgid "Stacked"
-msgstr "Apilada"
+msgstr "堆叠"
 
 #. New option that allows user to set a background colour (and eventually other styles) based on the existence of a shared note - effectively a way of tagging and identifying.
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/bExD5UTsqFfyvdXMbWYkkens.png
 #: 
 msgid "Style individuals based on shared note"
-msgstr "Estilitzar els individus basant-se en una nota compartida"
+msgstr "根据共享备注设置个人样式"
 
 #. Sets the default background colour when adding a new shared note for styling.
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/bExD5UTsqFfyvdXMbWYkkens.png
 #: 
 msgid "Default background colour for new items"
-msgstr "Color de fons predeterminat per als elements nous"
+msgstr "新项目的默认背景颜色"
 
 #. Label for the option to add a new shared note to the list: https://s3.eu-west-1.amazonaws.com/po-pub/i/bExD5UTsqFfyvdXMbWYkkens.png
 #: 
 msgid "Add shared note style"
-msgstr "Afegir un estil de nota compartida"
+msgstr "添加共享备注样式"
 
 #. Option to open modal that shows list of shared notes and lets the user edit the settings or reorder them:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/bExD5UTsqFfyvdXMbWYkkens.png  https://s3.eu-west-1.amazonaws.com/po-pub/i/3d1NliVq7MD5ZlllAht2A5XW.png
 #: 
 msgid "Edit shared notes"
-msgstr "Editar notes compartides"
+msgstr "编辑共享备注"
 
 #. Indicates the number of shared notes added to the settings: https://s3.eu-west-1.amazonaws.com/po-pub/i/bExD5UTsqFfyvdXMbWYkkens.png
 #: 
 msgid "%s shared note styles saved."
-msgstr "%s estils de notes compartides desats."
+msgstr "已保存 %s 种共享备注样式。"
 
 #. Text for when there are no shared note styles added to the list:  https://s3.eu-west-1.amazonaws.com/po-pub/i/yW3YdeiCwkyxAFyfMY4sdB2p.png
 #: 
 msgid "No styles set based on shared notes."
-msgstr "No s'estableix cap estil basat en notes compartides."
+msgstr "未根据共享备注设置样式。"
 
 #. Label for the colour picker that lets the user choose the background colour for the shared note style: https://s3.eu-west-1.amazonaws.com/po-pub/i/3d1NliVq7MD5ZlllAht2A5XW.png
 #: 
 msgid "Shared note colour"
-msgstr "Color de les notes compartides"
+msgstr "共享备注颜色"
 
 #. Part of the help text for option to set styles based on which shared notes are linked to an individual:  https://s3.eu-west-1.amazonaws.com/po-pub/i/NIUymmhOAhoOrnOrEw4LHHwy.png
 #: 
 msgid "This option lets you set styles for the tiles of individuals based on the shared notes linked to those individuals. Currently only the background colour can be set."
-msgstr "Aquesta opció permet definir estils per a les peces dels individus en funció de les notes compartides vinculades a aquestes persones. Actualment només es pot establir el color de fons."
+msgstr "此选项可让您根据与个人关联的共享备注为个人图块设置样式。目前仅可设置背景颜色。"
 
 #. Part of the help text for option to set styles based on which shared notes are linked to an individual:  https://s3.eu-west-1.amazonaws.com/po-pub/i/NIUymmhOAhoOrnOrEw4LHHwy.png
 #: 
 msgid "The options in this section are:"
-msgstr "Les opcions d'aquest apartat són:"
+msgstr "此部分的选项如下："
 
 #. Part of the help text for option to set styles based on which shared notes are linked to an individual:  https://s3.eu-west-1.amazonaws.com/po-pub/i/NIUymmhOAhoOrnOrEw4LHHwy.png
 #: 
 msgid "Enable option to use this functionality. If this is disabled, the settings are not used."
-msgstr "Habilita l'opció per utilitzar aquesta funcionalitat. Si es desactiva, la configuració no s'utilitza."
+msgstr "启用此功能的选项。如果禁用此选项，则不会使用这些设置。"
 
 #. Part of the help text for option to set styles based on which shared notes are linked to an individual:  https://s3.eu-west-1.amazonaws.com/po-pub/i/NIUymmhOAhoOrnOrEw4LHHwy.png
 #: 
 msgid "When adding a new item, this is the default colour used."
-msgstr "En afegir un element nou, aquest és el color predeterminat que s'utilitza."
+msgstr "添加新项目时，这是所用的默认颜色。"
 
 #. Part of the help text for option to set styles based on which shared notes are linked to an individual:  https://s3.eu-west-1.amazonaws.com/po-pub/i/NIUymmhOAhoOrnOrEw4LHHwy.png
 #: 
 msgid "Choose a shared note from this list and it will be added to the list of shared notes."
-msgstr "Selecciona una nota compartida d'aquesta llista i s'afegirà a la llista de notes compartides."
+msgstr "从此列表中选择一个共享备注，它将被添加到共享备注列表中。"
 
 #. Part of the help text for option to set styles based on which shared notes are linked to an individual:  https://s3.eu-west-1.amazonaws.com/po-pub/i/NIUymmhOAhoOrnOrEw4LHHwy.png
 #: 
 msgid "Click this to view the list of shared notes, where you can remove them, rearrange the order, or change the style associated with them."
-msgstr "Fes clic aquí per veure la llista de notes compartides, on pots eliminar-les, reordenar-ne l'ordre o canviar-ne l'estil associat."
+msgstr "点击此处可查看共享备注列表，您可以在其中删除、重新排列顺序或更改与之关联的样式。"
 
 #. Part of the help text for option to set styles based on which shared notes are linked to an individual:  https://s3.eu-west-1.amazonaws.com/po-pub/i/NIUymmhOAhoOrnOrEw4LHHwy.png
 #: 
 msgid "This option is shown on the list item in the edit screen, where you can choose the background colour for individuals linked to this shared note."
-msgstr "Aquesta opció es mostra a l'element de la llista de la pantalla d'edició, on pots seleccionar el color de fons de les persones vinculades a aquesta nota compartida."
+msgstr "此选项显示在编辑屏幕的列表项上，您可以在此处为与该共享备注关联的个人选择背景颜色。"
 
 #. Part of the help text for option to set styles based on which shared notes are linked to an individual:  https://s3.eu-west-1.amazonaws.com/po-pub/i/NIUymmhOAhoOrnOrEw4LHHwy.png
 #: 
 msgid "To use this option, first select a shared note. A new screen will appear allowing you to set the style to use for that shared note. You may add multiple items, and you can drag the items in the list to rearrange them."
-msgstr "Per utilitzar aquesta opció, primer selecciona una nota compartida. Apareixerà una pantalla nova que et permetrà definir l'estil que s'utilitzarà per a aquesta nota compartida. Pots afegir diversos ítems i arrossegar els ítems de la llista per reordenar-los."
+msgstr "要使用此选项，首先选择一个共享备注。将出现一个新屏幕，允许您为该共享备注设置要使用的样式。您可以添加多个项目，并且可以拖动列表中的项目来重新排列它们。"
 
 #. Part of the help text for option to set styles based on which shared notes are linked to an individual:  https://s3.eu-west-1.amazonaws.com/po-pub/i/NIUymmhOAhoOrnOrEw4LHHwy.png
 #: 
 msgid "If the same style is set by multiple settings, the following order is used:"
-msgstr "Si el mateix estil s'estableix amb diversos paràmetres, s'utilitza l'ordre següent:"
+msgstr "如果同一样式由多个设置设定，则使用以下顺序："
 
 #. Part of the help text for option to set styles based on which shared notes are linked to an individual:  https://s3.eu-west-1.amazonaws.com/po-pub/i/NIUymmhOAhoOrnOrEw4LHHwy.png
 #: 
 msgid "The style set based on shared notes is then used, if relevant. If an individual is linked to multiple shared notes in the list, the style from the highest note in the list is used."
-msgstr "A continuació, s'utilitza el conjunt d'estils basat en notes compartides, si escau. Si una persona està vinculada a diverses notes compartides de la llista, s'utilitzarà l'estil de la nota més alta de la llista."
+msgstr "如果相关，则随后使用基于共享备注设置的样式。如果一个人与列表中的多个共享备注相关联，则使用列表中排在最前的备注的样式。"
 
 #. Part of the help text for option to set styles based on which shared notes are linked to an individual:  https://s3.eu-west-1.amazonaws.com/po-pub/i/NIUymmhOAhoOrnOrEw4LHHwy.png
 #: 
 msgid "If the above options do not apply, then the Individual Background Colour is used."
-msgstr "Si les opcions anteriors no s'apliquen, s'utilitza el color de fons individual."
+msgstr "如果上述选项均不适用，则使用个人背景颜色。"
 
 #. Similar to birth and death date prefixes, the marriage date prefix is shown before the marriage date. https://s3.eu-west-1.amazonaws.com/po-pub/i/sJduRepchTD0hWHiI5o07QjL.png  https://s3.eu-west-1.amazonaws.com/po-pub/i/ef4C7sVuJ9WpQSxqWIJFvBwr.png
 #: 
 msgid "Marriage date prefix"
-msgstr "Prefix de data de matrimoni"
+msgstr "结婚日期前缀"
 
 #. Option to abbreviate the months in dates using the webtrees month shortening. In English, this is "January"->"Jan", "February"->"Feb" (and similar in most languages).
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/F5T8grIN2Crn5G9tGzAVeCBL.png
 #: 
 msgid "Abbreviated month names"
-msgstr "Noms de mes abreujats"
+msgstr "缩写月份名称"
 
 #. Part of help page:  https://s3.eu-west-1.amazonaws.com/po-pub/i/08Z4pSSmjQhf0V1ym9AEETTC.png
 #: 
 msgid "This section allows for some changes to the content of tiles, including links, abbreviations, and the details included on individuals and families."
-msgstr "Aquesta secció permet alguns canvis en el contingut de les peces, inclosos enllaços, abreviatures i els detalls inclosos sobre persones i famílies."
+msgstr "此部分允许对图块内容进行一些更改，包括链接、缩写以及个人和家庭所包含的详细信息。"
 
 #. Part of help page for abbreviation options: https://s3.eu-west-1.amazonaws.com/po-pub/i/rqnKktGCJbxelFo3RGr6SMVe.png
 #: 
 msgid "There are several options to shorten the names of individuals displayed."
-msgstr "Hi ha diverses opcions per escurçar els noms de les persones que es mostren."
+msgstr "有几种缩短所显示个人姓名的选项。"
 
 #. Part of help page for abbreviation options: https://s3.eu-west-1.amazonaws.com/po-pub/i/rqnKktGCJbxelFo3RGr6SMVe.png
 #: 
 msgid "the default option, this shows the primary name and any nickname. This option currently is the only one where the preferred name is underlined, and is the only one to show nicknames (in &quot;quotes&quot;)."
-msgstr "L'opció per defecte, mostra el nom principal i qualsevol àlies. Aquesta opció actualment és l'única on se subratlla el nom preferit, i és l'única que mostra sobrenoms (a \" cometes\")."
+msgstr "默认选项，此选项显示主要姓名及任何昵称。目前此选项是唯一将首选姓名加下划线，并唯一以“引号”显示昵称的选项。"
 
 #. Part of help page for abbreviation options: https://s3.eu-west-1.amazonaws.com/po-pub/i/rqnKktGCJbxelFo3RGr6SMVe.png
 #: 
 msgid "like the full name, but without nicknames."
-msgstr "com el nom complet, però sense sobrenoms."
+msgstr "与全名类似，但不显示昵称。"
 
 #. Part of help page for abbreviation options: https://s3.eu-west-1.amazonaws.com/po-pub/i/rqnKktGCJbxelFo3RGr6SMVe.png
 #: 
 msgid "just the given names are displayed."
-msgstr "Només es mostren els noms de pila."
+msgstr "仅显示名字。"
 
 #. Part of help page for abbreviation options: https://s3.eu-west-1.amazonaws.com/po-pub/i/rqnKktGCJbxelFo3RGr6SMVe.png
 #: 
 msgid "just the first word of the name in the given names field."
-msgstr "només la primera paraula del nom al camp noms de pila."
+msgstr "仅显示名字字段中的第一个词。"
 
 #. Part of help page for abbreviation options: https://s3.eu-west-1.amazonaws.com/po-pub/i/rqnKktGCJbxelFo3RGr6SMVe.png
 #: 
 msgid "just the surnames are displayed."
-msgstr "Només es mostren els cognoms."
+msgstr "仅显示姓氏。"
 
 #. Part of help page for abbreviation options: https://s3.eu-west-1.amazonaws.com/po-pub/i/rqnKktGCJbxelFo3RGr6SMVe.png
 #: 
 msgid "this displays initials only, for example &quot;JFK&quot;."
-msgstr "Això només mostra les inicials, per exemple \" JFK\"."
+msgstr "此选项仅显示姓名首字母，例如“JFK”。"
 
 #. Part of help page for abbreviation options: https://s3.eu-west-1.amazonaws.com/po-pub/i/rqnKktGCJbxelFo3RGr6SMVe.png
 #: 
 msgid "this shows initials for the first and second given name, as well as the full surname. For example: &quot;J.F. Kennedy&quot;"
-msgstr "Mostra les inicials del primer i segon nom, així com el cognom complet. Per exemple: \"J.F. Kennedy\""
+msgstr "此选项显示名字的首字母和第二个名字的首字母，以及完整的姓氏。例如：“J.F. 肯尼迪”"
 
 #. Part of help page for abbreviation options: https://s3.eu-west-1.amazonaws.com/po-pub/i/rqnKktGCJbxelFo3RGr6SMVe.png
 #: 
 msgid "no names are shown. If birth and death details are also disabled then it is possible to show only photos or even just coloured boxes."
-msgstr "No es mostren noms. Si les dades de naixement i defunció també estan desactivades, és possible mostrar només fotos o fins i tot només caixes de colors."
+msgstr "不显示任何名字。如果同时禁用出生和死亡详细信息，则可能仅显示照片，甚至只是彩色框。"
 
 #. Part of the help page for name abbreviations:  https://s3.eu-west-1.amazonaws.com/po-pub/i/wc6fNIyVirRJx9txr24YUfnP.png
 #: 
 msgid "There are several options to shorten place names (for place of birth, place of marriage, place of death)."
-msgstr "Hi ha diverses opcions per escurçar els topònims (per al lloc de naixement, el lloc de matrimoni, el lloc de mort)."
+msgstr "有几种缩短地名（出生地点、结婚地点、死亡地点）的选项。"
 
 #. Part of the help page for place abbreviations:  https://s3.eu-west-1.amazonaws.com/po-pub/i/wc6fNIyVirRJx9txr24YUfnP.png
 #: 
 msgid "the place name is printed in full."
-msgstr "El topònim està imprès íntegrament."
+msgstr "完整打印地名。"
 
 #. Part of the help page for place abbreviations:  https://s3.eu-west-1.amazonaws.com/po-pub/i/wc6fNIyVirRJx9txr24YUfnP.png
 #: 
 msgid "the first and last section of the place name is used, using commas to split the sections. For example, &quot;London, England, United Kingdom&quot; would be shortened to &quot;London, United Kingdom&quot;"
-msgstr "S'utilitza el primer i l'últim tram del topònim, utilitzant comes per dividir les seccions. Per exemple, \" Londres, Anglaterra, Regne Unit\" s'escurçaria a \" Londres, Regne Unit\""
+msgstr "使用地名的首段和末段，用逗号分隔各段。例如，“伦敦，英格兰，英国”将缩短为“伦敦，英国”"
 
 #. Part of the help page for place abbreviations:  https://s3.eu-west-1.amazonaws.com/po-pub/i/wc6fNIyVirRJx9txr24YUfnP.png
 #: 
 msgid "the first and last section of the place name is used, using commas to split the sections. The country is then converted to the ISO3166-1-Alpha-2 country code. <br>For example, &quot;Calgary, Alberta, Canada&quot; would be shortened to &quot;Calgary, CA&quot;"
-msgstr "S'utilitza el primer i l'últim tram del topònim, utilitzant comes per dividir les seccions. El país es converteix al codi de país ISO3166-1-Alpha-2. <br>Per exemple, \" Calgary, Alberta, Canadà> s'escurçaria a \" Calgary, Califòrnia;"
+msgstr "使用地名的首段和末段，用逗号分隔各段。然后将国家转换为ISO3166 - 1 - Alpha - 2国家代码。<br>例如，“卡尔加里，艾伯塔省，加拿大”将缩短为“卡尔加里，CA”"
 
 #. Part of the help page for place abbreviations:  https://s3.eu-west-1.amazonaws.com/po-pub/i/wc6fNIyVirRJx9txr24YUfnP.png
 #: 
 msgid "the first and last section of the place name is used, using commas to split the sections. The country is then converted to the ISO3166-1-Alpha-3 country code.<br>For example, &quot;Calgary, Alberta, Canada&quot; would be shortened to &quot;Calgary, CAN&quot;"
-msgstr "S'utilitza el primer i l'últim tram del topònim, utilitzant comes per dividir les seccions. A continuació, el país es converteix al codi de país ISO3166-1-Alpha-3.<br>Per exemple, \" Calgary, Alberta, Canadà> s'escurçaria a \" Calgary, CAN\""
+msgstr "使用地名的首段和末段，用逗号分隔各段。然后将国家转换为ISO3166 - 1 - Alpha - 3国家代码。<br>例如，“卡尔加里，艾伯塔省，加拿大”将缩短为“卡尔加里，CAN”"
 
 #. Part of the help page for place abbreviations:  https://s3.eu-west-1.amazonaws.com/po-pub/i/wc6fNIyVirRJx9txr24YUfnP.png
 #: 
 msgid "Note - The CLDR display name is used for matching. The data comes from <a href=\"https://www.datahub.io/core/country-codes\" class=\"help-link\">Datahub</a> but has been modified as for example the original CLDR name for the United Kingdom is &quot;UK&quot;, and the original CLDR name for the United States is &quot;US&quot;. Matching against these countries for the purposes of abbreviation is therefore pointless. So changes have been made to make this work better. Please <a href=\"https://github.com/Neriderc/GVExport/issues/new\" class=\"help-link\">open an issue</a> on GitHub if you find a country is not abbreviating correctly."
-msgstr "Nota: el nom de visualització CLDR s'utilitza per fer coincidències. Les dades provenen de <a href=\"https://www.datahub.io/core/country-codes\" class=\"help-link\">Datahub</a> però s'han modificat com per exemple el nom CLDR original per al Regne Unit és \"UK\", i el nom CLDR original per als Estats Units és \" US\". Per tant, no té sentit coincidir amb aquests països a efectes d'abreviatura. Per tant, s'han fet canvis per millorar aquest treball. Si us plau, <a href=\"https://github.com/Neriderc/GVExport/issues/new\" class=\"help-link\">open an issue</a> a GitHub si trobeu que un país no s'abreuja correctament."
+msgstr "注意 - 使用CLDR显示名称进行匹配。数据来自 <a href=\"https://www.datahub.io/core/country-codes\" class=\"help-link\">Datahub</a>，但已进行修改，例如，英国的原始CLDR名称为“UK”，美国的原始CLDR名称为“US”。因此，出于缩写目的对这些国家进行匹配毫无意义。所以进行了一些更改以使其更好地工作。如果您发现某个国家的缩写不正确，请 <a href=\"https://github.com/Neriderc/GVExport/issues/new\" class=\"help-link\">在GitHub上提交问题</a>。"
 
 #. Part of help page for abbreviations:  https://s3.eu-west-1.amazonaws.com/po-pub/i/yVRNezroLkh7Cky5dWr4YYyp.png
 #: 
 msgid "Selecting this box will shorten the month names. This uses the webtrees built in date shortening; in most cases, the month name will be shortened to three characters, e.g. \\\"Jan\\\" for January"
-msgstr "Si seleccioneu aquesta casella, s'escurçaran els noms dels mesos. Això utilitza els arbres web construïts en l'escurçament de dates; en la majoria dels casos, el nom del mes s'escurçarà a tres caràcters, per exemple, \"Jan\" per al gener"
+msgstr "选中此框将缩短月份名称。这使用了webtrees内置的日期缩短功能；在大多数情况下，月份名称将缩短为三个字符，例如“Jan”代表“January”。"
 
 #. Part of help page for choosing what goes on individual's tiles:  https://s3.eu-west-1.amazonaws.com/po-pub/i/u1x88hjQ3UFSTpqwJGuCdDSz.png
 #: 
 msgid "Whether to include the XREF of individuals in the diagram."
-msgstr "Si s'ha d'incloure l'XREF dels individus en el diagrama."
+msgstr "是否在图表中包含个人的XREF。"
 
 #. Part of help page for choosing what goes on individual's tiles:  
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/u1x88hjQ3UFSTpqwJGuCdDSz.png
 #: 
 msgid "Check the box if you would like to include the birthdate of individuals in the output."
-msgstr "Marqueu la casella si voleu incloure la data de naixement de les persones a la sortida."
+msgstr "如果您希望在输出中包含个人的出生日期，请选中此框。"
 
 #. Part of help page for choosing what goes on individual's tiles:  
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/u1x88hjQ3UFSTpqwJGuCdDSz.png
 #: 
 msgid "You can also choose whether to show the full date of birth or just the year."
-msgstr "També podeu triar si voleu mostrar la data completa de naixement o només l'any."
+msgstr "您还可以选择显示完整的出生日期还是仅显示年份。"
 
 #. Part of help page for choosing what goes on individual's tiles:  
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/u1x88hjQ3UFSTpqwJGuCdDSz.png
 #: 
 msgid "Whether to show the place of birth in the output. Also see option for abbreviating place names."
-msgstr "Si s'ha de mostrar el lloc de naixement a la sortida. Vegeu també l'opció d'abreujar topònims."
+msgstr "是否在输出中显示出生地点。另见缩写地名的选项。"
 
 #. Part of help page for choosing what goes on individual's tiles:  
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/u1x88hjQ3UFSTpqwJGuCdDSz.png
 #: 
 msgid "Check the box if you would like to include the death date of individuals in the output."
-msgstr "Marqueu la casella si voleu incloure la data de defunció de les persones a la sortida."
+msgstr "如果您希望在输出中包含个人的死亡日期，请选中此框。"
 
 #. Part of help page for choosing what goes on individual's tiles:  
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/u1x88hjQ3UFSTpqwJGuCdDSz.png
 #: 
 msgid "You can also choose whether to show the full date of death or just the year."
-msgstr "També pots triar si vols mostrar la data completa de la defunció o només l'any."
+msgstr "您还可以选择显示完整的死亡日期还是仅显示年份。"
 
 #. Part of help page for choosing what goes on individual's tiles:  
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/u1x88hjQ3UFSTpqwJGuCdDSz.png
 #: 
 msgid "Whether to show the place of death in the output. Also see option for abbreviating place names."
-msgstr "Si s'ha de mostrar el lloc de la mort a la sortida. Vegeu també l'opció d'abreujar topònims."
+msgstr "是否在输出中显示死亡地点。另见缩写地名的选项。"
 
 #. Part of help page for choosing what goes on individual's tiles:  
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/u1x88hjQ3UFSTpqwJGuCdDSz.png
 #: 
 msgid "Whether to print the sex of the individual on the individual&apos;s tile, e.g. &quot;Male&quot;"
-msgstr "Si s'ha d'imprimir el sexe de l'individu als taulells, per exemple \" Masculí\""
+msgstr "是否在个人的图块上打印个人性别，例如“男性”"
 
 #. Part of help page for deciding what information goes in the family section:  https://s3.eu-west-1.amazonaws.com/po-pub/i/igNqWCHKyhKOofsUxjaGrDeM.png
 #: 
 msgid "Whether to include the XREF of families in the output."
-msgstr "Si s'ha d'incloure la XREF de famílies a la sortida."
+msgstr "是否在输出中包含家庭的XREF。"
 
 #. Part of help page for deciding what information goes in the family section:  https://s3.eu-west-1.amazonaws.com/po-pub/i/igNqWCHKyhKOofsUxjaGrDeM.png
 #: 
 msgid "Check the box if you would like to include the date of marriage in the output."
-msgstr "Marqueu la casella si voleu incloure la data de matrimoni a la sortida."
+msgstr "如果您希望在输出中包含结婚日期，请选中此框。"
 
 #. Part of help page for deciding what information goes in the family section:  https://s3.eu-west-1.amazonaws.com/po-pub/i/igNqWCHKyhKOofsUxjaGrDeM.png
 #: 
 msgid "You can also choose whether to show the full date of marriage or just the year."
-msgstr "També podeu triar si voleu mostrar la data completa del matrimoni o només l'any."
+msgstr "您还可以选择显示完整的结婚日期还是仅显示年份。"
 
 #. Part of help page for deciding what information goes in the family section:  https://s3.eu-west-1.amazonaws.com/po-pub/i/igNqWCHKyhKOofsUxjaGrDeM.png
 #: 
 msgid "Whether to show the place of marriage in the output. Also see option for abbreviating place names."
-msgstr "Si s'ha de mostrar el lloc del matrimoni a la sortida. Vegeu també l'opció d'abreujar topònims."
+msgstr "是否在输出中显示结婚地点。另见缩写地名的选项。"
 
 #. An option in new setting to sort the saved settings list: 
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/fSaYMVDGQqSSVdo1qxXE1pqY.png
 #: 
 msgid "Oldest first"
-msgstr "Els més antics primer"
+msgstr "按最早排序"
 
 #. An option in new setting to sort the saved settings list: 
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/fSaYMVDGQqSSVdo1qxXE1pqY.png
 #: 
 msgid "Newest first"
-msgstr "El més nou primer"
+msgstr "按最新排序"
 
 #. An option in new setting to sort the saved settings list: 
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/fSaYMVDGQqSSVdo1qxXE1pqY.png
 #: 
 msgid "Alphabetical order"
-msgstr "Ordre alfabètic"
+msgstr "按字母顺序"
 
 #. An option in new setting to sort the saved settings list: 
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/fSaYMVDGQqSSVdo1qxXE1pqY.png
 #: 
 msgid "Reverse alphabetical order"
-msgstr "Ordre alfabètic invers"
+msgstr "按字母顺序倒序"
 
 #. New setting to sort the saved settings list: 
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/fSaYMVDGQqSSVdo1qxXE1pqY.png
 #: 
 msgid "Settings list sort order"
-msgstr "Configuració de l'ordre d'ordenació de la llista"
+msgstr "设置列表排序顺序"
 
 #. Part of the help text for the Settings list sort order option:  https://s3.eu-west-1.amazonaws.com/po-pub/i/yZYMz48ukCKc7zl43L5QhV0a.png
 #: 
 msgid "The default option. New settings are added to the bottom of the list."
-msgstr "L'opció per defecte. S'afegeixen nous paràmetres a la part inferior de la llista."
+msgstr "默认选项。新设置添加到列表底部。"
 
 #. Part of the help text for the Settings list sort order option:  
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/yZYMz48ukCKc7zl43L5QhV0a.png
 #: 
 msgid "New settings are added to the top of the list."
-msgstr "S'afegeixen nous paràmetres a la part superior de la llista."
+msgstr "新设置添加到列表顶部。"
 
 #. Part of the help text for the Settings list sort order option:  
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/yZYMz48ukCKc7zl43L5QhV0a.png
 #: 
 msgid "Settings are sorted based on their name."
-msgstr "La configuració s'ordena en funció del seu nom."
+msgstr "设置根据其名称进行排序。"
 
 #. Part of the help text for the Settings list sort order option:  
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/yZYMz48ukCKc7zl43L5QhV0a.png
 #: 
 msgid "Settings are sorted based on their name, but in reverse."
-msgstr "Els paràmetres s'ordenen en funció del seu nom, però al revés."
+msgstr "设置根据其名称进行排序，但为倒序。"
 
 #. Part of the help text for the Settings list sort order option:  
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/yZYMz48ukCKc7zl43L5QhV0a.png
 #: 
 msgid "Note that if you update a saved setting, this will affect how it is sorted under the 'Oldest first' or 'Newest first' options."
-msgstr "Tingueu en compte que si actualitzeu una opció de configuració desada, això afectarà la manera com s'ordena a les opcions \"Els més antics primer\" o \"Els més nous primer\"."
+msgstr "请注意，如果您更新已保存的设置，这将影响它在“按最早排序”或“按最新排序”选项下的排序方式。"
 
 #. Part of the help text for the Settings list sort order option:  
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/yZYMz48ukCKc7zl43L5QhV0a.png
 #: 
 msgid "This option lets you choose the order of saved settings. The options are"
-msgstr "Aquesta opció us permet triar l'ordre de la configuració desada. Les opcions són:"
+msgstr "此选项可让您选择已保存设置的顺序。选项如下"
 
 #. One option in the list of things that can happen when you click an individual in the diagram.  https://s3.eu-west-1.amazonaws.com/po-pub/i/KpMTncLFJrS21Y0UPolZeCDD.png
 #: 
 msgid "Add individual to list of starting individuals"
-msgstr "Afegir individu a la llista d'individus inicials"
+msgstr "将个人添加到起始个人列表"
 
 #. One option in the list of things that can happen when you click an individual in the diagram.  https://s3.eu-west-1.amazonaws.com/po-pub/i/KpMTncLFJrS21Y0UPolZeCDD.png
 #: 
 msgid "Open individual's page"
-msgstr "Obrir pàgina individual"
+msgstr "打开个人页面"
 
 #. One option in the list of things that can happen when you click an individual in the diagram.  https://s3.eu-west-1.amazonaws.com/po-pub/i/KpMTncLFJrS21Y0UPolZeCDD.png
 #: 
 msgid "Replace starting individuals with this individual"
-msgstr "Substituïu els individus inicials per aquest individu"
+msgstr "用此个人替换起始个人"
 
 #. One option in the list of things that can happen when you click an individual in the diagram.  https://s3.eu-west-1.amazonaws.com/po-pub/i/KpMTncLFJrS21Y0UPolZeCDD.png
 #: 
 msgid "Add this individual to the list of stopping individuals"
-msgstr "Afegiu aquest individu a la llista d'individus aturats"
+msgstr "将此个人添加到终止个人列表"
 
 #. One option in the list of things that can happen when you click an individual in the diagram.  https://s3.eu-west-1.amazonaws.com/po-pub/i/KpMTncLFJrS21Y0UPolZeCDD.png
 #: 
 msgid "Replace stopping individuals with this individual"
-msgstr "Substituïu l'aturada d'individus per aquest individu"
+msgstr "用此个人替换终止个人"
 
 #. New option to set what happens when you click an individual in the diagram.  https://s3.eu-west-1.amazonaws.com/po-pub/i/KpMTncLFJrS21Y0UPolZeCDD.png
 #: 
 msgid "Action when individual clicked"
-msgstr "Acció en què l'individu ha fet clic"
+msgstr "点击个人时的操作"
 
 #. One option in the list of things that can happen when you click an individual in the diagram.  
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/KpMTncLFJrS21Y0UPolZeCDD.png
 #: 
 msgid "Show menu"
-msgstr "Mostrar menú"
+msgstr "显示菜单"
 
 #. One option in the list of things that can happen when you click an individual in the diagram.  
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/KpMTncLFJrS21Y0UPolZeCDD.png
 #: 
 msgid "Do nothing"
-msgstr "No fer res"
+msgstr "不执行任何操作"
 
 #. Part of the help text for the option "Action when individual clicked".
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/oh4Yjz8fjz3l2aFFkAV608mv.png
 #: 
 msgid "This option lets you choose what happens when you click on an individual in the diagram."
-msgstr "Aquesta opció us permet triar què passa quan feu clic a una persona del diagrama."
+msgstr "此选项可让您选择在图表中点击个人时会发生什么。"
 
 #. Part of the help text for the option "Action when individual clicked".
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/oh4Yjz8fjz3l2aFFkAV608mv.png
 #: 
-#, fuzzy
 msgid "When you click on an individual, the webtrees page for that individual will open in a new tab or window."
-msgstr "Quan feu clic a una persona, la pàgina d'arbres web d'aquesta persona s'obrirà en una pestanya o finestra nova."
+msgstr "当您点击某个个人时，该个人的webtrees页面将在新标签页或窗口中打开。"
 
 #. Part of the help text for the option "Action when individual clicked".
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/oh4Yjz8fjz3l2aFFkAV608mv.png
 #: 
 msgid "If this option is selected, clicking on an individual in the diagram will add them to the list of starting individuals."
-msgstr "Si se selecciona aquesta opció, fent clic a un individu del diagrama s'afegirà a la llista d'individus inicials."
+msgstr "如果选择此选项，在图表中点击个人将把他们添加到起始个人列表中。"
 
 #. Part of the help text for the option "Action when individual clicked".
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/oh4Yjz8fjz3l2aFFkAV608mv.png
 #: 
 msgid "If this option is selected, clicking on an individual in the diagram will add them to the list of starting individuals and remove all others from the list."
-msgstr "Si se selecciona aquesta opció, fent clic a un individu del diagrama s'afegirà a la llista d'individus inicials i s'eliminaran tots els altres de la llista."
+msgstr "如果选择此选项，在图表中点击个人将把他们添加到起始个人列表中，并从列表中删除所有其他人员。"
 
 #. Part of the help text for the option "Action when individual clicked".
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/oh4Yjz8fjz3l2aFFkAV608mv.png
 #: 
 msgid "If this option is selected, clicking on an individual in the diagram will add them to the list of stopping individuals."
-msgstr "Si se selecciona aquesta opció, fent clic a un individu del diagrama s'afegirà a la llista d'individus aturats."
+msgstr "如果选择此选项，在图表中点击个人将把他们添加到终止个人列表中。"
 
 #. Part of the help text for the option "Action when individual clicked".
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/oh4Yjz8fjz3l2aFFkAV608mv.png
 #: 
 msgid "If this option is selected, clicking on an individual in the diagram will add them to the list of stopping individuals and remove all others from the list."
-msgstr "Si se selecciona aquesta opció, fent clic a un individu del diagrama s'afegirà a la llista d'individus aturats i s'eliminaran tots els altres de la llista."
+msgstr "如果选择此选项，在图表中点击个人将把他们添加到终止个人列表中，并从列表中删除所有其他人员。"
 
 #. Part of the help text for the option "Action when individual clicked".
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/oh4Yjz8fjz3l2aFFkAV608mv.png
 #: 
 msgid "If this option is chosen, when an individual is clicked on in the diagram, a menu will be shown with the above items to choose from."
-msgstr "Si es tria aquesta opció, quan es faci clic a una persona en el diagrama, es mostrarà un menú amb els elements anteriors per triar."
+msgstr "如果选择此选项，当在图表中点击个人时，将显示一个菜单，其中包含上述可选择的项目。"
 
 #. Part of the help text for the option "Action when individual clicked".
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/oh4Yjz8fjz3l2aFFkAV608mv.png
 #: 
 msgid "When an individual is clicked on in the diagram, nothing will happen."
-msgstr "Quan es fa clic a un individu al diagrama, no passarà res."
+msgstr "当在图表中点击个人时，不会发生任何事情。"
 
 #. Part of the help text for the option "Action when individual clicked".
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/oh4Yjz8fjz3l2aFFkAV608mv.png
 #: 
 msgid "Note that there is currently no option for what to do when a family record is clicked on in the diagram. However, the option to add URLs to individuals and families will also affect families in the browser diagram. That is, if you click a family then if this option is enabled, the family page will open in webtrees."
-msgstr "Tingueu en compte que actualment no hi ha cap opció sobre què fer quan es fa clic en un registre familiar al diagrama. No obstant això, l'opció d'afegir URL a individus i famílies també afectarà les famílies en el diagrama del navegador. És a dir, si feu clic a una família, si aquesta opció està habilitada, la pàgina de la família s'obrirà als arbres web.\n"
-""
+msgstr "请注意，目前在图表中点击家庭记录时没有相关操作选项。但是，为个人和家庭添加URL的选项也会影响浏览器图表中的家庭。也就是说，如果您点击一个家庭，并且此选项已启用，该家庭页面将在webtrees中打开。"
 
 #. An extra paragraph for the section on URL links in the help page:  https://s3.eu-west-1.amazonaws.com/po-pub/i/4Vxx95kI54pojXyfcC4CvyYc.png
 #: 
 #, fuzzy
 msgid "Also see \\'Action when individual clicked\\' in the Browser render settings."
-msgstr "Això també afecta les famílies del diagrama. Si aquesta opció està habilitada, podeu fer clic a registres familiars per obrir la pàgina d'arbres web de la família. Vegeu també \\'Action when individual clicked\\' a la configuració de renderització del navegador."
+msgstr "另请参阅浏览器渲染设置中的“点击个人时的操作”。"
 
 #. Option for what to do when individual clicked on in diagram
 #: 
 msgid "Add to list of individuals to highlight"
-msgstr "Afegeix a la llista d'individus per destacar"
+msgstr "添加到要突出显示的个人列表"
 
 #. Part of new option to highlight a custom list of individuals
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/iMke2fkhJ5QFsxPD8JHlabfu.png
 #: 
-#, fuzzy
 msgid "Show selected individuals in different colour"
-msgstr "Mostrar individus addicionals de color diferent"
+msgstr "以不同颜色显示选定的个人"
 
 #. Update to help text to add this new option
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/hepcgMX8Ou17qX7kH5upaW16.png
 #: 
-#, fuzzy
 msgid "If this option is selected, clicking on an individual in the diagram will add them to the list of individuals with a coloured background for identification in the diagram. See the option \"Show selected individuals in different colour\", in the Colours section of the Tile design options."
-msgstr "Si se selecciona aquesta opció, fent clic sobre un individu del diagrama s'afegirà a la llista d'individus amb fons de color per identificar-los en el diagrama. Consulta l'opció “Mostrar altres individus en un color diferent”, a la secció Colors de les opcions de disseny de les rajoles."
+msgstr "如果选择此选项，在图表中点击个人将把他们添加到带有彩色背景的个人列表中，以便在图表中识别。请参阅图块设计选项“颜色”部分中的“以不同颜色显示选定的个人”选项。"
 
 #. Default colour for custom highlights: 
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/avfciefqaWjNB7aRddD2bx22.png
 #: 
 msgid "Default highlight colour"
-msgstr "Color de ressaltat per predeterminat"
+msgstr "默认突出显示颜色"
 
 #. Part of the help text around background colour priority:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/5OK33EJBueLG9k0GXR19qRpk.png
 #: 
 msgid "If the option is enabled to show selected individuals in a different colour, then this option takes priority over all others."
-msgstr "Si l'opció està habilitada per mostrar les persones seleccionades en un color diferent, aquesta opció té prioritat sobre totes les altres."
+msgstr "如果启用了以不同颜色显示选定个人的选项，那么此选项优先于所有其他选项。"
 
 #. Part of the help for Show selected individuals in a different colour:  https://s3.eu-west-1.amazonaws.com/po-pub/i/P1bJ86EmElATeVIKW50p7nfv.png
 #: 
 msgid "This option lets you set a custom background for selected individuals. The default highlight colour is used by default, but the colour can be customised for each individual. Also see option in Browser Render settings to choose what happens when an individual is clicked, as this may be an easier way to add individuals to this list."
-msgstr "Aquesta opció us permet establir un fons personalitzat per a les persones seleccionades. El color de ressaltat predeterminat s'utilitza per defecte, però el color es pot personalitzar per a cada persona. Vegeu també l'opció a la configuració de renderització del navegador per triar què passa quan es fa clic a una persona, ja que aquesta pot ser una manera més fàcil d'afegir persones a aquesta llista."
+msgstr "此选项可让您为选定的个人设置自定义背景。默认情况下使用默认突出显示颜色，但颜色可针对每个个人进行自定义。另请参阅浏览器渲染设置中的选项，以选择点击个人时会发生什么，因为这可能是将个人添加到此列表的更简便方法。"
 
 #. Part of the help text for the option "Action when individual clicked".
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/oh4Yjz8fjz3l2aFFkAV608mv.png
 #: 
 msgid "This is the default option."
-msgstr "Aquesta és l'opció per defecte."
+msgstr "这是默认选项。"
 
 #. Part of the help text explaining the context menu when you click on an individual (if enabled): https://s3.eu-west-1.amazonaws.com/po-pub/i/JbiHUCluK5zzUvYxjbtvg3LS.png
 #: 
 msgid "In the General Settings section, there is an option in the Browser options that lets you choose what happens when you click on an individual in the diagram. One of the options is to show a menu, and the menu has the following options:"
-msgstr "A la secció Configuració general, hi ha una opció a les opcions del navegador que us permet triar què passa quan feu clic a una persona al diagrama. Una de les opcions és mostrar un menú, i el menú té les opcions següents:"
+msgstr "在常规设置部分，浏览器选项中有一个选项可让您选择在图表中点击个人时会发生什么。其中一个选项是显示菜单，该菜单具有以下选项："
 
 #. New option to "Use similar events if information not available". Current state is this is always on, but this new option allows you to force webtrees to only use the "birth" and "death" events to get the date or place. When enabled, this option allows webtrees to look for christening, baptism, burial, and cremation dates.
 #. 
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/Ar3cUICuO182fidUcnwLD1o7.png
 #: 
 msgid "Use similar events if information not available"
-msgstr "Utilitzar esdeveniments similars si la informació no està disponible"
+msgstr "信息不可用时使用类似事件"
 
 #. Part of help text for new option to Use similar events if information not available:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/VofL6d6Hi0v11hbzqG3N02wF.png
 #: 
 msgid "When showing information about a birth or death, if the information is not available then webtrees will look for similar events and use the information from those events instead."
-msgstr "Quan es mostra informació sobre un naixement o mort, si la informació no està disponible, els arbres web buscaran esdeveniments similars i utilitzaran la informació d'aquests esdeveniments."
+msgstr "在显示出生或死亡相关信息时，如果信息不可用，那么webtrees将查找类似事件并使用这些事件中的信息。"
 
 #. Part of help text for new option to Use similar events if information not available: https://s3.eu-west-1.amazonaws.com/po-pub/i/VofL6d6Hi0v11hbzqG3N02wF.png
 #: 
 msgid "If a birth date or place is not recorded, webtrees will attempt to use the date or place of the christening or baptism if it exists."
-msgstr "Si no es registra una data o lloc de naixement, Webtrees intentarà utilitzar la data o el lloc del bateig o bateig si existeix."
+msgstr "如果未记录出生日期或地点，webtrees将尝试使用洗礼或浸礼的日期或地点（如果存在）。"
 
 #. Part of help text for new option to Use similar events if information not available: https://s3.eu-west-1.amazonaws.com/po-pub/i/VofL6d6Hi0v11hbzqG3N02wF.png
 #: 
 msgid "If a death date or place is not recorded, webtrees will attempt to use the date or place of the burial or cremation if it exists."
-msgstr "Si no es registra una data o lloc de mort, webtrees intentarà utilitzar la data o el lloc de l'enterrament o la cremació si existeix."
+msgstr "如果未记录死亡日期或地点，webtrees将尝试使用埋葬或火化的日期或地点（如果存在）。"
 
 #. Part of help text for new option to Use similar events if information not available: https://s3.eu-west-1.amazonaws.com/po-pub/i/VofL6d6Hi0v11hbzqG3N02wF.png
 #: 
 msgid "If you disable this option, GVExport will only use information from birth and death events, and not try to find missing information in similar events."
-msgstr "Si desactiveu aquesta opció, GVExport només utilitzarà informació d'esdeveniments de naixement i mort, i no intentarà trobar informació que falta en esdeveniments similars."
+msgstr "如果您禁用此选项，GVExport将仅使用出生和死亡事件中的信息，而不会尝试在类似事件中查找缺失的信息。"
 
 #. New option that lets you set a limit on how many levels of ancestors or descendants can be used, to reduce server load:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/QFLhfPYHliw57Nxcq7TjSt2c.png
 #: 
 msgid "Limit ancestor and descendant levels"
-msgstr "Límit dels nivells d'avantpassats i descendents"
+msgstr "限制祖先和后代层级"
 
 #. One of the options for name abbreviations:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/8TnookhkbklzifVBjlRHlH6j.png
 #: 
 msgid "Preferred given name and surname"
-msgstr "Nom i cognoms preferits"
+msgstr "首选名字和姓氏"
 
 #. New option to show the first image attached to the birth event, if any:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/RVKTpBYdxWG9wyE9GAqScxDc.png
 #: 
 msgid "Show first birth image"
-msgstr "Mostra la imatge del primer naixement"
+msgstr "显示出生事件的首张图片"
 
 #. New option to show the first image attached to the death event, if any:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/RVKTpBYdxWG9wyE9GAqScxDc.png
 #: 
 msgid "Show first death image"
-msgstr "Mostra la primera imatge de la mort"
+msgstr "显示死亡事件的首张图片"
 
 #. New option to show burial (or cremation) date:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/WlSbROWFgzNEDqRS0q8pZgAb.png
 #: 
 msgid "Show burial date"
-msgstr "Mostra la data d'enterrament"
+msgstr "显示埋葬（或火化）日期"
 
 #. New option to show burial (or cremation) place:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/WlSbROWFgzNEDqRS0q8pZgAb.png
 #: 
 msgid "Show burial place"
-msgstr "Mostra el lloc d'enterrament"
+msgstr "显示埋葬（或火化）地点"
 
 #. New option to show the first image attached to the burial or cremation event, if any:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/RVKTpBYdxWG9wyE9GAqScxDc.png
 #: 
 msgid "Show first burial image"
-msgstr "Mostra la imatge del primer enterrament"
+msgstr "显示埋葬或火化事件的首张图片"
 
 #. GVExport can now show all marriage events if the same couple have multiple. This option will only show the first, if enabled:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/HqluftIIHdUwOT5EBUDDdIzS.png
 #: 
 msgid "Show only first marriage"
-msgstr "Mostra només el primer matrimoni"
+msgstr "仅显示首次婚姻"
 
 #. New option to show the first image attached to the marriage event, if any:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/RVKTpBYdxWG9wyE9GAqScxDc.png
 #: 
 msgid "Show first marriage image"
-msgstr "Mostra la imatge del primer matrimoni"
+msgstr "显示婚姻事件的首张图片"
 
 #. Show the type of marriage (civil, religious, etc)
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/HqluftIIHdUwOT5EBUDDdIzS.png
 #: 
 msgid "Show marriage type"
-msgstr "Mostra el tipus de matrimoni"
+msgstr "显示婚姻类型（民事、宗教等）"
 
 #. If this option is enabled, if the marriage type is not known then a message will be shown to indicate this: https://s3.eu-west-1.amazonaws.com/po-pub/i/HqluftIIHdUwOT5EBUDDdIzS.png
 #: 
 msgid "Show when type is not specified"
-msgstr "Mostra quan no s'especifica el tipus"
+msgstr "当类型未指定时显示"
 
 #. New wording for option to show photos on individuals as there are now many options for which photos to show.
 #: 
 msgid "Show photos of individuals"
-msgstr "Mostra fotos de persones"
+msgstr "显示个人照片"
 
 #. New control panel option for admin to set a prefix for burial records:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/hVEI9oO3KxRBrDdqseXZ5Lf0.png
 #: 
 msgid "Burial date prefix"
-msgstr "Prefix de la data d'enterrament"
+msgstr "埋葬日期前缀"
 
 #. Additional help text to clarify that the setting to use alternate events does not apply to burial events:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/KIQiyqfzLqLyWbWyJDAuNrkv.png
 #: 
 msgid "The options to show burial dates and places will use the burial or cremation events and is not affected by this setting."
-msgstr "Les opcions per mostrar les dates i els llocs d'enterrament utilitzaran els esdeveniments d'enterrament o cremació i no es veuen afectats per aquesta configuració."
+msgstr "显示埋葬日期和地点的选项将使用埋葬或火化事件，不受此设置影响。"
 
 #. Part of help for burial dates:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/L8XnRFljy2puyETrxWRkboGd.png
 #: 
 msgid "Check the box if you would like to include the burial date of individuals in the output."
-msgstr "Marqueu la casella si voleu incloure la data d'enterrament de les persones a la sortida."
+msgstr "如果您希望在输出中包含个人的埋葬日期，请选中此框。"
 
 #. Part of help for burial dates:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/L8XnRFljy2puyETrxWRkboGd.png
 #: 
 msgid "You can also choose whether to show the full date of burial or just the year."
-msgstr "També podeu triar si voleu mostrar la data completa de l'enterrament o només l'any."
+msgstr "您还可以选择显示完整的埋葬日期还是仅显示年份。"
 
 #. Part of help for burial place:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/L8XnRFljy2puyETrxWRkboGd.png
 #: 
 msgid "Whether to show the place of burial in the output. Also see option for abbreviating place names."
-msgstr "Si s'ha de mostrar el lloc d'enterrament a la sortida. Vegeu també l'opció per abreujar noms de llocs."
+msgstr "是否在输出中显示埋葬地点。另见缩写地名的选项。"
 
 #. Part of help text for photos:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/rpmt8ugrEArj5PBFFS8bRR5f.png
 #: 
 msgid "When enabled, if the birth event for the individual has photos attached, then the first will be shown. This is in addition to other photos."
-msgstr "Quan s'activa, si l'esdeveniment de naixement de l'individu té fotos adjuntes, es mostrarà la primera. Això s'afegeix a altres fotos."
+msgstr "启用后，如果个人的出生事件附有照片，则会显示第一张。这是在其他照片之外额外显示的。"
 
 #. Part of help text for photos:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/rpmt8ugrEArj5PBFFS8bRR5f.png
 #: 
 msgid "When enabled, if the marriage event for the individual has photos attached, then the first will be shown. This is in addition to other photos."
-msgstr "Quan s'activa, si l'esdeveniment de matrimoni de l'individu té fotos adjuntes, es mostrarà la primera. Això s'afegeix a altres fotos."
+msgstr "启用后，如果个人的婚姻事件附有照片，则会显示第一张。这是在其他照片之外额外显示的。"
 
 #. Part of help text for photos:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/rpmt8ugrEArj5PBFFS8bRR5f.png
 #: 
 msgid "When enabled, if the death event for the individual has photos attached, then the first will be shown. This is in addition to other photos."
-msgstr "Quan s'activa, si l'esdeveniment de mort de l'individu té fotos adjuntes, es mostrarà la primera. Això s'afegeix a altres fotos."
+msgstr "启用后，如果个人的死亡事件附有照片，则会显示第一张。这是在其他照片之外额外显示的。"
 
 #. Part of help text for photos:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/rpmt8ugrEArj5PBFFS8bRR5f.png
 #: 
 msgid "When enabled, if the burial event for the individual has photos attached, then the first will be shown. This is in addition to other photos."
-msgstr "Quan s'activa, si l'esdeveniment d'enterrament de l'individu té fotos adjuntes, es mostrarà la primera. Això s'afegeix a altres fotos."
+msgstr "启用后，如果个人的埋葬事件附有照片，则会显示第一张。这是在其他照片之外额外显示的。"
 
 #. Part of help text relating to content on family records:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/YgNsKPAarw3CvZkSzbtJvRe1.png
 #: 
 msgid "If a couple have been married more than once (a family record in webtrees has multiple marriage events), if this option is selected then only the first is shown (this is the default). If you unselect this option, all marriage events will be shown in the same family record in the diagram."
-msgstr "Si una parella s'ha casat més d'una vegada (un registre familiar en arbres web té diversos esdeveniments matrimonials), si aquesta opció està seleccionada només es mostra el primer (aquest és el valor predeterminat). Si desmarqueu aquesta opció, tots els esdeveniments matrimonials es mostraran al mateix registre familiar del diagrama."
+msgstr "如果一对夫妇结婚不止一次（webtrees中的家庭记录有多个婚姻事件），如果选择此选项，则仅显示第一次婚姻（这是默认设置）。如果取消选择此选项，图表中的同一家庭记录将显示所有婚姻事件。"
 
 #. Part of help text relating to content on family records:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/YgNsKPAarw3CvZkSzbtJvRe1.png
 #: 
 msgid "If selected, the type of marriage (civil, religious, registered partnership) will be shown on the family record."
-msgstr "Si se selecciona, el tipus de matrimoni (civil, religiós, parella registrada) es mostrarà a l'acta familiar."
+msgstr "如果选中，婚姻类型（民事、宗教、注册伴侣关系）将显示在家庭记录中。"
 
 #. Part of help text relating to content on family records:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/YgNsKPAarw3CvZkSzbtJvRe1.png
 #: 
 msgid "If selected, where the marriage type is not known then it will show a message stating this. If unselected, unknown marriage types will not be displayed."
-msgstr "Si se selecciona, quan no es coneix el tipus de matrimoni, es mostrarà un missatge que ho indica. Si no se selecciona, no es mostraran els tipus de matrimoni desconeguts.\n"
-""
+msgstr "如果选中，当婚姻类型未知时，将显示一条说明消息。如果未选中，未知的婚姻类型将不会显示。"
 
 #. Restoring as was incorrectly removed
 #: 
 msgid "browser, SVG, and PDF only"
-msgstr "Només navegador SVG i PDF"
+msgstr "仅浏览器、SVG和PDF"
 
 #. I have readded this as I was wrong about page links, the can be supported in SVG but only when generated in the browser (not server), so I have restored this.
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/PFTXgi5zjRwyuP02uQEGbizv.png
 #: 
 msgid "For SVG (and PDF if Graphviz installed on server) output, links can be included. This way you can click on the person in the diagram to be taken to their webtrees page."
-msgstr "Per a la sortida SVG (i PDF si Graphviz està instal·lat al servidor), es poden incloure enllaços. D'aquesta manera podeu fer clic a la persona del diagrama que voleu portar a la seva pàgina d'arbres web."
+msgstr "对于SVG（如果服务器上安装了Graphviz，PDF也适用）输出，可以包含链接。这样，您可以点击图表中的人物，跳转到他们的webtrees页面。"
 
 #. Extra part to help text to inform user that if they choose to include links in SVG format, the browser will render the diagram even if they have Graphviz on their server:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/wfrHxNXw49ofOCG1CBpFzGcW.png
 #: 
 msgid "Note that SVG output will always be rendered by the browser (and not the server) if you choose to include page links."
-msgstr "Tingueu en compte que la sortida SVG sempre serà renderitzada pel navegador (i no pel servidor) si decidiu incloure enllaços de pàgina."
+msgstr "请注意，如果您选择包含页面链接，SVG输出将始终由浏览器（而非服务器）渲染。"
 
 #. "Diagram colours" is now "Diagram style": https://s3.eu-west-1.amazonaws.com/po-pub/i/4AMAMqb2XvyddBnzaeXB174Y.png
 #: 
 msgid "Diagram style"
-msgstr "Estil de diagrama"
+msgstr "图表样式"
 
 #. New option to set the style of arrow:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/TYPN390pgUuKhdXd6P4NYUpN.png
 #: 
 msgid "Arrow style"
-msgstr "Estil de fletxa"
+msgstr "箭头样式"
 
 #. One of the arrow style options for new arrow style setting:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/4AMAMqb2XvyddBnzaeXB174Y.png
 #: 
 msgid "Solid"
-msgstr "Sòlid"
+msgstr "实心"
 
 #. One of the arrow style options for new arrow style setting:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/4AMAMqb2XvyddBnzaeXB174Y.png
 #: 
 msgid "Dotted"
-msgstr "Punts"
+msgstr "点状"
 
 #. One of the arrow style options for new arrow style setting:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/4AMAMqb2XvyddBnzaeXB174Y.png
 #: 
 msgid "Dashed"
-msgstr "Guions"
+msgstr "虚线"
 
 #. One of the arrow style options for new arrow style setting:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/4AMAMqb2XvyddBnzaeXB174Y.png
 #: 
 msgid "Bold"
-msgstr "Atrevit"
+msgstr "粗体"
 
 #. One of the arrow style options for new arrow style setting:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/4AMAMqb2XvyddBnzaeXB174Y.png
 #: 
 msgid "Tapered"
-msgstr "Obelisc"
+msgstr "锥形"
 
 #. One of the arrow style options for new arrow style setting:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/4AMAMqb2XvyddBnzaeXB174Y.png
 #: 
 msgid "Random"
-msgstr "Aleatori"
+msgstr "随机"
 
 #. Updated help text to cater for new arrow style option:  https://s3.eu-west-1.amazonaws.com/po-pub/i/fn6MBj0cyzMUvsgzAVFvUeoS.png
 #: 
 msgid "You are also able to set the arrow style here."
-msgstr "També podeu establir l'estil de fletxa aquí."
+msgstr "您也可以在此处设置箭头样式。"
 
 #. Updated help text to cater for new arrow style option:  https://s3.eu-west-1.amazonaws.com/po-pub/i/fn6MBj0cyzMUvsgzAVFvUeoS.png
 #: 
 msgid "This allows you to select the arrow style from the various available styles. The \\'Random\\' option will randomly select a style for each arrow, making it easier to follow overlapping arrows on complex diagrams."
-msgstr "Això us permet seleccionar l'estil de fletxa entre els diferents estils disponibles. L'opció \\'Aleatori\\' seleccionarà aleatòriament un estil per a cada fletxa, fent més fàcil seguir les fletxes superposades en diagrames complexos."
+msgstr "这使您可以从各种可用样式中选择箭头样式。“随机”选项将为每个箭头随机选择一种样式，使您在复杂图表中更容易分辨重叠的箭头。"
 
 #. Restoring this translation as it was needed after all. 
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/xIpoeu5Uos6YjpRvDXybeRqg.png
 #: 
 msgid "Add URL to individuals and families"
-msgstr "Agregar URL a individus i famílies"
+msgstr "为个人和家庭添加URL"
 
 #. A new message that pops up when diagram is downloaded:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/XxcKvjkqSJtgUHUpr5e8vBOL.png
 #: 
 msgid "Downloaded diagram with %s individuals and %s families."
-msgstr "S'ha descarregat el diagrama amb %s individus i %s famílies."
+msgstr "已下载包含 %s 个个人和 %s 个家庭的图表。"
 
 #. Message that shows if Graphviz installed but diagram can't be rendered on server due to options chosen:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/UBXubBpivJyzaSPmBiQoKicp.png
 #: 
 msgid "Diagram rendered in browser due to settings selected"
-msgstr "Diagrama representat al navegador segons la configuració seleccionada"
+msgstr "由于所选设置，图表在浏览器中渲染"
 
 #. New place name abbreviation option, to only show the section up to the first comma, normally the city.
 #. 
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/n46qXm3knZc5Xtx7hTiGNgZv.png
 #: 
 msgid "City only"
-msgstr "Només ciutat"
+msgstr "仅显示城市"
 
 #. Updated help to account for new option to only show the city.  https://s3.eu-west-1.amazonaws.com/po-pub/i/zrK8142tvoMbrXaHQL9bHZD4.png
 #: 
 msgid "only the first section of the place name is used, up to the first comma. For example, &quot;London, England, United Kingdom&quot; would be shortened to &quot;London&quot;"
-msgstr "només s'utilitza la primera secció del topònim, fins a la primera coma. Per exemple, \" Londres, Anglaterra, Regne Unit\" s'escurçaria a \" Londres\""
+msgstr "仅使用地名中第一个逗号之前的部分，通常是城市。例如，“伦敦，英格兰，英国”将缩短为“伦敦”"
 
 #. Part of help text that explains about colouring arrows:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/TiRwd6hEnd2Fh8g6agiMJabm.png
 #: 
 msgid "This allows you to select the method for colouring arrows that link the different nodes. The 'Random' option will randomly select a colour for each arrow, making it easier to follow overlapping arrows on complex diagrams."
-msgstr "Això us permet seleccionar el mètode per pintar les fletxes que uneixen els diferents nodes. L'opció \"Aleatori\" seleccionarà aleatòriament un color per a cada fletxa, facilitant el seguiment de fletxes superposades en diagrames complexos."
+msgstr "这使您可以选择为连接不同节点的箭头着色的方法。“随机”选项将为每个箭头随机选择一种颜色，使您在复杂图表中更容易分辨重叠的箭头。"
 
 #. Added new section for Arrow colour that incorporates existing option splus new Random option:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/2FChiaVMAKU4XrD6hAjWpo5u.png  https://s3.eu-west-1.amazonaws.com/po-pub/i/H0UG96EvyeAOsiax2QbDpjFz.png
 #: 
 msgid "Arrow colour"
-msgstr "Color de fletxa"
+msgstr "箭头颜色"
 
 #. Part of help text explaining setting arrow colours for the diagram:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/eL2Watu303E3miIjWjepkCm1.png
 #: 
 msgid "If selecting 'Custom', you are presented with further options"
-msgstr "Si seleccioneu \"Personalitzat\", se us presentaran més opcions"
+msgstr "如果选择“自定义”，您将看到更多选项"
 
 #. Added new option to the saved settings list that allows only saving settings that will affect the diagram:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/lk2HC9wbC8GP52hP8jQPbca5.png
 #: 
 msgid "Only save settings that affect diagram"
-msgstr "Desa només els paràmetres que afecten el diagrama"
+msgstr "仅保存影响图表的设置"
 
 #. Help text that explains new option "Only save settings that affect diagram":
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/s8JE1JCBUG1WTEzqCv5UxB4R.png
 #: 
 msgid "If you select this option, saving settings to the saved settings list will only save the settings that directly affect the diagram. When unchecked, other settings such as the 'Output file type' and 'Show saved diagrams panel' will also be saved."
-msgstr "Si seleccioneu aquesta opció, desar la configuració a la llista de configuració desada només desarà la configuració que afecta directament el diagrama. Quan no estigui marcada, també es desaran altres configuracions com ara \"Tipus de fitxer de sortida\" i \"Mostra el tauler de diagrames desats\"."
+msgstr "如果您选择此选项，将设置保存到已保存设置列表时，只会保存直接影响图表的设置。如果未选中，其他设置，如“输出文件类型”和“显示已保存图表面板”也将被保存。"
 
