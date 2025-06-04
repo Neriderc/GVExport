@@ -342,6 +342,7 @@ $usegraphviz = $vars['graphviz_bin'] != "";
                 }
             }
 
+            UI.calculateDiagramSize.updateDiagramSize();
             UI.tile.handleTileClick();
             createXrefListFromSvg();
             return element;
