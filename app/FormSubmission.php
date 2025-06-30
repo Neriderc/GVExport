@@ -84,6 +84,10 @@ class FormSubmission
             $settings['marriage_prefix'] = $vars["marriage_prefix"];
         }
 
+        if (isset($vars["divorce_prefix"]) && $this->isPrefixStringValid($vars["divorce_prefix"])) {
+            $settings['divorce_prefix'] = $vars["divorce_prefix"];
+        }
+
         foreach (Settings::USER_ROLES as $role) {
             if (isset($vars['limit_levels_' . strtolower($role)])) {
                 $settings['limit_levels_' . strtolower($role)] = I18N::digits($vars['limit_levels_' . strtolower($role)]);
@@ -183,6 +187,15 @@ class FormSubmission
         $settings['show_marriage_first_image'] = isset($vars['show_marriage_first_image']);
         $settings['show_marriage_type'] = isset($vars['show_marriage_type']);
         $settings['show_marriage_type_not_specified'] = isset($vars['show_marriage_type_not_specified']);
+        $settings['show_only_first_divorce'] = isset($vars['show_only_first_divorce']);
+        $settings['show_divorce_date'] = isset($vars['show_divorce_date']);
+
+        if (isset($vars['divorce_date_year_only'])) {
+            $settings['divorce_date_year_only'] = ($vars['divorce_date_year_only'] == 'true');
+        }
+
+        $settings['show_divorce_place'] = isset($vars['show_divorce_place']);
+        $settings['show_divorce_first_image'] = isset($vars['show_divorce_first_image']);
 
         $settings['show_indi_sex'] = isset($vars['show_indi_sex']);
         $settings['show_xref_individuals'] = isset($vars['show_xref_individuals']);
