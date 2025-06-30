@@ -40,6 +40,10 @@ use Fisharebest\Webtrees\Tree;
 use Psr\Http\Message\StreamFactoryInterface;
 use Fisharebest\Webtrees\Gedcom;
 
+use Fisharebest\Webtrees\Auth;
+use Fisharebest\Webtrees\Elements\AdoptedByWhichParent;
+use Fisharebest\Webtrees\Elements\PedigreeLinkageType;
+
 /**
  * Main class for managing the DOT file
  *
@@ -342,11 +346,12 @@ class Dot {
 							if (!empty($child) && (isset($this->individuals[$child->xref()]))) {
 								$fams = isset($this->individuals[$child->xref()]["fams"]) ? $this->individuals[$child->xref()]["fams"] : [];
 								foreach ($fams as $fam) {
-                                    $family_name = $this->generateFamilyNodeName($fam);
-                                    $arrow_colour = $this->getChildArrowColour($child, $fid);
-                                    $line_style = $this->getLineStyle();
-                                    $out .= $nodeName . " -> " . $family_name . ":" . $this->convertID($child->xref()) . " [color=\"$arrow_colour\", style=\"" . $line_style . "\", arrowsize=0.3] \n";
-                                }
+									$family_name = $this->generateFamilyNodeName($fam);
+									$arrow_colour = $this->getChildArrowColour($child, $fid);
+									$line_style = $this->getLineStyle();
+									$arrow_label = $this->getArrowLabel($fam,$child);
+									$out .= $nodeName . " -> " . $family_name . ":" . $this->convertID($child->xref()) . " [".$arrow_label."color=\"$arrow_colour\", style=\"" . $line_style . "\", arrowsize=0.3] \n";
+								}
 							}
 						}
 					}
@@ -380,9 +385,10 @@ class Dot {
 					// Draw an arrow from FAM to each CHIL
 					foreach ($f->children() as $child) {
 						if (!empty($child) && (isset($this->individuals[$child->xref()]))) {
-                            $arrow_colour = $this->getChildArrowColour($child, $fid);
-                            $line_style = $this->getLineStyle();
-							$out .= $this->convertID($fid) . " -> " . $this->convertID($child->xref()) . " [color=\"$arrow_colour\", style=\"" . $line_style . "\", arrowsize=0.3]\n";
+							$arrow_colour = $this->getChildArrowColour($child, $fid);
+							$line_style = $this->getLineStyle();
+							$arrow_label = $this->getArrowLabel($f,$child);
+							$out .= $this->convertID($fid) . " -> " . $this->convertID($child->xref()) . " [".$arrow_label."color=\"$arrow_colour\", style=\"" . $line_style . "\", arrowsize=0.3]\n";
 						}
 					}
 				}
@@ -1734,5 +1740,81 @@ class Dot {
             return $this->settings["arrows_default"];
         }
         return $this->settings["arrows_default"];
+    }
+
+    private function getArrowLabel($family,$child)
+    {
+        // Add a label to arrows to individuals when pedigree type is not "birth"
+
+        $result = "";
+
+        if (! $this->settings['show_pedigree_type']) {
+            return $result;
+        }
+
+        $famID = $family->xref();
+
+        # Analize if this is really necesary
+        $individual = Auth::checkIndividualAccess($child, true);
+        $family = Auth::checkFamilyAccess($family, true);
+
+        $fact_id = '';
+        $pedigree = '';
+        foreach ($individual->facts(['FAMC']) as $fact) {
+            if ($family === $fact->target()) {
+
+                $fact_id = $fact->id();
+
+                if ($fact instanceof Fact) {
+                    $pedigree = $fact->attribute('PEDI');
+                }
+
+                break;
+            }
+        }
+
+        $label_adopted_by = '';
+        if ($pedigree === PedigreeLinkageType::VALUE_ADOPTED) {
+            foreach ($individual->facts(['ADOP']) as $fact) {
+                if ($fact instanceof Fact) {
+                    $adopt_family = $fact->attribute('FAMC');
+                    if ('@' . $famID . '@' === $adopt_family) {
+        
+                        $adopted_by = "";
+                        if (preg_match_all('/\n3 ADOP (.+)/', $fact->gedcom(), $adopted_by_arr)) {
+                            foreach ($adopted_by_arr[1] as $adopted_by) {
+                                # Takes the first row
+                                break;
+                            }
+                        }
+                        $which_parent = new AdoptedByWhichParent(I18N::translate('Adoption'));
+                        $label_adopted_by = $which_parent->values()[$adopted_by];
+                        if (empty($label_adopted_by)) {
+                            $label_adopted_by = I18N::translate('Adopted');
+                        }
+                    }
+        
+                    break;
+                }
+            }
+        }
+
+        $values = [
+            "" => "",
+            PedigreeLinkageType::VALUE_BIRTH   => "",
+            PedigreeLinkageType::VALUE_ADOPTED => $label_adopted_by,
+            PedigreeLinkageType::VALUE_FOSTER  => I18N::translate('Foster parents'),
+            /* I18N: “sealing” is a Mormon ceremony. */
+            PedigreeLinkageType::VALUE_SEALING => I18N::translate('Sealing parents'),
+            /* I18N: “rada” is an Arabic word, pronounced “ra DAH”. It is child-to-parent pedigree, established by wet-nursing. */
+            PedigreeLinkageType::VALUE_RADA    => I18N::translate('Rada parents'),
+        ];
+
+        $result = $values[$pedigree] ?? $values[PedigreeLinkageType::VALUE_BIRTH];
+
+        if (!empty($result)) {
+            $result = 'label="'.$result.'", ';
+        }
+        return $result;
     }
 }

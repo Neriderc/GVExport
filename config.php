@@ -44,6 +44,7 @@ return array(
 	'show_marriage_type' => false, // Whether to show the type of marriage on the family record
 	'show_marriage_type_not_specified' => false, // Whether to add an "Unknown marriage type" message to the family record if 'show_marriage_type' is active and the type was not specified in the record
 	'show_indi_sex' => false, // Show the sex of the individual in text on the tile
+        'show_pedigree_type' => false, // Add a label to arrows to individuals when pedigree type is not "birth"
 	'include_ancestors' => true, // If ancestors should be included when calculating who to show in the diagram
 	'ancestor_levels' => 2, // Default setting for number of ancestor generations to include
 	'include_siblings' => true, // Whether to include siblings when calculating who to include in the diagram
