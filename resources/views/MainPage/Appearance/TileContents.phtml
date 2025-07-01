@@ -127,6 +127,11 @@ use Fisharebest\Webtrees\I18N;
                 <input type="checkbox" name="vars[use_alt_events]" id="use_alt_events" value="use_alt_events" <?= $vars["use_alt_events"] ? 'checked' : '' ?>>
                 <label class="check-list width-90pc" for='use_alt_events'><?= I18N::translate('Use similar events if information not available'); ?></label>
             </div>
+            <hr>
+            <div>
+                <input type="checkbox" name="vars[show_pedigree_type]" id="show_pedigree_type" value="show_pedigree_type" <?= $vars["show_pedigree_type"] ? 'checked' : '' ?>>
+                <label class="check-list width-90pc" for='show_pedigree_type'><?= I18N::translate('Add a label to arrows to individuals when pedigree type is not "birth"'); ?></label>
+            </div>
         </div>
     </div>
     <div class="col-auto">

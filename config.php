@@ -49,6 +49,7 @@ return array(
 	'divorce_date_year_only' => false, // Whether to show just the year or the full GEDCOM date of divorce
 	'show_divorce_place' => true, // Whether to show the place of divorce on the family record
 	'show_indi_sex' => false, // Show the sex of the individual in text on the tile
+        'show_pedigree_type' => false, // Add a label to arrows to individuals when pedigree type is not "birth"
 	'include_ancestors' => true, // If ancestors should be included when calculating who to show in the diagram
 	'ancestor_levels' => 2, // Default setting for number of ancestor generations to include
 	'include_siblings' => true, // Whether to include siblings when calculating who to include in the diagram
