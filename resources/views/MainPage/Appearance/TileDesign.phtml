@@ -76,6 +76,10 @@ use Fisharebest\Webtrees\Auth;
                     <label class="check-list width-90pc" for='show_marriage_first_image'><?= I18N::translate('Show first marriage image'); ?></label>
                 </div>
                 <div>
+                    <input type="checkbox" name="vars[show_divorce_first_image]" id="show_divorce_first_image" value="show_divorce_first_image" <?= $vars["show_divorce_first_image"] ? 'checked' : '' ?>>
+                    <label class="check-list width-90pc" for='show_divorce_first_image'><?= I18N::translate('Show first divorce image'); ?></label>
+                </div>
+                <div>
                     <input type="checkbox" name="vars[show_death_first_image]" id="show_death_first_image" value="show_death_first_image" <?= $vars["show_death_first_image"] ? 'checked' : '' ?>>
                     <label class="check-list width-90pc" for='show_death_first_image'><?= I18N::translate('Show first death image'); ?></label>
                 </div>

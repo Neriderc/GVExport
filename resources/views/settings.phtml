@@ -52,6 +52,8 @@ $prefix_regex = '^[A-Za-z0-9 ' . $regex_symbols . ']*$';
                 <input class="form-control col-sm-6" type="text" name="vars[death_prefix]" id="death_prefix" pattern="<?= $prefix_regex; ?>" title="<?= I18N::translate('Letters, numbers, spaces, or the following symbols: ') . $regex_symbols; ?>" value="<?= e($vars["death_prefix"]); ?>">
                 <label for="marriage_prefix"><?= I18N::translate('Marriage date prefix') ?>:</label>
                 <input class="form-control col-sm-6" type="text" name="vars[marriage_prefix]" id="marriage_prefix" pattern="<?= $prefix_regex; ?>" title="<?= I18N::translate('Letters, numbers, spaces, or the following symbols: ') . $regex_symbols; ?>" value="<?= e($vars["marriage_prefix"]); ?>">
+                <label for="divorce_prefix"><?= I18N::translate('Divorce date prefix') ?>:</label>
+                <input class="form-control col-sm-6" type="text" name="vars[divorce_prefix]" id="divorce_prefix" pattern="<?= $prefix_regex; ?>" title="<?= I18N::translate('Letters, numbers, spaces, or the following symbols: ') . $regex_symbols; ?>" value="<?= e($vars["divorce_prefix"]); ?>">
                 <label for="burial_prefix"><?= I18N::translate('Burial date prefix') ?>:</label>
                 <input class="form-control col-sm-6" type="text" name="vars[burial_prefix]" id="burial_prefix" pattern="<?= $prefix_regex; ?>" title="<?= I18N::translate('Letters, numbers, spaces, or the following symbols: ') . $regex_symbols; ?>" value="<?= e($vars["burial_prefix"]); ?>">
             </div>

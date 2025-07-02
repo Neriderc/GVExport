@@ -43,7 +43,14 @@ return array(
 	'show_marriage_place' => true, // Whether to show the place of marriage on the family record
 	'show_marriage_type' => false, // Whether to show the type of marriage on the family record
 	'show_marriage_type_not_specified' => false, // Whether to add an "Unknown marriage type" message to the family record if 'show_marriage_type' is active and the type was not specified in the record
+	'show_divorces' => false, // Whether to show divorces
+	'show_only_first_divorce' => true, // Whether to show only the first divorce of the family record
+	'show_divorce_date' => true, // Whether to show divorce date on the family record
+	'show_divorce_first_image' => false, // Whether to show divorce first image of individuals
+	'divorce_date_year_only' => false, // Whether to show just the year or the full GEDCOM date of divorce
+	'show_divorce_place' => true, // Whether to show the place of divorce on the family record
 	'show_indi_sex' => false, // Show the sex of the individual in text on the tile
+        'show_pedigree_type' => false, // Add a label to arrows to individuals when pedigree type is not "birth"
 	'include_ancestors' => true, // If ancestors should be included when calculating who to show in the diagram
 	'ancestor_levels' => 2, // Default setting for number of ancestor generations to include
 	'include_siblings' => true, // Whether to include siblings when calculating who to include in the diagram
@@ -137,6 +144,7 @@ return array(
 	'death_prefix' => '†', // Text shown on chart before the death date - alternatively could use '↓'
     'burial_prefix' => '_', // Text shown on chart before the burial date
     'marriage_prefix' => '∞', // Text shown on chart before the marriage date
+    'divorce_prefix' => '×', // Text shown on chart before the divorce date
 	'limit_levels_visitor' => '5', // How many ancestor or descendant levels a user with this privilege can select up to
 	'limit_levels_member' => '10', // How many ancestor or descendant levels a user with this privilege can select up to
 	'limit_levels_editor' => '15', // How many ancestor or descendant levels a user with this privilege can select up to
