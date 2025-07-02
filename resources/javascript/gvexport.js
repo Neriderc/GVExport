@@ -323,6 +323,10 @@ async function pageLoaded(Url) {
     marriagetypeEl.addEventListener('change', function(e) {
         Form.showHideMatchCheckbox('show_marriage_type', 'marriage_type_subgroup');
     });
+    let divorcesEl = form.querySelector("#show_divorces");
+    divorcesEl.addEventListener('change', function(e) {
+        Form.showHideMatchCheckbox('show_divorces', 'divorces_subgroup');
+    });
 
     window.addEventListener("scroll", (event) => {
         // Hide diagram context menu on scroll
