@@ -43,6 +43,7 @@ return array(
 	'show_marriage_place' => true, // Whether to show the place of marriage on the family record
 	'show_marriage_type' => false, // Whether to show the type of marriage on the family record
 	'show_marriage_type_not_specified' => false, // Whether to add an "Unknown marriage type" message to the family record if 'show_marriage_type' is active and the type was not specified in the record
+	'show_divorces' => false, // Whether to show divorces
 	'show_only_first_divorce' => true, // Whether to show only the first divorce of the family record
 	'show_divorce_date' => true, // Whether to show divorce date on the family record
 	'show_divorce_first_image' => false, // Whether to show divorce first image of individuals

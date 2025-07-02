@@ -559,7 +559,11 @@ class Dot {
 			$f = $this->getUpdatedFamily($fid);
 
 			$marriages = $f->facts(['MARR']);
-			$divorces = $f->facts(['DIV']);
+			if ($this->settings["show_divorces"]) {;
+				$divorces = $f->facts(['DIV']);
+			} else {
+				$divorces = [];
+			}
 
 			// Get the husband's and wife's id from PGV
 			$husb_id = $this->families[$fid]["husb_id"] ?? "";
@@ -700,13 +704,10 @@ class Dot {
 			);
 			$noPartners = empty($husb_id) && empty($wife_id);
 			$enabled = (
-				$this->settings["show_marriage_date"] ||
-				$this->settings["show_marriage_place"] ||
-				$this->settings["show_xref_families"] ||
-				$this->settings["show_marriage_type"] ||
-				$this->settings["show_divorce_date"] ||
-				$this->settings["show_divorce_place"] 
+				($hasMarriages || $hasDivorces) ||
+				$this->settings["show_xref_families"]
 			);
+
 
 			// --- Printing ---
 			// "Combined" type

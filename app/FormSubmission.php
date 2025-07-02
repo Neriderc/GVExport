@@ -187,6 +187,7 @@ class FormSubmission
         $settings['show_marriage_first_image'] = isset($vars['show_marriage_first_image']);
         $settings['show_marriage_type'] = isset($vars['show_marriage_type']);
         $settings['show_marriage_type_not_specified'] = isset($vars['show_marriage_type_not_specified']);
+        $settings['show_divorces'] = isset($vars['show_divorces']);
         $settings['show_only_first_divorce'] = isset($vars['show_only_first_divorce']);
         $settings['show_divorce_date'] = isset($vars['show_divorce_date']);
 

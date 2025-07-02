@@ -167,26 +167,31 @@ use Fisharebest\Webtrees\I18N;
                 </div>
             </div>
             <div>
-                <input type="checkbox" name="vars[show_only_first_divorce]" id="show_only_first_divorce" value="show_only_first_divorce" <?= $vars["show_only_first_divorce"] ? 'checked' : '' ?>>
-                <label class="check-list width-90pc" for='show_only_first_divorce'><?= I18N::translate('Show only first divorce'); ?></label>
-            </div>
-            <div>
-                <input type="checkbox" onclick="Form.showHideMatchCheckbox('show_divorce_date', 'divorce_date_subgroup');" name="vars[show_divorce_date]" id="show_divorce_date" value="show_divorce_date" <?= $vars["show_divorce_date"] ? 'checked' : '' ?>>
-                <label class="check-list width-90pc" for='show_divorce_date'><?= I18N::translate('Show divorce date'); ?></label>
-                <div id="divorce_date_subgroup" class="setting_subgroup col-auto options-panel-background" <?= !$vars["show_divorce_date"] ? 'style="display:none;"' : '' ?>>
-                    <div class="col-auto mx-3">
-                        <input type="radio" name="vars[divorce_date_year_only]" id="md_type_y" value="true" <?= $vars["divorce_date_year_only"] ? 'checked' : '' ?>>
-                        <label for="md_type_y"><?= I18N::translate('Year') ?></label>
+                <input type="checkbox" name="vars[show_divorces]" id="show_divorces" value="show_divorces" <?= $vars["show_divorces"] ? 'checked' : '' ?>>
+                <label class="check-list width-90pc" for='show_divorces'><?= I18N::translate('Show divorces'); ?></label>
+                <div id="divorces_subgroup" class="setting_subgroup col-auto options-panel-background" <?= !$vars["show_divorces"] ? 'style="display:none;"' : '' ?>>
+                    <div>
+                        <input type="checkbox" name="vars[show_only_first_divorce]" id="show_only_first_divorce" value="show_only_first_divorce" <?= $vars["show_only_first_divorce"] ? 'checked' : '' ?>>
+                        <label class="check-list width-90pc" for='show_only_first_divorce'><?= I18N::translate('Show only first divorce'); ?></label>
                     </div>
-                    <div class="col-auto mx-3">
-                        <input type="radio" name="vars[divorce_date_year_only]" id="md_type_gedcom" value="false" <?= !$vars["divorce_date_year_only"] ? 'checked' : '' ?>>
-                        <label for="md_type_gedcom"><?= I18N::translate('Full date') ?></label>
+                    <div>
+                        <input type="checkbox" onclick="Form.showHideMatchCheckbox('show_divorce_date', 'divorce_date_subgroup');" name="vars[show_divorce_date]" id="show_divorce_date" value="show_divorce_date" <?= $vars["show_divorce_date"] ? 'checked' : '' ?>>
+                        <label class="check-list width-90pc" for='show_divorce_date'><?= I18N::translate('Show divorce date'); ?></label>
+                        <div id="divorce_date_subgroup" class="setting_subgroup col-auto options-panel-background" <?= !$vars["show_divorce_date"] ? 'style="display:none;"' : '' ?>>
+                            <div class="col-auto mx-3">
+                                <input type="radio" name="vars[divorce_date_year_only]" id="md_type_y" value="true" <?= $vars["divorce_date_year_only"] ? 'checked' : '' ?>>
+                                <label for="md_type_y"><?= I18N::translate('Year') ?></label>
+                            </div>
+                            <div class="col-auto mx-3">
+                                <input type="radio" name="vars[divorce_date_year_only]" id="md_type_gedcom" value="false" <?= !$vars["divorce_date_year_only"] ? 'checked' : '' ?>>
+                                <label for="md_type_gedcom"><?= I18N::translate('Full date') ?></label>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <div>
-                <input type="checkbox" name="vars[show_divorce_place]" id="show_divorce_place" value="show_divorce_place" <?= $vars["show_divorce_place"] ? 'checked' : '' ?>>
-                <label class="check-list width-90pc" for='show_divorce_place'><?= I18N::translate('Show divorce place'); ?></label>
+                    <div>
+                        <input type="checkbox" name="vars[show_divorce_place]" id="show_divorce_place" value="show_divorce_place" <?= $vars["show_divorce_place"] ? 'checked' : '' ?>>
+                        <label class="check-list width-90pc" for='show_divorce_place'><?= I18N::translate('Show divorce place'); ?></label>
+                    </div>
             </div>
         </div>
     </div>
