@@ -184,12 +184,12 @@ use Fisharebest\Webtrees\I18N;
                         <label class="check-list width-90pc" for='show_divorce_date'><?= I18N::translate('Show divorce date'); ?></label>
                         <div id="divorce_date_subgroup" class="setting_subgroup col-auto options-panel-background" <?= !$vars["show_divorce_date"] ? 'style="display:none;"' : '' ?>>
                             <div class="col-auto mx-3">
-                                <input type="radio" name="vars[divorce_date_year_only]" id="md_type_y" value="true" <?= $vars["divorce_date_year_only"] ? 'checked' : '' ?>>
-                                <label for="md_type_y"><?= I18N::translate('Year') ?></label>
+                                <input type="radio" name="vars[divorce_date_year_only]" id="dvd_type_y" value="true" <?= $vars["divorce_date_year_only"] ? 'checked' : '' ?>>
+                                <label for="dvd_type_y"><?= I18N::translate('Year') ?></label>
                             </div>
                             <div class="col-auto mx-3">
-                                <input type="radio" name="vars[divorce_date_year_only]" id="md_type_gedcom" value="false" <?= !$vars["divorce_date_year_only"] ? 'checked' : '' ?>>
-                                <label for="md_type_gedcom"><?= I18N::translate('Full date') ?></label>
+                                <input type="radio" name="vars[divorce_date_year_only]" id="dvd_type_gedcom" value="false" <?= !$vars["divorce_date_year_only"] ? 'checked' : '' ?>>
+                                <label for="dvd_type_gedcom"><?= I18N::translate('Full date') ?></label>
                             </div>
                         </div>
                     </div>

@@ -723,8 +723,8 @@ const Form = {
                             setCheckStatus(document.getElementById('md_type_gedcom'), !toBool(settings[key]));
                             break;
                         case 'divorce_date_year_only':
-                            setCheckStatus(document.getElementById('md_type_y'), toBool(settings[key]));
-                            setCheckStatus(document.getElementById('md_type_gedcom'), !toBool(settings[key]));
+                            setCheckStatus(document.getElementById('dvd_type_y'), toBool(settings[key]));
+                            setCheckStatus(document.getElementById('dvd_type_gedcom'), !toBool(settings[key]));
                             break;
                         case 'burial_date_year_only':
                             setCheckStatus(document.getElementById('bud_type_y'), toBool(settings[key]));
