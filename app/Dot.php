@@ -349,7 +349,7 @@ class Dot {
 									$family_name = $this->generateFamilyNodeName($fam);
 									$arrow_colour = $this->getChildArrowColour($child, $fid);
 									$line_style = $this->getLineStyle();
-									$arrow_label = $this->getArrowLabel($fam,$child);
+									$arrow_label = 'label=' . $this->getArrowLabel($f,$child) . ', ';
 									$out .= $nodeName . " -> " . $family_name . ":" . $this->convertID($child->xref()) . " [".$arrow_label."color=\"$arrow_colour\", style=\"" . $line_style . "\", arrowsize=0.3] \n";
 								}
 							}
