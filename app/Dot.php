@@ -1934,7 +1934,7 @@ class Dot {
         $result = $values[$pedigree] ?? $values[PedigreeLinkageType::VALUE_BIRTH];
 
         if (!empty($result)) {
-            $result = 'label="'.$result.'", ';
+            $result = 'fontsize=' . $this->settings['font_size'] .', label="'.$result.'", ';
         }
         return $result;
     }
