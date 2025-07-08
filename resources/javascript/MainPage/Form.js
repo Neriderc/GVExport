@@ -722,6 +722,10 @@ const Form = {
                             setCheckStatus(document.getElementById('md_type_y'), toBool(settings[key]));
                             setCheckStatus(document.getElementById('md_type_gedcom'), !toBool(settings[key]));
                             break;
+                        case 'divorce_date_year_only':
+                            setCheckStatus(document.getElementById('dvd_type_y'), toBool(settings[key]));
+                            setCheckStatus(document.getElementById('dvd_type_gedcom'), !toBool(settings[key]));
+                            break;
                         case 'burial_date_year_only':
                             setCheckStatus(document.getElementById('bud_type_y'), toBool(settings[key]));
                             setCheckStatus(document.getElementById('bud_type_gedcom'), !toBool(settings[key]));
@@ -780,9 +784,11 @@ const Form = {
             Form.showHideMatchCheckbox('show_birthdate', 'birth_date_subgroup');
             Form.showHideMatchCheckbox('show_death_date', 'death_date_subgroup');
             Form.showHideMatchCheckbox('show_marriage_date', 'marriage_date_subgroup');
+            Form.showHideMatchCheckbox('show_divorce_date', 'divorce_date_subgroup');
             Form.showHideMatchCheckbox('show_burial_date', 'burial_date_subgroup');
             Form.showHideMatchCheckbox('highlight_custom_indis', 'highlight_custom_option');
             Form.showHideMatchCheckbox('show_marriage_type', 'marriage_type_subgroup');
+            Form.showHideMatchCheckbox('show_divorces', 'divorces_subgroup');
             setSavedDiagramsPanel();
             Form.showHide(document.getElementById('arrow_group'),document.getElementById('colour_arrow_related').checked)
             toggleUpdateButton();

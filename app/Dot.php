@@ -40,6 +40,10 @@ use Fisharebest\Webtrees\Tree;
 use Psr\Http\Message\StreamFactoryInterface;
 use Fisharebest\Webtrees\Gedcom;
 
+use Fisharebest\Webtrees\Auth;
+use Fisharebest\Webtrees\Elements\AdoptedByWhichParent;
+use Fisharebest\Webtrees\Elements\PedigreeLinkageType;
+
 /**
  * Main class for managing the DOT file
  *
@@ -342,11 +346,13 @@ class Dot {
 							if (!empty($child) && (isset($this->individuals[$child->xref()]))) {
 								$fams = isset($this->individuals[$child->xref()]["fams"]) ? $this->individuals[$child->xref()]["fams"] : [];
 								foreach ($fams as $fam) {
-                                    $family_name = $this->generateFamilyNodeName($fam);
-                                    $arrow_colour = $this->getChildArrowColour($child, $fid);
-                                    $line_style = $this->getLineStyle();
-                                    $out .= $nodeName . " -> " . $family_name . ":" . $this->convertID($child->xref()) . " [color=\"$arrow_colour\", style=\"" . $line_style . "\", arrowsize=0.3] \n";
-                                }
+									$family_name = $this->generateFamilyNodeName($fam);
+									$arrow_colour = $this->getChildArrowColour($child, $fid);
+									$line_style = $this->getLineStyle();
+									$arrow_desc = $this->getArrowLabel($f,$child);
+									$arrow_label = empty($arrow_desc) ? '' : $arrow_desc;
+									$out .= $nodeName . " -> " . $family_name . ":" . $this->convertID($child->xref()) . " [".$arrow_label."color=\"$arrow_colour\", style=\"" . $line_style . "\", arrowsize=0.3] \n";
+								}
 							}
 						}
 					}
@@ -380,9 +386,10 @@ class Dot {
 					// Draw an arrow from FAM to each CHIL
 					foreach ($f->children() as $child) {
 						if (!empty($child) && (isset($this->individuals[$child->xref()]))) {
-                            $arrow_colour = $this->getChildArrowColour($child, $fid);
-                            $line_style = $this->getLineStyle();
-							$out .= $this->convertID($fid) . " -> " . $this->convertID($child->xref()) . " [color=\"$arrow_colour\", style=\"" . $line_style . "\", arrowsize=0.3]\n";
+							$arrow_colour = $this->getChildArrowColour($child, $fid);
+							$line_style = $this->getLineStyle();
+							$arrow_label = $this->getArrowLabel($f,$child);
+							$out .= $this->convertID($fid) . " -> " . $this->convertID($child->xref()) . " [".$arrow_label."color=\"$arrow_colour\", style=\"" . $line_style . "\", arrowsize=0.3]\n";
 						}
 					}
 				}
@@ -519,9 +526,16 @@ class Dot {
 		$marriageType_array = Array();
 		$marriagedate_array = Array();
 		$marriageplace_array = Array();
+		$marriageEmpty_array = Array();
 		$pic_marriage_first_array = Array();
 		$pic_marriage_first_title_array = Array();
 		$pic_marriage_first_link_array = Array();
+		$divorcedate_array = Array();
+		$divorceplace_array = Array();
+		$divorceEmpty_array = Array();
+		$pic_divorce_first_array = Array();
+		$pic_divorce_first_title_array = Array();
+		$pic_divorce_first_link_array = Array();
 
 		$printCount = -1;
 
@@ -552,6 +566,11 @@ class Dot {
 			$f = $this->getUpdatedFamily($fid);
 
 			$marriages = $f->facts(['MARR']);
+			if ($this->settings["show_divorces"]) {;
+				$divorces = $f->facts(['DIV']);
+			} else {
+				$divorces = [];
+			}
 
 			// Get the husband's and wife's id from PGV
 			$husb_id = $this->families[$fid]["husb_id"] ?? "";
@@ -560,8 +579,8 @@ class Dot {
 			$fill_colour = $this->getFamilyColour();
 			$link = $f->url();
 
-			if (count($marriages) == 0) {
-				# No marriage events
+			if ((count($marriages) == 0) && (count($divorces) == 0)) {
+				# No marriage or divorce events
 				#Increment the printCount in order to print a family without marriage
 				$printCount += 1;
 			}
@@ -571,7 +590,7 @@ class Dot {
 				$printCount += 1;
 
 				// Set marriage prefix only if marriage exists
-				$married = !(empty($marriageFact) && Date::compare($marriageFact->date(), new Date('')) == 0);
+				$married = ! empty($marriageFact);
 				if ($married) {
 					$prefix_array[$printCount] = $this->settings["marriage_prefix"] . ' ';
 				}
@@ -604,6 +623,12 @@ class Dot {
 				} else {
 					$marriageplace_array[$printCount] = "";
 				}
+
+				if (empty($marriageType_array[$printCount]) && empty($marriagedate_array[$printCount]) && empty($marriageplace_array[$printCount])) {
+					$marriageEmpty_array[$printCount] = I18N::translate('Married');
+				} else {
+					$marriageEmpty_array[$printCount] = "";
+				}
 		
 				if ($this->settings["show_marriage_first_image"] && $this->isPhotoRequired()) {
 					[$pic_marriage_first_array[$printCount], 
@@ -619,9 +644,78 @@ class Dot {
 					break;
 				}
 			}
+
+                        #---
+                        #Divorce
+
+			# At least one divorce event
+			foreach ($divorces as $divorceFact) {
+				$printCount += 1;
+
+				// Set divorce prefix only if divorce exists
+				$divorced = ! empty($divorceFact);
+				if ($divorced) {
+					$prefix_array[$printCount] = $this->settings["divorce_prefix"] . ' ';
+				}
+	
+				// Show divorce year
+				if ($this->settings["show_divorce_date"]) {
+					$divorcedate_array[$printCount] = $this->formatDate($divorceFact->date(), $this->settings["divorce_date_year_only"],  $this->settings["use_abbr_month"]);
+				} else {
+					$divorcedate_array[$printCount] = "";
+				}
+	
+				// Show divorce place
+				if ($this->settings["show_divorce_place"] && !empty($divorceFact) && !empty($divorceFact->place())) {
+					$divorceplace_array[$printCount] = $this->getAbbreviatedPlace($divorceFact->place()->gedcomName(), $this->settings);
+				} else {
+					$divorceplace_array[$printCount] = "";
+				}
+
+                        	$divorceEmpty_array[$printCount] = I18N::translate('Divorced');
+		
+				if ($this->settings["show_divorce_first_image"] && $this->isPhotoRequired()) {
+					[$pic_divorce_first_array[$printCount], 
+					 $pic_divorce_first_title_array[$printCount], 
+					 $pic_divorce_first_link_array[$printCount]] = $this->addFirstPhotoFromSpecificFactToFam($divorceFact);
+				}
+	
+				// Get the husband's and wife's id from PGV
+				$husb_id = $this->families[$fid]["husb_id"] ?? "";
+				$wife_id = $this->families[$fid]["wife_id"] ?? "";
+
+				if ($this->settings["show_only_first_divorce"]) {
+					break;
+				}
+			}
 		}
 
 		for ($i = 0; $i <= $printCount; $i++) {
+
+			$isDummy = substr($fid, 0, 2) === "F_";
+			$hasMarriages = !(
+				empty($marriagedate_array[$i]) &&
+				empty($marriageplace_array[$i]) &&
+				empty($marriageType_array[$i]) &&
+				empty($marriageEmpty_array[$i]) 
+			);
+			$hasDivorces = !(
+				empty($divorcedate_array[$i]) &&
+				empty($divorceplace_array[$i]) &&
+				empty($divorceEmpty_array[$i]) 
+			);
+			$hasContent = (
+				($hasMarriages || $hasDivorces) ||
+				!(empty($family) &&
+				empty($prefix_array[$i]))
+			);
+			$noPartners = empty($husb_id) && empty($wife_id);
+			$enabled = (
+				($hasMarriages || $hasDivorces) ||
+				$this->settings["show_xref_families"]
+			);
+
+
 			// --- Printing ---
 			// "Combined" type
 			if ($this->settings["diagram_type"] == "combined") {
@@ -665,46 +759,56 @@ class Dot {
 				}
 
 
-                $isDummy = substr($fid, 0, 2) === "F_";
-                $hasContent = !(
-                    empty($marriagedate_array[$i]) &&
-                    empty($marriageplace_array[$i]) &&
-                    empty($marriageType_array[$i]) &&
-                    empty($family) &&
-                    empty($prefix_array[$i])
-                );
-                $noPartners = empty($husb_id) && empty($wife_id);
-                $enabled = (
-                    $this->settings["show_marriage_date"] ||
-                    $this->settings["show_marriage_place"] ||
-                    $this->settings["show_xref_families"] ||
-                    $this->settings["show_marriage_type"]
-                );
-
 				// --- Print marriage ---
 				if (!$isDummy && ($hasContent || $noPartners) && $enabled) {
-                    $out .= "<TR>";
-                    if ($this->settings["add_links"]) {
-                        $out .= "<TD COLSPAN=\"2\" CELLPADDING=\"0\" PORT=\"marr\" TARGET=\"_BLANK\" HREF=\"" . $this->convertToHTMLSC($link) . "\" BGCOLOR=\"" . $fill_colour . "\">"; #ESL!!! 20090213 without convertToHTMLSC the dot file has invalid data
-                    } else {
-                        $out .= "<TD COLSPAN=\"2\" CELLPADDING=\"0\" PORT=\"marr\" BGCOLOR=\"" . $fill_colour . "\">";
-                    }
-                    $out .= "<TABLE  CELLBORDER=\"0\">";
-                    $out .= "<TR>";
-                    $out .= "<TD>";
-					$out .= "<FONT COLOR=\"". $this->settings["font_colour_details"] ."\" POINT-SIZE=\"" . ($this->settings["font_size"]) ."\">" . ($prefix_array[$i] ?? '') . (empty($marriageType_array[$i])?"":$marriageType_array[$i]) . " " . (empty($marriagedate_array[$i])?"":$marriagedate_array[$i]) . " " . (empty($marriageplace_array[$i])?"":"(".$marriageplace_array[$i].")") . $family . "</FONT><BR />";
-                    $out .= "</TD>";
-
-                    if ($this->isPhotoRequired()) {
-                        if ($this->settings["show_marriage_first_image"] && !empty($pic_marriage_first_array[$i])) {
-                            $out .= $this->getFamFactImage(true /*$detailsExist*/, $pic_marriage_first_array[$i], $pic_marriage_first_link_array[$i], $pic_marriage_first_title_array[$i]);
-                        }
-                    }
-
-                    $out .= "</TR>";
-                    $out .= "</TABLE>";
-                    $out .= "</TD>";
-                    $out .= "</TR>";
+					$out .= "<TR>";
+					if ($this->settings["add_links"]) {
+						$out .= "<TD COLSPAN=\"2\" CELLPADDING=\"0\" PORT=\"marr\" TARGET=\"_BLANK\" HREF=\"" . $this->convertToHTMLSC($link) . "\" BGCOLOR=\"" . $fill_colour . "\">"; #ESL!!! 20090213 without convertToHTMLSC the dot file has invalid data
+					} else {
+						$out .= "<TD COLSPAN=\"2\" CELLPADDING=\"0\" PORT=\"marr\" BGCOLOR=\"" . $fill_colour . "\">";
+					}
+					$out .= "<TABLE  CELLBORDER=\"0\">";
+					if (($hasMarriages) || (! $hasDivorces)) {
+						$out .= "<TR>";
+						$out .= "<TD>";
+						$out .= "<FONT COLOR=\"". $this->settings["font_colour_details"] ."\" POINT-SIZE=\"" . ($this->settings["font_size"]) ."\">" . ($prefix_array[$i] ?? '') . (empty($marriageType_array[$i])?"":$marriageType_array[$i]) . (empty($marriageEmpty_array[$i])?"":$marriageEmpty_array[$i]) . " " . (empty($marriagedate_array[$i])?"":$marriagedate_array[$i]) . " " . (empty($marriageplace_array[$i])?"":"(".$marriageplace_array[$i].")") . "</FONT><BR />";
+						$out .= "</TD>";
+	
+						if ($this->isPhotoRequired()) {
+							if ($this->settings["show_marriage_first_image"] && !empty($pic_marriage_first_array[$i])) {
+								$out .= $this->getFamFactImage(true /*$detailsExist*/, $pic_marriage_first_array[$i], $pic_marriage_first_link_array[$i], $pic_marriage_first_title_array[$i]);
+							}
+						}
+	
+						$out .= "</TR>";
+					}
+					if ($hasDivorces) {
+						$out .= "<TR>";
+						$out .= "<TD>";
+						$out .= "<FONT COLOR=\"". $this->settings["font_colour_details"] ."\" POINT-SIZE=\"" . ($this->settings["font_size"]) ."\">" . ($prefix_array[$i] ?? '') . " " . (empty($divorceEmpty_array[$i])?"":$divorceEmpty_array[$i]) . " " . (empty($divorcedate_array[$i])?"":$divorcedate_array[$i]) . " " . (empty($divorceplace_array[$i])?"":"(".$divorceplace_array[$i].")") . "</FONT><BR />";
+						$out .= "</TD>";
+	
+						if ($this->isPhotoRequired()) {
+							if ($this->settings["show_divorce_first_image"] && !empty($pic_divorce_first_array[$i])) {
+								$out .= $this->getFamFactImage(true /*$detailsExist*/, $pic_divorce_first_array[$i], $pic_divorce_first_link_array[$i], $pic_divorce_first_title_array[$i]);
+							}
+						}
+	
+						$out .= "</TR>";
+					}
+					if ($i == $printCount) {
+						# Last Fact
+						if (!empty($family)) {
+							$out .= "<TR>";
+							$out .= "<TD>";
+							$out .= "<FONT COLOR=\"". $this->settings["font_colour_details"] ."\" POINT-SIZE=\"" . ($this->settings["font_size"]) ."\">" . $family . "</FONT>";
+							$out .= "</TD>";
+							$out .= "</TR>";
+						}
+					}
+					$out .= "</TABLE>";
+					$out .= "</TD>";
+					$out .= "</TR>";
 				}
 	
 				if ($i == $printCount) {
@@ -719,7 +823,7 @@ class Dot {
 					$href = "";
 				}
 				// If names, birth details, and death details are all disabled - show a smaller marriage circle to match the small tiles for individuals.
-				if (!$this->settings["show_marriage_date"] && !$this->settings["show_marriage_place"] && !$this->settings["show_xref_families"]) {
+				if (!$this->settings["show_marriage_date"] && !$this->settings["show_marriage_place"] && !$this->settings["show_divorce_date"] && !$this->settings["show_divorce_place"] && !$this->settings["show_xref_families"]) {
 					$out .= "color=\"" . $this->settings["border_col"] . "\",fillcolor=\"" . $fill_colour . "\", $href shape=point, height=0.2, style=filled";
 					$out .= ", label=" . "< >";
 				} else {
@@ -727,28 +831,49 @@ class Dot {
 						$out .= "color=\"" . $this->settings["border_col"] . "\",fillcolor=\"" . $fill_colour . "\", $href shape=oval, style=\"filled\", margin=0.01";
 						$out .= ", label=" . "<<TABLE border=\"0\" CELLPADDING=\"5\" CELLSPACING=\"0\"><TR><TD>";
 					}
+					if ($hasMarriages) {
+						$out .= "<FONT COLOR=\"". $this->settings["font_colour_details"] ."\" POINT-SIZE=\"" . ($this->settings["font_size"]) ."\">" . (empty($prefix_array[$i])?"":$prefix_array[$i]) . (empty($marriageType_array[$i])?"":$marriageType_array[$i]) . (empty($marriageEmpty_array[$i])?"":$marriageEmpty_array[$i]) . " " . (empty($marriagedate_array[$i])?"":$marriagedate_array[$i]) . "<BR />" . (empty($marriageplace_array[$i])?"":"(".$marriageplace_array[$i].")") . "</FONT>";
 
-					$out .= "<FONT COLOR=\"". $this->settings["font_colour_details"] ."\" POINT-SIZE=\"" . ($this->settings["font_size"]) ."\">" . (empty($prefix_array[$i])?"":$prefix_array[$i]) . (empty($marriageType_array[$i])?"":$marriageType_array[$i]) . " " . (empty($marriagedate_array[$i])?"":$marriagedate_array[$i]) . "<BR />" . (empty($marriageplace_array[$i])?"":"(".$marriageplace_array[$i].")") . $family . "</FONT>";
+						if ($this->isPhotoRequired()) {
+							if ($this->settings["show_marriage_first_image"] && !empty($pic_marriage_first_array[$i])) {
+								$out .= "</TD>";
+								$out .= $this->getFamFactImage(true /*$detailsExist*/, $pic_marriage_first_array[$i], $pic_marriage_first_link_array[$i], $pic_marriage_first_title_array[$i]);
+								$out .= "</TR><TR><TD>";
+							}
+						}
+					}
+					if ($hasDivorces) {
+						if ($hasMarriages) {
+							$out .= "<BR /><BR />";
+						}
+						$out .= "<FONT COLOR=\"". $this->settings["font_colour_details"] ."\" POINT-SIZE=\"" . ($this->settings["font_size"]) ."\">" . (empty($prefix_array[$i])?"":$prefix_array[$i]) . " " . (empty($divorceEmpty_array[$i])?"":$divorceEmpty_array[$i]) . " " . (empty($divorcedate_array[$i])?"":$divorcedate_array[$i]) . "<BR />" . (empty($divorceplace_array[$i])?"":"(".$divorceplace_array[$i].")") . "</FONT>";
 
-                    if ($this->isPhotoRequired()) {
-                        if ($this->settings["show_marriage_first_image"] && !empty($pic_marriage_first_array[$i])) {
-                            $out .= "</TD>";
-                            $out .= $this->getFamFactImage(true /*$detailsExist*/, $pic_marriage_first_array[$i], $pic_marriage_first_link_array[$i], $pic_marriage_first_title_array[$i]);
-                            $out .= "</TR><TR><TD>";
-                        }
-                    }
+						if ($this->isPhotoRequired()) {
+							if ($this->settings["show_divorce_first_image"] && !empty($pic_divorce_first_array[$i])) {
+								$out .= "</TD>";
+								$out .= $this->getFamFactImage(true /*$detailsExist*/, $pic_divorce_first_array[$i], $pic_divorce_first_link_array[$i], $pic_divorce_first_title_array[$i]);
+								$out .= "</TR><TR><TD>";
+							}
+						}
+					}
 
 					if ($i == $printCount) {
-                        $out .= "</TD>";
+						# Last Fact
+						$out .= "</TD>";
 
-                        $out .= "</TR>";
+						$out .= "</TR>";
+						if (!empty($family)) {
+							$out .= "<TR>";
+							$out .= "<TD>";
+							$out .= "<FONT COLOR=\"". $this->settings["font_colour_details"] ."\" POINT-SIZE=\"" . ($this->settings["font_size"]) ."\">" . $family . "</FONT>";
+							$out .= "</TD>";
+							$out .= "</TR>";
+						}
 						$out .= "</TABLE>>";
-					} else {
-                        $out .= "<BR /><BR />";
-                    }
+					}
 				}
 			}
-		}
+		} // for $i
 
 		$out .= "];\n";
 
@@ -1734,5 +1859,81 @@ class Dot {
             return $this->settings["arrows_default"];
         }
         return $this->settings["arrows_default"];
+    }
+
+    private function getArrowLabel($family,$child)
+    {
+        // Add a label to arrows to individuals when pedigree type is not "birth"
+
+        $result = "";
+
+        if (! $this->settings['show_pedigree_type']) {
+            return $result;
+        }
+
+        $famID = $family->xref();
+
+        # Analize if this is really necesary
+        $individual = Auth::checkIndividualAccess($child, true);
+        $family = Auth::checkFamilyAccess($family, true);
+
+        $fact_id = '';
+        $pedigree = '';
+        foreach ($individual->facts(['FAMC']) as $fact) {
+            if ($family === $fact->target()) {
+
+                $fact_id = $fact->id();
+
+                if ($fact instanceof Fact) {
+                    $pedigree = $fact->attribute('PEDI');
+                }
+
+                break;
+            }
+        }
+
+        $label_adopted_by = '';
+        if ($pedigree === PedigreeLinkageType::VALUE_ADOPTED) {
+            foreach ($individual->facts(['ADOP']) as $fact) {
+                if ($fact instanceof Fact) {
+                    $adopt_family = $fact->attribute('FAMC');
+                    if ('@' . $famID . '@' === $adopt_family) {
+        
+                        $adopted_by = "";
+                        if (preg_match_all('/\n3 ADOP (.+)/', $fact->gedcom(), $adopted_by_arr)) {
+                            foreach ($adopted_by_arr[1] as $adopted_by) {
+                                # Takes the first row
+                                break;
+                            }
+                        }
+                        $which_parent = new AdoptedByWhichParent(I18N::translate('Adoption'));
+                        $label_adopted_by = $which_parent->values()[$adopted_by];
+                        if (empty($label_adopted_by)) {
+                            $label_adopted_by = I18N::translate('Adopted');
+                        }
+                    }
+        
+                    break;
+                }
+            }
+        }
+
+        $values = [
+            "" => "",
+            PedigreeLinkageType::VALUE_BIRTH   => "",
+            PedigreeLinkageType::VALUE_ADOPTED => $label_adopted_by,
+            PedigreeLinkageType::VALUE_FOSTER  => I18N::translate('Foster parents'),
+            /* I18N: “sealing” is a Mormon ceremony. */
+            PedigreeLinkageType::VALUE_SEALING => I18N::translate('Sealing parents'),
+            /* I18N: “rada” is an Arabic word, pronounced “ra DAH”. It is child-to-parent pedigree, established by wet-nursing. */
+            PedigreeLinkageType::VALUE_RADA    => I18N::translate('Rada parents'),
+        ];
+
+        $result = $values[$pedigree] ?? $values[PedigreeLinkageType::VALUE_BIRTH];
+
+        if (!empty($result)) {
+            $result = 'label="'.$result.'", ';
+        }
+        return $result;
     }
 }

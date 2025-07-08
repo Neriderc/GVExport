@@ -537,6 +537,7 @@ class Settings
             case 'death_prefix':
             case 'burial_prefix':
             case 'marriage_prefix':
+            case 'divorce_prefix':
             case 'limit_levels_visitor':
             case 'limit_levels_member':
             case 'limit_levels_editor':
