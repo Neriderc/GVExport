@@ -144,7 +144,7 @@ return array(
 	'death_prefix' => '†', // Text shown on chart before the death date - alternatively could use '↓'
     'burial_prefix' => '_', // Text shown on chart before the burial date
     'marriage_prefix' => '∞', // Text shown on chart before the marriage date
-    'divorce_prefix' => '×', // Text shown on chart before the divorce date
+    'divorce_prefix' => '⚮', // Text shown on chart before the divorce date
 	'limit_levels_visitor' => '5', // How many ancestor or descendant levels a user with this privilege can select up to
 	'limit_levels_member' => '10', // How many ancestor or descendant levels a user with this privilege can select up to
 	'limit_levels_editor' => '15', // How many ancestor or descendant levels a user with this privilege can select up to
