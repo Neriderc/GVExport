@@ -870,6 +870,8 @@ class Dot {
 							$out .= "</TR>";
 						}
 						$out .= "</TABLE>>";
+					} elseif (!empty($marriageplace_array[$i])) {
+						$out .= "<BR />";
 					}
 				}
 			}
