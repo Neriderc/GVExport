@@ -336,7 +336,7 @@ class Person
             if ($rounded) {
                 $out .= "<TR><TD WIDTH=\"7\"></TD><TD COLSPAN=\"6\" CELLPADDING=\"2\" BGCOLOR=\"$stripe_colour\" PORT=\"nam\" $size></TD><TD WIDTH=\"7\"></TD></TR>";
             } else {
-                $out .= "<TR><TD COLSPAN=\"6\" CELLPADDING=\"2\" BGCOLOR=\"$stripe_colour\" PORT=\"nam\" $size></TD></TR>";
+                $out .= "<TR><TD COLSPAN=\"9\" CELLPADDING=\"2\" BGCOLOR=\"$stripe_colour\" PORT=\"nam\" $size></TD></TR>";
             }
         }
         // Second row (photo, name, birth, death & burial data)
