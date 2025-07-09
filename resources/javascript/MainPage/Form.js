@@ -789,6 +789,7 @@ const Form = {
             Form.showHideMatchCheckbox('highlight_custom_indis', 'highlight_custom_option');
             Form.showHideMatchCheckbox('show_marriage_type', 'marriage_type_subgroup');
             Form.showHideMatchCheckbox('show_divorces', 'divorces_subgroup');
+            Form.showHideMatchCheckbox('show_marriages', 'marriages_subgroup');
             setSavedDiagramsPanel();
             Form.showHide(document.getElementById('arrow_group'),document.getElementById('colour_arrow_related').checked)
             toggleUpdateButton();
