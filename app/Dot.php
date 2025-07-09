@@ -579,72 +579,73 @@ class Dot {
 			$fill_colour = $this->getFamilyColour();
 			$link = $f->url();
 
-			if ((count($marriages) == 0) && (count($divorces) == 0)) {
+			if ((count($marriages) == 0 && count($divorces) == 0) || !$this->settings["show_marriages"]) {
 				# No marriage or divorce events
 				#Increment the printCount in order to print a family without marriage
 				$printCount += 1;
 			}
 
-			# At least one marriage event
-			foreach ($marriages as $marriageFact) {
-				$printCount += 1;
+			if ($this->settings["show_marriages"]) {
+				# At least one marriage event
+				foreach ($marriages as $marriageFact) {
+					$printCount += 1;
 
-				// Set marriage prefix only if marriage exists
-				$married = ! empty($marriageFact);
-				if ($married) {
-					$prefix_array[$printCount] = $this->settings["marriage_prefix"] . ' ';
-				}
-	
-				if ($this->settings["show_marriage_type"]) {
-					$marriageType_array[$printCount] = '';
-					if (($marriageFact instanceof Fact)) {
-						$marriageAttributeType = $marriageFact->attribute('TYPE');
-						if ($marriageAttributeType !== '') {
-							$element = Registry::elementFactory()->make('FAM:MARR:TYPE');
-							$marriageType_array[$printCount] = $element->value($marriageAttributeType, $this->tree);
-						} else {
-							if ($this->settings["show_marriage_type"] && $this->settings["show_marriage_type_not_specified"]) {
-								$marriageType_array[$printCount] = I18N::translate('Unknown type of marriage') ;
+					// Set marriage prefix only if marriage exists
+					$married = ! empty($marriageFact);
+					if ($married) {
+						$prefix_array[$printCount] = $this->settings["marriage_prefix"] . ' ';
+					}
+		
+					if ($this->settings["show_marriage_type"]) {
+						$marriageType_array[$printCount] = '';
+						if (($marriageFact instanceof Fact)) {
+							$marriageAttributeType = $marriageFact->attribute('TYPE');
+							if ($marriageAttributeType !== '') {
+								$element = Registry::elementFactory()->make('FAM:MARR:TYPE');
+								$marriageType_array[$printCount] = $element->value($marriageAttributeType, $this->tree);
+							} else {
+								if ($this->settings["show_marriage_type"] && $this->settings["show_marriage_type_not_specified"]) {
+									$marriageType_array[$printCount] = I18N::translate('Unknown type of marriage') ;
+								}
 							}
 						}
 					}
-				}
-	
-				// Show marriage year
-				if ($this->settings["show_marriage_date"]) {
-					$marriagedate_array[$printCount] = $this->formatDate($marriageFact->date(), $this->settings["marr_date_year_only"],  $this->settings["use_abbr_month"]);
-				} else {
-					$marriagedate_array[$printCount] = "";
-				}
-	
-				// Show marriage place
-				if ($this->settings["show_marriage_place"] && !empty($marriageFact) && !empty($marriageFact->place())) {
-					$marriageplace_array[$printCount] = $this->getAbbreviatedPlace($marriageFact->place()->gedcomName(), $this->settings);
-				} else {
-					$marriageplace_array[$printCount] = "";
-				}
-
-				if (empty($marriageType_array[$printCount]) && empty($marriagedate_array[$printCount]) && empty($marriageplace_array[$printCount])) {
-					$marriageEmpty_array[$printCount] = I18N::translate('Married');
-				} else {
-					$marriageEmpty_array[$printCount] = "";
-				}
 		
-				if ($this->settings["show_marriage_first_image"] && $this->isPhotoRequired()) {
-					[$pic_marriage_first_array[$printCount], 
-					 $pic_marriage_first_title_array[$printCount], 
-					 $pic_marriage_first_link_array[$printCount]] = $this->addFirstPhotoFromSpecificFactToFam($marriageFact);
-				}
-	
-				// Get the husband's and wife's id from PGV
-				$husb_id = $this->families[$fid]["husb_id"] ?? "";
-				$wife_id = $this->families[$fid]["wife_id"] ?? "";
+					// Show marriage year
+					if ($this->settings["show_marriage_date"]) {
+						$marriagedate_array[$printCount] = $this->formatDate($marriageFact->date(), $this->settings["marr_date_year_only"],  $this->settings["use_abbr_month"]);
+					} else {
+						$marriagedate_array[$printCount] = "";
+					}
+		
+					// Show marriage place
+					if ($this->settings["show_marriage_place"] && !empty($marriageFact) && !empty($marriageFact->place())) {
+						$marriageplace_array[$printCount] = $this->getAbbreviatedPlace($marriageFact->place()->gedcomName(), $this->settings);
+					} else {
+						$marriageplace_array[$printCount] = "";
+					}
 
-				if ($this->settings["show_only_first_marriage"]) {
-					break;
+					if (empty($marriageType_array[$printCount]) && empty($marriagedate_array[$printCount]) && empty($marriageplace_array[$printCount])) {
+						$marriageEmpty_array[$printCount] = I18N::translate('Married');
+					} else {
+						$marriageEmpty_array[$printCount] = "";
+					}
+			
+					if ($this->settings["show_marriage_first_image"] && $this->isPhotoRequired()) {
+						[$pic_marriage_first_array[$printCount], 
+						$pic_marriage_first_title_array[$printCount], 
+						$pic_marriage_first_link_array[$printCount]] = $this->addFirstPhotoFromSpecificFactToFam($marriageFact);
+					}
+		
+					// Get the husband's and wife's id from PGV
+					$husb_id = $this->families[$fid]["husb_id"] ?? "";
+					$wife_id = $this->families[$fid]["wife_id"] ?? "";
+
+					if ($this->settings["show_only_first_marriage"]) {
+						break;
+					}
 				}
 			}
-
                         #---
                         #Divorce
 
@@ -843,9 +844,6 @@ class Dot {
 						}
 					}
 					if ($hasDivorces) {
-						if ($hasMarriages) {
-							$out .= "<BR /><BR />";
-						}
 						$out .= "<FONT COLOR=\"". $this->settings["font_colour_details"] ."\" POINT-SIZE=\"" . ($this->settings["font_size"]) ."\">" . (empty($prefix_array[$i])?"":$prefix_array[$i]) . " " . (empty($divorceEmpty_array[$i])?"":$divorceEmpty_array[$i]) . " " . (empty($divorcedate_array[$i])?"":$divorcedate_array[$i]) . "<BR />" . (empty($divorceplace_array[$i])?"":"(".$divorceplace_array[$i].")") . "</FONT>";
 
 						if ($this->isPhotoRequired()) {
@@ -858,18 +856,20 @@ class Dot {
 					}
 
 					if ($i == $printCount) {
+						
+						if (!empty($family)) {
+							if (!empty($divorceplace_array[$i]) || (!empty($marriageplace_array[$i]) && empty($divorceplace_array[$i]))) {
+								$out .= "<BR />";
+							}
+						
+							$out .= "<FONT COLOR=\"". $this->settings["font_colour_details"] ."\" POINT-SIZE=\"" . ($this->settings["font_size"]) ."\">" . $family . "</FONT>";
+						}
 						# Last Fact
 						$out .= "</TD>";
-
 						$out .= "</TR>";
-						if (!empty($family)) {
-							$out .= "<TR>";
-							$out .= "<TD>";
-							$out .= "<FONT COLOR=\"". $this->settings["font_colour_details"] ."\" POINT-SIZE=\"" . ($this->settings["font_size"]) ."\">" . $family . "</FONT>";
-							$out .= "</TD>";
-							$out .= "</TR>";
-						}
 						$out .= "</TABLE>>";
+					} elseif (!empty($marriageplace_array[$i])) {
+						$out .= "<BR />";
 					}
 				}
 			}
@@ -1932,7 +1932,7 @@ class Dot {
         $result = $values[$pedigree] ?? $values[PedigreeLinkageType::VALUE_BIRTH];
 
         if (!empty($result)) {
-            $result = 'label="'.$result.'", ';
+            $result = 'fontsize=' . $this->settings['font_size'] .', label="'.$result.'", ';
         }
         return $result;
     }

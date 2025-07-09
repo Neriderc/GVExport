@@ -336,7 +336,7 @@ class Person
             if ($rounded) {
                 $out .= "<TR><TD WIDTH=\"7\"></TD><TD COLSPAN=\"6\" CELLPADDING=\"2\" BGCOLOR=\"$stripe_colour\" PORT=\"nam\" $size></TD><TD WIDTH=\"7\"></TD></TR>";
             } else {
-                $out .= "<TR><TD COLSPAN=\"6\" CELLPADDING=\"2\" BGCOLOR=\"$stripe_colour\" PORT=\"nam\" $size></TD></TR>";
+                $out .= "<TR><TD COLSPAN=\"9\" CELLPADDING=\"2\" BGCOLOR=\"$stripe_colour\" PORT=\"nam\" $size></TD></TR>";
             }
         }
         // Second row (photo, name, birth, death & burial data)
@@ -466,11 +466,13 @@ class Person
         $name = str_replace("_U_", "<u>", $name);
         $name = str_replace("_/U_", "</u> ", $name);
 
-        // If PID already in name (from another module), remove it, so we don't add twice
-        $name = str_replace(" (" . $pid . ")", "", $name);
-        if ($this->dot->settings["show_xref_individuals"] && !isset($vars["first_run_xref_check"])) {
-            // Show INDI id
-            $name = $name . " (" . $pid . ")";
+        if (!empty($pid)) {
+            // If PID already in name (from another module), remove it, so we don't add twice
+            $name = str_replace(" (" . $pid . ")", "", $name);
+            if ($this->dot->settings["show_xref_individuals"] && !isset($vars["first_run_xref_check"])) {
+                // Show INDI id
+                $name = $name . " (" . $pid . ")";
+            }
         }
         return $name;
     }

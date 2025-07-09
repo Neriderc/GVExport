@@ -182,6 +182,7 @@ class FormSubmission
             $settings['marr_date_year_only'] = ($vars['marr_date_year_only'] == 'true');
         }
 
+        $settings['show_marriages'] = isset($vars['show_marriages']);
         $settings['show_marriage_place'] = isset($vars['show_marriage_place']);
         $settings['use_alt_events'] = isset($vars['use_alt_events']);
         $settings['show_marriage_first_image'] = isset($vars['show_marriage_first_image']);
@@ -491,7 +492,7 @@ class FormSubmission
      */
     private function isPrefixStringValid($name): bool
     {
-        return preg_match('/^[A-Za-z0-9_ .*+()^∞%$#@!†-↑↓×]*$/',$name);
+        return preg_match('/^[A-Za-z0-9_ .*+()^∞%$#@!†-↑↓×⚮]*$/',$name);
     }
 
     /**
