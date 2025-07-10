@@ -25,12 +25,14 @@ use vendor\WebtreesModules\gvexport\Settings;
                 <input type="text" onblur="Form.setDefaultValueIfBlank(this, 72)" class="form-control col-sm-6" size="5" name="vars[dpi]" id="dpi"
                        value="<?= I18N::digits($vars['dpi']); ?>">
             </div>
+            <?php if (!$admin) { ?>
             <div <?= $usegraphviz ? "" : 'style="display: none"'?>>
                 <label for="diagram_size"><?= I18N::translate('Approximate size of diagram as PDF') ?>:</label>
                 <div class="col-auto">
                     <span id="diagram_size"></span>
                 </div>
             </div>
+            <?php } ?>
         </div>
     </div>
 
