@@ -80,6 +80,10 @@ use vendor\WebtreesModules\gvexport\Settings;
                 <?= view('components/select', ['name' => 'vars[arrow_colour_type]', 'id' => 'arrow_colour_type', 'selected' => I18N::digits($vars['arrow_colour_type']), 'options' => MainPage::updateTranslations($settings["arrow_colour_type_options"])]) ?>
                 <?= view($module->name() . '::MainPage/Appearance/TileDesign/Subgroup',['view' => $module->name() . '::MainPage/Appearance/TileDesign/CustomArrowColourSubgroup', 'view_options' => ['module' => $module, 'vars' => $vars, 'admin' => $admin, 'group' => 'arrow_colour_type', 'field' => 'custom', 'select_id' => 'arrow_colour_type', 'option_id' => Settings::OPTION_ARROW_CUSTOM_COLOUR, 'picker_list' => ['arrows_default' => 'Relationship arrow colour']]]); ?>
             </div>
+            <div>
+                <input type="checkbox" name="vars[show_pedigree_type]" id="show_pedigree_type" value="show_pedigree_type" <?= $vars["show_pedigree_type"] ? 'checked' : '' ?>>
+                <label class="check-list width-90pc" for='show_pedigree_type'><?= I18N::translate('Add arrow label when pedigree type is not "birth"'); ?></label>
+            </div>
             <div class="col-sm-12 col-auto">
                 <input type="color" class="picker" name="vars[background_col]" id="background_col" value="<?= e($vars["background_col"]); ?>" /><label for="background_col" class="picker-label"><?= I18N::translate('Diagram background colour') ?></label>
             </div>
