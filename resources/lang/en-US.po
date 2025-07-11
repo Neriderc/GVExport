@@ -2340,3 +2340,59 @@ msgstr "Only save settings that affect diagram"
 msgid "If you select this option, saving settings to the saved settings list will only save the settings that directly affect the diagram. When unchecked, other settings such as the 'Output file type' and 'Show saved diagrams panel' will also be saved."
 msgstr "If you select this option, saving settings to the saved settings list will only save the settings that directly affect the diagram. When unchecked, other settings such as the 'Output file type' and 'Show saved diagrams panel' will also be saved."
 
+#: 
+msgid "Show divorces"
+msgstr "Show divorces"
+
+#: 
+msgid "Divorce date prefix"
+msgstr "Divorce date prefix"
+
+#: 
+msgid "Show first divorce image"
+msgstr "Show first divorce image"
+
+#: 
+msgid "Add arrow label when pedigree type is not \"birth\""
+msgstr "Add arrow label when pedigree type is not \"birth\""
+
+#: 
+msgid "Show only first divorce"
+msgstr "Show only first divorce"
+
+#: 
+msgid "Show divorce place"
+msgstr "Show divorce place"
+
+#: 
+msgid "If selected, divorces will be listed on the family record."
+msgstr "If selected, divorces will be listed on the family record."
+
+#: 
+msgid "If a couple have been divorced more than once (a family record in webtrees has multiple divorce events), if this option is selected then only the first is shown (this is the default). If you unselect this option, all divorce events will be shown in the same family record in the diagram."
+msgstr "If a couple have been divorced more than once (a family record in webtrees has multiple divorce events), if this option is selected then only the first is shown (this is the default). If you unselect this option, all divorce events will be shown in the same family record in the diagram."
+
+#: 
+msgid "Check the box if you would like to include the date of divorce in the output."
+msgstr "Check the box if you would like to include the date of divorce in the output."
+
+#: 
+msgid "You can also choose whether to show the full date of divorce or just the year."
+msgstr "You can also choose whether to show the full date of divorce or just the year."
+
+#: 
+msgid "Whether to show the place of divorce in the output. Also see option for abbreviating place names."
+msgstr "Whether to show the place of divorce in the output. Also see option for abbreviating place names."
+
+#: 
+msgid "If selected, labels will be added to the relationship arrows where a relationship is not by birth. For example, foster or adopted children."
+msgstr "If selected, labels will be added to the relationship arrows where a relationship is not by birth. For example, foster or adopted children."
+
+#: 
+msgid "Show marriages"
+msgstr "Show marriages"
+
+#: 
+msgid "If selected, marriages will be listed on the family record."
+msgstr "If selected, marriages will be listed on the family record."
+

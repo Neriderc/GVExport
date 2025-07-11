@@ -2314,29 +2314,85 @@ msgstr "seule la première section du nom de lieu est utilisée, jusqu'à la pre
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/TiRwd6hEnd2Fh8g6agiMJabm.png
 #: 
 msgid "This allows you to select the method for colouring arrows that link the different nodes. The 'Random' option will randomly select a colour for each arrow, making it easier to follow overlapping arrows on complex diagrams."
-msgstr ""
+msgstr "Cette option vous permet de sélectionner la méthode de coloration des flèches qui relient les différents nœuds. L'option « Aléatoire » sélectionne au hasard une couleur pour chaque flèche, ce qui facilite le suivi des flèches qui se chevauchent dans les diagrammes complexes."
 
 #. Added new section for Arrow colour that incorporates existing option splus new Random option:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/2FChiaVMAKU4XrD6hAjWpo5u.png  https://s3.eu-west-1.amazonaws.com/po-pub/i/H0UG96EvyeAOsiax2QbDpjFz.png
 #: 
 msgid "Arrow colour"
-msgstr ""
+msgstr "Couleur des flèches"
 
 #. Part of help text explaining setting arrow colours for the diagram:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/eL2Watu303E3miIjWjepkCm1.png
 #: 
 msgid "If selecting 'Custom', you are presented with further options"
-msgstr ""
+msgstr "En choisissant \"Personnalisation\" vous verrez d'autres options"
 
 #. Added new option to the saved settings list that allows only saving settings that will affect the diagram:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/lk2HC9wbC8GP52hP8jQPbca5.png
 #: 
 msgid "Only save settings that affect diagram"
-msgstr ""
+msgstr "Ne sauvegarder que les paramètres qui affectent le diagramme"
 
 #. Help text that explains new option "Only save settings that affect diagram":
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/s8JE1JCBUG1WTEzqCv5UxB4R.png
 #: 
 msgid "If you select this option, saving settings to the saved settings list will only save the settings that directly affect the diagram. When unchecked, other settings such as the 'Output file type' and 'Show saved diagrams panel' will also be saved."
+msgstr "Si vous sélectionnez cette option, l'enregistrement des paramètres dans la liste des paramètres enregistrés n'enregistrera que les paramètres qui affectent directement le diagramme. Si cette option n'est pas cochée, d'autres paramètres tels que le « Type de fichier de sortie » et « Afficher le panneau des diagrammes enregistrés » seront également sauvegardés."
+
+#: 
+msgid "Show divorces"
+msgstr ""
+
+#: 
+msgid "Divorce date prefix"
+msgstr ""
+
+#: 
+msgid "Show first divorce image"
+msgstr ""
+
+#: 
+msgid "Add arrow label when pedigree type is not \"birth\""
+msgstr ""
+
+#: 
+msgid "Show only first divorce"
+msgstr ""
+
+#: 
+msgid "Show divorce place"
+msgstr ""
+
+#: 
+msgid "If selected, divorces will be listed on the family record."
+msgstr ""
+
+#: 
+msgid "If a couple have been divorced more than once (a family record in webtrees has multiple divorce events), if this option is selected then only the first is shown (this is the default). If you unselect this option, all divorce events will be shown in the same family record in the diagram."
+msgstr ""
+
+#: 
+msgid "Check the box if you would like to include the date of divorce in the output."
+msgstr ""
+
+#: 
+msgid "You can also choose whether to show the full date of divorce or just the year."
+msgstr ""
+
+#: 
+msgid "Whether to show the place of divorce in the output. Also see option for abbreviating place names."
+msgstr ""
+
+#: 
+msgid "If selected, labels will be added to the relationship arrows where a relationship is not by birth. For example, foster or adopted children."
+msgstr ""
+
+#: 
+msgid "Show marriages"
+msgstr ""
+
+#: 
+msgid "If selected, marriages will be listed on the family record."
 msgstr ""
 
