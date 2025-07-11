@@ -2366,3 +2366,59 @@ msgstr "Desa només els paràmetres que afecten el diagrama"
 msgid "If you select this option, saving settings to the saved settings list will only save the settings that directly affect the diagram. When unchecked, other settings such as the 'Output file type' and 'Show saved diagrams panel' will also be saved."
 msgstr "Si seleccioneu aquesta opció, desar la configuració a la llista de configuració desada només desarà la configuració que afecta directament el diagrama. Quan no estigui marcada, també es desaran altres configuracions com ara \"Tipus de fitxer de sortida\" i \"Mostra el tauler de diagrames desats\"."
 
+#: 
+msgid "Show divorces"
+msgstr "Mostrar divorcis"
+
+#: 
+msgid "Divorce date prefix"
+msgstr "Prefix de data de divorci"
+
+#: 
+msgid "Show first divorce image"
+msgstr "Mostra la primera imatge del divorci"
+
+#: 
+msgid "Add arrow label when pedigree type is not \"birth\""
+msgstr "Afegeix l'etiqueta de fletxa quan el tipus de pedigrí no és \"naixement\""
+
+#: 
+msgid "Show only first divorce"
+msgstr "Mostra només el primer divorci"
+
+#: 
+msgid "Show divorce place"
+msgstr "Mostra el lloc del divorci"
+
+#: 
+msgid "If selected, divorces will be listed on the family record."
+msgstr "Si se selecciona, els divorcis apareixeran al registre familiar."
+
+#: 
+msgid "If a couple have been divorced more than once (a family record in webtrees has multiple divorce events), if this option is selected then only the first is shown (this is the default). If you unselect this option, all divorce events will be shown in the same family record in the diagram."
+msgstr "Si una parella s'ha divorciat més d'una vegada (un registre familiar en arbres web té diversos esdeveniments de divorci), si aquesta opció està seleccionada només es mostra el primer (aquest és el valor predeterminat). Si desmarqueu aquesta opció, tots els esdeveniments de divorci es mostraran al mateix registre familiar del diagrama."
+
+#: 
+msgid "Check the box if you would like to include the date of divorce in the output."
+msgstr "Marqueu la casella si voleu incloure la data del divorci a la sortida."
+
+#: 
+msgid "You can also choose whether to show the full date of divorce or just the year."
+msgstr "També podeu triar si voleu mostrar la data completa del divorci o només l'any."
+
+#: 
+msgid "Whether to show the place of divorce in the output. Also see option for abbreviating place names."
+msgstr "Si s'ha de mostrar el lloc del divorci a la sortida. Vegeu també l'opció per abreujar noms de llocs."
+
+#: 
+msgid "If selected, labels will be added to the relationship arrows where a relationship is not by birth. For example, foster or adopted children."
+msgstr "Si se selecciona, s'afegiran etiquetes a les fletxes de relació quan una relació no sigui per naixement. Per exemple, nens d'acollida o adoptats."
+
+#: 
+msgid "Show marriages"
+msgstr "Mostrar matrimonis"
+
+#: 
+msgid "If selected, marriages will be listed on the family record."
+msgstr "Si se selecciona, els matrimonis apareixeran al registre familiar."
+

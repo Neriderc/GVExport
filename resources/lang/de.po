@@ -2270,7 +2270,7 @@ msgstr "Zufällig"
 #. Updated help text to cater for new arrow style option:  https://s3.eu-west-1.amazonaws.com/po-pub/i/fn6MBj0cyzMUvsgzAVFvUeoS.png
 #: 
 msgid "You are also able to set the arrow style here."
-msgstr "Hier können Sie auch den Stil der Pfeile festlegen."
+msgstr "Hier können Sie den Stil der Pfeile festlegen."
 
 #. Updated help text to cater for new arrow style option:  https://s3.eu-west-1.amazonaws.com/po-pub/i/fn6MBj0cyzMUvsgzAVFvUeoS.png
 #: 
@@ -2311,29 +2311,85 @@ msgstr "Nur der erste Teil des Ortsnamens bis zum ersten Komma wird verwendet. B
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/TiRwd6hEnd2Fh8g6agiMJabm.png
 #: 
 msgid "This allows you to select the method for colouring arrows that link the different nodes. The 'Random' option will randomly select a colour for each arrow, making it easier to follow overlapping arrows on complex diagrams."
-msgstr ""
+msgstr "Hier können Sie auswählen, wie die Pfeile eingefärbt werden, die die verschiedenen Knoten miteinander verknüpfen. Die Option 'Zufall' wählt eine zufällige Farbe für jeden Pfeil aus, sodass überlappende Pfeile in komplexen Diagrammen einfacher verfolgt werden können."
 
 #. Added new section for Arrow colour that incorporates existing option splus new Random option:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/2FChiaVMAKU4XrD6hAjWpo5u.png  https://s3.eu-west-1.amazonaws.com/po-pub/i/H0UG96EvyeAOsiax2QbDpjFz.png
 #: 
 msgid "Arrow colour"
-msgstr ""
+msgstr "Pfeilfarbe"
 
 #. Part of help text explaining setting arrow colours for the diagram:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/eL2Watu303E3miIjWjepkCm1.png
 #: 
 msgid "If selecting 'Custom', you are presented with further options"
-msgstr ""
+msgstr "Wenn Sie 'Benutzerdefiniert' auswählen, werden Ihnen weitere Optionen angezeigt"
 
 #. Added new option to the saved settings list that allows only saving settings that will affect the diagram:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/lk2HC9wbC8GP52hP8jQPbca5.png
 #: 
 msgid "Only save settings that affect diagram"
-msgstr ""
+msgstr "Nur Einstellungen speichern, die das Diagramm betreffen"
 
 #. Help text that explains new option "Only save settings that affect diagram":
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/s8JE1JCBUG1WTEzqCv5UxB4R.png
 #: 
 msgid "If you select this option, saving settings to the saved settings list will only save the settings that directly affect the diagram. When unchecked, other settings such as the 'Output file type' and 'Show saved diagrams panel' will also be saved."
+msgstr "Wenn Sie diese Option auswählen, werden beim Speichern von Einstellungen in der Liste der gespeicherten Einstellungen nur diejenigen Einstellungen gespeichert, die sich direkt auf das Diagramm auswirken. Wenn diese Option deaktiviert ist, werden auch andere Einstellungen gespeichert, wie etwa 'Ausgabedateityp' und 'Gespeicherte Diagramme anzeigen' ."
+
+#: 
+msgid "Show divorces"
+msgstr "Scheidungen anzeigen"
+
+#: 
+msgid "Divorce date prefix"
+msgstr "Präfix für das Scheidungsdatum"
+
+#: 
+msgid "Show first divorce image"
+msgstr "Zeige das erste Bild zu einer Scheidung"
+
+#: 
+msgid "Add arrow label when pedigree type is not \"birth\""
+msgstr "Pfeilbeschriftung hinzufügen, wenn die Abstammung nicht \"Geburt\" ist"
+
+#: 
+msgid "Show only first divorce"
+msgstr "Nur die erste Scheidung anzeigen"
+
+#: 
+msgid "Show divorce place"
+msgstr "Ort der Scheidung anzeigen"
+
+#: 
+msgid "If selected, divorces will be listed on the family record."
+msgstr "Wenn diese Option ausgewählt wird, werden Scheidungen in der Familienbox aufgeführt."
+
+#: 
+msgid "If a couple have been divorced more than once (a family record in webtrees has multiple divorce events), if this option is selected then only the first is shown (this is the default). If you unselect this option, all divorce events will be shown in the same family record in the diagram."
+msgstr "Wenn ein Paar mehr als einmal geschieden wurde (eine Familienaufzeichnung in webtrees erlaubt auch mehrere Scheidungsereignisse) und wenn diese Option ausgewählt ist, wird nur die erste Scheidung angezeigt (dies ist der Standard). Wenn Sie diese Option nicht ausgewählt haben, werden alle Scheidungsereignisse im Diagramm angezeigt."
+
+#: 
+msgid "Check the box if you would like to include the date of divorce in the output."
+msgstr "Aktivieren Sie das Kästchen, wenn Sie das Scheidungsdatum in die Ausgabe aufnehmen möchten."
+
+#: 
+msgid "You can also choose whether to show the full date of divorce or just the year."
+msgstr "Sie können außerdem wählen, ob das vollständige Scheidungsdatum oder nur das Jahr angezeigt werden soll."
+
+#: 
+msgid "Whether to show the place of divorce in the output. Also see option for abbreviating place names."
+msgstr "Ob der Scheidungsort in der Ausgabe angezeigt werden soll. Siehe auch die Option zum Abkürzen von Ortsnamen."
+
+#: 
+msgid "If selected, labels will be added to the relationship arrows where a relationship is not by birth. For example, foster or adopted children."
+msgstr "Wenn diese Option aktiviert ist, werden den Verwandtschaftspfeilen Beschriftungen hinzugefügt, wenn die Verwandtschaft nicht auf der Geburt beruht. Beispielsweise bei Pflege- oder Adoptivkindern."
+
+#: 
+msgid "Show marriages"
+msgstr ""
+
+#: 
+msgid "If selected, marriages will be listed on the family record."
 msgstr ""
 

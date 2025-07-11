@@ -88,6 +88,47 @@ const UI = {
         }
     },
 
+
+
+    calculateDiagramSize: {
+        getRenderWidth() {
+            let svgEl = document.getElementById("rendering").querySelector("svg");
+            console.log(svgEl.getAttribute("width"));
+            return svgEl.getAttribute("width").split('pt')[0];
+        },
+
+        getRenderHeight() {
+            let svgEl = document.getElementById("rendering").querySelector("svg");
+            return svgEl.getAttribute("height").split('pt')[0];
+        },
+
+        getDpi() {
+            let dpiEl = form.querySelector("#dpi");
+            return dpiEl.value;
+        },
+
+        getDiagramDimensionsString() {
+            const width = this.getRenderWidth();
+            const height = this.getRenderHeight();
+            const BASE_DPI = 72;
+            const dpi = this.getDpi();
+            const INCH_TO_MM = 25.4;
+            const MARGIN_WIDTH = 20 * dpi/BASE_DPI;
+            const MARGIN_HEIGHT = 26 * dpi/BASE_DPI;
+
+            const inchesWidth = width/BASE_DPI;
+            const inchesHeight = height/BASE_DPI;
+            const mmWidth = (inchesWidth * INCH_TO_MM) + MARGIN_WIDTH;
+            const mmHeight = (inchesHeight * INCH_TO_MM) +  MARGIN_HEIGHT;
+            return Math.round(mmWidth) + "mm x " + Math.round(mmHeight) + "mm";
+        },
+
+        updateDiagramSize() {
+            let diagramSizeEl = form.querySelector("#diagram_size");
+            diagramSizeEl.innerHTML = this.getDiagramDimensionsString();
+        }
+    },
+
     tile: {
         /**
          * Fixes URL so regular expression doesn't get confused
