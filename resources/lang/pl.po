@@ -2375,3 +2375,83 @@ msgstr ""
 msgid "If you select this option, saving settings to the saved settings list will only save the settings that directly affect the diagram. When unchecked, other settings such as the 'Output file type' and 'Show saved diagrams panel' will also be saved."
 msgstr ""
 
+#: 
+msgid "Show divorces"
+msgstr ""
+
+#: 
+msgid "Divorce date prefix"
+msgstr ""
+
+#: 
+msgid "Show first divorce image"
+msgstr ""
+
+#: 
+msgid "Add arrow label when pedigree type is not \"birth\""
+msgstr ""
+
+#: 
+msgid "Show only first divorce"
+msgstr ""
+
+#: 
+msgid "Show divorce place"
+msgstr ""
+
+#: 
+msgid "If selected, divorces will be listed on the family record."
+msgstr ""
+
+#: 
+msgid "If a couple have been divorced more than once (a family record in webtrees has multiple divorce events), if this option is selected then only the first is shown (this is the default). If you unselect this option, all divorce events will be shown in the same family record in the diagram."
+msgstr ""
+
+#: 
+msgid "Check the box if you would like to include the date of divorce in the output."
+msgstr ""
+
+#: 
+msgid "You can also choose whether to show the full date of divorce or just the year."
+msgstr ""
+
+#: 
+msgid "Whether to show the place of divorce in the output. Also see option for abbreviating place names."
+msgstr ""
+
+#: 
+msgid "If selected, labels will be added to the relationship arrows where a relationship is not by birth. For example, foster or adopted children."
+msgstr ""
+
+#: 
+msgid "Show marriages"
+msgstr ""
+
+#: 
+msgid "If selected, marriages will be listed on the family record."
+msgstr ""
+
+#: 
+msgid "Approximate size of diagram as PDF"
+msgstr ""
+
+#: 
+msgid "This shows an estimated size of the PDF that will be generated from the diagram. This is only visible if Graphviz is installed on the server. If a setting is enabled to cause the PDF to be generated in the browser (for example photo shapes), this will not be accurate."
+msgstr ""
+
+#: 
+msgid "Married"
+msgstr ""
+
+#: 
+msgid "Divorced"
+msgstr ""
+
+#: 
+msgid "Show divorce date"
+msgstr ""
+
+#: 
+msgid "This also affects families in the diagram. If this option is enabled, you can click on family records to open the family webtrees page. Also see \\'Action when individual clicked\\' in the Browser render settings."
+msgstr ""
+

@@ -2396,3 +2396,27 @@ msgstr "Show marriages"
 msgid "If selected, marriages will be listed on the family record."
 msgstr "If selected, marriages will be listed on the family record."
 
+#: 
+msgid "Approximate size of diagram as PDF"
+msgstr "Approximate size of diagram as PDF"
+
+#: 
+msgid "This shows an estimated size of the PDF that will be generated from the diagram. This is only visible if Graphviz is installed on the server. If a setting is enabled to cause the PDF to be generated in the browser (for example photo shapes), this will not be accurate."
+msgstr "This shows an estimated size of the PDF that will be generated from the diagram. This is only visible if Graphviz is installed on the server. If a setting is enabled to cause the PDF to be generated in the browser (for example photo shapes), this will not be accurate."
+
+#: 
+msgid "Married"
+msgstr "Married"
+
+#: 
+msgid "Divorced"
+msgstr "Divorced"
+
+#: 
+msgid "Show divorce date"
+msgstr "Show divorce date"
+
+#: 
+msgid "This also affects families in the diagram. If this option is enabled, you can click on family records to open the family webtrees page. Also see \\'Action when individual clicked\\' in the Browser render settings."
+msgstr "This also affects families in the diagram. If this option is enabled, you can click on family records to open the family webtrees page. Also see \\'Action when individual clicked\\' in the Browser render settings."
+

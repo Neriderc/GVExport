@@ -2195,7 +2195,7 @@ msgstr "Als een koppel meer dan eens getrouwd is geweest (een gezinsrecord in we
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/YgNsKPAarw3CvZkSzbtJvRe1.png
 #: 
 msgid "If selected, the type of marriage (civil, religious, registered partnership) will be shown on the family record."
-msgstr "Als deze optie is geselecteerd, wordt het type huwelijk (burgerlijk, religieus, geregistreerd partnerschap) getoond op het gezinsrecord."
+msgstr "Indien geselecteerd, wordt het type huwelijk (burgerlijk, religieus, geregistreerd partnerschap) getoond op het gezinsrecord."
 
 #. Part of help text relating to content on family records:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/YgNsKPAarw3CvZkSzbtJvRe1.png
@@ -2336,4 +2336,84 @@ msgstr "Sla alleen instellingen op die diagrammen beïnvloeden"
 #: 
 msgid "If you select this option, saving settings to the saved settings list will only save the settings that directly affect the diagram. When unchecked, other settings such as the 'Output file type' and 'Show saved diagrams panel' will also be saved."
 msgstr "Als u deze optie selecteert, worden bij het opslaan van instellingen in de lijst met opgeslagen instellingen alleen de instellingen opgeslagen die direct van invloed zijn op het diagram. Als deze optie niet is aangevinkt, worden andere instellingen zoals 'Type uitvoerbestand' en 'Toon paneel met opgeslagen diagrammen' ook opgeslagen."
+
+#: 
+msgid "Show divorces"
+msgstr "Toon echtscheidingen"
+
+#: 
+msgid "Divorce date prefix"
+msgstr "Voorvoegsel echtscheidingsdatum"
+
+#: 
+msgid "Show first divorce image"
+msgstr "Toon eerste echtscheidingsafbeelding"
+
+#: 
+msgid "Add arrow label when pedigree type is not \"birth\""
+msgstr "Pijllabel toevoegen wanneer stamboomtype niet \"geboorte\" is"
+
+#: 
+msgid "Show only first divorce"
+msgstr "Toon alleen eerste echtscheiding"
+
+#: 
+msgid "Show divorce place"
+msgstr "Toon echtscheidingplaats"
+
+#: 
+msgid "If selected, divorces will be listed on the family record."
+msgstr "Indien geselecteerd, worden echtscheidingen vermeld in het gezinsrecord."
+
+#: 
+msgid "If a couple have been divorced more than once (a family record in webtrees has multiple divorce events), if this option is selected then only the first is shown (this is the default). If you unselect this option, all divorce events will be shown in the same family record in the diagram."
+msgstr "Als een stel meer dan eens gescheiden is (een gezinsrecord in webtrees heeft meerdere echtscheidingsgebeurtenissen), dan wordt, als deze optie geselecteerd is, alleen de eerste getoond (dit is de standaard). Als u deze optie niet selecteert, worden alle echtscheidingen in hetzelfde gezinsrecord in het diagram getoond."
+
+#: 
+msgid "Check the box if you would like to include the date of divorce in the output."
+msgstr "Vink het vakje aan als u de echtscheidingsdatum wilt opnemen in de uitvoer."
+
+#: 
+msgid "You can also choose whether to show the full date of divorce or just the year."
+msgstr "U kunt ook kiezen of de volledige echtscheidingsdatum of alleen het jaar moet worden getoond."
+
+#: 
+msgid "Whether to show the place of divorce in the output. Also see option for abbreviating place names."
+msgstr "Of dat de plaats van echtscheiding moet worden weergegeven in de uitvoer. Zie ook de optie voor het afkorten van plaatsnamen."
+
+#: 
+msgid "If selected, labels will be added to the relationship arrows where a relationship is not by birth. For example, foster or adopted children."
+msgstr "Indien geselecteerd, worden er labels toegevoegd aan de verwantschapspijlen als de verwantschap niet door geboorte is. Bijvoorbeeld pleeg- of adoptiekinderen."
+
+#: 
+msgid "Show marriages"
+msgstr "Toon huwelijken"
+
+#: 
+msgid "If selected, marriages will be listed on the family record."
+msgstr "Indien geselecteerd, worden huwelijken vermeld in het gezinsrecord."
+
+#: 
+msgid "Approximate size of diagram as PDF"
+msgstr "Geschatte grootte van diagram als PDF"
+
+#: 
+msgid "This shows an estimated size of the PDF that will be generated from the diagram. This is only visible if Graphviz is installed on the server. If a setting is enabled to cause the PDF to be generated in the browser (for example photo shapes), this will not be accurate."
+msgstr "Dit toont een geschatte grootte van de PDF die uit het diagram zal worden gegenereerd. Dit is alleen zichtbaar als Graphviz is geïnstalleerd op de server. Als een instelling is ingeschakeld die ervoor zorgt dat de PDF in de browser wordt gegenereerd (bijvoorbeeld fotovormen), zal dit niet nauwkeurig zijn."
+
+#: 
+msgid "Married"
+msgstr "Getrouwd"
+
+#: 
+msgid "Divorced"
+msgstr "Gescheiden"
+
+#: 
+msgid "Show divorce date"
+msgstr "Toon echtscheidingsdatum"
+
+#: 
+msgid "This also affects families in the diagram. If this option is enabled, you can click on family records to open the family webtrees page. Also see \\'Action when individual clicked\\' in the Browser render settings."
+msgstr "Dit heeft ook invloed op gezinnen in het diagram. Als deze optie is ingeschakeld, kunt u op gezinsrecords klikken om de webtreespagina van het gezin te openen. Zie ook \\‘Actie bij klikken op persoon\\’ in de weergave-instellingen van de browser."
 

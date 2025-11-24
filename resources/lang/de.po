@@ -1320,7 +1320,7 @@ msgstr "Wählen Sie die Farbe für Personen, deren Geschlecht nicht bekannt ist,
 #. Help text for the option to set non-related sex colours:  https://s3.eu-west-1.amazonaws.com/po-pub/i/aX1DPFZeEFtV4VGaEqUB05mY.png
 #: 
 msgid "There are four options here for non-blood related individuals, if the &quot;Mark not blood-related people with different colour&quot; option is enabled in the &quot;People to be included&quot; section."
-msgstr "Es gibt hier vier Einstelungen für nicht blutsverwandte Personen, wenn die Einstellung &quot;Nicht blutsverwandte Personen mit anderer Farbe markieren&quot; im Abschnitt &quot;Einzuschließende Personen&quot; aktiviert ist."
+msgstr "Es gibt hier vier Einstellungen für nicht blutsverwandte Personen, wenn die Einstellung &quot;Nicht blutsverwandte Personen mit anderer Farbe markieren&quot; im Abschnitt &quot;Einzuschließende Personen&quot; aktiviert ist."
 
 #. Part of the help text for family tile colours:  https://s3.eu-west-1.amazonaws.com/po-pub/i/YJInMp5brj9vY9iKPUQTX3rF.png
 #: 
@@ -2387,9 +2387,33 @@ msgstr "Wenn diese Option aktiviert ist, werden den Verwandtschaftspfeilen Besch
 
 #: 
 msgid "Show marriages"
-msgstr ""
+msgstr "Zeige Heiraten"
 
 #: 
 msgid "If selected, marriages will be listed on the family record."
-msgstr ""
+msgstr "Falls ausgewählt werden Heiraten im Familiendatensatz gezeigt"
+
+#: 
+msgid "Approximate size of diagram as PDF"
+msgstr "Ungefähre Größe des Diagramms als PDF"
+
+#: 
+msgid "This shows an estimated size of the PDF that will be generated from the diagram. This is only visible if Graphviz is installed on the server. If a setting is enabled to cause the PDF to be generated in the browser (for example photo shapes), this will not be accurate."
+msgstr "Dieses zeigt die geschätzte Größe des PDF das durch das Diagramm erzeugt wird. Dies wird nur gezeigt, wenn Graphviz auf dem Server installiert ist. Bei Einstellungen, die ein PDF im Browser generieren (z.B. abgerundete Fotos) ist diese Angabe ungenau."
+
+#: 
+msgid "Married"
+msgstr "Verheiratet"
+
+#: 
+msgid "Divorced"
+msgstr "Geschieden"
+
+#: 
+msgid "Show divorce date"
+msgstr "Zeige Datum der Scheidung"
+
+#: 
+msgid "This also affects families in the diagram. If this option is enabled, you can click on family records to open the family webtrees page. Also see \\'Action when individual clicked\\' in the Browser render settings."
+msgstr "Dies beeinflusst auch die Darstellung  von Familien. Wenn ausgewählt, kann man ein Familienelement anklicken, um die Familienseite von webtrees zu öffnen. Siehe auch\\'Aktion beim Anklicken eines Personenkästchens\\'."
 

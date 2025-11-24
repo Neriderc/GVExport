@@ -2342,57 +2342,82 @@ msgstr "Si vous sélectionnez cette option, l'enregistrement des paramètres dan
 
 #: 
 msgid "Show divorces"
-msgstr ""
+msgstr "Montrer les divorces"
 
 #: 
 msgid "Divorce date prefix"
-msgstr ""
+msgstr "Préfixe de date de divorce"
 
 #: 
 msgid "Show first divorce image"
-msgstr ""
+msgstr "Afficher la première image de divorce"
 
 #: 
 msgid "Add arrow label when pedigree type is not \"birth\""
-msgstr ""
+msgstr "Ajouter une étiquette fléchée lorsque le type de pedigree n'est pas « naissance »"
 
 #: 
 msgid "Show only first divorce"
-msgstr ""
+msgstr "Afficher uniquement le premier divorce"
 
 #: 
 msgid "Show divorce place"
-msgstr ""
+msgstr "Afficher le lieu du divorce"
 
 #: 
 msgid "If selected, divorces will be listed on the family record."
-msgstr ""
+msgstr "Si cette option est sélectionnée, les divorces seront répertoriés dans le dossier familial."
 
 #: 
 msgid "If a couple have been divorced more than once (a family record in webtrees has multiple divorce events), if this option is selected then only the first is shown (this is the default). If you unselect this option, all divorce events will be shown in the same family record in the diagram."
-msgstr ""
+msgstr "If a couple have been divorced more than once (a family record in webtrees has multiple divorce events), if this option is selected then only the first is shown (this is the default). If you unselect this option, all divorce events will be shown in the same family record in the diagram."
 
 #: 
 msgid "Check the box if you would like to include the date of divorce in the output."
-msgstr ""
+msgstr "Cochez la case si vous souhaitez inclure la date du divorce dans la sortie."
 
 #: 
 msgid "You can also choose whether to show the full date of divorce or just the year."
-msgstr ""
+msgstr "Vous pouvez également choisir d’afficher la date complète du divorce ou simplement l’année."
 
 #: 
 msgid "Whether to show the place of divorce in the output. Also see option for abbreviating place names."
-msgstr ""
+msgstr "S'il faut afficher le lieu du divorce dans la sortie. Voir également l'option permettant d'abréger les noms de lieux."
 
 #: 
 msgid "If selected, labels will be added to the relationship arrows where a relationship is not by birth. For example, foster or adopted children."
-msgstr ""
+msgstr "Si cette option est sélectionnée, des étiquettes seront ajoutées aux flèches de relation lorsqu'une relation n'est pas de naissance. Par exemple, les enfants placés en famille d’accueil ou adoptés."
 
 #: 
 msgid "Show marriages"
-msgstr ""
+msgstr "Afficher les mariages\n"
+""
 
 #: 
 msgid "If selected, marriages will be listed on the family record."
-msgstr ""
+msgstr "Si cette option est sélectionnée, les mariages seront répertoriés dans le dossier familial."
+
+#: 
+msgid "Approximate size of diagram as PDF"
+msgstr "Taille approximative du diagramme au format PDF"
+
+#: 
+msgid "This shows an estimated size of the PDF that will be generated from the diagram. This is only visible if Graphviz is installed on the server. If a setting is enabled to cause the PDF to be generated in the browser (for example photo shapes), this will not be accurate."
+msgstr "Cela montre une taille estimée du PDF qui sera généré à partir du diagramme. Ceci n'est visible que si Graphviz est installé sur le serveur. Si un paramètre est activé pour provoquer la génération du PDF dans le navigateur (par exemple des formes de photos), cela ne sera pas exact."
+
+#: 
+msgid "Married"
+msgstr "Marié"
+
+#: 
+msgid "Divorced"
+msgstr "Divorcé"
+
+#: 
+msgid "Show divorce date"
+msgstr "Montrer la date du divorce"
+
+#: 
+msgid "This also affects families in the diagram. If this option is enabled, you can click on family records to open the family webtrees page. Also see \\'Action when individual clicked\\' in the Browser render settings."
+msgstr "Cela affecte également les familles dans le diagramme. Si cette option est activée, vous pouvez cliquer sur les enregistrements de famille pour ouvrir la page webtrees de la famille. Voir également \\' Action lorsque l'on clique sur un individu \\' dans les paramètres d'affichage du navigateur."
 
