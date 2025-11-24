@@ -2338,3 +2338,83 @@ msgstr "Uložit pouze nastavení ovlivňující diagram"
 msgid "If you select this option, saving settings to the saved settings list will only save the settings that directly affect the diagram. When unchecked, other settings such as the 'Output file type' and 'Show saved diagrams panel' will also be saved."
 msgstr "Pokud tuto možnost zaškrtnete, při ukládání nastavení do seznamu uložených nastavení se uloží pouze ta, která přímo ovlivňují vzhled diagramu. Pokud není zaškrtnuto, uloží se i další nastavení, jako je 'Typ výstupního souboru' nebo 'Zobrazit panel uložených diagramů'."
 
+#: 
+msgid "Show divorces"
+msgstr "Zobrazit rozvody"
+
+#: 
+msgid "Divorce date prefix"
+msgstr "Předpona data rozvodu"
+
+#: 
+msgid "Show first divorce image"
+msgstr "Zobrazit obrázek prvního rozvodu"
+
+#: 
+msgid "Add arrow label when pedigree type is not \"birth\""
+msgstr "Přidat popisek šipky, pokud typ vztahu není \"narození\""
+
+#: 
+msgid "Show only first divorce"
+msgstr "Zobrazit pouze první rozvod"
+
+#: 
+msgid "Show divorce place"
+msgstr "Zobrazit místo rozvodu"
+
+#: 
+msgid "If selected, divorces will be listed on the family record."
+msgstr "Pokud je vybráno, rozvody budou uvedeny v rodinném záznamu."
+
+#: 
+msgid "If a couple have been divorced more than once (a family record in webtrees has multiple divorce events), if this option is selected then only the first is shown (this is the default). If you unselect this option, all divorce events will be shown in the same family record in the diagram."
+msgstr "Pokud se pár rozvedl vícekrát (rodinný záznam ve webtrees obsahuje více událostí rozvodu), při zapnutí této volby se zobrazí pouze první rozvod (výchozí chování). Pokud tuto volbu vypnete, zobrazí se v diagramu všechny rozvody v jednom rodinném záznamu."
+
+#: 
+msgid "Check the box if you would like to include the date of divorce in the output."
+msgstr "Zaškrtněte, pokud chcete v výstupu uvést datum rozvodu."
+
+#: 
+msgid "You can also choose whether to show the full date of divorce or just the year."
+msgstr "Můžete také zvolit, zda zobrazit celé datum rozvodu, nebo pouze rok."
+
+#: 
+msgid "Whether to show the place of divorce in the output. Also see option for abbreviating place names."
+msgstr "Zda zobrazit místo rozvodu ve výstupu. Viz také volbu pro zkracování názvů míst."
+
+#: 
+msgid "If selected, labels will be added to the relationship arrows where a relationship is not by birth. For example, foster or adopted children."
+msgstr "Pokud je vybráno, budou k šipkám vztahů přidány popisky tam, kde vztah není založen narozením. Například u pěstounských nebo adoptovaných dětí."
+
+#: 
+msgid "Show marriages"
+msgstr "Zobrazit sňatky"
+
+#: 
+msgid "If selected, marriages will be listed on the family record."
+msgstr "Pokud je vybráno, sňatky budou uvedeny v rodinném záznamu."
+
+#: 
+msgid "Approximate size of diagram as PDF"
+msgstr "Přibližná velikost diagramu v PDF"
+
+#: 
+msgid "This shows an estimated size of the PDF that will be generated from the diagram. This is only visible if Graphviz is installed on the server. If a setting is enabled to cause the PDF to be generated in the browser (for example photo shapes), this will not be accurate."
+msgstr "Zobrazí odhad velikosti PDF souboru, který bude vytvořen z diagramu. Údaj je k dispozici jen tehdy, pokud je na serveru nainstalovaný Graphviz. Pokud se PDF generuje v prohlížeči (například kvůli zobrazení fotografií v diagramu), nemusí být odhad přesný."
+
+#: 
+msgid "Married"
+msgstr "Sezdaní"
+
+#: 
+msgid "Divorced"
+msgstr "Rozvedení"
+
+#: 
+msgid "Show divorce date"
+msgstr "Zobrazit datum rozvodu"
+
+#: 
+msgid "This also affects families in the diagram. If this option is enabled, you can click on family records to open the family webtrees page. Also see \\'Action when individual clicked\\' in the Browser render settings."
+msgstr "Tato volba ovlivní také políčko rodiny v diagramu. Pokud je povolena, můžete kliknutím na záznam rodiny otevřít její stránku ve webtrees. Viz také \\'Akce po kliknutí na osobu\\' v nastavení \\'Vykreslování v prohlížeči\\'."
+

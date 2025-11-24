@@ -2422,3 +2422,27 @@ msgstr "Mostrar matrimonis"
 msgid "If selected, marriages will be listed on the family record."
 msgstr "Si se selecciona, els matrimonis apareixeran al registre familiar."
 
+#: 
+msgid "Approximate size of diagram as PDF"
+msgstr "Mida aproximada del diagrama com a PDF"
+
+#: 
+msgid "This shows an estimated size of the PDF that will be generated from the diagram. This is only visible if Graphviz is installed on the server. If a setting is enabled to cause the PDF to be generated in the browser (for example photo shapes), this will not be accurate."
+msgstr "Això mostra una mida estimada del PDF que es generarà a partir del diagrama. Això només és visible si Graphviz està instal·lat al servidor. Si s'habilita una configuració per generar el PDF al navegador (per exemple, formes de fotos), això no serà exacte."
+
+#: 
+msgid "Married"
+msgstr "Casat"
+
+#: 
+msgid "Divorced"
+msgstr "Divorciat"
+
+#: 
+msgid "Show divorce date"
+msgstr "Mostra la data del divorci"
+
+#: 
+msgid "This also affects families in the diagram. If this option is enabled, you can click on family records to open the family webtrees page. Also see \\'Action when individual clicked\\' in the Browser render settings."
+msgstr "Això també afecta les famílies del diagrama. Si aquesta opció està activada, podeu fer clic a registres familiars per obrir la pàgina d'arbres web genealògics. Vegeu també [L'acció quan es fa clic a l'individu] a la configuració de renderització del navegador."
+
