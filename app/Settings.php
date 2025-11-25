@@ -453,7 +453,7 @@ class Settings
         // Output file formats
         $Graphviz['output']['svg']['label'] = "SVG"; #ESL!!! 20090213
         $Graphviz['output']['svg']['extension'] = "svg";
-        $Graphviz['output']['svg']['exec'] = $settings['graphviz_bin'] . " -Tsvg:cairo -o" . $settings['filename'] . ".svg " . $settings['filename'] . ".dot";
+        $Graphviz['output']['svg']['exec'] = $settings['graphviz_bin'] . " -Tsvg -o" . $settings['filename'] . ".svg " . $settings['filename'] . ".dot";
         $Graphviz['output']['svg']['cont_type'] = "image/svg+xml";
 
         $Graphviz['output']['dot']['label'] = "DOT"; #ESL!!! 20090213
