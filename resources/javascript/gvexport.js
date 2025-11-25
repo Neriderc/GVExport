@@ -368,7 +368,8 @@ function showModal(content) {
         '<span class="close" onclick="document.getElementById(' + "'modal'" + ').remove()">&times;</span>\n' +
         content + "\n" +
         "</div>"
-    document.body.appendChild(modal);
+    const renderContainer = document.getElementById("render-container")
+    renderContainer.appendChild(modal);
     // When the user clicks anywhere outside the modal, close it
     window.onclick = function(event) {
         if (event.target === modal) {
