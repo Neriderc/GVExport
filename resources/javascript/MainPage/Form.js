@@ -80,8 +80,7 @@ const Form = {
      * @returns {boolean}
      */
     mustUseClientGeneration() {
-        let optionsUnsupported = (document.getElementById('photo_shape')?.value !== '0' ||
-            (document.getElementById('output_type')?.value === 'svg' && document.getElementById('add_links')?.checked));
+        let optionsUnsupported = (document.getElementById('photo_shape')?.value !== '0');
         return !graphvizAvailable || optionsUnsupported;
     },
     /**
