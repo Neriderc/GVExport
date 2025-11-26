@@ -357,7 +357,7 @@ class GVExport extends AbstractModule implements ModuleCustomInterface, ModuleCh
         // Get out DOT file
         $out .= $dot->createDOTDump();
         if (isset($_POST["browser"]) && $_POST["browser"] == "true") {
-            $dot->messages[] = I18N::translate('Generated %s individuals and %s family records', sizeof($dot->individuals), sizeof($dot->families));
+            $dot->messages[] = I18N::translate('Generated diagram with %s individuals, %s family records, and %s images', sizeof($dot->individuals), sizeof($dot->families), substr_count($out, '<IMG'));
             $response['messages'] = $dot->messages;
             $response['enable_debug_mode'] = $dot->debug_string;
             $response['dot'] = $out;
@@ -370,7 +370,7 @@ class GVExport extends AbstractModule implements ModuleCustomInterface, ModuleCh
         } else {
             $r = $out;
         }
-        $settings->updateRecordCount($dot->settings['time_token'], sizeof($dot->individuals), sizeof($dot->families));
+        $settings->updateRecordCount($dot->settings['time_token'], sizeof($dot->individuals), sizeof($dot->families), substr_count($out, '<IMG'));
         return $r;
     }
 
