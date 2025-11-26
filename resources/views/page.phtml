@@ -140,7 +140,7 @@ $usegraphviz = $vars['graphviz_bin'] != "";
                     break;
                 default:
             }
-            if (output !== "dot") {
+            if (output !== "dot" && output !== "svg") {
                 e.preventDefault();
             }
         }
@@ -176,8 +176,9 @@ $usegraphviz = $vars['graphviz_bin'] != "";
                 if (obj['time_token'] === myToken) {
                     let indis = obj['indis'];
                     let fams = obj['fams'];
+                    let images = obj['images'];
                     if ('indis' in obj && 'fams' in obj) {
-                        UI.showToast(TRANSLATE['Downloaded diagram with %s individuals and %s families.'].replace('%s', indis).replace('%s', fams))
+                        UI.showToast(TRANSLATE['Downloaded diagram with %s individuals, %s families, and %s images.'].replace('%s', indis).replace('%s', fams).replace('%s', images))
                     }
                 } else {
                     retry(myToken, callCount);

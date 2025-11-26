@@ -914,12 +914,13 @@ class Settings
      * @param int $fams
      * @return void
      */
-    public function updateRecordCount(string $token, int $indis, int $fams)
+    public function updateRecordCount(string $token, int $indis, int $fams, int $images)
     {
         $data = json_encode([
             'time_token' => $token,
             'indis' => $indis,
-            'fams' => $fams
+            'fams' => $fams,
+            'images' => $images
         ]);
         $_SESSION[Settings::PREFERENCE_PREFIX . '_' . Settings::RECORD_COUNT_PREFERENCE_NAME] = $data;
     }
@@ -935,7 +936,8 @@ class Settings
         $defaults = [
             'time_token' => '',
             'indis' => -1,
-            'fams' => -1
+            'fams' => -1,
+            'images' => -1
         ];
 
         $records = $_SESSION[Settings::PREFERENCE_PREFIX . '_' . Settings::RECORD_COUNT_PREFERENCE_NAME] ?? null;
