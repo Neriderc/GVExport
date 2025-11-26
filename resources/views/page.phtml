@@ -140,7 +140,7 @@ $usegraphviz = $vars['graphviz_bin'] != "";
                     break;
                 default:
             }
-            if (output !== "dot") {
+            if (output !== "dot" && output !== "svg") {
                 e.preventDefault();
             }
         }
