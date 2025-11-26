@@ -447,10 +447,9 @@ const UI = {
         },
 
         /**
-         * Run when setting is changed for what to do when individual is clicked in diagram
+         * Save settings without refreshing diagram
          */
         clickOptionChanged() {
-            // Trigger background settings saving.
             isUserLoggedIn().then((loggedIn) => {
                 if (loggedIn) {
                     saveSettingsServer().then();

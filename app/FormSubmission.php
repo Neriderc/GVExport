@@ -234,6 +234,9 @@ class FormSubmission
         if (isset($vars['click_action_indi'])) {
             $settings['click_action_indi'] = I18N::digits($vars["click_action_indi"]);
         }
+        if (isset($vars['click_action_fam'])) {
+            $settings['click_action_fam'] = I18N::digits($vars["click_action_fam"]);
+        }
         $settings['enable_debug_mode'] = isset($vars['enable_debug_mode']);
         $settings['show_debug_panel'] = isset($vars['show_debug_panel']);
         if (isset($vars['admin_page'])) {

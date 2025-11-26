@@ -292,13 +292,15 @@ async function pageLoaded(Url) {
 
     // Change events
     const form = document.getElementById('gvexport');
-    let changeElems = form.querySelectorAll("input:not([type='file']):not(#save_settings_name):not(#stop_pid):not(#highlight_pid):not(#highlight_custom_json):not(#sharednote_col_add), select:not(#simple_settings_list):not(#pid):not(#highlight_pid):not(#stop_pid):not(#sharednote_col_add):not(#settings_sort_order):not(#click_action_indi)");
+    let changeElems = form.querySelectorAll("input:not([type='file']):not(#save_settings_name):not(#stop_pid):not(#highlight_pid):not(#highlight_custom_json):not(#sharednote_col_add), select:not(#simple_settings_list):not(#pid):not(#highlight_pid):not(#stop_pid):not(#sharednote_col_add):not(#settings_sort_order):not(#click_action_indi):not(#click_action_fam)");
     for (let i = 0; i < changeElems.length; i++) {
         changeElems[i].addEventListener("change", Form.handleFormChange);
     }
     let indiSelectEl = form.querySelector("#pid");
     indiSelectEl.addEventListener('change', Form.indiList.indiSelectChanged);
     let clickActionSelectEl = form.querySelector("#click_action_indi");
+    clickActionSelectEl.addEventListener('change', UI.tile.clickOptionChanged);
+    clickActionSelectEl = form.querySelector("#click_action_fam");
     clickActionSelectEl.addEventListener('change', UI.tile.clickOptionChanged);
     let stopIndiSelectEl = form.querySelector("#stop_pid");
     stopIndiSelectEl.addEventListener('change', stopIndiSelectChanged);

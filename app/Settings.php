@@ -552,6 +552,7 @@ class Settings
             // Include these in most things but not in cookie and not in saved settings if option
             // to only save diagram settings is enabled
             case 'click_action_indi':
+            case 'click_action_fam':
             case 'auto_update':
             case 'convert_photos_jpeg':
             case 'photo_quality':
