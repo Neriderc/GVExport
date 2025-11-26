@@ -18,4 +18,8 @@ use Fisharebest\Webtrees\I18N;
         <label for="click_action_indi"><?= I18N::translate('Action when individual clicked'); ?></label>
         <?= view('components/select', ['name' => 'vars[click_action_indi]', 'id' => 'click_action_indi', 'selected' => I18N::digits($vars['click_action_indi']), 'options' => MainPage::updateTranslations($settings["click_action_indi_options"])]) ?>
     </div>
+    <div class="col-auto vspace-10">
+        <label for="click_action_fam"><?= I18N::translate('Action when family clicked'); ?></label>
+        <?= view('components/select', ['name' => 'vars[click_action_fam]', 'id' => 'click_action_fam', 'selected' => I18N::digits($vars['click_action_fam']), 'options' => MainPage::updateTranslations($settings["click_action_fam_options"])]) ?>
+    </div>
 </div>

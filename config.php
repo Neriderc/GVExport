@@ -157,5 +157,6 @@ return array(
     'show_diagram_panel' => false, // If set to true, a "Saved diagrams" section is shown at the top, that lists settings saved using the feature to save multiple versions of settings
     'auto_update' => true, // If auto-updating browser render on change is enabled or not
     'click_action_indi' => 0, // When clicking an individual, which action to do. Default of 0 means open link to their user page
+    'click_action_fam' => 0, // When clicking a family, which action to do. Default of 0 means open link to the family page
     'url_xref_treatment' => 'default' // What to do with XREF provided by webtrees when loading page ('default', 'add', 'nothing', or 'overwrite'   )
 );
