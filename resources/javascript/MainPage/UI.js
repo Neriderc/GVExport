@@ -252,7 +252,7 @@ const UI = {
                                 }
                                 break;
                             case '50': // Show a menu for user to choose
-                                UI.tile.showNodeContextMenu(e, url, xref);
+                                UI.tile.showIndiContextMenu(e, url, xref);
                                 break;
                             case '70': // Add XREF to list of custom highlighted individuals
                                 UI.tile.highlightIndividual(xref);
@@ -262,19 +262,16 @@ const UI = {
                                 break;
                         }
                     } else {
+                        let parent = e.currentTarget.closest('g.node');
+                        let titleEl = parent.querySelector('title');
+                        let xref = titleEl.textContent;
                         // Is a family tile
                         switch (clickAction) {
                             case '0':
                                 window.open(url,'_blank');
                                 break;
                             case '10': // Add a child
-                                let parent = e.currentTarget.closest('g.node');
-                                let titleEl = parent.querySelector('title');
-                                let xref = titleEl.textContent;
-                                let urlDecoded = url.replaceAll('%2F', '/'); // Handle non-pretty URLs
-                                var pos = urlDecoded.lastIndexOf('/family/');
-                                let addChildUrl = urlDecoded.substring(0,pos) + "/add-child-to-family/" + xref + "/U";
-                                window.open(addChildUrl,'_blank');
+                                UI.tile.goToAddChild(url, xref);
                                 break;
                             case '20': // Show menu
                                 UI.tile.showFamilyContextMenu(e, url, xref);
@@ -291,18 +288,18 @@ const UI = {
         },
 
         /**
-         * Shows a context menu on a node in the diagram, e.g. show menu when individual clicked if this option enabled
+         * Shows a context menu on an individual in the diagram, e.g. show menu when individual clicked if this option enabled
          *
          * @param e The click event
-         * @param url The URL of the individual or family webtrees page
-         * @param xref The xref of the individual or family
+         * @param url The URL of the individual's webtrees page
+         * @param xref The xref of the individual
          */
-        showNodeContextMenu(e, url, xref) {
+        showIndiContextMenu(e, url, xref) {
             UI.contextMenu.clearContextMenu();
             const div = document.getElementById('context_list');
             div.setAttribute("data-xref",  xref);
             div.setAttribute("data-url",  url);
-            UI.contextMenu.addContextMenuOption('👤', 'Open individual\'s page', UI.tile.openIndividualsPageContextMenu);
+            UI.contextMenu.addContextMenuOption('👤', 'Open individual\'s page', UI.tile.openContextMenuUrl);
             UI.contextMenu.addContextMenuOption('➕', 'Add individual to list of starting individuals', UI.tile.addIndividualToStartingIndividualsContextMenu);
             UI.contextMenu.addContextMenuOption('🔄', 'Replace starting individuals with this individual', UI.tile.replaceStartingIndividualsContextMenu);
             UI.contextMenu.addContextMenuOption('🛑', 'Add this individual to the list of stopping individuals', UI.tile.addIndividualToStoppingIndividualsContextMenu);
@@ -312,12 +309,29 @@ const UI = {
         },
 
         /**
+         * Shows a context menu on a family in the diagram, e.g. show menu when family clicked if this option enabled
+         *
+         * @param e The click event
+         * @param url The URL of the individual or family webtrees page
+         * @param xref The xref of the family
+         */
+        showFamilyContextMenu(e, url, xref) {
+            UI.contextMenu.clearContextMenu();
+            const div = document.getElementById('context_list');
+            div.setAttribute("data-xref",  xref);
+            div.setAttribute("data-url",  url);
+            UI.contextMenu.addContextMenuOption('👥', 'Open family\'s page', UI.tile.openContextMenuUrl);
+            UI.contextMenu.addContextMenuOption('👶', 'Add a child', UI.tile.addChildContextMenu);
+            UI.contextMenu.enableContextMenu(window.innerWidth - e.clientX, e.clientY);
+        },
+
+        /**
          * Function for context menu item
          *
          * @param e Click event
          */
-        openIndividualsPageContextMenu(e) {
-            UI.tile.openIndividualsPage(e.currentTarget.parentElement.getAttribute('data-url'));
+        openContextMenuUrl(e) {
+            UI.tile.openUrlFromContextMenu(e.currentTarget.parentElement.getAttribute('data-url'));
         },
 
         /**
@@ -365,13 +379,33 @@ const UI = {
             UI.tile.highlightIndividual(e.currentTarget.parentElement.getAttribute('data-xref'));
         },
 
+        /**
+         * Function for context menu item
+         *
+         * @param e Click event
+         */
+        addChildContextMenu(e) {
+            let xref = e.currentTarget.parentElement.getAttribute('data-xref');
+            let url = e.currentTarget.parentElement.getAttribute('data-url');
+            UI.tile.goToAddChild(url, xref);
+        },
 
         /**
-         * Adds the individual to the starting individual list
+         * Go to the add a child webtrees page
+         */
+        goToAddChild(url, xref) {
+            let urlDecoded = url.replaceAll('%2F', '/'); // Handle non-pretty URLs
+            var pos = urlDecoded.lastIndexOf('/family/');
+            let addChildUrl = urlDecoded.substring(0,pos) + "/add-child-to-family/" + xref + "/U";
+            window.open(addChildUrl,'_blank');
+        },
+
+        /**
+         * Opens the given URL from a context menu
          *
          * @param xref
          */
-        openIndividualsPage(url) {
+        openUrlFromContextMenu(url) {
             if (url) {
                 window.open(url,'_blank');
                 UI.contextMenu.clearContextMenu();
@@ -654,6 +688,7 @@ const UI = {
             event.stopPropagation();
             event.preventDefault();
             UI.helpPanel.showHelpSidebar(event.target.getAttribute('data-help'));
+            UI.contextMenu.clearContextMenu();
         }
     },
 
@@ -706,6 +741,7 @@ const UI = {
             let div = document.createElement('div');
             div.setAttribute('id', 'context_list');
             div.style.display = 'block';
+            div.style.paddingRight = '20px';
             document.getElementById('context_menu').appendChild(div);
         },
 

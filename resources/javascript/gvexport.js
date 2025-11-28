@@ -344,7 +344,7 @@ async function pageLoaded(Url) {
 
     document.addEventListener("mousedown", function(event) {
         // Hide diagram context menu if clicked off a tile
-        if (event.target.closest('.settings_ellipsis_menu_item') == null && event.target.parent?.id !== 'menu-info') {
+        if (event.target.closest('.settings_ellipsis_menu_item') == null && event.target.parentElement?.id !== 'menu-info') {
             UI.contextMenu.clearContextMenu();
         }
     });
