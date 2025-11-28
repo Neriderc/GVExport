@@ -209,16 +209,18 @@ const UI = {
                 });
                 // Only trigger links if not dragging
                 linkElements[i].addEventListener('click', function (e) {
-                    let clickActionEl = document.getElementById('click_action_indi');
+                    e.preventDefault();
+                    let isIndividual = UI.tile.isNodeAnIndividual(linkElements[i]);
+                    let clickActionEl = isIndividual ? document.getElementById('click_action_indi') : document.getElementById('click_action_fam');
                     let clickAction = clickActionEl ? clickActionEl.value : DEFAULT_ACTION;
                     let url = linkElements[i].getAttribute('xlink:href');
 
                     // Do nothing if user is dragging
                     if (Data.getDistance(startx, starty, e.clientX, e.clientY) >= MIN_DRAG) {
-                        e.preventDefault();
-                    // Leave family links alone
-                    } else if (UI.tile.isNodeAnIndividual(linkElements[i])) {
-                        e.preventDefault();
+                        return;
+                    }
+
+                    if (isIndividual) {
                         let xref = UI.tile.getXrefFromUrl(url);
                         switch (clickAction) {
                             case '0':
@@ -259,6 +261,29 @@ const UI = {
                             default: // Unknown, so do nothing
                                 break;
                         }
+                    } else {
+                        // Is a family tile
+                        switch (clickAction) {
+                            case '0':
+                                window.open(url,'_blank');
+                                break;
+                            case '10': // Add a child
+                                let parent = e.currentTarget.closest('g.node');
+                                let titleEl = parent.querySelector('title');
+                                let xref = titleEl.textContent;
+                                let urlDecoded = url.replaceAll('%2F', '/'); // Handle non-pretty URLs
+                                var pos = urlDecoded.lastIndexOf('/family/');
+                                let addChildUrl = urlDecoded.substring(0,pos) + "/add-child-to-family/" + xref + "/U";
+                                window.open(addChildUrl,'_blank');
+                                break;
+                            case '20': // Show menu
+                                UI.tile.showFamilyContextMenu(e, url, xref);
+                                break;
+                            case '30': // Do nothing option
+                            default: // Unknown, so do nothing
+                                break;
+                        }
+
                     }
 
                 });
