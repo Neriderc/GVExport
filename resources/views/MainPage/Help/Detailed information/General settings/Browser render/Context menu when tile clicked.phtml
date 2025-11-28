@@ -17,15 +17,23 @@ $help = new Help();
 <?= view($module->name() . '::MainPage/Help/HelpHeader',['name' => $page_name]); ?>
 
 <p>
-    <?= I18N::translate('In the General Settings section, there is an option in the Browser options that lets you choose what happens when you click on an individual in the diagram. One of the options is to show a menu, and the menu has the following options:'); ?>
+    <?= I18N::translate('In the General Settings section, there are options in the Browser options that lets you choose what happens when you click on an individual or a family in the diagram. One of the options is to show a menu, and the menu has the following options:'); ?>
 </p>
+<h4><?= I18N::translate('Individual'); ?></h4>
 <ul>
-    <li><?= I18N::translate('Open individual\'s page'); ?> -<?= I18N::translate('When you click on an individual, the webtrees page for that individual will open in a new tab or window.'); ?></li>
+    <li><?= I18N::translate('Open individual\'s page'); ?> - <?= I18N::translate('Open the webtrees page for the individual in a new tab or window.'); ?></li>
     <li><?= I18N::translate('Add individual to list of starting individuals'); ?> - <?= I18N::translate('If this option is selected, clicking on an individual in the diagram will add them to the list of starting individuals.'); ?></li>
     <li><?= I18N::translate('Replace starting individuals with this individual'); ?> - <?= I18N::translate('If this option is selected, clicking on an individual in the diagram will add them to the list of starting individuals and remove all others from the list.'); ?></li>
     <li><?= I18N::translate('Add this individual to the list of stopping individuals'); ?> - <?= I18N::translate('If this option is selected, clicking on an individual in the diagram will add them to the list of stopping individuals.'); ?></li>
     <li><?= I18N::translate('Replace stopping individuals with this individual'); ?> - <?= I18N::translate('If this option is selected, clicking on an individual in the diagram will add them to the list of stopping individuals and remove all others from the list.'); ?></li>
     <li><?= I18N::translate('Add to list of individuals to highlight'); ?> - <?= I18N::translate('If this option is selected, clicking on an individual in the diagram will add them to the list of individuals with a coloured background for identification in the diagram. See the option "Show selected individuals in different colour", in the Colours section of the Tile design options.'); ?></li>
+</ul>
+</p>
+
+<h4><?= I18N::translate('Family'); ?></h4>
+<ul>
+    <li><?= I18N::translate('Open family\'s page'); ?> - <?= I18N::translate('Open the webtrees page for the family in a new tab or window.'); ?></li>
+    <li><?= I18N::translate('Add a child'); ?> - <?= I18N::translate('Open the webtrees page to add a child to the family in a new tab or window.'); ?></li>
 </ul>
 
 <p>
