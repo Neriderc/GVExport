@@ -228,7 +228,7 @@
     float: right;
 }
 
-.highlight_picker {
+.highlight_picker, .highlight_fams_picker {
     width: 32px;
     margin-top: 4px !important;
 }

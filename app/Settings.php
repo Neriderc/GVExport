@@ -91,6 +91,7 @@ class Settings
         $this->defaultSettings['sharednote_col_data'] = '[]';
         $this->defaultSettings['updated_date'] = '';
         $this->defaultSettings['highlight_custom_json'] = '{}';
+        $this->defaultSettings['highlight_custom_fams_json'] = '{}';
         $this->defaultSettings['limit_levels'] = ($tree ? $this->getLevelLimit($tree, $this->defaultSettings) : '0');
     }
 

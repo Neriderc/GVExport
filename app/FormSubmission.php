@@ -346,6 +346,13 @@ class FormSubmission
         if (isset($vars["highlight_custom_json"]) && $this->isValidJSON($vars["highlight_custom_json"])) {
             $settings['highlight_custom_json'] = $vars["highlight_custom_json"];
         }
+        $settings['highlight_custom_fams'] = isset($vars["highlight_custom_fams"]);
+        if (isset($vars["highlight_custom_fams_col"]) && $this->isValidColourHex($vars["highlight_custom_fams_col"])) {
+            $settings['highlight_custom_fams_col'] = $vars["highlight_custom_fams_col"];
+        }
+        if (isset($vars["highlight_custom_fams_json"]) && $this->isValidJSON($vars["highlight_custom_fams_json"])) {
+            $settings['highlight_custom_fams_json'] = $vars["highlight_custom_fams_json"];
+        }
         if (isset($vars["border_col"]) && $this->isValidColourHex($vars["border_col"])) {
             $settings['border_col'] = $vars["border_col"];
         }

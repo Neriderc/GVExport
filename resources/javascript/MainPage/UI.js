@@ -67,11 +67,11 @@ const UI = {
      * @param zoom Set zoom level to this number
      * @returns {boolean}
      */
-    scrollToRecord(xref, scrollX = null, scrollY = null, zoom = null) {
+    scrollToRecord(xref, type = 'indi', scrollX = null, scrollY = null, zoom = null) {
         // Why do we multiply the scale by 1 and 1/3?
         let zoomBase = (zoom ? zoom : panzoomInst.getTransform().scale) * (1 + 1 / 3);
         let zoom_value = zoomBase * parseFloat(document.getElementById("dpi").value) / 72;
-        let [found, x, y] = UI.tile.getElementPositionFromXref(xref);
+        let [found, x, y] = UI.tile.getElementPositionFromXref(xref, type);
         if (!found) {
             // The xref isn't in the diagram
             return false;
@@ -97,7 +97,6 @@ const UI = {
     calculateDiagramSize: {
         getRenderWidth() {
             let svgEl = document.getElementById("rendering").querySelector("svg");
-            console.log(svgEl.getAttribute("width"));
             return svgEl.getAttribute("width").split('pt')[0];
         },
 
@@ -468,7 +467,7 @@ const UI = {
         },
 
         /**
-         * Adds XREF to custom highlight list
+         * Adds individual's XREF to custom highlight list
          *
          * @param xref
          */
@@ -476,6 +475,20 @@ const UI = {
             if (xref) {
                 this.addIndiToCustomHighlightList(xref);
                 Form.handleFormChange(xref);
+                UI.contextMenu.clearContextMenu();
+            }
+        },
+
+
+        /**
+         * Adds family XREF to custom highlight list
+         *
+         * @param xref
+         */
+        highlightFamily(xref) {
+            if (xref) {
+                this.addFamToCustomHighlightList(xref);
+                Form.handleFormChange();
                 UI.contextMenu.clearContextMenu();
             }
         },
@@ -506,6 +519,31 @@ const UI = {
         },
 
         /**
+         *  Adds the XREF to the list of families to highlight
+         *
+         * @param xref xref of family to add
+         * @param colour colour to use for this family (if not default)
+         */
+        addFamToCustomHighlightList(xref, colour = null) {
+            let listEl = document.getElementById('highlight_custom_fams_json');
+            let list = listEl.value.trim();
+            if (list.trim() === '') list = '{}';
+            let data = JSON.parse(list);
+            if (xref !== '' && !data[xref]) {
+                if (colour) {
+                    data[xref] = colour;
+                } else {
+                    let el = document.getElementById('highlight_custom_fams_col');
+                    if (el) {
+                        data[xref] = el.value;
+                    }
+                }
+            }
+            listEl.value = JSON.stringify(data);
+            Form.famList.refreshFamsFromJson('highlight_custom_fams_json', 'highlight_fams_list');
+        },
+
+        /**
          * Save settings without refreshing diagram
          */
         clickOptionChanged() {
@@ -519,12 +557,28 @@ const UI = {
         },
 
         /**
+         * Calls the right function to get the position of the relevant element
+         * 
+         * @param {*} xref xref of entity (individual or family)
+         * @param {*} type the type of the entity (individual or family)
+         */
+
+        getElementPositionFromXref(xref, type) {
+            if (type === 'indi') {
+                return this.getPolygonPositionFromXref(xref);
+            } else if (type === 'fam') {
+                return this.getEllipsePositionFromXref(xref);
+            }
+            return false;
+        },
+
+        /**
          * Finds the individual's tile from the provided XREF, and returns position information
          *
          * @param xref The XREF of the individual we are looking for
          * @returns {boolean[]|(boolean|string|number)[]} An array [true if found, x position, y position]
          */
-        getElementPositionFromXref(xref) {
+        getPolygonPositionFromXref(xref) {
             const rendering = document.getElementById('rendering');
             const svg = rendering.getElementsByTagName('svg')[0].cloneNode(true);
             let titles = svg.getElementsByTagName('title');
@@ -569,6 +623,47 @@ const UI = {
                             // Get the average of the largest and smallest, so we can position the element in the middle
                             x = (minX + maxX) / 2;
                             y = (minY + maxY) / 2;
+
+                        } else {
+                            x = group.getElementsByTagName('text')[0].getAttribute('x');
+                            y = group.getElementsByTagName('text')[0].getAttribute('y')
+                        }
+                        return [true, x, y];
+                    }
+                }
+            }
+            return [false, null, null];
+        },
+
+
+    /**
+         * Finds the family's tile from the provided XREF, and returns position information
+         *
+         * @param xref The XREF of the family we are looking for
+         * @returns {boolean[]|(boolean|string|number)[]} An array [true if found, x position, y position]
+         */
+        getEllipsePositionFromXref(xref) {
+            const rendering = document.getElementById('rendering');
+            const svg = rendering.getElementsByTagName('svg')[0].cloneNode(true);
+            let titles = svg.getElementsByTagName('title');
+            for (let i=0; i<titles.length; i++) {
+                let xrefs = titles[i].innerHTML.split("_");
+                for (let j=0; j<xrefs.length; j++) {
+                    if (xrefs[j] === xref) {
+                        let minX = null;
+                        let minY = null;
+                        let maxX = null;
+                        let maxY = null;
+                        let x = null;
+                        let y = null;
+                        const group = titles[i].parentElement;
+                        // We need to locate the element within the SVG. We use "ellipse" here because it is the
+                        // only element that will always exist and that also has position information
+                        // (other elements like text, image, etc. can be disabled by the user)
+                        const list = group.getElementsByTagName('ellipse');
+                        if (list.length !== 0) {
+                            x = list[0].getAttribute('cx');
+                            y = list[0].getAttribute('cy');
 
                         } else {
                             x = group.getElementsByTagName('text')[0].getAttribute('x');

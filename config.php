@@ -139,6 +139,8 @@ return array(
     'indi_background_age_high' => 100, // For background colour option for age, this is the age for the high colour - this age and anything older gets this colour
     'highlight_custom_indis' => '', // Whether to highlight a custom list of individuals
     'highlight_custom_col' => '#FFFDC3', // The default colour to highlight the custom highlighted individuals
+    'highlight_custom_fams' => '', // Whether to highlight a custom list of families
+    'highlight_custom_fams_col' => '#FFFDC3', // The default colour to highlight the custom highlighted families
 	'border_col' => '#606060', // Border colour (in UI this is Family border colour, but by default the individual border is the same as family)
 	'indi_border_col' => '#606060', // Border colour of individuals
 	'birth_prefix' => '*', // Text shown on chart before the birthdate - alternatively could use '↑'

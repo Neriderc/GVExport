@@ -30,6 +30,7 @@ $usegraphviz = $vars['graphviz_bin'] != "";
     let autoUpdate = <?= $vars["auto_update"] ? 'true' : 'false' ?>;
     let debug_string = "";
     let TOMSELECT_URL = "";
+    let TOMSELECT_FAM_URL = "";
     let download_file_name = "<?= e($vars['filename']); ?>";
     let url_xref_treatment = "<?= e($vars['url_xref_treatment']); ?>";
     let shared_note_default = "<?= $vars['sharednote_col_default']; ?>";
@@ -331,13 +332,13 @@ $usegraphviz = $vars['graphviz_bin'] != "";
             }
             // scroll to the nominated individual
             if (xref) {
-                UI.scrollToRecord(xref, scrollX, scrollY, zoom);
+                UI.scrollToRecord(xref, 'indi', scrollX, scrollY, zoom);
             } else {
             // Otherwise scroll to last individual on starting individuals list
                 let indiList = document.getElementById('xref_list').value.split(",");
                 for (let i = indiList.length - 1; i >= 0; i--) {
                     if (indiList[i].trim() !== "") {
-                        UI.scrollToRecord(indiList[i].trim());
+                        UI.scrollToRecord(indiList[i].trim(), 'indi');
                         break;
                     }
                 }
