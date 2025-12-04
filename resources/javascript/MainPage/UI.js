@@ -35,9 +35,12 @@ const UI = {
 
         const toastParent = document.getElementById("toast-container");
         if (toastParent !== null) {
+
+            const existing = [...toastParent.querySelectorAll(".toast-message")].some(t => t.innerText === message);
+            if (existing) return;
+
             const toast = document.createElement("div");
-            toast.setAttribute("id", "toast");
-            toast.setAttribute("class", "pointer");
+            toast.setAttribute("class", "toast-message pointer");
             if (message.substring(0, ERROR_CHAR.length) === ERROR_CHAR) {
                 toast.className += " error";
                 message = message.substring(ERROR_CHAR.length);

@@ -325,7 +325,7 @@ $usegraphviz = $vars['graphviz_bin'] != "";
                     return false; // tells the library to not preventDefault.
                 }
             });
-            if (messages !== "") {
+            if (messages !== "" && scrollX === null) {
                 for (let i = 0; i < messages.length; i++) {
                     UI.showToast(messages[i]);
                 }
