@@ -197,7 +197,7 @@ $usegraphviz = $vars['graphviz_bin'] != "";
         }
     }
 
-    function updateRender(scrollX = null, scrollY = null, zoom = null, xref = null) {
+    function updateRender(scrollX = null, scrollY = null, zoom = null, xref = null, xrefType = 'indi') {
         // Don't overwrite browser settings with default settings
         if (!firstRender) {
             // Update settings in browser storage if logged out
@@ -332,7 +332,7 @@ $usegraphviz = $vars['graphviz_bin'] != "";
             }
             // scroll to the nominated individual
             if (xref) {
-                UI.scrollToRecord(xref, 'indi', scrollX, scrollY, zoom);
+                UI.scrollToRecord(xref, xrefType, scrollX, scrollY, zoom);
             } else {
             // Otherwise scroll to last individual on starting individuals list
                 let indiList = document.getElementById('xref_list').value.split(",");

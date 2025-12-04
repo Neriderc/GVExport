@@ -272,10 +272,13 @@ const UI = {
                             case '10': // Add a child
                                 UI.tile.goToAddChild(url, xref);
                                 break;
-                            case '20': // Show menu
+                            case '20': // Add family to list of custom highlighted families
+                                UI.tile.highlightFamily(xref);
+                                break;
+                            case '30': // Show menu
                                 UI.tile.showFamilyContextMenu(e, url, xref);
                                 break;
-                            case '30': // Do nothing option
+                            case '40': // Do nothing option
                             default: // Unknown, so do nothing
                                 break;
                         }
@@ -321,6 +324,7 @@ const UI = {
             div.setAttribute("data-url",  url);
             UI.contextMenu.addContextMenuOption('👥', 'Open family\'s page', UI.tile.openContextMenuUrl);
             UI.contextMenu.addContextMenuOption('👶', 'Add a child', UI.tile.addChildContextMenu);
+            UI.contextMenu.addContextMenuOption('🖍️', 'Add to list of families to highlight', UI.tile.highlightFamilyContextMenu);
             UI.contextMenu.enableContextMenu(window.innerWidth - e.clientX, e.clientY);
         },
 
@@ -376,6 +380,15 @@ const UI = {
          */
         highlightIndividualContextMenu(e) {
             UI.tile.highlightIndividual(e.currentTarget.parentElement.getAttribute('data-xref'));
+        },
+
+        /**
+         * Function for context menu item
+         *
+         * @param e Click event
+         */
+        highlightFamilyContextMenu(e) {
+            UI.tile.highlightFamily(e.currentTarget.parentElement.getAttribute('data-xref'));
         },
 
         /**
@@ -488,7 +501,7 @@ const UI = {
         highlightFamily(xref) {
             if (xref) {
                 this.addFamToCustomHighlightList(xref);
-                Form.handleFormChange();
+                Form.handleFormChange(xref, 'fam');
                 UI.contextMenu.clearContextMenu();
             }
         },
@@ -579,6 +592,7 @@ const UI = {
          * @returns {boolean[]|(boolean|string|number)[]} An array [true if found, x position, y position]
          */
         getPolygonPositionFromXref(xref) {
+
             const rendering = document.getElementById('rendering');
             const svg = rendering.getElementsByTagName('svg')[0].cloneNode(true);
             let titles = svg.getElementsByTagName('title');
@@ -625,8 +639,14 @@ const UI = {
                             y = (minY + maxY) / 2;
 
                         } else {
-                            x = group.getElementsByTagName('text')[0].getAttribute('x');
-                            y = group.getElementsByTagName('text')[0].getAttribute('y')
+                            const textList = group.getElementsByTagName('text');
+                            if (textList.length !== 0) {
+                                x = textList[0].getAttribute('x');
+                                y = textList[0].getAttribute('y');
+                            } else {
+                                console.warn("No polygon or text found for XREF:", xref, group);
+                                return [false, null, null];
+                            }
                         }
                         return [true, x, y];
                     }
@@ -636,7 +656,7 @@ const UI = {
         },
 
 
-    /**
+        /**
          * Finds the family's tile from the provided XREF, and returns position information
          *
          * @param xref The XREF of the family we are looking for
@@ -650,10 +670,6 @@ const UI = {
                 let xrefs = titles[i].innerHTML.split("_");
                 for (let j=0; j<xrefs.length; j++) {
                     if (xrefs[j] === xref) {
-                        let minX = null;
-                        let minY = null;
-                        let maxX = null;
-                        let maxY = null;
                         let x = null;
                         let y = null;
                         const group = titles[i].parentElement;
@@ -664,7 +680,6 @@ const UI = {
                         if (list.length !== 0) {
                             x = list[0].getAttribute('cx');
                             y = list[0].getAttribute('cy');
-
                         } else {
                             x = group.getElementsByTagName('text')[0].getAttribute('x');
                             y = group.getElementsByTagName('text')[0].getAttribute('y')
