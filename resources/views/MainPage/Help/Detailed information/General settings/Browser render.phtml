@@ -35,9 +35,18 @@ $help = new Help();
     <li><?= I18N::translate('Show menu'); ?> - <?= I18N::translate('If this option is chosen, when an individual is clicked on in the diagram, a menu will be shown with the above items to choose from.'); ?></li>
     <li><?= I18N::translate('Do nothing'); ?> - <?= I18N::translate('When an individual is clicked on in the diagram, nothing will happen.'); ?></li>
 </ul>
+
+<h4><?= I18N::translate('Action when family clicked'); ?></h4>
 <p>
-    <?= I18N::translate('Note that there is currently no option for what to do when a family record is clicked on in the diagram. However, the option to add URLs to individuals and families will also affect families in the browser diagram. That is, if you click a family then if this option is enabled, the family page will open in webtrees.'); ?>
+    <?= I18N::translate('This option lets you choose what happens when you click on a family in the diagram.'); ?>
 </p>
+<ul>
+    <li><?= I18N::translate('Open family page'); ?> - <?= I18N::translate('This is the default option.'); ?> <?= I18N::translate('When you click on a family, the webtrees page for that family will open in a new tab or window.'); ?></li>
+    <li><?= I18N::translate('Add to list of families to highlight'); ?> - <?= I18N::translate('If this option is selected, clicking on a family in the diagram will add them to the list of families highlighted with a coloured background for identification in the diagram. See the option "Show selected families in different colour", in the Colours section of the Tile design options.'); ?></li>
+    <li><?= I18N::translate('Show menu'); ?> - <?= I18N::translate('If this option is chosen, when a family is clicked on in the diagram, a menu will be shown with the above items to choose from.'); ?></li>
+    <li><?= I18N::translate('Do nothing'); ?> - <?= I18N::translate('When a family is clicked on in the diagram, nothing will happen.'); ?></li>
+</ul>
+
 <p>
     <?= I18N::translate('Related links'); ?>:
 </p>
