@@ -325,7 +325,7 @@ const UI = {
             const div = document.getElementById('context_list');
             div.setAttribute("data-xref",  xref);
             div.setAttribute("data-url",  url);
-            UI.contextMenu.addContextMenuOption('👥', 'Open family\'s page', UI.tile.openContextMenuUrl);
+            UI.contextMenu.addContextMenuOption('👥', 'Open family page', UI.tile.openContextMenuUrl);
             UI.contextMenu.addContextMenuOption('👶', 'Add a child', UI.tile.addChildContextMenu);
             UI.contextMenu.addContextMenuOption('🖍️', 'Add to list of families to highlight', UI.tile.highlightFamilyContextMenu);
             UI.contextMenu.enableContextMenu(window.innerWidth - e.clientX, e.clientY);
