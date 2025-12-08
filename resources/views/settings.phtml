@@ -16,7 +16,7 @@ use Fisharebest\Webtrees\Tree;
 $settingsObj = new Settings();
 $settings = $settingsObj->getDefaultSettings();
 $usegraphviz = $vars['graphviz_bin'] != "";
-$regex_symbols = '_.*+()^∞%$#@!†-↑↓';
+$regex_symbols = '_.*+\(\)^∞%$#@!†\-↑↓';
 $prefix_regex = '^[A-Za-z0-9 ' . $regex_symbols . ']*$';
 ?>
 
