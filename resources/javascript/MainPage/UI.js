@@ -259,6 +259,12 @@ const UI = {
                             case '70': // Add XREF to list of custom highlighted individuals
                                 UI.tile.highlightIndividual(xref);
                                 break;
+                            case '80': // Add a partner
+                                UI.tile.goToAddPartner(url, xref);
+                                break;
+                            case '90': // Add a parent
+                                UI.tile.goToAddParent(url, xref);
+                                break;
                             case '60': // Do nothing option
                             default: // Unknown, so do nothing
                                 break;
@@ -310,6 +316,8 @@ const UI = {
             UI.contextMenu.addContextMenuOption('🛑', 'Add this individual to the list of stopping individuals', UI.tile.addIndividualToStoppingIndividualsContextMenu);
             UI.contextMenu.addContextMenuOption('🚫', 'Replace stopping individuals with this individual', UI.tile.replaceStoppingIndividualsContextMenu);
             UI.contextMenu.addContextMenuOption('🖍️', 'Add to list of individuals to highlight', UI.tile.highlightIndividualContextMenu);
+            UI.contextMenu.addContextMenuOption('❤️', 'Add a partner', UI.tile.addPartnerContextMenu);
+            UI.contextMenu.addContextMenuOption('🧑‍🧒', 'Add a parent', UI.tile.addParentContextMenu);
             UI.contextMenu.enableContextMenu(window.innerWidth - e.clientX, e.clientY);
         },
 
@@ -390,6 +398,28 @@ const UI = {
          *
          * @param e Click event
          */
+        addPartnerContextMenu(e) {
+            let xref = e.currentTarget.parentElement.getAttribute('data-xref');
+            let url = e.currentTarget.parentElement.getAttribute('data-url');
+            UI.tile.goToAddPartner(url, xref);
+        },
+
+        /**
+         * Function for context menu item
+         *
+         * @param e Click event
+         */
+        addParentContextMenu(e) {
+            let xref = e.currentTarget.parentElement.getAttribute('data-xref');
+            let url = e.currentTarget.parentElement.getAttribute('data-url');
+            UI.tile.goToAddParent(url, xref);
+        },
+
+        /**
+         * Function for context menu item
+         *
+         * @param e Click event
+         */
         highlightFamilyContextMenu(e) {
             UI.tile.highlightFamily(e.currentTarget.parentElement.getAttribute('data-xref'));
         },
@@ -411,8 +441,28 @@ const UI = {
         goToAddChild(url, xref) {
             let urlDecoded = url.replaceAll('%2F', '/'); // Handle non-pretty URLs
             var pos = urlDecoded.lastIndexOf('/family/');
-            let addChildUrl = urlDecoded.substring(0,pos) + "/add-child-to-family/" + xref + "/U";
-            window.open(addChildUrl,'_blank');
+            let addUrl = urlDecoded.substring(0,pos) + "/add-child-to-family/" + xref + "/U";
+            window.open(addUrl,'_blank');
+        },
+
+        /**
+         * Go to the add a spouse webtrees page
+         */
+        goToAddPartner(url, xref) {
+            let urlDecoded = url.replaceAll('%2F', '/'); // Handle non-pretty URLs
+            var pos = urlDecoded.lastIndexOf('/individual/');
+            let addUrl = urlDecoded.substring(0,pos) + "/add-spouse-to-individual/" + xref;
+            window.open(addUrl,'_blank');
+        },
+
+        /**
+         * Go to the add a parent webtrees page
+         */
+        goToAddParent(url, xref) {
+            let urlDecoded = url.replaceAll('%2F', '/'); // Handle non-pretty URLs
+            var pos = urlDecoded.lastIndexOf('/individual/');
+            let addUrl = urlDecoded.substring(0,pos) + "/add-parent-to-individual/" + xref + "/U";
+            window.open(addUrl,'_blank');
         },
 
         /**
