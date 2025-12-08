@@ -4,17 +4,25 @@
  * @type {{}}
  */
 const Form = {
+    
+    /**
+     * Form change event
+     */
+
+    handleFormChangeEvent(e) {
+        Form.handleFormChange();
+    },
 
     /**
      * Triggers on form change, to update diagram if autoUpdate enabled
      *
      * @param xref xref of tile we want to keep in the same position
      */
-    handleFormChange(xref = null) {
+    handleFormChange(xref = null, xrefType = 'indi') {
     if (autoUpdate) {
             // If xref has been nominated, calculate the position on screen, so we can keep it in the same place
             if (xref) {
-                let [found, x, y] = UI.tile.getElementPositionFromXref(xref);
+                let [found, x, y] = UI.tile.getElementPositionFromXref(xref, xrefType);
                 if (found) {
                     let scale = panzoomInst.getTransform().scale;
                     // Why is this 1 1/3 number needed?
@@ -23,7 +31,7 @@ const Form = {
                     const rendering = document.getElementById('rendering');
                     const svg = rendering.getElementsByTagName('svg')[0];
                     let transform = panzoomInst.getTransform();
-                    updateRender(x*zoom_value + transform.x, parseFloat(svg.getAttribute('height'))*zoomBase + y*zoom_value + transform.y, transform.scale, xref);
+                    updateRender(x*zoom_value + transform.x, parseFloat(svg.getAttribute('height'))*zoomBase + y*zoom_value + transform.y, transform.scale, xref, xrefType);
                 } else {
                     updateRender();
                 }
@@ -539,7 +547,7 @@ const Form = {
                 const newListItem = document.createElement("div");
                 newListItem.className = "indi_list_item";
                 newListItem.setAttribute("data-xref", xref);
-                newListItem.setAttribute("onclick", "UI.scrollToRecord('" + xref + "')");
+                newListItem.setAttribute("onclick", "UI.scrollToRecord('" + xref + "', 'indi')");
                 const listItemIndi = document.createElement("span");
                 listItemIndi.innerHTML = contents + "<div class=\"saved-settings-ellipsis\" onclick=\"Form.indiList.removeItem(event, this.parentElement.parentElement" + ", '" + otherXrefId + "')\"><a class='pointer'>×</a></div>";
                 newListItem.appendChild(listItemIndi);
@@ -579,7 +587,7 @@ const Form = {
                 mainPage.Url.changeURLXref(list.value.split(',')[0].trim());
             }
             updateClearAll();
-            if (xrefListId === 'highlight_custom_json') {
+            if (xrefListId === 'highlight_custom_json' || xrefListId === 'highlight_custom_fams_json') {
                 let data = JSON.parse(list.value);
                 delete data[xref];
                 list.value = JSON.stringify(data);
@@ -674,6 +682,139 @@ const Form = {
             updateClearAll();
             if (autoUpdate && update) updateRender();
         }
+    },
+
+    /**
+     * Settings related to lists of families
+     */
+
+    famList: {
+
+        /**
+         * Triggered by person select being changed for highlighted families
+         */
+        highlightFamSelectChanged() {
+            let xref = document.getElementById('highlight_fid').value.trim();
+            if (xref !== "") {
+                let colour = document.getElementById('highlight_custom_fams_col').value;
+                UI.tile.addFamToCustomHighlightList(xref, colour);
+                Form.clearSelect('highlight_fid');
+            }
+            if (autoUpdate) {
+                updateRender();
+            }
+        },
+
+
+        /**
+         * Updates the list of families to add the details of the family
+         *
+         * @param url The webtrees URL that runs the Tom-select search that we use to pull the details
+         * @param xref The webtrees ID of the family
+         * @param list  the ID of the list element that we are updating
+         * @param colour For some, we want to have a colour select box included. This is the colour for the box.
+         * @returns {Promise<void>}
+         */
+        loadFamilyDetails(url, xref, list, colour = '') {
+            return fetch(url + xref.trim()).then(async (response) => {
+                const data = await response.json();
+
+                let contents;
+                let otherXrefId = 'highlight_custom_fams_json';
+
+                if (data["data"].length !== 0) {
+                    for (let i = 0; i < data['data'].length; i++) {
+                        if (xref.toUpperCase() === data['data'][i].value.toUpperCase()) {
+                            contents = data["data"][i]["text"];
+                            // Fix case if mismatched
+                            if (xref !== data['data'][i].value) {
+                                let listEl = document.getElementById(otherXrefId);
+                                let famList = listEl.value.split(',');
+                                for (let j = famList.length - 1; j >= 0; j--) {
+                                    if (famList[j].trim() === xref.trim()) {
+                                        famList[j] = data["data"][i].value;
+                                        break;
+                                    }
+                                }
+                                listEl.value = famList.join(',');
+                                setTimeout(() => {
+                                    Form.indiList.refreshFamsFromJson('highlight_custom_json', 'highlight_list');
+                                }, 100);
+                                Form.handleFormChange();
+                            }
+                        }
+                    }
+                } else {
+                    contents = xref;
+                }
+                const listElement = document.getElementById(list);
+                const newListItem = document.createElement("div");
+                newListItem.className = "indi_list_item";
+                newListItem.setAttribute("data-xref", xref);
+                newListItem.setAttribute("onclick", "UI.scrollToRecord('" + xref + "', 'fam')");
+                const listItem = document.createElement("span");
+                listItem.innerHTML = contents + "<div class=\"saved-settings-ellipsis\" onclick=\"Form.indiList.removeItem(event, this.parentElement.parentElement" + ", '" + otherXrefId + "')\"><a class='pointer'>×</a></div>";
+                newListItem.appendChild(listItem);
+                if (colour !== '') {
+                    listItem.setAttribute('class', 'list-item-highlight');
+                    let picker = `<input type="color" class="highlight_fams_picker" data-xref="${xref}" value="${colour}">`;
+                    newListItem.innerHTML = newListItem.innerHTML + picker;
+                    newListItem.querySelector('.highlight_fams_picker')?.addEventListener('change', Form.famList.updateFamsHighlightColour);
+                } else {
+                    listItemIndi.setAttribute('class', 'list_item_content');
+                }
+                // Multiple promises can be for the same xref - don't add if a duplicate
+                let item = listElement.querySelector(`[data-xref="${xref}"]`);
+                if (item == null) {
+                    listElement.appendChild(newListItem);
+                } else {
+                    newListItem.remove();
+                }
+                updateClearAll();
+            })
+        },
+
+
+        /**
+         * Load a list of families into element famListId using JSON data
+         *
+         * @param {string} jsonId
+         * @param {string} famListId
+         */
+        refreshFamsFromJson(jsonId, famListId) {
+            let jsonEl = document.getElementById(jsonId);
+            let listEl = document.getElementById(famListId);
+            document.getElementById(famListId).innerHTML = "";
+            if (jsonEl.value === '' || jsonEl.value === '[]') jsonEl.value = '{}';
+            try {
+                let data = JSON.parse(jsonEl.value);
+                for (let key in data) {
+                    Form.famList.loadFamilyDetails(TOMSELECT_FAM_URL, key, famListId, data[key]);
+                }
+            } catch (error) {
+                UI.showToast(ERROR_CHAR + error);
+            }
+        },
+
+
+        /** Triggered by change of highlight colour picker, updates the JSON that stores the colour
+         * 
+         * @param {Event} e
+         */
+        updateFamsHighlightColour(e) {
+            let xref = e.target.getAttribute('data-xref');
+            let newColour = e.target.value;
+            let list = document.getElementById('highlight_custom_fams_json');
+            let data = JSON.parse(list.value);
+            data[xref] = newColour;
+            list.value = JSON.stringify(data);
+
+            if (autoUpdate) {
+                updateRender();
+            }
+        },
+
+
     },
 
     settings: {
@@ -786,6 +927,7 @@ const Form = {
             Form.showHideMatchCheckbox('show_divorce_date', 'divorce_date_subgroup');
             Form.showHideMatchCheckbox('show_burial_date', 'burial_date_subgroup');
             Form.showHideMatchCheckbox('highlight_custom_indis', 'highlight_custom_option');
+            Form.showHideMatchCheckbox('highlight_custom_fams', 'highlight_custom_fams_option');
             Form.showHideMatchCheckbox('show_marriage_type', 'marriage_type_subgroup');
             Form.showHideMatchCheckbox('show_divorces', 'divorces_subgroup');
             Form.showHideMatchCheckbox('show_marriages', 'marriages_subgroup');

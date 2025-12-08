@@ -79,7 +79,8 @@ class Settings
         $this->defaultSettings['stripe_col_type_options'] = [self::OPTION_STRIPE_NONE => 'No stripe', self::OPTION_STRIPE_SEX_COLOUR => 'Based on individual&apos;s sex', self::OPTION_STRIPE_VITAL_COLOUR => 'Based on vital status', self::OPTION_STRIPE_AGE_COLOUR => 'Based on age'];
         $this->defaultSettings['border_col_type_options'] = [self::OPTION_BORDER_CUSTOM_COLOUR => 'Custom', self::OPTION_BORDER_SEX_COLOUR => 'Based on individual&apos;s sex', self::OPTION_BORDER_FAMILY => 'Same as family border', self::OPTION_BORDER_VITAL_COLOUR => 'Based on vital status', self::OPTION_BORDER_AGE_COLOUR => 'Based on age'];
         $this->defaultSettings['settings_sort_order_options'] = [0 => 'Oldest first', 10 => 'Newest first', 20 => 'Alphabetical order', 30 => 'Reverse alphabetical order'];
-        $this->defaultSettings['click_action_indi_options'] = [0 => 'Open individual\'s page', 10 => 'Add individual to list of starting individuals', 20 => 'Replace starting individuals with this individual', 30 => 'Add this individual to the list of stopping individuals', 40 => 'Replace stopping individuals with this individual', 70 => 'Add to list of individuals to highlight', 50 => 'Show menu', 60 => 'Do nothing'];
+        $this->defaultSettings['click_action_indi_options'] = [0 => 'Open individual\'s page', 10 => 'Add individual to list of starting individuals', 20 => 'Replace starting individuals with this individual', 30 => 'Add this individual to the list of stopping individuals', 40 => 'Replace stopping individuals with this individual', 70 => 'Add to list of individuals to highlight', 80 => 'Add a partner', 90 => 'Add a parent', 50 => 'Show menu', 60 => 'Do nothing'];
+        $this->defaultSettings['click_action_fam_options'] = [0 => 'Open family page', 10 => 'Add a child', 20 => 'Add to list of families to highlight', 30 => 'Show menu',40 => 'Do nothing'];
         $this->defaultSettings['arrow_style_options'] = [0 => 'Solid', 10 => 'Dotted', 20 => 'Dashed', 30 => 'Bold', 40 => 'Tapered', 50 => 'Random', 60 => 'None'];
         $this->defaultSettings['arrow_colour_type_options'] = [Settings::OPTION_ARROW_CUSTOM_COLOUR => 'Custom', Settings::OPTION_ARROW_RANDOM_COLOUR => 'Random'];
         $this->defaultSettings['countries'] = $this->getCountryAbbreviations();
@@ -90,6 +91,7 @@ class Settings
         $this->defaultSettings['sharednote_col_data'] = '[]';
         $this->defaultSettings['updated_date'] = '';
         $this->defaultSettings['highlight_custom_json'] = '{}';
+        $this->defaultSettings['highlight_custom_fams_json'] = '{}';
         $this->defaultSettings['limit_levels'] = ($tree ? $this->getLevelLimit($tree, $this->defaultSettings) : '0');
     }
 
@@ -525,6 +527,7 @@ class Settings
             case 'border_col_type_options':
             case 'settings_sort_order_options':
             case 'click_action_indi_options':
+            case 'click_action_fam_options':
             case 'arrow_style_options':
             case 'arrow_colour_type_options':
             case 'limit_levels':
@@ -550,6 +553,7 @@ class Settings
             // Include these in most things but not in cookie and not in saved settings if option
             // to only save diagram settings is enabled
             case 'click_action_indi':
+            case 'click_action_fam':
             case 'auto_update':
             case 'convert_photos_jpeg':
             case 'photo_quality':
@@ -949,5 +953,22 @@ class Settings
         }
 
         return json_encode($defaults);
+    }
+
+    /**
+     * Check if key is found in json
+     *
+     * @param string $json the json as a string
+     * @param string $key the key to look for
+     * @return bool
+     */
+    static function isKeyInJson(string $json, string $key): bool
+    {
+        try {
+            $data = json_decode($json, true);
+        } catch (Exception $e) {
+            return false;
+        }
+        return isset($data[$key]);
     }
 }

@@ -141,7 +141,7 @@ function removeSearchOptionFromList(xref, listId) {
     }
 }
 
-// Refresh the list of starting and stopping individuals
+// Refresh the lists of people
 function refreshIndisFromXREFS(onchange) {
     // If triggered from onchange event, only proceed if auto-update enabled
     if (!onchange || autoUpdate) {
@@ -150,6 +150,7 @@ function refreshIndisFromXREFS(onchange) {
         document.getElementById('stop_indi_list').innerHTML = "";
         loadXrefList(TOMSELECT_URL, 'stop_xref_list', 'stop_indi_list');
         Form.indiList.refreshIndisFromJson('highlight_custom_json', 'highlight_list');
+        Form.famList.refreshFamsFromJson('highlight_custom_fams_json', 'highlight_fams_list');
     }
 }
 
@@ -263,6 +264,7 @@ async function pageLoaded(Url) {
     }
 
     TOMSELECT_URL = document.getElementById('pid').getAttribute("data-wt-url") + "&query=";
+    TOMSELECT_FAM_URL = document.getElementById('highlight_fid').getAttribute("data-wt-url") + "&query=";
     loadUrlToken(Url);
     loadSettingsDetails();
     loadURLXref(Url);
@@ -292,18 +294,22 @@ async function pageLoaded(Url) {
 
     // Change events
     const form = document.getElementById('gvexport');
-    let changeElems = form.querySelectorAll("input:not([type='file']):not(#save_settings_name):not(#stop_pid):not(#highlight_pid):not(#highlight_custom_json):not(#sharednote_col_add), select:not(#simple_settings_list):not(#pid):not(#highlight_pid):not(#stop_pid):not(#sharednote_col_add):not(#settings_sort_order):not(#click_action_indi)");
+    let changeElems = form.querySelectorAll("input:not([type='file']):not(#save_settings_name):not(#stop_pid):not(#highlight_pid):not(#highlight_fid):not(#highlight_custom_json):not(#sharednote_col_add), select:not(#simple_settings_list):not(#pid):not(#stop_pid):not(#sharednote_col_add):not(#settings_sort_order):not(#click_action_indi):not(#click_action_fam)");
     for (let i = 0; i < changeElems.length; i++) {
-        changeElems[i].addEventListener("change", Form.handleFormChange);
+        changeElems[i].addEventListener("change", Form.handleFormChangeEvent);
     }
     let indiSelectEl = form.querySelector("#pid");
     indiSelectEl.addEventListener('change', Form.indiList.indiSelectChanged);
     let clickActionSelectEl = form.querySelector("#click_action_indi");
     clickActionSelectEl.addEventListener('change', UI.tile.clickOptionChanged);
+    clickActionSelectEl = form.querySelector("#click_action_fam");
+    clickActionSelectEl.addEventListener('change', UI.tile.clickOptionChanged);
     let stopIndiSelectEl = form.querySelector("#stop_pid");
     stopIndiSelectEl.addEventListener('change', stopIndiSelectChanged);
     let highlightIndiSelectEl = form.querySelector("#highlight_pid");
     highlightIndiSelectEl.addEventListener('change', Form.indiList.highlightIndiSelectChanged);
+    let highlightFamSelectEl = form.querySelector("#highlight_fid");
+    highlightFamSelectEl.addEventListener('change', Form.famList.highlightFamSelectChanged);
     let settingsSortOrder = form.querySelector("#settings_sort_order");
     settingsSortOrder.addEventListener('change', loadSettingsDetails);
     let simpleSettingsEl = form.querySelector("#simple_settings_list");
@@ -342,7 +348,7 @@ async function pageLoaded(Url) {
 
     document.addEventListener("mousedown", function(event) {
         // Hide diagram context menu if clicked off a tile
-        if (event.target.closest('.settings_ellipsis_menu_item') == null && event.target.parent?.id !== 'menu-info') {
+        if (event.target.closest('.settings_ellipsis_menu_item') == null && event.target.parentElement?.id !== 'menu-info') {
             UI.contextMenu.clearContextMenu();
         }
     });
@@ -773,7 +779,7 @@ function diagramSearchBoxChange(e) {
     let xref = document.getElementById('diagram_search_box').value.trim();
     // Skip the first trigger, only fire for the follow-up trigger when the XREF is set
     if (xref !== ""){
-        if (!UI.scrollToRecord(xref)) {
+        if (!UI.scrollToRecord(xref, 'indi')) {
             UI.showToast(TRANSLATE['Individual not found']);
         }
         Form.clearSelect('diagram_search_box');

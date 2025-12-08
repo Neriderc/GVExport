@@ -473,9 +473,12 @@ class Dot {
  	 *
  	 * @return string colour (#RRGGBB)
  	 */
-	function getFamilyColour(): string
-    {
-		// Determine the fill colour
+	function getFamilyColour($xref = null): string
+    {	
+		if (!empty($xref) && $this->settings['highlight_custom_fams'] && Settings::isKeyInJson($this->settings['highlight_custom_fams_json'], $xref)) {
+			$data = json_decode($this->settings['highlight_custom_fams_json'], true);
+            return $data[$xref];
+        } 
         return $this->settings["family_col"];
 	}
 
@@ -576,7 +579,7 @@ class Dot {
 			$husb_id = $this->families[$fid]["husb_id"] ?? "";
 			$wife_id = $this->families[$fid]["wife_id"] ?? "";
 	
-			$fill_colour = $this->getFamilyColour();
+			$fill_colour = $this->getFamilyColour($fid);
 			$link = $f->url();
 
 			if ((count($marriages) == 0 && count($divorces) == 0) || !$this->settings["show_marriages"]) {

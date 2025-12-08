@@ -35,9 +35,12 @@ const UI = {
 
         const toastParent = document.getElementById("toast-container");
         if (toastParent !== null) {
+
+            const existing = [...toastParent.querySelectorAll(".toast-message")].some(t => t.innerText === message);
+            if (existing) return;
+
             const toast = document.createElement("div");
-            toast.setAttribute("id", "toast");
-            toast.setAttribute("class", "pointer");
+            toast.setAttribute("class", "toast-message pointer");
             if (message.substring(0, ERROR_CHAR.length) === ERROR_CHAR) {
                 toast.className += " error";
                 message = message.substring(ERROR_CHAR.length);
@@ -67,11 +70,11 @@ const UI = {
      * @param zoom Set zoom level to this number
      * @returns {boolean}
      */
-    scrollToRecord(xref, scrollX = null, scrollY = null, zoom = null) {
+    scrollToRecord(xref, type = 'indi', scrollX = null, scrollY = null, zoom = null) {
         // Why do we multiply the scale by 1 and 1/3?
         let zoomBase = (zoom ? zoom : panzoomInst.getTransform().scale) * (1 + 1 / 3);
         let zoom_value = zoomBase * parseFloat(document.getElementById("dpi").value) / 72;
-        let [found, x, y] = UI.tile.getElementPositionFromXref(xref);
+        let [found, x, y] = UI.tile.getElementPositionFromXref(xref, type);
         if (!found) {
             // The xref isn't in the diagram
             return false;
@@ -97,7 +100,6 @@ const UI = {
     calculateDiagramSize: {
         getRenderWidth() {
             let svgEl = document.getElementById("rendering").querySelector("svg");
-            console.log(svgEl.getAttribute("width"));
             return svgEl.getAttribute("width").split('pt')[0];
         },
 
@@ -209,16 +211,18 @@ const UI = {
                 });
                 // Only trigger links if not dragging
                 linkElements[i].addEventListener('click', function (e) {
-                    let clickActionEl = document.getElementById('click_action_indi');
+                    e.preventDefault();
+                    let isIndividual = UI.tile.isNodeAnIndividual(linkElements[i]);
+                    let clickActionEl = isIndividual ? document.getElementById('click_action_indi') : document.getElementById('click_action_fam');
                     let clickAction = clickActionEl ? clickActionEl.value : DEFAULT_ACTION;
                     let url = linkElements[i].getAttribute('xlink:href');
 
                     // Do nothing if user is dragging
                     if (Data.getDistance(startx, starty, e.clientX, e.clientY) >= MIN_DRAG) {
-                        e.preventDefault();
-                    // Leave family links alone
-                    } else if (UI.tile.isNodeAnIndividual(linkElements[i])) {
-                        e.preventDefault();
+                        return;
+                    }
+
+                    if (isIndividual) {
                         let xref = UI.tile.getXrefFromUrl(url);
                         switch (clickAction) {
                             case '0':
@@ -250,15 +254,44 @@ const UI = {
                                 }
                                 break;
                             case '50': // Show a menu for user to choose
-                                UI.tile.showNodeContextMenu(e, url, xref);
+                                UI.tile.showIndiContextMenu(e, url, xref);
                                 break;
                             case '70': // Add XREF to list of custom highlighted individuals
                                 UI.tile.highlightIndividual(xref);
+                                break;
+                            case '80': // Add a partner
+                                UI.tile.goToAddPartner(url, xref);
+                                break;
+                            case '90': // Add a parent
+                                UI.tile.goToAddParent(url, xref);
                                 break;
                             case '60': // Do nothing option
                             default: // Unknown, so do nothing
                                 break;
                         }
+                    } else {
+                        let parent = e.currentTarget.closest('g.node');
+                        let titleEl = parent.querySelector('title');
+                        let xref = titleEl.textContent;
+                        // Is a family tile
+                        switch (clickAction) {
+                            case '0':
+                                window.open(url,'_blank');
+                                break;
+                            case '10': // Add a child
+                                UI.tile.goToAddChild(url, xref);
+                                break;
+                            case '20': // Add family to list of custom highlighted families
+                                UI.tile.highlightFamily(xref);
+                                break;
+                            case '30': // Show menu
+                                UI.tile.showFamilyContextMenu(e, url, xref);
+                                break;
+                            case '40': // Do nothing option
+                            default: // Unknown, so do nothing
+                                break;
+                        }
+
                     }
 
                 });
@@ -266,23 +299,43 @@ const UI = {
         },
 
         /**
-         * Shows a context menu on a node in the diagram, e.g. show menu when individual clicked if this option enabled
+         * Shows a context menu on an individual in the diagram, e.g. show menu when individual clicked if this option enabled
          *
          * @param e The click event
-         * @param url The URL of the individual or family webtrees page
-         * @param xref The xref of the individual or family
+         * @param url The URL of the individual's webtrees page
+         * @param xref The xref of the individual
          */
-        showNodeContextMenu(e, url, xref) {
+        showIndiContextMenu(e, url, xref) {
             UI.contextMenu.clearContextMenu();
             const div = document.getElementById('context_list');
             div.setAttribute("data-xref",  xref);
             div.setAttribute("data-url",  url);
-            UI.contextMenu.addContextMenuOption('👤', 'Open individual\'s page', UI.tile.openIndividualsPageContextMenu);
+            UI.contextMenu.addContextMenuOption('👤', 'Open individual\'s page', UI.tile.openContextMenuUrl);
             UI.contextMenu.addContextMenuOption('➕', 'Add individual to list of starting individuals', UI.tile.addIndividualToStartingIndividualsContextMenu);
             UI.contextMenu.addContextMenuOption('🔄', 'Replace starting individuals with this individual', UI.tile.replaceStartingIndividualsContextMenu);
             UI.contextMenu.addContextMenuOption('🛑', 'Add this individual to the list of stopping individuals', UI.tile.addIndividualToStoppingIndividualsContextMenu);
             UI.contextMenu.addContextMenuOption('🚫', 'Replace stopping individuals with this individual', UI.tile.replaceStoppingIndividualsContextMenu);
             UI.contextMenu.addContextMenuOption('🖍️', 'Add to list of individuals to highlight', UI.tile.highlightIndividualContextMenu);
+            UI.contextMenu.addContextMenuOption('❤️', 'Add a partner', UI.tile.addPartnerContextMenu);
+            UI.contextMenu.addContextMenuOption('🧑‍🧒', 'Add a parent', UI.tile.addParentContextMenu);
+            UI.contextMenu.enableContextMenu(window.innerWidth - e.clientX, e.clientY);
+        },
+
+        /**
+         * Shows a context menu on a family in the diagram, e.g. show menu when family clicked if this option enabled
+         *
+         * @param e The click event
+         * @param url The URL of the individual or family webtrees page
+         * @param xref The xref of the family
+         */
+        showFamilyContextMenu(e, url, xref) {
+            UI.contextMenu.clearContextMenu();
+            const div = document.getElementById('context_list');
+            div.setAttribute("data-xref",  xref);
+            div.setAttribute("data-url",  url);
+            UI.contextMenu.addContextMenuOption('👥', 'Open family page', UI.tile.openContextMenuUrl);
+            UI.contextMenu.addContextMenuOption('👶', 'Add a child', UI.tile.addChildContextMenu);
+            UI.contextMenu.addContextMenuOption('🖍️', 'Add to list of families to highlight', UI.tile.highlightFamilyContextMenu);
             UI.contextMenu.enableContextMenu(window.innerWidth - e.clientX, e.clientY);
         },
 
@@ -291,8 +344,8 @@ const UI = {
          *
          * @param e Click event
          */
-        openIndividualsPageContextMenu(e) {
-            UI.tile.openIndividualsPage(e.currentTarget.parentElement.getAttribute('data-url'));
+        openContextMenuUrl(e) {
+            UI.tile.openUrlFromContextMenu(e.currentTarget.parentElement.getAttribute('data-url'));
         },
 
         /**
@@ -340,13 +393,84 @@ const UI = {
             UI.tile.highlightIndividual(e.currentTarget.parentElement.getAttribute('data-xref'));
         },
 
+        /**
+         * Function for context menu item
+         *
+         * @param e Click event
+         */
+        addPartnerContextMenu(e) {
+            let xref = e.currentTarget.parentElement.getAttribute('data-xref');
+            let url = e.currentTarget.parentElement.getAttribute('data-url');
+            UI.tile.goToAddPartner(url, xref);
+        },
 
         /**
-         * Adds the individual to the starting individual list
+         * Function for context menu item
+         *
+         * @param e Click event
+         */
+        addParentContextMenu(e) {
+            let xref = e.currentTarget.parentElement.getAttribute('data-xref');
+            let url = e.currentTarget.parentElement.getAttribute('data-url');
+            UI.tile.goToAddParent(url, xref);
+        },
+
+        /**
+         * Function for context menu item
+         *
+         * @param e Click event
+         */
+        highlightFamilyContextMenu(e) {
+            UI.tile.highlightFamily(e.currentTarget.parentElement.getAttribute('data-xref'));
+        },
+
+        /**
+         * Function for context menu item
+         *
+         * @param e Click event
+         */
+        addChildContextMenu(e) {
+            let xref = e.currentTarget.parentElement.getAttribute('data-xref');
+            let url = e.currentTarget.parentElement.getAttribute('data-url');
+            UI.tile.goToAddChild(url, xref);
+        },
+
+        /**
+         * Go to the add a child webtrees page
+         */
+        goToAddChild(url, xref) {
+            let urlDecoded = url.replaceAll('%2F', '/'); // Handle non-pretty URLs
+            var pos = urlDecoded.lastIndexOf('/family/');
+            let addUrl = urlDecoded.substring(0,pos) + "/add-child-to-family/" + xref + "/U";
+            window.open(addUrl,'_blank');
+        },
+
+        /**
+         * Go to the add a spouse webtrees page
+         */
+        goToAddPartner(url, xref) {
+            let urlDecoded = url.replaceAll('%2F', '/'); // Handle non-pretty URLs
+            var pos = urlDecoded.lastIndexOf('/individual/');
+            let addUrl = urlDecoded.substring(0,pos) + "/add-spouse-to-individual/" + xref;
+            window.open(addUrl,'_blank');
+        },
+
+        /**
+         * Go to the add a parent webtrees page
+         */
+        goToAddParent(url, xref) {
+            let urlDecoded = url.replaceAll('%2F', '/'); // Handle non-pretty URLs
+            var pos = urlDecoded.lastIndexOf('/individual/');
+            let addUrl = urlDecoded.substring(0,pos) + "/add-parent-to-individual/" + xref + "/U";
+            window.open(addUrl,'_blank');
+        },
+
+        /**
+         * Opens the given URL from a context menu
          *
          * @param xref
          */
-        openIndividualsPage(url) {
+        openUrlFromContextMenu(url) {
             if (url) {
                 window.open(url,'_blank');
                 UI.contextMenu.clearContextMenu();
@@ -409,7 +533,7 @@ const UI = {
         },
 
         /**
-         * Adds XREF to custom highlight list
+         * Adds individual's XREF to custom highlight list
          *
          * @param xref
          */
@@ -417,6 +541,20 @@ const UI = {
             if (xref) {
                 this.addIndiToCustomHighlightList(xref);
                 Form.handleFormChange(xref);
+                UI.contextMenu.clearContextMenu();
+            }
+        },
+
+
+        /**
+         * Adds family XREF to custom highlight list
+         *
+         * @param xref
+         */
+        highlightFamily(xref) {
+            if (xref) {
+                this.addFamToCustomHighlightList(xref);
+                Form.handleFormChange(xref, 'fam');
                 UI.contextMenu.clearContextMenu();
             }
         },
@@ -447,10 +585,34 @@ const UI = {
         },
 
         /**
-         * Run when setting is changed for what to do when individual is clicked in diagram
+         *  Adds the XREF to the list of families to highlight
+         *
+         * @param xref xref of family to add
+         * @param colour colour to use for this family (if not default)
+         */
+        addFamToCustomHighlightList(xref, colour = null) {
+            let listEl = document.getElementById('highlight_custom_fams_json');
+            let list = listEl.value.trim();
+            if (list.trim() === '') list = '{}';
+            let data = JSON.parse(list);
+            if (xref !== '' && !data[xref]) {
+                if (colour) {
+                    data[xref] = colour;
+                } else {
+                    let el = document.getElementById('highlight_custom_fams_col');
+                    if (el) {
+                        data[xref] = el.value;
+                    }
+                }
+            }
+            listEl.value = JSON.stringify(data);
+            Form.famList.refreshFamsFromJson('highlight_custom_fams_json', 'highlight_fams_list');
+        },
+
+        /**
+         * Save settings without refreshing diagram
          */
         clickOptionChanged() {
-            // Trigger background settings saving.
             isUserLoggedIn().then((loggedIn) => {
                 if (loggedIn) {
                     saveSettingsServer().then();
@@ -461,12 +623,29 @@ const UI = {
         },
 
         /**
+         * Calls the right function to get the position of the relevant element
+         * 
+         * @param {*} xref xref of entity (individual or family)
+         * @param {*} type the type of the entity (individual or family)
+         */
+
+        getElementPositionFromXref(xref, type) {
+            if (type === 'indi') {
+                return this.getPolygonPositionFromXref(xref);
+            } else if (type === 'fam') {
+                return this.getEllipsePositionFromXref(xref);
+            }
+            return false;
+        },
+
+        /**
          * Finds the individual's tile from the provided XREF, and returns position information
          *
          * @param xref The XREF of the individual we are looking for
          * @returns {boolean[]|(boolean|string|number)[]} An array [true if found, x position, y position]
          */
-        getElementPositionFromXref(xref) {
+        getPolygonPositionFromXref(xref) {
+
             const rendering = document.getElementById('rendering');
             const svg = rendering.getElementsByTagName('svg')[0].cloneNode(true);
             let titles = svg.getElementsByTagName('title');
@@ -512,6 +691,48 @@ const UI = {
                             x = (minX + maxX) / 2;
                             y = (minY + maxY) / 2;
 
+                        } else {
+                            const textList = group.getElementsByTagName('text');
+                            if (textList.length !== 0) {
+                                x = textList[0].getAttribute('x');
+                                y = textList[0].getAttribute('y');
+                            } else {
+                                console.warn("No polygon or text found for XREF:", xref, group);
+                                return [false, null, null];
+                            }
+                        }
+                        return [true, x, y];
+                    }
+                }
+            }
+            return [false, null, null];
+        },
+
+
+        /**
+         * Finds the family's tile from the provided XREF, and returns position information
+         *
+         * @param xref The XREF of the family we are looking for
+         * @returns {boolean[]|(boolean|string|number)[]} An array [true if found, x position, y position]
+         */
+        getEllipsePositionFromXref(xref) {
+            const rendering = document.getElementById('rendering');
+            const svg = rendering.getElementsByTagName('svg')[0].cloneNode(true);
+            let titles = svg.getElementsByTagName('title');
+            for (let i=0; i<titles.length; i++) {
+                let xrefs = titles[i].innerHTML.split("_");
+                for (let j=0; j<xrefs.length; j++) {
+                    if (xrefs[j] === xref) {
+                        let x = null;
+                        let y = null;
+                        const group = titles[i].parentElement;
+                        // We need to locate the element within the SVG. We use "ellipse" here because it is the
+                        // only element that will always exist and that also has position information
+                        // (other elements like text, image, etc. can be disabled by the user)
+                        const list = group.getElementsByTagName('ellipse');
+                        if (list.length !== 0) {
+                            x = list[0].getAttribute('cx');
+                            y = list[0].getAttribute('cy');
                         } else {
                             x = group.getElementsByTagName('text')[0].getAttribute('x');
                             y = group.getElementsByTagName('text')[0].getAttribute('y')
@@ -630,6 +851,7 @@ const UI = {
             event.stopPropagation();
             event.preventDefault();
             UI.helpPanel.showHelpSidebar(event.target.getAttribute('data-help'));
+            UI.contextMenu.clearContextMenu();
         }
     },
 
@@ -682,6 +904,7 @@ const UI = {
             let div = document.createElement('div');
             div.setAttribute('id', 'context_list');
             div.style.display = 'block';
+            div.style.paddingRight = '20px';
             document.getElementById('context_menu').appendChild(div);
         },
 

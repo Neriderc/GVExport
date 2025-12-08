@@ -234,6 +234,9 @@ class FormSubmission
         if (isset($vars['click_action_indi'])) {
             $settings['click_action_indi'] = I18N::digits($vars["click_action_indi"]);
         }
+        if (isset($vars['click_action_fam'])) {
+            $settings['click_action_fam'] = I18N::digits($vars["click_action_fam"]);
+        }
         $settings['enable_debug_mode'] = isset($vars['enable_debug_mode']);
         $settings['show_debug_panel'] = isset($vars['show_debug_panel']);
         if (isset($vars['admin_page'])) {
@@ -342,6 +345,13 @@ class FormSubmission
         }
         if (isset($vars["highlight_custom_json"]) && $this->isValidJSON($vars["highlight_custom_json"])) {
             $settings['highlight_custom_json'] = $vars["highlight_custom_json"];
+        }
+        $settings['highlight_custom_fams'] = isset($vars["highlight_custom_fams"]);
+        if (isset($vars["highlight_custom_fams_col"]) && $this->isValidColourHex($vars["highlight_custom_fams_col"])) {
+            $settings['highlight_custom_fams_col'] = $vars["highlight_custom_fams_col"];
+        }
+        if (isset($vars["highlight_custom_fams_json"]) && $this->isValidJSON($vars["highlight_custom_fams_json"])) {
+            $settings['highlight_custom_fams_json'] = $vars["highlight_custom_fams_json"];
         }
         if (isset($vars["border_col"]) && $this->isValidColourHex($vars["border_col"])) {
             $settings['border_col'] = $vars["border_col"];

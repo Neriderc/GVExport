@@ -31,7 +31,7 @@ class Help
     public const DIAGRAM_APPEARANCE = 'Diagram';
     public const OUTPUT_FILE = 'Output file';
     public const BROWSER_RENDER = 'Browser render';
-    public const CONTEXT_MENU_HELP = 'Context menu when individual clicked';
+    public const CONTEXT_MENU_HELP = 'Context menu when tile clicked';
     public const SAVE_SETTINGS = 'Save settings';
     public const SETTINGS_FILE = 'Settings file';
     public const MESSAGE_HISTORY = 'Message history';

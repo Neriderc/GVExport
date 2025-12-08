@@ -142,7 +142,7 @@
     bottom: 30px;
 }
 
-#toast {
+.toast-message {
     visibility: hidden;
     min-width: 250px;
     margin-left: -125px;
@@ -160,12 +160,12 @@
     cursor: pointer;
 }
 
-#toast.show {
+.toast-message.show {
     visibility: visible; /* Show the snackbar */
     animation: fadein 0.5s, fadeout 0.5s 5s;
 }
 
-#toast.error {
+toast-message.error {
     background-color: #633;
 }
 
@@ -228,7 +228,7 @@
     float: right;
 }
 
-.highlight_picker {
+.highlight_picker, .highlight_fams_picker {
     width: 32px;
     margin-top: 4px !important;
 }

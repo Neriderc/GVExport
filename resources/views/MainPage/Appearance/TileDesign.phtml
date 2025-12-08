@@ -198,6 +198,25 @@ use Fisharebest\Webtrees\Auth;
                     <?php } ?>
                 </div>
             </div>
+            <div class="col-auto padding-left-10">
+                <input type="checkbox" name="vars[highlight_custom_fams]" onclick="Form.showHideMatchCheckbox('highlight_custom_fams', 'highlight_custom_fams_option');" id="highlight_custom_fams" value="true" <?= $vars["highlight_custom_fams"] ? 'checked' : '' ?>><label for="highlight_custom_fams" class="check-list width-90pc"><?= I18N::translate('Show selected families in different colour') ?></label>
+                <div class="setting_subgroup col-auto options-panel-background" id="highlight_custom_fams_option"  data-test="<?= $vars["highlight_custom_fams"]; ?>" <?= !$admin && !$vars["highlight_custom_fams"] ? 'style="display:none;"' : '' ?>>
+                    <input type="color" class="picker" name="vars[highlight_custom_fams_col]" id="highlight_custom_fams_col" value="<?= e($vars["highlight_custom_fams_col"]); ?>" /><label for="highlight_custom_fams_col" class="picker-label"><?= I18N::translate('Default highlight colour') ?></label>
+                    <?php if (!$admin) { ?>
+                    <div id="highlight_fams_list">
+
+                    </div>
+                    <div>
+                        <?php
+                        echo view('components/select-family', ['name' => 'vars[highlight_fid]', 'tree' => $tree, 'id' => 'highlight_fid', 'xref' => '']);
+                        ?>
+                    </div>
+                    <div class="input-group-append">
+                        <input type="text" name="vars[highlight_custom_fams_json]" id="highlight_custom_fams_json" value="<?= e($vars['highlight_custom_fams_json']) ?>" hidden="true">
+                    </div>
+                    <?php } ?>
+                </div>
+            </div>
             <div class="col-auto">
                 <input type="color" class="picker" name="vars[family_col]" id="family_col" value="<?= e($vars["family_col"]); ?>" /><label for="family_col" class="picker-label"><?= I18N::translate('Family background') ?></label>
             </div>

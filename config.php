@@ -139,6 +139,8 @@ return array(
     'indi_background_age_high' => 100, // For background colour option for age, this is the age for the high colour - this age and anything older gets this colour
     'highlight_custom_indis' => '', // Whether to highlight a custom list of individuals
     'highlight_custom_col' => '#FFFDC3', // The default colour to highlight the custom highlighted individuals
+    'highlight_custom_fams' => '', // Whether to highlight a custom list of families
+    'highlight_custom_fams_col' => '#FFFDC3', // The default colour to highlight the custom highlighted families
 	'border_col' => '#606060', // Border colour (in UI this is Family border colour, but by default the individual border is the same as family)
 	'indi_border_col' => '#606060', // Border colour of individuals
 	'birth_prefix' => '*', // Text shown on chart before the birthdate - alternatively could use '↑'
@@ -157,5 +159,6 @@ return array(
     'show_diagram_panel' => false, // If set to true, a "Saved diagrams" section is shown at the top, that lists settings saved using the feature to save multiple versions of settings
     'auto_update' => true, // If auto-updating browser render on change is enabled or not
     'click_action_indi' => 0, // When clicking an individual, which action to do. Default of 0 means open link to their user page
+    'click_action_fam' => 0, // When clicking a family, which action to do. Default of 0 means open link to the family page
     'url_xref_treatment' => 'default' // What to do with XREF provided by webtrees when loading page ('default', 'add', 'nothing', or 'overwrite'   )
 );
