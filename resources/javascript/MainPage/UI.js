@@ -336,6 +336,7 @@ const UI = {
             UI.contextMenu.addContextMenuOption('👥', 'Open family page', UI.tile.openContextMenuUrl);
             UI.contextMenu.addContextMenuOption('👶', 'Add a child', UI.tile.addChildContextMenu);
             UI.contextMenu.addContextMenuOption('🖍️', 'Add to list of families to highlight', UI.tile.highlightFamilyContextMenu);
+            UI.contextMenu.addContextMenuOption('🧑‍🧑‍🧒‍🧒', 'Change family members', UI.tile.changeFamilyMembersContextMenu);
             UI.contextMenu.enableContextMenu(window.innerWidth - e.clientX, e.clientY);
         },
 
@@ -429,6 +430,17 @@ const UI = {
          *
          * @param e Click event
          */
+        changeFamilyMembersContextMenu(e) {
+            let xref = e.currentTarget.parentElement.getAttribute('data-xref');
+            let url = e.currentTarget.parentElement.getAttribute('data-url');
+            UI.tile.changeFamilyMembers(url, xref);
+        },
+
+        /**
+         * Function for context menu item
+         *
+         * @param e Click event
+         */
         addChildContextMenu(e) {
             let xref = e.currentTarget.parentElement.getAttribute('data-xref');
             let url = e.currentTarget.parentElement.getAttribute('data-url');
@@ -440,7 +452,7 @@ const UI = {
          */
         goToAddChild(url, xref) {
             let urlDecoded = url.replaceAll('%2F', '/'); // Handle non-pretty URLs
-            var pos = urlDecoded.lastIndexOf('/family/');
+            let pos = urlDecoded.lastIndexOf('/family/');
             let addUrl = urlDecoded.substring(0,pos) + "/add-child-to-family/" + xref + "/U";
             window.open(addUrl,'_blank');
         },
@@ -450,7 +462,7 @@ const UI = {
          */
         goToAddPartner(url, xref) {
             let urlDecoded = url.replaceAll('%2F', '/'); // Handle non-pretty URLs
-            var pos = urlDecoded.lastIndexOf('/individual/');
+            let pos = urlDecoded.lastIndexOf('/individual/');
             let addUrl = urlDecoded.substring(0,pos) + "/add-spouse-to-individual/" + xref;
             window.open(addUrl,'_blank');
         },
@@ -460,8 +472,20 @@ const UI = {
          */
         goToAddParent(url, xref) {
             let urlDecoded = url.replaceAll('%2F', '/'); // Handle non-pretty URLs
-            var pos = urlDecoded.lastIndexOf('/individual/');
+            let pos = urlDecoded.lastIndexOf('/individual/');
             let addUrl = urlDecoded.substring(0,pos) + "/add-parent-to-individual/" + xref + "/U";
+            window.open(addUrl,'_blank');
+        },
+
+        /**
+         * Go to the change family members webtrees page
+         */
+        changeFamilyMembers(url, xref) {
+            // We need to handle pretty and non-pretty URLs differently
+            let urlDecoded = url.replaceAll('%2F', '/');
+            let prettyUrls = urlDecoded.indexOf('route=') === -1;
+            let pos = urlDecoded.lastIndexOf('/family/');
+            let addUrl = urlDecoded.substring(0,pos) + '/change-family-members' + (prettyUrls ? '?' : '&') + 'xref=' + xref;
             window.open(addUrl,'_blank');
         },
 

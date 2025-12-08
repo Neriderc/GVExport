@@ -233,7 +233,8 @@ msgid "Individual required"
 msgstr "Persoon vereist"
 
 #: 
-msgid "Generated %s individuals and %s family records"
+#, fuzzy
+msgid "Generated diagram with %s individuals, %s family records, and %s images"
 msgstr "%s persoons- en %s gezinsrecords gegenereerd"
 
 #: 
@@ -1442,7 +1443,7 @@ msgstr "als een koppeling voor delen is gemaakt, wordt deze weergegeven zodat u 
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/Oemo1QWV9iDy7QJ1ue3YJ26u.png
 #: 
 msgid "if logged in, this will create a sharing link and add this to the webtrees favourites on your &quot;My page&quot; page"
-msgstr "als u bent ingelogd, maakt u een koppeling om te delen en voegt u deze toe aan de webtrees-favorieten op uw pagina &quot;Mijn favorieten&quot;"
+msgstr "als u bent ingelogd, maakt u een koppeling om te delen en voegt u deze toe aan de webtreesfavorieten op uw pagina &quot;Mijn favorieten&quot;"
 
 #. Part of the help text:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/Oemo1QWV9iDy7QJ1ue3YJ26u.png
@@ -1977,17 +1978,6 @@ msgstr "Als deze optie is gekozen, wordt er bij het klikken op een persoon in he
 msgid "When an individual is clicked on in the diagram, nothing will happen."
 msgstr "Wanneer er op een persoon wordt geklikt in het diagram, gebeurt er niets."
 
-#. Part of the help text for the option "Action when individual clicked".
-#. https://s3.eu-west-1.amazonaws.com/po-pub/i/oh4Yjz8fjz3l2aFFkAV608mv.png
-#: 
-msgid "Note that there is currently no option for what to do when a family record is clicked on in the diagram. However, the option to add URLs to individuals and families will also affect families in the browser diagram. That is, if you click a family then if this option is enabled, the family page will open in webtrees."
-msgstr "Merk op dat er momenteel geen optie is voor wat er moet gebeuren als er wordt geklikt op een gezinsrecord in het diagram. De optie om URL's toe te voegen aan personen en gezinnen zal echter ook gezinnen in het browserdiagram beïnvloeden. Dat wil zeggen, als u op een gezin klikt en deze optie is ingeschakeld, zal de gezinspagina openen in webtrees."
-
-#. An extra paragraph for the section on URL links in the help page:  https://s3.eu-west-1.amazonaws.com/po-pub/i/4Vxx95kI54pojXyfcC4CvyYc.png
-#: 
-msgid "Also see \\'Action when individual clicked\\' in the Browser render settings."
-msgstr "Zie ook \\'Actie bij klikken op persoon\\' in de  Browserweergave-instellingen."
-
 #. Option for what to do when individual clicked on in diagram
 #: 
 msgid "Add to list of individuals to highlight"
@@ -2030,7 +2020,8 @@ msgstr "Dit is de standaardoptie."
 
 #. Part of the help text explaining the context menu when you click on an individual (if enabled): https://s3.eu-west-1.amazonaws.com/po-pub/i/JbiHUCluK5zzUvYxjbtvg3LS.png
 #: 
-msgid "In the General Settings section, there is an option in the Browser options that lets you choose what happens when you click on an individual in the diagram. One of the options is to show a menu, and the menu has the following options:"
+#, fuzzy
+msgid "In the General Settings section, there are options in the Browser options that lets you choose what happens when you click on an individual or a family in the diagram. One of the options is to show a menu, and the menu has the following options:"
 msgstr "In de sectie Algemene instellingen is er een optie in de Browseropties waarmee u kunt kiezen wat er gebeurt als u op een persoon in het diagram klikt. Een van de opties is om een menu weer te geven, en het menu heeft de volgende opties:"
 
 #. New option to "Use similar events if information not available". Current state is this is always on, but this new option allows you to force webtrees to only use the "birth" and "death" events to get the date or place. When enabled, this option allows webtrees to look for christening, baptism, burial, and cremation dates.
@@ -2286,7 +2277,8 @@ msgstr "URL toevoegen naar personen en gezinnen"
 #. A new message that pops up when diagram is downloaded:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/XxcKvjkqSJtgUHUpr5e8vBOL.png
 #: 
-msgid "Downloaded diagram with %s individuals and %s families."
+#, fuzzy
+msgid "'Downloaded diagram with %s individuals, %s families, and %s images."
 msgstr "Diagram met %s personen en %s gezinnen gedownload."
 
 #. Message that shows if Graphviz installed but diagram can't be rendered on server due to options chosen:
@@ -2416,4 +2408,72 @@ msgstr "Toon echtscheidingsdatum"
 #: 
 msgid "This also affects families in the diagram. If this option is enabled, you can click on family records to open the family webtrees page. Also see \\'Action when individual clicked\\' in the Browser render settings."
 msgstr "Dit heeft ook invloed op gezinnen in het diagram. Als deze optie is ingeschakeld, kunt u op gezinsrecords klikken om de webtreespagina van het gezin te openen. Zie ook \\‘Actie bij klikken op persoon\\’ in de weergave-instellingen van de browser."
+
+#: 
+msgid "Show selected families in different colour"
+msgstr "Geselecteerde gezinnen in verschillende kleuren weergeven"
+
+#: 
+msgid "Add to list of families to highlight"
+msgstr "Toevoegen aan lijst met gezinnen om te markeren"
+
+#: 
+msgid "This option lets you set a custom background colour for selected families. The default highlight colour is used by default, but the colour can be customised for each individual. Also see option in Browser Render settings to choose what happens when a family is clicked, as this may be an easier way to add families to this list."
+msgstr "Met deze optie kunt u een aangepaste achtergrondkleur instellen voor geselecteerde gezinnen. Standaard wordt de standaardmarkeringskleur gebruikt, maar de kleur kan voor elke persoon worden aangepast. Zie ook de optie in de instellingen voor browserweergave om te kiezen wat er gebeurt wanneer op een gezin wordt geklikt, aangezien dit een eenvoudigere manier kan zijn om gezinnen aan deze lijst toe te voegen."
+
+#: 
+msgid "When you click on a family, the webtrees page for that family will open in a new tab or window."
+msgstr "Wanneer u op een gezin klikt, wordt de webtreespagina voor dat gezin in een nieuw tabblad of venster geopend."
+
+#: 
+msgid "If this option is selected, clicking on a family in the diagram will add them to the list of families highlighted with a coloured background for identification in the diagram. See the option \"Show selected families in different colour\", in the Colours section of the Tile design options."
+msgstr "Als deze optie is geselecteerd, worden gezinnen die u in het diagram aanklikt toegevoegd aan de lijst met gezinnen die ter identificatie in het diagram zijn gemarkeerd met een gekleurde achtergrond. Zie de optie \"Geselecteerde gezinnen in een andere kleur weergeven\" in het gedeelte Kleuren van de tegelontwerpopties."
+
+#: 
+msgid "If this option is chosen, when a family is clicked on in the diagram, a menu will be shown with the above items to choose from."
+msgstr "Als deze optie wordt gekozen, wordt er bij het aanklikken van een gezin in het diagram een menu weergegeven met de bovenstaande items waaruit kan worden gekozen."
+
+#: 
+msgid "When a family is clicked on in the diagram, nothing will happen."
+msgstr "Wanneer u op een gezin in het diagram klikt, gebeurt er niets."
+
+#: 
+msgid "Action when family clicked"
+msgstr "Actie wanneer op gezin wordt geklikt"
+
+#: 
+msgid "Open family page"
+msgstr "Open gezinspagina"
+
+#: 
+msgid "Open the webtrees page for the family in a new tab or window."
+msgstr "Open de webtreespagina voor het gezin in een nieuw tabblad of venster."
+
+#: 
+msgid "Open the webtrees page to add a child to the family in a new tab or window."
+msgstr "Open de webtreespagina om een kind aan het gezin toe te voegen in een nieuw tabblad of venster."
+
+#: 
+msgid "Open the webtrees page for the individual in a new tab or window."
+msgstr "Open de webtreespagina voor de persoon in een nieuw tabblad of venster."
+
+#: 
+msgid "Add a partner"
+msgstr "Een partner toevoegen"
+
+#: 
+msgid "Add a parent"
+msgstr "Een ouder toevoegen"
+
+#: 
+msgid "Open the webtrees page to add a partner to this individual"
+msgstr "Open de webtreespagina om een partner aan deze persoon toe te voegen"
+
+#: 
+msgid "Open the webtrees page to add a parent to this individual"
+msgstr "Open de webtreespagina om een ouder aan deze persoon toe te voegen"
+
+#: 
+msgid "Open the webtrees page for changing family members in a new tab or window."
+msgstr ""
 
