@@ -138,7 +138,9 @@ class functionsClippingsCart {
 					$this->enhanceIndividualsList($record);
 				}
 				// search for a highlighted photo if it is in the clippings cart and if a photo is required
-				$this->individuals[$record->xref()]['pic'] = $this->searchPhotoToIndi($record->xref());
+				[$this->individuals[$record->xref()]['pic'], 
+				 $this->individuals[$record->xref()]['pic_title'], 
+				 $this->individuals[$record->xref()]['pic_link']] = $this->searchPhotoToIndi($record->xref());
 			} elseif ($record instanceof Family) {
 				if ($this->combinedMode) {
 					$this->addDummyPartner($record, self::ID_HUSBAND);
@@ -163,7 +165,7 @@ class functionsClippingsCart {
 		} else {
 			return;
 		}
-		if (isset($partner) && !$this->isXrefinCart($partner->xref())) {
+		if (isset($partner) && !$this->isXrefInCart($partner->xref())) {
 			$fid = $family->xref();
 			$pid = self::DUMMY_INDIVIDUAL_XREF.($partnerType == self::ID_HUSBAND ? 'H' : 'W').$fid;
 			$this->addIndiToList($pid);
@@ -383,26 +385,41 @@ class functionsClippingsCart {
 	 * if it is in the clippings cart
 	 * and if the class parameter defines that photos are required.
 	 * External image references are not supported.
+	 * 
+	 * 9/12/2025 This function had changes made by @stefaz to resolve issues with media files 
 	 *
 	 * @param string $pid XREF of individual
-	 * @return string|null URL of highlighted media file (rendering in brpowser) or
-	 * 					   file location in media folder (rendering on server) or
-	 * 					   null
+	 * @return array [URL/path, title, link] or [null, "", null]
 	 */
-	private function searchPhotoToIndi(string $pid): ?string
+	private function searchPhotoToIndi(string $pid): array
 	{
 		if ($this->photoIsRequired) {
-			$mediaFile = $this->preferedPhotoInCart(Registry::individualFactory()->make($pid, $this->tree));
+			$individual = Registry::individualFactory()->make($pid, $this->tree);
+			if ($individual === null) {
+				return [null, "", null];
+			}
+			$mediaFile = $this->preferedPhotoInCart($individual);
 			if (isset($mediaFile) && !$mediaFile->isExternal()) {
+				$media_title = strip_tags($individual->fullName());
 				// If we are rendering in the browser, provide the URL, otherwise provide the server side file location
 				if (isset($_REQUEST["render"])) {
-					return Site::getPreference('INDEX_DIRECTORY') . $this->tree->getPreference('MEDIA_DIRECTORY') . $mediaFile->filename();
+					$pic = Site::getPreference('INDEX_DIRECTORY') . $this->tree->getPreference('MEDIA_DIRECTORY') . $mediaFile->filename();
 				} else {
-					return str_replace("&", "%26", $mediaFile->imageUrl($this->dpi, $this->dpi, "contain"));
+					$pic = str_replace("&", "%26", $mediaFile->imageUrl($this->dpi, $this->dpi, "contain"));
 				}
+				// Get the media object to retrieve the download URL for the link
+				$fact = $individual->facts(['OBJE'])->first(static function (Fact $fact): bool {
+					$media = $fact->target();
+					return $media instanceof Media && $media->firstImageFile() instanceof MediaFile;
+				});
+				$pic_link = null;
+				if ($fact instanceof Fact && $fact->target() instanceof Media) {
+					$pic_link = $fact->target()->firstImageFile()->downloadUrl('inline');
+				}
+				return [$pic, $media_title, $pic_link];
 			}
 		}
-		return null;
+		return [null, "", null];
 	}
 
 	/**
