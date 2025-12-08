@@ -59,7 +59,6 @@ msgstr "Mark not blood-related people with different color"
 #. SVG links no longer work (and seem to have been broken for 3+ years), and it's not trivial to fix. Instead, I have updated this to clarify that it works only with PDF, and it will be hidden if Graphviz is not installed on the server.
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/SEzk1B1h5LwyvxiJ9liuAwLX.png
 #: 
-#, fuzzy
 msgid "Add link to individuals and families in PDF output"
 msgstr "Add URL to individuals and families"
 
@@ -234,8 +233,8 @@ msgid "Individual required"
 msgstr "Individual required"
 
 #: 
-msgid "Generated %s individuals and %s family records"
-msgstr "Generated %s individuals and %s family records"
+msgid "Generated diagram with %s individuals, %s family records, and %s images"
+msgstr "Generated diagram with %s individuals, %s family records, and %s images"
 
 #: 
 msgid "Invalid starting individual:"
@@ -1200,7 +1199,6 @@ msgstr "This lets you assign a shape based on the sex of individuals. For exampl
 
 #. Part of the Photos help text:  https://s3.eu-west-1.amazonaws.com/po-pub/i/LnybW6GMtDH0UDez4Z0flfpW.png
 #: 
-#, fuzzy
 msgid "This option lets you enable or disable showing photos on the tiles of individuals."
 msgstr "This option lets you enable or disable showing photos on the tiles of individuals."
 
@@ -1979,18 +1977,6 @@ msgstr "If this option is chosen, when an individual is clicked on in the diagra
 msgid "When an individual is clicked on in the diagram, nothing will happen."
 msgstr "When an individual is clicked on in the diagram, nothing will happen."
 
-#. Part of the help text for the option "Action when individual clicked".
-#. https://s3.eu-west-1.amazonaws.com/po-pub/i/oh4Yjz8fjz3l2aFFkAV608mv.png
-#: 
-msgid "Note that there is currently no option for what to do when a family record is clicked on in the diagram. However, the option to add URLs to individuals and families will also affect families in the browser diagram. That is, if you click a family then if this option is enabled, the family page will open in webtrees."
-msgstr "Note that there is currently no option for what to do when a family record is clicked on in the diagram. However, the option to add URLs to individuals and families will also affect families in the browser diagram. That is, if you click a family then if this option is enabled, the family page will open in webtrees."
-
-#. An extra paragraph for the section on URL links in the help page:  https://s3.eu-west-1.amazonaws.com/po-pub/i/4Vxx95kI54pojXyfcC4CvyYc.png
-#: 
-#, fuzzy
-msgid "Also see \\'Action when individual clicked\\' in the Browser render settings."
-msgstr "This also affects families in the diagram. If this option is enabled, you can click on family records to open the family webtrees page. Also see \\'Action when individual clicked\\' in the Browser render settings."
-
 #. Option for what to do when individual clicked on in diagram
 #: 
 msgid "Add to list of individuals to highlight"
@@ -2033,8 +2019,8 @@ msgstr "This is the default option."
 
 #. Part of the help text explaining the context menu when you click on an individual (if enabled): https://s3.eu-west-1.amazonaws.com/po-pub/i/JbiHUCluK5zzUvYxjbtvg3LS.png
 #: 
-msgid "In the General Settings section, there is an option in the Browser options that lets you choose what happens when you click on an individual in the diagram. One of the options is to show a menu, and the menu has the following options:"
-msgstr "In the General Settings section, there is an option in the Browser options that lets you choose what happens when you click on an individual in the diagram. One of the options is to show a menu, and the menu has the following options:"
+msgid "In the General Settings section, there are options in the Browser options that lets you choose what happens when you click on an individual or a family in the diagram. One of the options is to show a menu, and the menu has the following options:"
+msgstr "In the General Settings section, there are options in the Browser options that lets you choose what happens when you click on an individual or a family in the diagram. One of the options is to show a menu, and the menu has the following options:"
 
 #. New option to "Use similar events if information not available". Current state is this is always on, but this new option allows you to force webtrees to only use the "birth" and "death" events to get the date or place. When enabled, this option allows webtrees to look for christening, baptism, burial, and cremation dates.
 #. 
@@ -2289,8 +2275,8 @@ msgstr "Add URL to individuals and families"
 #. A new message that pops up when diagram is downloaded:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/XxcKvjkqSJtgUHUpr5e8vBOL.png
 #: 
-msgid "Downloaded diagram with %s individuals and %s families."
-msgstr "Downloaded diagram with %s individuals and %s families."
+msgid "'Downloaded diagram with %s individuals, %s families, and %s images."
+msgstr "'Downloaded diagram with %s individuals, %s families, and %s images."
 
 #. Message that shows if Graphviz installed but diagram can't be rendered on server due to options chosen:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/UBXubBpivJyzaSPmBiQoKicp.png
@@ -2419,4 +2405,72 @@ msgstr "Show divorce date"
 #: 
 msgid "This also affects families in the diagram. If this option is enabled, you can click on family records to open the family webtrees page. Also see \\'Action when individual clicked\\' in the Browser render settings."
 msgstr "This also affects families in the diagram. If this option is enabled, you can click on family records to open the family webtrees page. Also see \\'Action when individual clicked\\' in the Browser render settings."
+
+#: 
+msgid "Show selected families in different colour"
+msgstr "Show selected families in different color"
+
+#: 
+msgid "Add to list of families to highlight"
+msgstr "Add to list of families to highlight"
+
+#: 
+msgid "This option lets you set a custom background colour for selected families. The default highlight colour is used by default, but the colour can be customised for each individual. Also see option in Browser Render settings to choose what happens when a family is clicked, as this may be an easier way to add families to this list."
+msgstr "This option lets you set a custom background color for selected families. The default highlight color is used by default, but the color can be customized for each individual. Also see option in Browser Render settings to choose what happens when a family is clicked, as this may be an easier way to add families to this list."
+
+#: 
+msgid "When you click on a family, the webtrees page for that family will open in a new tab or window."
+msgstr "When you click on a family, the webtrees page for that family will open in a new tab or window."
+
+#: 
+msgid "If this option is selected, clicking on a family in the diagram will add them to the list of families highlighted with a coloured background for identification in the diagram. See the option \"Show selected families in different colour\", in the Colours section of the Tile design options."
+msgstr "If this option is selected, clicking on a family in the diagram will add them to the list of families highlighted with a coloured background for identification in the diagram. See the option \"Show selected families in different colour\", in the Colours section of the Tile design options."
+
+#: 
+msgid "If this option is chosen, when a family is clicked on in the diagram, a menu will be shown with the above items to choose from."
+msgstr "If this option is chosen, when a family is clicked on in the diagram, a menu will be shown with the above items to choose from."
+
+#: 
+msgid "When a family is clicked on in the diagram, nothing will happen."
+msgstr "When a family is clicked on in the diagram, nothing will happen."
+
+#: 
+msgid "Action when family clicked"
+msgstr "Action when family clicked"
+
+#: 
+msgid "Open family page"
+msgstr "Open family page"
+
+#: 
+msgid "Open the webtrees page for the family in a new tab or window."
+msgstr "Open the webtrees page for the family in a new tab or window."
+
+#: 
+msgid "Open the webtrees page to add a child to the family in a new tab or window."
+msgstr "Open the webtrees page to add a child to the family in a new tab or window."
+
+#: 
+msgid "Open the webtrees page for the individual in a new tab or window."
+msgstr "Open the webtrees page for the individual in a new tab or window."
+
+#: 
+msgid "Add a partner"
+msgstr "Add a partner"
+
+#: 
+msgid "Add a parent"
+msgstr "Add a parent"
+
+#: 
+msgid "Open the webtrees page to add a partner to this individual"
+msgstr "Open the webtrees page to add a partner to this individual"
+
+#: 
+msgid "Open the webtrees page to add a parent to this individual"
+msgstr "Open the webtrees page to add a parent to this individual"
+
+#: 
+msgid "Open the webtrees page for changing family members in a new tab or window."
+msgstr "Open the webtrees page for changing family members in a new tab or window."
 
