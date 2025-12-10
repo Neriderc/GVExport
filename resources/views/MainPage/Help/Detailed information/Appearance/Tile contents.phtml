@@ -57,7 +57,7 @@ $help = new Help();
     </li>
     <li><?= I18N::translate('City only'); ?> - <?= I18N::translate('only the first section of the place name is used, up to the first comma. For example, &quot;London, England, United Kingdom&quot; would be shortened to &quot;London&quot;'); ?>.
     </li>
-    <li><?= I18N::translate('City and country'); ?> - <?= I18N::translate('the first and last section of the place name is used, using commas to split the sections. For example, &quot;London, England, United Kingdom&quot; would be shortened to &quot;London, United Kingdom&quot;'); ?>.
+    <li><?= I18N::translate('City and country'); ?> - <?= I18N::translate('the first and last section of the place name is used, using commas to split the sections. For example, &quot;London, England, United Kingdom&quot; would be shortened to &quot;London, United Kingdom&quot;. This option will also convert a country code (like NZ or GBR) to the full name, and will translate that name to the language set in webtrees if webtrees has a translation available.'); ?>.
     </li>
     <li><?= I18N::translate('City and 2 letter ISO country code'); ?> - <?= I18N::translate('the first and last section of the place name is used, using commas to split the sections. The country is then converted to the ISO3166-1-Alpha-2 country code. <br>For example, &quot;Calgary, Alberta, Canada&quot; would be shortened to &quot;Calgary, CA&quot;'); ?>
     </li>
