@@ -825,7 +825,7 @@ msgstr "Eine neue Startperson wurde zu den %s bereits Existierenden hinzugefügt
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/Rq4HsawCjQ0CuWW3I2SoDIJM.png
 #: 
 msgid "Diagram will be rendered in browser as server doesn't support photo shapes"
-msgstr "Das Diagramm wird im Browser gerendert, da der Server keine Fotoformen unterstützt"
+msgstr "Das Diagramm wird im Browser gerendert, da der Server keine geformten Fotos unterstützt"
 
 #. One of the options in the new feature to change the shape of photos:  https://s3.eu-west-1.amazonaws.com/po-pub/i/xt0dCFkQXFZVcva3B9ae0WOL.png
 #: 
@@ -1733,7 +1733,8 @@ msgstr "der Ortsname wird vollständig ausgegeben."
 
 #. Part of the help page for place abbreviations:  https://s3.eu-west-1.amazonaws.com/po-pub/i/wc6fNIyVirRJx9txr24YUfnP.png
 #: 
-msgid "the first and last section of the place name is used, using commas to split the sections. For example, &quot;London, England, United Kingdom&quot; would be shortened to &quot;London, United Kingdom&quot;"
+#, fuzzy
+msgid "the first and last section of the place name is used, using commas to split the sections. For example, &quot;London, England, United Kingdom&quot; would be shortened to &quot;London, United Kingdom&quot;. This option will also convert a country code (like NZ or GBR) to the full name, and will translate that name to the language set in webtrees if webtrees has a translation available."
 msgstr "der erste und der letzte Abschnitt des Ortsnamens wird verwendet, wobei Kommas verwendet werden, um die Abschnitte zu trennen. Beispiel: &quot;London, England, Vereinigtes Königreich&quot; würde zu &quot;London, Vereinigtes Königreich&quot; abgekürzt."
 
 #. Part of the help page for place abbreviations:  https://s3.eu-west-1.amazonaws.com/po-pub/i/wc6fNIyVirRJx9txr24YUfnP.png
@@ -2022,7 +2023,7 @@ msgstr "Dies ist die Standardoption."
 #: 
 #, fuzzy
 msgid "In the General Settings section, there are options in the Browser options that lets you choose what happens when you click on an individual or a family in the diagram. One of the options is to show a menu, and the menu has the following options:"
-msgstr "Im Abschnitt \"Allgemeine Einstellungen\" gibt es bei den Browser-Optionen eine Einstellung, mit der man auswählen kann, was passiert, wenn man auf eine Person im Diagramm klickt. Eine Auswahlmöglichkeit besteht darin, ein Menü anzuzeigen, das dann die folgenden Punkte anbietet:"
+msgstr "Im Abschnitt \"Allgemeine Einstellungen\" gibt es bei den Browser-Optionen eine Auswahl, was passiert, wenn man auf eine Person oder Familie im Diagramm klickt. Eine der Auswahlmöglichkeiten zeigt ein Menü mit den folgenden Punkte an:"
 
 #. New option to "Use similar events if information not available". Current state is this is always on, but this new option allows you to force webtrees to only use the "birth" and "death" events to get the date or place. When enabled, this option allows webtrees to look for christening, baptism, burial, and cremation dates.
 #. 
@@ -2411,69 +2412,69 @@ msgstr "Dies beeinflusst auch die Darstellung  von Familien. Wenn ausgewählt, k
 
 #: 
 msgid "Show selected families in different colour"
-msgstr ""
+msgstr "Ausgewählte Familien farblich kennzeichnen"
 
 #: 
 msgid "Add to list of families to highlight"
-msgstr ""
+msgstr "Zur Liste hervorgehobener Familien hinzufügen"
 
 #: 
 msgid "This option lets you set a custom background colour for selected families. The default highlight colour is used by default, but the colour can be customised for each individual. Also see option in Browser Render settings to choose what happens when a family is clicked, as this may be an easier way to add families to this list."
-msgstr ""
+msgstr "Mit dieser Option können Sie eine Hintergrundfarbe für ausgewählte Familien festlegen. Dabei wird die Standard-Hervorhebungsfarbe verwendet; die Farbe kann jedoch auch für jede Familie individuell angepasst werden. Beachten Sie sich auch die Option in den Browser-Rendering-Einstellungen, um auszuwählen, was passiert, wenn auf eine Familie geklickt wird, da dies möglicherweise eine einfachere Möglichkeit ist, um Familien zu dieser Liste hinzuzufügen."
 
 #: 
 msgid "When you click on a family, the webtrees page for that family will open in a new tab or window."
-msgstr ""
+msgstr "Wenn Sie auf eine Familie klicken, wird die webtrees-Seite für diese Familie in einem neuen Tab oder Fenster geöffnet."
 
 #: 
 msgid "If this option is selected, clicking on a family in the diagram will add them to the list of families highlighted with a coloured background for identification in the diagram. See the option \"Show selected families in different colour\", in the Colours section of the Tile design options."
-msgstr ""
+msgstr "Wenn diese Option ausgewählt ist, wird durch Klicken auf eine Familie im Diagramm diese zur Liste der hervorgehobenen Familien mit einem speziellen farbigen Hintergrund zur Identifizierung im Diagramm hinzugefügt. Sehen Sie sich die Option \"Ausgewählte Familie farblich kennzeichnen\" im Abschnitt \"Farben\" der Gestaltungsoptionen für Kästchen an."
 
 #: 
 msgid "If this option is chosen, when a family is clicked on in the diagram, a menu will be shown with the above items to choose from."
-msgstr ""
+msgstr "Wenn diese Option ausgewählt ist und auf eine Familie im Diagramm geklickt wird, wird ein Menü mit den oben genannten Elementen zur Auswahl angezeigt."
 
 #: 
 msgid "When a family is clicked on in the diagram, nothing will happen."
-msgstr ""
+msgstr "Wenn im Diagramm auf eine Familie geklickt wird, passiert nichts."
 
 #: 
 msgid "Action when family clicked"
-msgstr ""
+msgstr "Aktion beim Anklicken einer Familie"
 
 #: 
 msgid "Open family page"
-msgstr ""
+msgstr "Seite der Familie öffnen"
 
 #: 
 msgid "Open the webtrees page for the family in a new tab or window."
-msgstr ""
+msgstr "Öffnen der webtrees-Familienseite in einem neuen Tab oder Fenster"
 
 #: 
 msgid "Open the webtrees page to add a child to the family in a new tab or window."
-msgstr ""
+msgstr "Öffnen der webtrees-Familienseite in einem neuen Tab oder Fenster zum Hinzufügen eine Kindes"
 
 #: 
 msgid "Open the webtrees page for the individual in a new tab or window."
-msgstr ""
+msgstr "Öffnen der webtrees-Seite für die Person in einem neuen Tab oder Fenster"
 
 #: 
 msgid "Add a partner"
-msgstr ""
+msgstr "Einen Partner hinzufügen"
 
 #: 
 msgid "Add a parent"
-msgstr ""
+msgstr "Ein Elternteil hinzufügen"
 
 #: 
 msgid "Open the webtrees page to add a partner to this individual"
-msgstr ""
+msgstr "Öffnen der webtrees-Seite um einen Partner zu dieser Person hinzuzufügen"
 
 #: 
 msgid "Open the webtrees page to add a parent to this individual"
-msgstr ""
+msgstr "Öffnen der webtrees-Seite um ein Elternteil zu dieser Person hinzuzufügen"
 
 #: 
 msgid "Open the webtrees page for changing family members in a new tab or window."
-msgstr ""
+msgstr "Öffnen der webtrees-Seite in einem neuen Tab oder Fenster um Familienmitglieder zu ändern"
 
