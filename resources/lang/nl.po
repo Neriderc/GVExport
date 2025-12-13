@@ -1733,7 +1733,8 @@ msgstr "de plaatsnaam wordt volledig afgedrukt."
 
 #. Part of the help page for place abbreviations:  https://s3.eu-west-1.amazonaws.com/po-pub/i/wc6fNIyVirRJx9txr24YUfnP.png
 #: 
-msgid "the first and last section of the place name is used, using commas to split the sections. For example, &quot;London, England, United Kingdom&quot; would be shortened to &quot;London, United Kingdom&quot;"
+#, fuzzy
+msgid "the first and last section of the place name is used, using commas to split the sections. For example, &quot;London, England, United Kingdom&quot; would be shortened to &quot;London, United Kingdom&quot;. This option will also convert a country code (like NZ or GBR) to the full name, and will translate that name to the language set in webtrees if webtrees has a translation available."
 msgstr "het eerste en laatste deel van de plaatsnaam wordt gebruikt, waarbij komma's worden gebruikt om de delen te splitsen. Bijvoorbeeld &quot;Londen, Engeland, Verenigd Koninkrijk&quot; wordt afgekort tot &quot;Londen, Verenigd Koninkrijk&quot;"
 
 #. Part of the help page for place abbreviations:  https://s3.eu-west-1.amazonaws.com/po-pub/i/wc6fNIyVirRJx9txr24YUfnP.png
@@ -2475,5 +2476,5 @@ msgstr "Open de webtreespagina om een ouder aan deze persoon toe te voegen"
 
 #: 
 msgid "Open the webtrees page for changing family members in a new tab or window."
-msgstr ""
+msgstr "Open de webtreespagina voor het wijzigen van gezinsleden in een nieuw tabblad of venster."
 

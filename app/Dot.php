@@ -1655,8 +1655,13 @@ class Dot {
                 if (!empty($place)) {
                     $place .= ", ";
                 }
-                $place .= trim($place_chunks[$chunk_count - 1]);
-                return $place;
+				// Add last section, but convert to full name if it's ISO
+				$country = Dot::getIsoCountry($settings, trim($place_chunks[$chunk_count - 1]));
+				// Translate city/country combo if translation available in webtrees, else just translate country
+				if ($place . $country === I18N::translate($place . $country)) {
+					return $place . I18N::translate($country);
+				}
+                return I18N::translate($place . $country);
             }
         }
 
@@ -1678,18 +1683,32 @@ class Dot {
             $place .= ", ";
         }
 
-        /* Look up our country in the array of country names.
-           It must be an exact match, or it won't be abbreviated to the country code. */
-        if (isset($settings["countries"][$code][strtolower(trim($place_chunks[$chunk_count - 1]))])) {
-            $place .= $settings["countries"][$code][strtolower(trim($place_chunks[$chunk_count - 1]))];
-        } else {
-            // We didn't find country in the abbreviation list, so just add the full country name
-            if (!empty($place_chunks[$chunk_count - 1])) {
-                $place .= trim($place_chunks[$chunk_count - 1]);
-            }
-        }
+        $place .= Dot::getCountryIso($settings, $place_chunks, $chunk_count, $code);
         return $place;
     }
+	private static function getIsoCountry($settings, string $countryName): string
+	{
+		/* Look up our country code in the array of country codes.
+           It must be an exact match, or it won't be converted to the country name. */
+        if (isset($settings["countries"]['isoToName'][strtoupper(trim($countryName))])) {
+            return $settings["countries"]['isoToName'][strtoupper(trim($countryName))];
+        }
+		// We didn't find country in the abbreviation list, so just add the full country name
+		return trim($countryName);
+	}
+
+	private static function getCountryIso($settings, $place_chunks, $chunk_count, $isoCode) {
+		/* Look up our country in the array of country names.
+           It must be an exact match, or it won't be abbreviated to the country code. */
+        if (isset($settings["countries"][$isoCode][strtolower(trim($place_chunks[$chunk_count - 1]))])) {
+            return $settings["countries"][$isoCode][strtolower(trim($place_chunks[$chunk_count - 1]))];
+        }
+		// We didn't find country in the abbreviation list, so just add the full country name
+		if (!empty($place_chunks[$chunk_count - 1])) {
+			return trim($place_chunks[$chunk_count - 1]);
+		}
+		return '';
+	}
 
     /**
      * Gives back a text with HTML special chars

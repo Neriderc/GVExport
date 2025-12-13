@@ -422,11 +422,12 @@ class Settings
     {
         $countries['iso2'] = $this->loadCountryDataFile('iso2');
         $countries['iso3'] = $this->loadCountryDataFile('iso3');
+        $countries['isoToName'] = $this->loadCountryDataFileToNameArray();
         return $countries;
     }
 
     /**
-     * Loads country data from JSON file
+     * Loads country data from JSON file for converting to ISO code
      *
      * @param $type
      * @return array|false
@@ -446,6 +447,24 @@ class Settings
         $countries = [];
         foreach ($json as $row => $value) {
             $countries[strtolower($row)] = strtoupper($value);
+        }
+        return $countries;
+    }
+
+    /**
+     * Loads country data from JSON file for converting from ISO code to English name
+     *
+     * @param $type
+     * @return array|false
+     */
+    private function loadCountryDataFileToNameArray() {
+        $codeToCountry = file_get_contents(dirname(__FILE__) . "/../resources/data/CountryFromCode.json");
+
+        $countries = [];
+
+        $json = json_decode($codeToCountry, true);
+        foreach ($json as $code => $country) {
+            $countries[strtoupper($code)] = $country;
         }
         return $countries;
     }

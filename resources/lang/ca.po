@@ -1756,7 +1756,8 @@ msgstr "El topònim està imprès íntegrament."
 
 #. Part of the help page for place abbreviations:  https://s3.eu-west-1.amazonaws.com/po-pub/i/wc6fNIyVirRJx9txr24YUfnP.png
 #: 
-msgid "the first and last section of the place name is used, using commas to split the sections. For example, &quot;London, England, United Kingdom&quot; would be shortened to &quot;London, United Kingdom&quot;"
+#, fuzzy
+msgid "the first and last section of the place name is used, using commas to split the sections. For example, &quot;London, England, United Kingdom&quot; would be shortened to &quot;London, United Kingdom&quot;. This option will also convert a country code (like NZ or GBR) to the full name, and will translate that name to the language set in webtrees if webtrees has a translation available."
 msgstr "S'utilitza el primer i l'últim tram del topònim, utilitzant comes per dividir les seccions. Per exemple, \" Londres, Anglaterra, Regne Unit\" s'escurçaria a \" Londres, Regne Unit\""
 
 #. Part of the help page for place abbreviations:  https://s3.eu-west-1.amazonaws.com/po-pub/i/wc6fNIyVirRJx9txr24YUfnP.png
@@ -2502,5 +2503,5 @@ msgstr "Obre la pàgina webtrees per afegir un pare a aquest individu"
 
 #: 
 msgid "Open the webtrees page for changing family members in a new tab or window."
-msgstr ""
+msgstr "Obriu la pàgina webtrees per canviar els membres de la família en una pestanya o finestra nova."
 

@@ -233,8 +233,8 @@ msgid "Individual required"
 msgstr "Osoba je vyžadována"
 
 #: 
-msgid "Generated %s individuals and %s family records"
-msgstr "Vytvořeno %s záznamů osob a %s záznamů rodin"
+msgid "Generated diagram with %s individuals, %s family records, and %s images"
+msgstr "Vytvořen diagram s %s osobami, %s záznamy rodin a %s obrázky"
 
 #: 
 msgid "Invalid starting individual:"
@@ -1732,7 +1732,8 @@ msgstr "zobrazí se celý název místa."
 
 #. Part of the help page for place abbreviations:  https://s3.eu-west-1.amazonaws.com/po-pub/i/wc6fNIyVirRJx9txr24YUfnP.png
 #: 
-msgid "the first and last section of the place name is used, using commas to split the sections. For example, &quot;London, England, United Kingdom&quot; would be shortened to &quot;London, United Kingdom&quot;"
+#, fuzzy
+msgid "the first and last section of the place name is used, using commas to split the sections. For example, &quot;London, England, United Kingdom&quot; would be shortened to &quot;London, United Kingdom&quot;. This option will also convert a country code (like NZ or GBR) to the full name, and will translate that name to the language set in webtrees if webtrees has a translation available."
 msgstr "použije se první a poslední část názvu místa, přičemž se části oddělí čárkami, např. &quot;London, England, United Kingdom&quot; se zkrátí na &quot;London, United Kingdom&quot;."
 
 #. Part of the help page for place abbreviations:  https://s3.eu-west-1.amazonaws.com/po-pub/i/wc6fNIyVirRJx9txr24YUfnP.png
@@ -1978,17 +1979,6 @@ msgstr "Pokud je tato možnost vybrána, při kliknutí na osobu v diagramu se z
 msgid "When an individual is clicked on in the diagram, nothing will happen."
 msgstr "Když kliknete na osobu v diagramu, nic se nestane."
 
-#. Part of the help text for the option "Action when individual clicked".
-#. https://s3.eu-west-1.amazonaws.com/po-pub/i/oh4Yjz8fjz3l2aFFkAV608mv.png
-#: 
-msgid "Note that there is currently no option for what to do when a family record is clicked on in the diagram. However, the option to add URLs to individuals and families will also affect families in the browser diagram. That is, if you click a family then if this option is enabled, the family page will open in webtrees."
-msgstr "Všimněte si, že momentálně neexistuje žádná možnost nastavit, co dělat, když kliknete na rodinný záznam v diagramu. Možnost přidávat URL adresy k jednotlivcům a rodinám však ovlivní i rodiny v prohlížeči diagramu. To znamená, že pokud kliknete na rodinu, a tato možnost je povolena, stránka rodiny se otevře ve webtrees."
-
-#. An extra paragraph for the section on URL links in the help page:  https://s3.eu-west-1.amazonaws.com/po-pub/i/4Vxx95kI54pojXyfcC4CvyYc.png
-#: 
-msgid "Also see \\'Action when individual clicked\\' in the Browser render settings."
-msgstr "Podívejte se také na \\'Akce po kliknutí na osobu\\' v nastavení vykreslování prohlížeče."
-
 #. Option for what to do when individual clicked on in diagram
 #: 
 msgid "Add to list of individuals to highlight"
@@ -2031,8 +2021,8 @@ msgstr "Toto je výchozí možnost."
 
 #. Part of the help text explaining the context menu when you click on an individual (if enabled): https://s3.eu-west-1.amazonaws.com/po-pub/i/JbiHUCluK5zzUvYxjbtvg3LS.png
 #: 
-msgid "In the General Settings section, there is an option in the Browser options that lets you choose what happens when you click on an individual in the diagram. One of the options is to show a menu, and the menu has the following options:"
-msgstr "V sekci Obecná nastavení je v možnostech prohlížeče volba, která vám umožní zvolit, co se stane při kliknutí na osobu v diagramu. Jednou z možností je zobrazit nabídku, která obsahuje následující volby:"
+msgid "In the General Settings section, there are options in the Browser options that lets you choose what happens when you click on an individual or a family in the diagram. One of the options is to show a menu, and the menu has the following options:"
+msgstr "V sekci Obecná nastavení se nachází volby v nastavení prohlížeče, které umožňují zvolit, co se stane při kliknutí na osobu nebo rodinu v diagramu. Jednou z možností je zobrazení nabídky, která obsahuje následující volby:"
 
 #. New option to "Use similar events if information not available". Current state is this is always on, but this new option allows you to force webtrees to only use the "birth" and "death" events to get the date or place. When enabled, this option allows webtrees to look for christening, baptism, burial, and cremation dates.
 #. 
@@ -2287,8 +2277,8 @@ msgstr "K osobám a rodinám přidat URL"
 #. A new message that pops up when diagram is downloaded:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/XxcKvjkqSJtgUHUpr5e8vBOL.png
 #: 
-msgid "Downloaded diagram with %s individuals and %s families."
-msgstr "Stažený diagram s %s osobami a %s rodinami."
+msgid "'Downloaded diagram with %s individuals, %s families, and %s images."
+msgstr "Stažený diagram s %s osobami, %s rodinami a %s obrázky."
 
 #. Message that shows if Graphviz installed but diagram can't be rendered on server due to options chosen:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/UBXubBpivJyzaSPmBiQoKicp.png
@@ -2417,4 +2407,72 @@ msgstr "Zobrazit datum rozvodu"
 #: 
 msgid "This also affects families in the diagram. If this option is enabled, you can click on family records to open the family webtrees page. Also see \\'Action when individual clicked\\' in the Browser render settings."
 msgstr "Tato volba ovlivní také políčko rodiny v diagramu. Pokud je povolena, můžete kliknutím na záznam rodiny otevřít její stránku ve webtrees. Viz také \\'Akce po kliknutí na osobu\\' v nastavení \\'Vykreslování v prohlížeči\\'."
+
+#: 
+msgid "Show selected families in different colour"
+msgstr "Zobrazit vybrané rodiny odlišnou barvou"
+
+#: 
+msgid "Add to list of families to highlight"
+msgstr "Přidat do seznamu zvýrazněných rodin"
+
+#: 
+msgid "This option lets you set a custom background colour for selected families. The default highlight colour is used by default, but the colour can be customised for each individual. Also see option in Browser Render settings to choose what happens when a family is clicked, as this may be an easier way to add families to this list."
+msgstr "Tato volba umožňuje nastavit vlastní barvu pozadí pro vybrané rodiny. Ve výchozím stavu se používá výchozí barva zvýraznění, ale barvu lze přizpůsobit pro každou rodinu zvlášť. Viz také volbu v nastavení vykreslení prohlížeče, která určuje, co se stane po kliknutí na rodinu – může to být jednodušší způsob, jak rodiny do tohoto seznamu přidat."
+
+#: 
+msgid "When you click on a family, the webtrees page for that family will open in a new tab or window."
+msgstr "Po kliknutí na rodinu se stránka této rodiny ve webtrees otevře na nové kartě nebo v novém okně."
+
+#: 
+msgid "If this option is selected, clicking on a family in the diagram will add them to the list of families highlighted with a coloured background for identification in the diagram. See the option \"Show selected families in different colour\", in the Colours section of the Tile design options."
+msgstr "Pokud je tato volba zapnutá, kliknutím na rodinu v diagramu ji přidáte do seznamu rodin zvýrazněných barevným pozadím pro snadnou identifikaci v diagramu. Viz také volbu \"Zobrazit vybrané rodiny odlišnou barvou\" v sekci Barvy v nastavení vzhledu dlaždic."
+
+#: 
+msgid "If this option is chosen, when a family is clicked on in the diagram, a menu will be shown with the above items to choose from."
+msgstr "Pokud je tato volba zvolena, po kliknutí na rodinu v diagramu se zobrazí nabídka s výše uvedenými možnostmi."
+
+#: 
+msgid "When a family is clicked on in the diagram, nothing will happen."
+msgstr "Po kliknutí na rodinu v diagramu se nic nestane."
+
+#: 
+msgid "Action when family clicked"
+msgstr "Akce při kliknutí na rodinu"
+
+#: 
+msgid "Open family page"
+msgstr "Otevřít stránku rodiny"
+
+#: 
+msgid "Open the webtrees page for the family in a new tab or window."
+msgstr "Otevře stránku rodiny ve webtrees na nové kartě nebo v novém okně."
+
+#: 
+msgid "Open the webtrees page to add a child to the family in a new tab or window."
+msgstr "Otevře stránku ve webtrees pro přidání dítěte do rodiny na nové kartě nebo v novém okně."
+
+#: 
+msgid "Open the webtrees page for the individual in a new tab or window."
+msgstr "Otevře stránku osoby ve webtrees na nové kartě nebo v novém okně."
+
+#: 
+msgid "Add a partner"
+msgstr "Přidat partnera"
+
+#: 
+msgid "Add a parent"
+msgstr "Přidat rodiče"
+
+#: 
+msgid "Open the webtrees page to add a partner to this individual"
+msgstr "Otevře stránku ve webtrees pro přidání partnera k této osobě"
+
+#: 
+msgid "Open the webtrees page to add a parent to this individual"
+msgstr "Otevře stránku ve webtrees pro přidání rodiče k této osobě"
+
+#: 
+msgid "Open the webtrees page for changing family members in a new tab or window."
+msgstr "Otevře stránku ve webtrees pro úpravu členů rodiny na nové kartě nebo v novém okně"
 
