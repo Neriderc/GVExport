@@ -78,6 +78,7 @@ class GVExport extends AbstractModule implements ModuleCustomInterface, ModuleCh
     use ModuleConfigTrait;
     public const CUSTOM_VERSION     = '2.2.4';
     public const CUSTOM_MODULE      = "GVExport";
+    public const CUSTOM_DESCRIPTION = "Generate a diagram of everyone in your family tree. Highly customisable, with the ability to navigate in your browser or export the diagram to a file.";
     public const CUSTOM_LATEST      = 'https://raw.githubusercontent.com/Neriderc/' . self::CUSTOM_MODULE. '/main/latest-version.txt';
     public const SUPPORT_URL        = 'https://github.com/Neriderc/GVExport';
     public string $base_url;
@@ -110,7 +111,7 @@ class GVExport extends AbstractModule implements ModuleCustomInterface, ModuleCh
 
     public function description(): string
     {
-        return 'This is the "GVExport" module';
+        return I18N::translate(self::CUSTOM_DESCRIPTION);
     }
 
     public function chartMenuClass(): string
