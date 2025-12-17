@@ -233,9 +233,8 @@ msgid "Individual required"
 msgstr "Persoon vereist"
 
 #: 
-#, fuzzy
 msgid "Generated diagram with %s individuals, %s family records, and %s images"
-msgstr "%s persoons- en %s gezinsrecords gegenereerd"
+msgstr "Diagram met %s personen, %s gezinsrecords en %s afbeeldingen gegenereerd"
 
 #: 
 msgid "Invalid starting individual:"
@@ -1733,9 +1732,8 @@ msgstr "de plaatsnaam wordt volledig afgedrukt."
 
 #. Part of the help page for place abbreviations:  https://s3.eu-west-1.amazonaws.com/po-pub/i/wc6fNIyVirRJx9txr24YUfnP.png
 #: 
-#, fuzzy
 msgid "the first and last section of the place name is used, using commas to split the sections. For example, &quot;London, England, United Kingdom&quot; would be shortened to &quot;London, United Kingdom&quot;. This option will also convert a country code (like NZ or GBR) to the full name, and will translate that name to the language set in webtrees if webtrees has a translation available."
-msgstr "het eerste en laatste deel van de plaatsnaam wordt gebruikt, waarbij komma's worden gebruikt om de delen te splitsen. Bijvoorbeeld &quot;Londen, Engeland, Verenigd Koninkrijk&quot; wordt afgekort tot &quot;Londen, Verenigd Koninkrijk&quot;"
+msgstr "het eerste en laatste deel van de plaatsnaam worden gebruikt, waarbij komma's worden gebruikt om de delen te scheiden. Bijvoorbeeld, &quot;Londen, Engeland, Verenigd Koninkrijk&quot; zou worden afgekort tot &quot;Londen, Verenigd Koninkrijk&quot;. Deze optie zet ook een landcode (zoals NZ of GBR) om in de volledige naam en vertaalt die naam naar de taal die is ingesteld in webtrees, als webtrees een vertaling beschikbaar heeft."
 
 #. Part of the help page for place abbreviations:  https://s3.eu-west-1.amazonaws.com/po-pub/i/wc6fNIyVirRJx9txr24YUfnP.png
 #: 
@@ -2021,9 +2019,8 @@ msgstr "Dit is de standaardoptie."
 
 #. Part of the help text explaining the context menu when you click on an individual (if enabled): https://s3.eu-west-1.amazonaws.com/po-pub/i/JbiHUCluK5zzUvYxjbtvg3LS.png
 #: 
-#, fuzzy
 msgid "In the General Settings section, there are options in the Browser options that lets you choose what happens when you click on an individual or a family in the diagram. One of the options is to show a menu, and the menu has the following options:"
-msgstr "In de sectie Algemene instellingen is er een optie in de Browseropties waarmee u kunt kiezen wat er gebeurt als u op een persoon in het diagram klikt. Een van de opties is om een menu weer te geven, en het menu heeft de volgende opties:"
+msgstr "In het gedeelte Algemene instellingen zijn er opties in de browseropties waarmee u kunt kiezen wat er gebeurt wanneer u op een persoon of een gezin in het diagram klikt. Een van de opties is om een menu weer te geven, en het menu heeft de volgende opties:"
 
 #. New option to "Use similar events if information not available". Current state is this is always on, but this new option allows you to force webtrees to only use the "birth" and "death" events to get the date or place. When enabled, this option allows webtrees to look for christening, baptism, burial, and cremation dates.
 #. 
@@ -2278,9 +2275,8 @@ msgstr "URL toevoegen naar personen en gezinnen"
 #. A new message that pops up when diagram is downloaded:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/XxcKvjkqSJtgUHUpr5e8vBOL.png
 #: 
-#, fuzzy
 msgid "'Downloaded diagram with %s individuals, %s families, and %s images."
-msgstr "Diagram met %s personen en %s gezinnen gedownload."
+msgstr "Diagram met %s personen, %s gezinnen en %s afbeeldingen gedownload."
 
 #. Message that shows if Graphviz installed but diagram can't be rendered on server due to options chosen:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/UBXubBpivJyzaSPmBiQoKicp.png
@@ -2477,4 +2473,16 @@ msgstr "Open de webtreespagina om een ouder aan deze persoon toe te voegen"
 #: 
 msgid "Open the webtrees page for changing family members in a new tab or window."
 msgstr "Open de webtreespagina voor het wijzigen van gezinsleden in een nieuw tabblad of venster."
+
+#: 
+msgid "Living"
+msgstr "Levend"
+
+#: 
+msgid "Deceased"
+msgstr "Overleden"
+
+#: 
+msgid "Generate a diagram of everyone in your family tree. Highly customisable, with the ability to navigate in your browser or export the diagram to a file."
+msgstr "Maak een diagram van iedereen in uw stamboom. Zeer aanpasbaar, met de mogelijkheid om in uw browser te navigeren of het diagram naar een bestand te exporteren."
 
