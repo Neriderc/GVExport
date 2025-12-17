@@ -29,10 +29,6 @@ const UI = {
      * @param message
      */
     showToast: function(message) {
-        // If test suite is running, don't show toasts. We aren't checking them anyway, and tests
-        // fail because the toast appears over an item so the test thinks it can't access the element
-        if (window.Cypress) return;
-
         const toastParent = document.getElementById("toast-container");
         if (toastParent !== null) {
 

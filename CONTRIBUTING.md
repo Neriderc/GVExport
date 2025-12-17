@@ -69,7 +69,7 @@ It's all manual currently, please [create an issue](https://github.com/Neriderc/
 
 If you're keen and available to do testing of pull requests or regression testing before releases, please [create an issue](https://github.com/Neriderc/GVExport/issues) and volunteer.
 
-We would also happily accept automated tests if that's your thing. We have been experimenting with Cypress for functional testing.
+We would also happily accept automated tests if that's your thing. We have been experimenting with Playwright for functional testing.
 
 # How to report a bug
 If you find a security vulnerability, do NOT open an issue. See [SECURITY.md](https://github.com/Neriderc/GVExport/blob/master/SECURITY.md)) for the email address to contact.

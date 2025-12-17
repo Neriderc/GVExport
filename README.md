@@ -54,7 +54,7 @@ If you'd like to contribute to GVExport, great! You can contribute by:
 - Creating issues for any new ideas you have
 - Creating issues if you find bugs
 - Contributing code - check out the Issues for things that need attention. If you have changes you want to make not listed in an issue, please create one, then you can link your pull request.
-- Testing - please [create an issue](https://github.com/Neriderc/GVExport/issues) for any bugs you find. If you're familiar with Cypress, [create an issue](https://github.com/Neriderc/GVExport/issues) and volunteer to build on our current basic automated tests.
+- Testing - please [create an issue](https://github.com/Neriderc/GVExport/issues) for any bugs you find. If you're familiar with Playwright, [create an issue](https://github.com/Neriderc/GVExport/issues) and volunteer to build on our current basic automated tests.
 - Documentation - anyone can update [our Wiki](https://github.com/Neriderc/GVExport/wiki)
 - Translating - you can translate into a language you are fluent in by joining the [PO Editor project](https://poeditor.com/join/project/YqPRBXZnlf). Discussion on translating can be done by creating an issue.
 

@@ -1732,9 +1732,8 @@ msgstr "zobrazí se celý název místa."
 
 #. Part of the help page for place abbreviations:  https://s3.eu-west-1.amazonaws.com/po-pub/i/wc6fNIyVirRJx9txr24YUfnP.png
 #: 
-#, fuzzy
 msgid "the first and last section of the place name is used, using commas to split the sections. For example, &quot;London, England, United Kingdom&quot; would be shortened to &quot;London, United Kingdom&quot;. This option will also convert a country code (like NZ or GBR) to the full name, and will translate that name to the language set in webtrees if webtrees has a translation available."
-msgstr "použije se první a poslední část názvu místa, přičemž se části oddělí čárkami, např. &quot;London, England, United Kingdom&quot; se zkrátí na &quot;London, United Kingdom&quot;."
+msgstr "Použije se první a poslední část názvu místa, přičemž jednotlivé části jsou odděleny čárkami. Například &quot;London, England, United Kingdom&quot; se zkrátí na &quot;London, United Kingdom&quot;. Tato volba také převede kód země (např. NZ nebo GBR) na plný název a přeloží jej do jazyka nastaveného ve webtrees, pokud je překlad k dispozici."
 
 #. Part of the help page for place abbreviations:  https://s3.eu-west-1.amazonaws.com/po-pub/i/wc6fNIyVirRJx9txr24YUfnP.png
 #: 
@@ -2475,4 +2474,16 @@ msgstr "Otevře stránku ve webtrees pro přidání rodiče k této osobě"
 #: 
 msgid "Open the webtrees page for changing family members in a new tab or window."
 msgstr "Otevře stránku ve webtrees pro úpravu členů rodiny na nové kartě nebo v novém okně"
+
+#: 
+msgid "Living"
+msgstr "Žijící"
+
+#: 
+msgid "Deceased"
+msgstr "Zemřelí"
+
+#: 
+msgid "Generate a diagram of everyone in your family tree. Highly customisable, with the ability to navigate in your browser or export the diagram to a file."
+msgstr "Modul pro generování diagramu všech osob v rodokmenu s pokročilými možnostmi přizpůsobení, procházením v prohlížeči a exportem do souboru."
 
