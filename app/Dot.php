@@ -628,8 +628,8 @@ class Dot {
 						$marriageplace_array[$printCount] = "";
 					}
 
-					if (empty($marriageType_array[$printCount]) && empty($marriagedate_array[$printCount]) && empty($marriageplace_array[$printCount])) {
-						$marriageEmpty_array[$printCount] = I18N::translate('Married');
+					if (empty($marriageType_array[$printCount]) && empty($marriagedate_array[$printCount]) && empty($marriageplace_array[$printCount]) && $this->settings['show_event_text_families']) {
+						$marriageEmpty_array[$printCount] = I18N::translate('Marriage');
 					} else {
 						$marriageEmpty_array[$printCount] = "";
 					}
@@ -676,8 +676,11 @@ class Dot {
 					$divorceplace_array[$printCount] = "";
 				}
 
-                        	$divorceEmpty_array[$printCount] = I18N::translate('Divorced');
-		
+				if (empty($divorcedate_array[$printCount]) && empty($divorceplace_array[$printCount]) && $this->settings['show_event_text_families']) {
+					$divorceEmpty_array[$printCount] =  I18N::translate('Divorce');
+				} else {
+					$divorceEmpty_array[$printCount] = "";
+				}
 				if ($this->settings["show_divorce_first_image"] && $this->isPhotoRequired()) {
 					[$pic_divorce_first_array[$printCount], 
 					 $pic_divorce_first_title_array[$printCount], 
@@ -775,7 +778,7 @@ class Dot {
 					if (($hasMarriages) || (! $hasDivorces)) {
 						$out .= "<TR>";
 						$out .= "<TD>";
-						$out .= "<FONT COLOR=\"". $this->settings["font_colour_details"] ."\" POINT-SIZE=\"" . ($this->settings["font_size"]) ."\">" . ($prefix_array[$i] ?? '') . (empty($marriageType_array[$i])?"":$marriageType_array[$i]) . (empty($marriageEmpty_array[$i])?"":$marriageEmpty_array[$i]) . " " . (empty($marriagedate_array[$i])?"":$marriagedate_array[$i]) . " " . (empty($marriageplace_array[$i])?"":"(".$marriageplace_array[$i].")") . "</FONT><BR />";
+						$out .= "<FONT COLOR=\"". $this->settings["font_colour_details"] ."\" POINT-SIZE=\"" . ($this->settings["font_size"]) ."\">" . ($prefix_array[$i] ?? '') . (empty($marriageType_array[$i])?"":$marriageType_array[$i]) . (empty($marriageEmpty_array[$i])?"":$marriageEmpty_array[$i] . " ") . (empty($marriagedate_array[$i])?"":$marriagedate_array[$i] . " ") . (empty($marriageplace_array[$i])?"":"(".$marriageplace_array[$i].")") . "</FONT><BR />";
 						$out .= "</TD>";
 	
 						if ($this->isPhotoRequired()) {
@@ -789,7 +792,7 @@ class Dot {
 					if ($hasDivorces) {
 						$out .= "<TR>";
 						$out .= "<TD>";
-						$out .= "<FONT COLOR=\"". $this->settings["font_colour_details"] ."\" POINT-SIZE=\"" . ($this->settings["font_size"]) ."\">" . ($prefix_array[$i] ?? '') . " " . (empty($divorceEmpty_array[$i])?"":$divorceEmpty_array[$i]) . " " . (empty($divorcedate_array[$i])?"":$divorcedate_array[$i]) . " " . (empty($divorceplace_array[$i])?"":"(".$divorceplace_array[$i].")") . "</FONT><BR />";
+						$out .= "<FONT COLOR=\"". $this->settings["font_colour_details"] ."\" POINT-SIZE=\"" . ($this->settings["font_size"]) ."\">" . ($prefix_array[$i] ?? '') . (empty($divorceEmpty_array[$i])?"":$divorceEmpty_array[$i] . " ") . (empty($divorcedate_array[$i])?"":$divorcedate_array[$i] . " ") . (empty($divorceplace_array[$i])?"":"(".$divorceplace_array[$i].")") . "</FONT><BR />";
 						$out .= "</TD>";
 	
 						if ($this->isPhotoRequired()) {
@@ -836,7 +839,7 @@ class Dot {
 						$out .= ", label=" . "<<TABLE border=\"0\" CELLPADDING=\"5\" CELLSPACING=\"0\"><TR><TD>";
 					}
 					if ($hasMarriages) {
-						$out .= "<FONT COLOR=\"". $this->settings["font_colour_details"] ."\" POINT-SIZE=\"" . ($this->settings["font_size"]) ."\">" . (empty($prefix_array[$i])?"":$prefix_array[$i]) . (empty($marriageType_array[$i])?"":$marriageType_array[$i]) . (empty($marriageEmpty_array[$i])?"":$marriageEmpty_array[$i]) . " " . (empty($marriagedate_array[$i])?"":$marriagedate_array[$i]) . "<BR />" . (empty($marriageplace_array[$i])?"":"(".$marriageplace_array[$i].")") . "</FONT>";
+						$out .= "<FONT COLOR=\"". $this->settings["font_colour_details"] ."\" POINT-SIZE=\"" . ($this->settings["font_size"]) ."\">" . (empty($prefix_array[$i])?"":$prefix_array[$i]) . (empty($marriageType_array[$i])?"":$marriageType_array[$i]) . (empty($marriageEmpty_array[$i])?"":$marriageEmpty_array[$i] . " ") . (empty($marriagedate_array[$i])?"":$marriagedate_array[$i]) . "<BR />" . (empty($marriageplace_array[$i])?"":"(".$marriageplace_array[$i].")") . "</FONT>";
 
 						if ($this->isPhotoRequired()) {
 							if ($this->settings["show_marriage_first_image"] && !empty($pic_marriage_first_array[$i])) {
@@ -847,7 +850,7 @@ class Dot {
 						}
 					}
 					if ($hasDivorces) {
-						$out .= "<FONT COLOR=\"". $this->settings["font_colour_details"] ."\" POINT-SIZE=\"" . ($this->settings["font_size"]) ."\">" . (empty($prefix_array[$i])?"":$prefix_array[$i]) . " " . (empty($divorceEmpty_array[$i])?"":$divorceEmpty_array[$i]) . " " . (empty($divorcedate_array[$i])?"":$divorcedate_array[$i]) . "<BR />" . (empty($divorceplace_array[$i])?"":"(".$divorceplace_array[$i].")") . "</FONT>";
+						$out .= "<FONT COLOR=\"". $this->settings["font_colour_details"] ."\" POINT-SIZE=\"" . ($this->settings["font_size"]) ."\">" . (empty($prefix_array[$i])?"":$prefix_array[$i]) . (empty($divorceEmpty_array[$i])?"":$divorceEmpty_array[$i] . " ") . (empty($divorcedate_array[$i])?"":$divorcedate_array[$i]) . "<BR />" . (empty($divorceplace_array[$i])?"":"(".$divorceplace_array[$i].")") . "</FONT>";
 
 						if ($this->isPhotoRequired()) {
 							if ($this->settings["show_divorce_first_image"] && !empty($pic_divorce_first_array[$i])) {

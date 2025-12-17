@@ -143,6 +143,7 @@ export const ENGLISH_TERMS = [
 'Show divorces',
 'Show only first divorce',
 'Show divorce place',
+'Show events as text if no date',
 
 'Approximate size of diagram as PDF',
 'Diagram',

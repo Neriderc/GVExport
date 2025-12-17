@@ -202,6 +202,7 @@ class FormSubmission
         $settings['show_indi_sex'] = isset($vars['show_indi_sex']);
         $settings['show_xref_individuals'] = isset($vars['show_xref_individuals']);
         $settings['show_xref_families'] = isset($vars['show_xref_families']);
+        $settings['show_event_text_families'] = isset($vars['show_event_text_families']);
         $settings['show_pedigree_type'] = isset($vars['show_pedigree_type']);
         $settings['add_links'] = isset($vars['add_links']);
 
