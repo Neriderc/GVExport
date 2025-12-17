@@ -963,7 +963,3 @@ const Form = {
         }
     },
 }
-
-if (typeof Cypress !== 'undefined') {
-    window.Form = Form;
-}

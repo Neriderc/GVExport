@@ -250,11 +250,6 @@ const Data = {
             const heightInches = height / dpi;
             const doc = new window.jspdf.jsPDF({orientation: orientation, format: [widthInches, heightInches], unit: 'in', compress: true});
             doc.addImage(imgData, "PNG", 0, 0, widthInches, heightInches);
-            // If running test suite, don't actually trigger download of data
-            // We have generated it so know it works
-            if (!window.Cypress) {
-                doc.save(download_file_name + ".pdf");
-            }
         },
 
         /**
@@ -268,11 +263,6 @@ const Data = {
             downloadLinkElement.href = URL;
             downloadLinkElement.download = filename;
             document.body.appendChild(downloadLinkElement);
-            // If running test suite, don't actually trigger download of data
-            // We have generated it so know it works
-            if (!window.Cypress) {
-                downloadLinkElement.click();
-            }
             document.body.removeChild(downloadLinkElement);
         },
     },
