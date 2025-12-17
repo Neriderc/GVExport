@@ -39,8 +39,6 @@ export function runSharedTranslationTests(role: 'guest' | 'user') {
         ];
 
         const NON_ENGLISH_LANGUAGES_FAIL_EXPECTED = [
-        'Deutsch',
-        'català',
         'norsk bokmål',
         'русский',
         'polski',
@@ -53,6 +51,7 @@ export function runSharedTranslationTests(role: 'guest' | 'user') {
             Deutsch: ['Oval', 'Diagram'],
             Nederlands: ['Partners', 'Diagram', 'Download', 'Help'],
             čeština: ['Font', 'Diagram', 'Reset'],
+            català: ['Font', 'Diagram', 'Rectangle', 'Oval'],
         };
 
         // Expect to pass these tests

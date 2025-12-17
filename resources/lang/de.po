@@ -2478,3 +2478,15 @@ msgstr "Öffnen der webtrees-Seite um ein Elternteil zu dieser Person hinzuzufü
 msgid "Open the webtrees page for changing family members in a new tab or window."
 msgstr "Öffnen der webtrees-Seite in einem neuen Tab oder Fenster um Familienmitglieder zu ändern"
 
+#: 
+msgid "Living"
+msgstr "lebend"
+
+#: 
+msgid "Deceased"
+msgstr "verstorben"
+
+#: 
+msgid "Generate a diagram of everyone in your family tree. Highly customisable, with the ability to navigate in your browser or export the diagram to a file."
+msgstr "Erzeuge ein Diagramm von jedem in deiner Familie. Sehr viele Einstellmöglichkeiten, man kann im Browser navigieren oder das Diagramm in eine Datei exportieren."
+

@@ -2505,3 +2505,15 @@ msgstr "Obre la pàgina webtrees per afegir un pare a aquest individu"
 msgid "Open the webtrees page for changing family members in a new tab or window."
 msgstr "Obriu la pàgina webtrees per canviar els membres de la família en una pestanya o finestra nova."
 
+#: 
+msgid "Living"
+msgstr "Viure"
+
+#: 
+msgid "Deceased"
+msgstr "Difunt"
+
+#: 
+msgid "Generate a diagram of everyone in your family tree. Highly customisable, with the ability to navigate in your browser or export the diagram to a file."
+msgstr "Genera un diagrama de tots els membres del teu arbre genealògic. Altament personalitzable, amb la possibilitat de navegar pel navegador o exportar el diagrama a un fitxer."
+
