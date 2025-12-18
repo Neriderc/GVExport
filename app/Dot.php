@@ -778,10 +778,11 @@ class Dot {
 						$out .= "<TD COLSPAN=\"2\" CELLPADDING=\"0\" PORT=\"marr\" BGCOLOR=\"" . $fill_colour . "\">";
 					}
 					$out .= "<TABLE  CELLBORDER=\"0\">";
-					if (($hasMarriages) || (! $hasDivorces)) {
+					if (($hasMarriages) || (!$hasDivorces)) {
 						$out .= "<TR>";
 						$out .= "<TD>";
-						$out .= "<FONT COLOR=\"". $this->settings["font_colour_details"] ."\" POINT-SIZE=\"" . ($this->settings["font_size"]) ."\">" . ($marriage_prefix_array[$i] ?? '') . (empty($marriageType_array[$i])?"":$marriageType_array[$i]) . (empty($marriageEmpty_array[$i])?"":$marriageEmpty_array[$i] . " ") . (empty($marriagedate_array[$i])?"":$marriagedate_array[$i] . " ") . (empty($marriageplace_array[$i])?"":"(".$marriageplace_array[$i].")") . "</FONT><BR />";
+						$text = ($marriage_prefix_array[$i] ?? '') . (empty($marriageType_array[$i])?"":$marriageType_array[$i]) . (empty($marriageEmpty_array[$i])?"":$marriageEmpty_array[$i] . " ") . (empty($marriagedate_array[$i])?"":$marriagedate_array[$i] . " ") . (empty($marriageplace_array[$i])?"":"(".$marriageplace_array[$i].")");
+						if (!empty($text)) $out .= "<FONT COLOR=\"". $this->settings["font_colour_details"] ."\" POINT-SIZE=\"" . ($this->settings["font_size"]) ."\">" . $text . "</FONT><BR />";
 						$out .= "</TD>";
 	
 						if ($this->isPhotoRequired()) {
