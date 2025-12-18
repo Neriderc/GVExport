@@ -70,5 +70,28 @@ export function runSharedOptionsTests(role: 'guest' | 'user') {
             await checkNonDefaults(page, false);
         });
 
+        test('option: Show events as text if no date', async ({ page }) => {
+            await loadGVExport(page);
+            await toggleAdvancedPanels(page);
+            await toggleSettingsSubgroups(page);
 
+            // Check not enabled and not showing in diagram
+            await expect(page.locator("#show_event_text_families")).not.toBeChecked();
+            let svgHtml = await page.locator('#rendering svg').innerHTML();
+            expect(svgHtml).not.toContain('∞ Marriage');
+
+            // Enable
+            await page.locator('#show_divorces').check();
+            await page.locator('#diagtype_combined').click();
+
+            // Make sure SVG finishes loading after change
+            const before = await page.locator('#rendering svg').innerHTML();
+            await page.locator('#show_event_text_families').check();
+            await expect(page.locator('#rendering svg')).not.toHaveJSProperty('innerHTML', before);
+
+            // Check that it shows in diagram
+            svgHtml = await page.locator('#rendering svg').innerHTML();
+            expect(svgHtml).toContain('∞ Marriage');
+            expect(svgHtml).toContain('⚮ Divorce');
+        });    
 }
