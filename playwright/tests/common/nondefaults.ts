@@ -166,6 +166,7 @@ export async function checkNonDefaults(page: Page, admin: Boolean) {
     await expect(page.locator('#show_marriage_place')).not.toBeChecked();
     await expect(page.locator('#show_marriage_type')).toBeChecked();
     await expect(page.locator('#show_divorces')).toBeChecked();
+    await expect(page.locator('#show_event_text_families')).toBeChecked();
 
     // DPI
     await expect(page.locator('#dpi')).toHaveValue('100');
@@ -358,6 +359,7 @@ export async function setNonDefaults(page: Page, admin: Boolean) {
     await page.check('#show_marriage_type');
     await page.uncheck('#show_marriages');
     await page.check('#show_divorces');
+    await page.check('#show_event_text_families');
     
     // Diagram DPI
     await page.fill('#dpi', '100');
