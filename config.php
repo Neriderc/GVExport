@@ -50,7 +50,7 @@ return array(
 	'show_divorce_first_image' => false, // Whether to show divorce first image of individuals
 	'divorce_date_year_only' => false, // Whether to show just the year or the full GEDCOM date of divorce
 	'show_divorce_place' => true, // Whether to show the place of divorce on the family record
-	'show_event_text_families' => false, // Whether to add the label "Marriage" or "Divorce" to the event
+	'show_event_text_families' => false, // Whether to add the label "Marriage" or "Divorce" to the event if no date available
 	'show_indi_sex' => false, // Show the sex of the individual in text on the tile
         'show_pedigree_type' => false, // Add a label to arrows to individuals when pedigree type is not "birth"
 	'include_ancestors' => true, // If ancestors should be included when calculating who to show in the diagram
