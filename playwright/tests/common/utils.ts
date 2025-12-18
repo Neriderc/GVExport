@@ -8,6 +8,14 @@ import { Page, test, expect } from '../../fixtures';
 export async function loadGVExport(page: Page) {
     await page.goto('/module/_GVExport_/Chart/gvetest?xref=X1&reset=1');
     await page.waitForURL('/module/_GVExport_/Chart/gvetest?xref=X1');
+
+    // Sometimes our other tests leave the language in the wrong state. Reset if needed.
+    const languageToggle = page.locator('li.menu-language > a.dropdown-toggle');
+
+    if ((await languageToggle.innerText()).trim() !== 'Language') {
+        await languageToggle.click();
+        await page.getByRole('menuitem', { name: 'British English' }).click();
+    }
 };
 
 export async function toggleAdvancedPanels(page: Page) {

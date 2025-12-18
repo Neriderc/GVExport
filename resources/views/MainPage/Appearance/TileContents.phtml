@@ -201,6 +201,10 @@ use Fisharebest\Webtrees\I18N;
                     </div>
                 </div>
             </div>
+            <div>
+                <input type="checkbox" name="vars[show_event_text_families]" id="show_event_text_families" value="show_event_text_families" <?= $vars["show_event_text_families"] ? 'checked' : '' ?>>
+                <label class="check-list width-90pc" for='show_event_text_families'><?= I18N::translate('Show events as text if no date'); ?></label>
+            </div>
         </div>
     </div>
     <div class="col-auto">

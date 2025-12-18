@@ -154,6 +154,7 @@ export async function checkDefaults(page: Page, admin: Boolean) {
     await expect(page.locator('#show_marriage_place')).toBeChecked();
     await expect(page.locator('#show_marriage_type')).not.toBeChecked();
     await expect(page.locator('#show_divorces')).not.toBeChecked();
+    await expect(page.locator('#show_event_text_families')).not.toBeChecked();
     // Diagram DPI
     await expect(page.locator('#dpi')).toHaveValue('72');
     // Spacing
