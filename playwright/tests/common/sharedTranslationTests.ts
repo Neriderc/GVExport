@@ -96,18 +96,5 @@ export function runSharedTranslationTests(role: 'guest' | 'user') {
                 }
             });
         }
-    
-        /**
-         * webtrees saves the set language to the database for the user account, so we need to change it back
-         * to avoid affecting other tests that are looking for the English terms
-         */
-        test('set language back to English', async ({ page }) => {
-            await loadGVExport(page);
-            await page.locator('li.menu-language > a.dropdown-toggle').click();
-            await page.getByRole('menuitem', { name: 'British English' }).click();
-            await expect(page.locator('#rendering svg')).toBeVisible();
-            await expect(page.getByRole('button', { name: 'Language' })).toBeDefined();
-        });
-
     });
 }
