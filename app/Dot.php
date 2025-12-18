@@ -525,7 +525,8 @@ class Dot {
 	function printFamily(string $fid, string $nodeName, SharedNoteList $sharednotes): string
 	{
 		$out = $nodeName;
-		$prefix_array = Array();
+		$marriage_prefix_array = Array();
+		$divorce_prefix_array = Array();
 		$marriageType_array = Array();
 		$marriagedate_array = Array();
 		$marriageplace_array = Array();
@@ -596,7 +597,7 @@ class Dot {
 					// Set marriage prefix only if marriage exists
 					$married = ! empty($marriageFact);
 					if ($married) {
-						$prefix_array[$printCount] = $this->settings["marriage_prefix"] . ' ';
+						$marriage_prefix_array[$printCount] = $this->settings["marriage_prefix"] . ' ';
 					}
 		
 					if ($this->settings["show_marriage_type"]) {
@@ -628,7 +629,7 @@ class Dot {
 						$marriageplace_array[$printCount] = "";
 					}
 
-					if (empty($marriageType_array[$printCount]) && empty($marriagedate_array[$printCount]) && empty($marriageplace_array[$printCount]) && $this->settings['show_event_text_families']) {
+					if (empty($marriageType_array[$printCount]) && (empty($marriagedate_array[$printCount]) || !$this->settings["show_marriage_date"]) && empty($marriageplace_array[$printCount]) && $this->settings['show_event_text_families']) {
 						$marriageEmpty_array[$printCount] = I18N::translate('Marriage');
 					} else {
 						$marriageEmpty_array[$printCount] = "";
@@ -659,7 +660,7 @@ class Dot {
 				// Set divorce prefix only if divorce exists
 				$divorced = ! empty($divorceFact);
 				if ($divorced) {
-					$prefix_array[$printCount] = $this->settings["divorce_prefix"] . ' ';
+					$divorce_prefix_array[$printCount] = $this->settings["divorce_prefix"] . ' ';
 				}
 	
 				// Show divorce year
@@ -676,7 +677,7 @@ class Dot {
 					$divorceplace_array[$printCount] = "";
 				}
 
-				if (empty($divorcedate_array[$printCount]) && empty($divorceplace_array[$printCount]) && $this->settings['show_event_text_families']) {
+				if ((empty($divorcedate_array[$printCount]) || !$this->settings["show_divorce_date"]) && empty($divorceplace_array[$printCount]) && $this->settings['show_event_text_families']) {
 					$divorceEmpty_array[$printCount] =  I18N::translate('Divorce');
 				} else {
 					$divorceEmpty_array[$printCount] = "";
@@ -701,12 +702,14 @@ class Dot {
 
 			$isDummy = substr($fid, 0, 2) === "F_";
 			$hasMarriages = !(
+				empty($marriage_prefix_array[$i]) &&
 				empty($marriagedate_array[$i]) &&
 				empty($marriageplace_array[$i]) &&
 				empty($marriageType_array[$i]) &&
 				empty($marriageEmpty_array[$i]) 
 			);
 			$hasDivorces = !(
+				empty($divorce_prefix_array[$i]) &&
 				empty($divorcedate_array[$i]) &&
 				empty($divorceplace_array[$i]) &&
 				empty($divorceEmpty_array[$i]) 
@@ -714,11 +717,11 @@ class Dot {
 			$hasContent = (
 				($hasMarriages || $hasDivorces) ||
 				!(empty($family) &&
-				empty($prefix_array[$i]))
+				empty($marriage_prefix_array[$i]) && empty($divorce_prefix_array[$i]))
 			);
 			$noPartners = empty($husb_id) && empty($wife_id);
 			$enabled = (
-				($hasMarriages || $hasDivorces) ||
+				($hasContent) ||
 				$this->settings["show_xref_families"]
 			);
 
@@ -778,7 +781,7 @@ class Dot {
 					if (($hasMarriages) || (! $hasDivorces)) {
 						$out .= "<TR>";
 						$out .= "<TD>";
-						$out .= "<FONT COLOR=\"". $this->settings["font_colour_details"] ."\" POINT-SIZE=\"" . ($this->settings["font_size"]) ."\">" . ($prefix_array[$i] ?? '') . (empty($marriageType_array[$i])?"":$marriageType_array[$i]) . (empty($marriageEmpty_array[$i])?"":$marriageEmpty_array[$i] . " ") . (empty($marriagedate_array[$i])?"":$marriagedate_array[$i] . " ") . (empty($marriageplace_array[$i])?"":"(".$marriageplace_array[$i].")") . "</FONT><BR />";
+						$out .= "<FONT COLOR=\"". $this->settings["font_colour_details"] ."\" POINT-SIZE=\"" . ($this->settings["font_size"]) ."\">" . ($marriage_prefix_array[$i] ?? '') . (empty($marriageType_array[$i])?"":$marriageType_array[$i]) . (empty($marriageEmpty_array[$i])?"":$marriageEmpty_array[$i] . " ") . (empty($marriagedate_array[$i])?"":$marriagedate_array[$i] . " ") . (empty($marriageplace_array[$i])?"":"(".$marriageplace_array[$i].")") . "</FONT><BR />";
 						$out .= "</TD>";
 	
 						if ($this->isPhotoRequired()) {
@@ -792,7 +795,7 @@ class Dot {
 					if ($hasDivorces) {
 						$out .= "<TR>";
 						$out .= "<TD>";
-						$out .= "<FONT COLOR=\"". $this->settings["font_colour_details"] ."\" POINT-SIZE=\"" . ($this->settings["font_size"]) ."\">" . ($prefix_array[$i] ?? '') . (empty($divorceEmpty_array[$i])?"":$divorceEmpty_array[$i] . " ") . (empty($divorcedate_array[$i])?"":$divorcedate_array[$i] . " ") . (empty($divorceplace_array[$i])?"":"(".$divorceplace_array[$i].")") . "</FONT><BR />";
+						$out .= "<FONT COLOR=\"". $this->settings["font_colour_details"] ."\" POINT-SIZE=\"" . ($this->settings["font_size"]) ."\">" . ($divorce_prefix_array[$i] ?? '') . (empty($divorceEmpty_array[$i])?"":$divorceEmpty_array[$i] . " ") . (empty($divorcedate_array[$i])?"":$divorcedate_array[$i] . " ") . (empty($divorceplace_array[$i])?"":"(".$divorceplace_array[$i].")") . "</FONT><BR />";
 						$out .= "</TD>";
 	
 						if ($this->isPhotoRequired()) {
@@ -829,8 +832,8 @@ class Dot {
 				} else {
 					$href = "";
 				}
-				// If names, birth details, and death details are all disabled - show a smaller marriage circle to match the small tiles for individuals.
-				if (!$this->settings["show_marriage_date"] && !$this->settings["show_marriage_place"] && !$this->settings["show_divorce_date"] && !$this->settings["show_divorce_place"] && !$this->settings["show_xref_families"]) {
+				// If show marriages and show divorces are disabled - show a smaller marriage circle to match the small tiles for individuals.
+				if (!$this->settings["show_marriages"] && !$this->settings["show_divorces"]) {
 					$out .= "color=\"" . $this->settings["border_col"] . "\",fillcolor=\"" . $fill_colour . "\", $href shape=point, height=0.2, style=filled";
 					$out .= ", label=" . "< >";
 				} else {
@@ -839,7 +842,7 @@ class Dot {
 						$out .= ", label=" . "<<TABLE border=\"0\" CELLPADDING=\"5\" CELLSPACING=\"0\"><TR><TD>";
 					}
 					if ($hasMarriages) {
-						$out .= "<FONT COLOR=\"". $this->settings["font_colour_details"] ."\" POINT-SIZE=\"" . ($this->settings["font_size"]) ."\">" . (empty($prefix_array[$i])?"":$prefix_array[$i]) . (empty($marriageType_array[$i])?"":$marriageType_array[$i]) . (empty($marriageEmpty_array[$i])?"":$marriageEmpty_array[$i] . " ") . (empty($marriagedate_array[$i])?"":$marriagedate_array[$i]) . "<BR />" . (empty($marriageplace_array[$i])?"":"(".$marriageplace_array[$i].")") . "</FONT>";
+						$out .= "<FONT COLOR=\"". $this->settings["font_colour_details"] ."\" POINT-SIZE=\"" . ($this->settings["font_size"]) ."\">" . (empty($marriage_prefix_array[$i])?"": $marriage_prefix_array[$i]) . (empty($marriageType_array[$i])?"":$marriageType_array[$i]) . (empty($marriageEmpty_array[$i])?"":$marriageEmpty_array[$i] . " ") . (empty($marriagedate_array[$i])?"":$marriagedate_array[$i]) . "<BR />" . (empty($marriageplace_array[$i])?"":"(".$marriageplace_array[$i].")") . "</FONT>";
 
 						if ($this->isPhotoRequired()) {
 							if ($this->settings["show_marriage_first_image"] && !empty($pic_marriage_first_array[$i])) {
@@ -850,7 +853,7 @@ class Dot {
 						}
 					}
 					if ($hasDivorces) {
-						$out .= "<FONT COLOR=\"". $this->settings["font_colour_details"] ."\" POINT-SIZE=\"" . ($this->settings["font_size"]) ."\">" . (empty($prefix_array[$i])?"":$prefix_array[$i]) . (empty($divorceEmpty_array[$i])?"":$divorceEmpty_array[$i] . " ") . (empty($divorcedate_array[$i])?"":$divorcedate_array[$i]) . "<BR />" . (empty($divorceplace_array[$i])?"":"(".$divorceplace_array[$i].")") . "</FONT>";
+						$out .= "<FONT COLOR=\"". $this->settings["font_colour_details"] ."\" POINT-SIZE=\"" . ($this->settings["font_size"]) ."\">" . (empty($divorce_prefix_array[$i])?"": $divorce_prefix_array[$i]) . (empty($divorceEmpty_array[$i])?"":$divorceEmpty_array[$i] . " ") . (empty($divorcedate_array[$i])?"":$divorcedate_array[$i]) . "<BR />" . (empty($divorceplace_array[$i])?"":"(".$divorceplace_array[$i].")") . "</FONT>";
 
 						if ($this->isPhotoRequired()) {
 							if ($this->settings["show_divorce_first_image"] && !empty($pic_divorce_first_array[$i])) {
