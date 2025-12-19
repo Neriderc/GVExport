@@ -56,11 +56,11 @@ class ClippingsCart {
 	}
 
 	/**
-	 * get the XREFs in the clippings cart
+	 * Get the XREFs in the clippings cart
 	 *
 	 * @param Tree $tree
 	 *
-	 * @return array
+	 * @return array of XREFs
 	 */
 	private static function getXrefsInCart(Tree $tree): array
 	{
@@ -72,7 +72,7 @@ class ClippingsCart {
 	}
 
 	/**
-	 * get the records in the clippings cart
+	 * Get the records in the clippings cart
 	 *
 	 * @param Tree $tree
 	 *

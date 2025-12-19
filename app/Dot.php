@@ -59,6 +59,13 @@ class Dot {
     private Tree $tree;
     public string $debug_string = "";
 
+	public const DUMMY_INDIVIDUAL_XREF	= 'I_';
+	public const DUMMY_FAMILIY_XREF		= 'F_';						// what happens if someone is using such a XREF ???
+	public const HAS_PARENTS			= 'has_parents';
+	public const ID_HUSBAND				= 'husb_id';
+	public const ID_WIFE				= 'wife_id';
+	public const ID_UNKNOWN				= 'unkn_id';
+
     /**
 	 * Constructor of Dot class
 	 */
@@ -290,11 +297,13 @@ class Dot {
 			}
 		} else {
 		// If individuals in clipping cart and option chosen to use them, then proceed
+
 			$cart = new ClippingsCart($this->tree);
-			$list = (new ClippingsCartList($cart, $this->isPhotoRequired(), $this->settings['dpi'], ($this->settings["diagram_type"] == "combined")))->getLists();
+			$lists = (new ClippingsCartListBuilder($cart, ($this->settings["diagram_type"] == "combined")))->getLists();
+			$enhancedLists = (new ClippingsCartListEnhancer($cart, $lists, $this->isPhotoRequired(), $this->settings['dpi'], ($this->settings["diagram_type"] == "combined")))->enhance();
 			
-			$this->individuals = $list['individuals'];
-			$this->families = $list['families'];
+			$this->individuals = $enhancedLists['individuals'];
+			$this->families = $enhancedLists['families'];
 		}
 
 		// Create shared notes data

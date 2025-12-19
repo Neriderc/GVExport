@@ -13,7 +13,7 @@ use Fisharebest\Webtrees\Registry;
 /**
  * Class to read the clippings cart in order to build up the arrays for individuals and families
  */
-class ClippingsCartList {
+class ClippingsCartListEnhancer {
 
 	private array $individuals = [];
 	private array $families = [];
@@ -23,13 +23,6 @@ class ClippingsCartList {
 	private bool $combinedMode;
 	private int $dpi;
 
-	public const DUMMY_INDIVIDUAL_XREF	= 'I_';
-	public const DUMMY_FAMILIY_XREF		= 'F_';						// what happens if someone is using such a XREF ???
-	public const HAS_PARENTS			= 'has_parents';
-	public const ID_HUSBAND				= 'husb_id';
-	public const ID_WIFE				= 'wife_id';
-	public const ID_UNKNOWN				= 'unkn_id';
-
 	/**
 	 * constructor for this class
 	 *
@@ -38,21 +31,31 @@ class ClippingsCartList {
 	 * @param int $dpi
 	 * @param bool $combinedMode
 	 */
-	function __construct(ClippingsCart $clippingsCart, $photoIsRequired, $dpi, $combinedMode) {
+	function __construct(ClippingsCart $clippingsCart, array $lists, $photoIsRequired, $dpi, $combinedMode) {
 		$this->cart = $clippingsCart;
 		$this->tree = $clippingsCart->tree;
 		$this->dpi = $dpi;
 		$this->photoIsRequired = $photoIsRequired;
 		$this->combinedMode = $combinedMode;
+		$this->individuals = $lists['individuals'];
+		$this->families = $lists['families'];
 	}
 
-
 	/**
-	 * Runs main logic and returns lists of indis and fams from the clippings cart for populating the diagram
+	 * Fill the arrays "individuals" and "families" with their relevant data
+	 *
 	 */
-	public function getLists(): array
-	{
-		$this->createListsFromClippingsCart();
+	public function enhance () {
+		foreach ($this->individuals as $indi) {
+			$record = $indi['record'];
+			if ($this->combinedMode) {
+				$this->enhanceIndividualsList($record);
+			}
+			[$this->individuals[$record->xref()]['pic'], 
+				$this->individuals[$record->xref()]['pic_title'], 
+				$this->individuals[$record->xref()]['pic_link']] = $this->getPhoto($record->xref());
+		}
+
 
 		return [
 			'individuals' => $this->individuals,
@@ -60,56 +63,7 @@ class ClippingsCartList {
 		];
 	}
 
-
-	/**
-	 * Read INDI and FAM from the clippings cart and fill the arrays "individuals" and "families"
-	 *
-	 */
-	private function createListsFromClippingsCart () {
-		$records = ClippingsCart::getRecordsInCart($this->tree);
-		$this->addIndividualsFromClippingsCart($records);
-		$this->addFamiliesFromClippingsCart($records);
-
-		foreach ($records as $record) {
-			if ($record instanceof Individual) {
-				if ($this->combinedMode) {
-					$this->enhanceIndividualsList($record);
-				}
-				[$this->individuals[$record->xref()]['pic'], 
-				 $this->individuals[$record->xref()]['pic_title'], 
-				 $this->individuals[$record->xref()]['pic_link']] = $this->getPhoto($record->xref());
-			} elseif ($record instanceof Family && $this->combinedMode) {
-				$this->addDummyPartner($record, self::ID_HUSBAND);
-				$this->addDummyPartner($record, self::ID_WIFE);
-			}
-		}
-	}
-
-	/**
-	 * if husband or wife are missing for a family we create a dummy one
-	 * that is needed for the "combined" mode
-	 *
-	 * @param Family $family
-	 * @param string $partnerType self::ID_HUSBAND or self::ID_WIFE
-	 */
-	private function addDummyPartner (Family $family, string $partnerType) {
-		if ($partnerType == self::ID_HUSBAND) {
-			$partner = $family->husband();
-		} elseif ($partnerType == self::ID_WIFE) {
-			$partner = $family->wife();
-		} else {
-			return;
-		}
-		if (isset($partner) && !$this->cart->isXrefInCart($partner->xref())) {
-			$fid = $family->xref();
-			$pid = self::DUMMY_INDIVIDUAL_XREF.($partnerType == self::ID_HUSBAND ? 'H' : 'W').$fid;
-			$this->addIndiToList($pid);
-			$this->individuals[$pid]['rel'] = false;
-			$this->individuals[$pid]['fams'][$fid] = $fid;
-			$this->families[$fid][$partnerType] = $pid;
-			$this->families[$fid][self::HAS_PARENTS] = true;
-		}
-	}
+	
 
 	/**
 	 * add information to the arrays "individuals" and "families" about the spouse families or add a dummy spouse family
@@ -138,24 +92,24 @@ class ClippingsCartList {
 	 */
 	private function addDummyFamily (Individual $individual) {
 		$pid = $individual->xref();
-		$this->addFamToList(self::DUMMY_FAMILIY_XREF.$pid);
-		$this->individuals[$pid]['fams'][self::DUMMY_FAMILIY_XREF.$pid] = self::DUMMY_FAMILIY_XREF.$pid;
-		$this->families[self::DUMMY_FAMILIY_XREF.$pid][self::HAS_PARENTS] = true;
+		$this->addFamToList(Dot::DUMMY_FAMILIY_XREF.$pid);
+		$this->individuals[$pid]['fams'][Dot::DUMMY_FAMILIY_XREF.$pid] = Dot::DUMMY_FAMILIY_XREF.$pid;
+		$this->families[Dot::DUMMY_FAMILIY_XREF.$pid][Dot::HAS_PARENTS] = true;
 		if ($individual->sex() == "M") {
-			$this->families[self::DUMMY_FAMILIY_XREF.$pid][self::ID_HUSBAND] = $pid;
-			$this->families[self::DUMMY_FAMILIY_XREF.$pid][self::ID_WIFE] = "";
+			$this->families[Dot::DUMMY_FAMILIY_XREF.$pid][Dot::ID_HUSBAND] = $pid;
+			$this->families[Dot::DUMMY_FAMILIY_XREF.$pid][Dot::ID_WIFE] = "";
 		} elseif ($individual->sex() == "F") {
-			$this->families[self::DUMMY_FAMILIY_XREF.$pid][self::ID_WIFE] = $pid;
-			$this->families[self::DUMMY_FAMILIY_XREF.$pid][self::ID_HUSBAND] = "";
+			$this->families[Dot::DUMMY_FAMILIY_XREF.$pid][Dot::ID_WIFE] = $pid;
+			$this->families[Dot::DUMMY_FAMILIY_XREF.$pid][Dot::ID_HUSBAND] = "";
 		} elseif ($individual->sex() == "X") {
-			$this->families[self::DUMMY_FAMILIY_XREF.$pid][self::ID_UNKNOWN] = $pid;
-			$this->families[self::DUMMY_FAMILIY_XREF.$pid][self::ID_WIFE] = "";
-			$this->families[self::DUMMY_FAMILIY_XREF.$pid][self::ID_HUSBAND] = "";
+			$this->families[Dot::DUMMY_FAMILIY_XREF.$pid][Dot::ID_UNKNOWN] = $pid;
+			$this->families[Dot::DUMMY_FAMILIY_XREF.$pid][Dot::ID_WIFE] = "";
+			$this->families[Dot::DUMMY_FAMILIY_XREF.$pid][Dot::ID_HUSBAND] = "";
 		} else {
 			// unknown gender
-			$this->families[self::DUMMY_FAMILIY_XREF.$pid][self::ID_UNKNOWN] = $pid;
-			$this->families[self::DUMMY_FAMILIY_XREF.$pid][self::ID_WIFE] = "";
-			$this->families[self::DUMMY_FAMILIY_XREF.$pid][self::ID_HUSBAND] = "";
+			$this->families[Dot::DUMMY_FAMILIY_XREF.$pid][Dot::ID_UNKNOWN] = $pid;
+			$this->families[Dot::DUMMY_FAMILIY_XREF.$pid][Dot::ID_WIFE] = "";
+			$this->families[Dot::DUMMY_FAMILIY_XREF.$pid][Dot::ID_HUSBAND] = "";
 		}
 	}
 
@@ -170,41 +124,11 @@ class ClippingsCartList {
 		$fid = $family->xref();
 		$this->individuals[$pid]['fams'][$fid] = $fid;
 		if ($family->husband() && $family->husband()->xref() == $pid) {
-			$this->families[$fid][self::ID_HUSBAND] = $pid;
+			$this->families[$fid][Dot::ID_HUSBAND] = $pid;
 		} else {
-			$this->families[$fid][self::ID_WIFE] = $pid;
+			$this->families[$fid][Dot::ID_WIFE] = $pid;
 		}
-		$this->families[$fid][self::HAS_PARENTS] = true;
-	}
-
-	/**
-	 * read INDI records from the clippings cart and initially fill the array "individuals"
-	 *
-	 * @param array $records
-	 */
-	private function addIndividualsFromClippingsCart (array $records) {
-		foreach ($records as $record) {
-			if ($record instanceof Individual) {
-				$pid = $record->xref();
-				$this->addIndiToList($pid);
-                $this->individuals[$pid]['rel'] = true;
-			}
-		}
-	}
-
-	/**
-	 * read FAM records from the clippings cart and initially fill the array "families"
-	 *
-	 * @param array $records
-	 */
-	private function addFamiliesFromClippingsCart (array $records)
-	{
-		foreach ($records as $record) {
-			if ($record instanceof Family) {
-				$fid = $record->xref();
-				$this->addFamToList($fid);
-			}
-		}
+		$this->families[$fid][Dot::HAS_PARENTS] = true;
 	}
 
 	/**
