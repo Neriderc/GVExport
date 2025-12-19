@@ -1,82 +1,27 @@
 <?php
-/**
- * functions to build individual and family arrays for GVExport from the clippings cart
- *
- * Copyright (C) 2022 Hermann Hartenthaler. All rights reserved.
- *
- * webtrees: online genealogy / web based family history software
- * Copyright (C) 2022 webtrees development team.
- *
- * This program is free software; you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation; either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program; If not, see <https://www.gnu.org/licenses/>.
- *
- * @author Hermann Hartenthaler
- * @license GPL v3 or later
- */
-
-/*
- * tbd:
- * move const to a more global place
- * test: what happens if there are already XREFs using a dummy style i.e. starting with F: or I_W or I_H?
- */
-
-declare(strict_types=1);
-
 namespace vendor\WebtreesModules\gvexport;
 
 use Fisharebest\Webtrees\Fact;
-use Fisharebest\Webtrees\GedcomRecord;
 use Fisharebest\Webtrees\Individual;
 use Fisharebest\Webtrees\Family;
 use Fisharebest\Webtrees\Media;
 use Fisharebest\Webtrees\MediaFile;
-use Fisharebest\Webtrees\Session;
 use Fisharebest\Webtrees\Site;
 use Fisharebest\Webtrees\Tree;
 use Fisharebest\Webtrees\Registry;
 
-use function in_array;
-use function array_filter;
-use function array_keys;
-use function array_map;
-use function uasort;
-use function count;
-use function str_replace;
-
-
 /**
- * class to read the clippings cart in order to build up the arrays for individuals and families
+ * Class to read the clippings cart in order to build up the arrays for individuals and families
  */
-class functionsClippingsCart {
+class ClippingsCartList {
 
-	// ------------ definition of data structures
-
-	/**
-	 * @var $individuals	array as it is defined for GVExport
-	 */
-	private array $individuals;
-
-	/**
-	 * @var $families		array as it is defined for GVExport
-	 */
-	private array $families;
-
+	private array $individuals = [];
+	private array $families = [];
+	private ClippingsCart $cart;
 	private Tree $tree;
 	private bool $photoIsRequired;
 	private bool $combinedMode;
 	private int $dpi;
-
-	// ------------ definition of const
 
 	public const DUMMY_INDIVIDUAL_XREF	= 'I_';
 	public const DUMMY_FAMILIY_XREF		= 'F_';						// what happens if someone is using such a XREF ???
@@ -85,50 +30,43 @@ class functionsClippingsCart {
 	public const ID_WIFE				= 'wife_id';
 	public const ID_UNKNOWN				= 'unkn_id';
 
-	// ------------ definition of methods
-
 	/**
 	 * constructor for this class
 	 *
-	 * @param Tree $tree
+	 * @param ClippingsCart $clippingsCart
 	 * @param bool $photoIsRequired
-	 * @param bool $combinedMode
 	 * @param int $dpi
+	 * @param bool $combinedMode
 	 */
-	function __construct(Tree $tree, bool $photoIsRequired, bool $combinedMode, int $dpi) {
-		$this->tree = $tree;
+	function __construct(ClippingsCart $clippingsCart, $photoIsRequired, $dpi, $combinedMode) {
+		$this->cart = $clippingsCart;
+		$this->tree = $clippingsCart->tree;
 		$this->dpi = $dpi;
 		$this->photoIsRequired = $photoIsRequired;
 		$this->combinedMode = $combinedMode;
-		$this->individuals = [];
-		$this->families = [];
-		$this->createIndividualsFamiliesListsFromClippingsCart();
 	}
 
-	/**
-	 * return array "individuals" as it is defined for GVExport
-	 *
-	 * @return array
-	 */
-	public function getIndividuals(): array {
-		return $this->individuals;
-	}
 
 	/**
-	 * return array "families" as it is defined for GVExport
-	 *
-	 * @return array
+	 * Runs main logic and returns lists of indis and fams from the clippings cart for populating the diagram
 	 */
-	public function getFamilies(): array {
-		return $this->families;
+	public function getLists(): array
+	{
+		$this->createListsFromClippingsCart();
+
+		return [
+			'individuals' => $this->individuals,
+			'families'  => $this->families,
+		];
 	}
 
+
 	/**
-	 * read INDI and FAM from the clippings cart and fill the arrays "individuals" and "families"
+	 * Read INDI and FAM from the clippings cart and fill the arrays "individuals" and "families"
 	 *
 	 */
-	private function createIndividualsFamiliesListsFromClippingsCart () {
-		$records = $this->getRecordsInCart($this->tree);
+	private function createListsFromClippingsCart () {
+		$records = ClippingsCart::getRecordsInCart($this->tree);
 		$this->addIndividualsFromClippingsCart($records);
 		$this->addFamiliesFromClippingsCart($records);
 
@@ -137,15 +75,12 @@ class functionsClippingsCart {
 				if ($this->combinedMode) {
 					$this->enhanceIndividualsList($record);
 				}
-				// search for a highlighted photo if it is in the clippings cart and if a photo is required
 				[$this->individuals[$record->xref()]['pic'], 
 				 $this->individuals[$record->xref()]['pic_title'], 
-				 $this->individuals[$record->xref()]['pic_link']] = $this->searchPhotoToIndi($record->xref());
-			} elseif ($record instanceof Family) {
-				if ($this->combinedMode) {
-					$this->addDummyPartner($record, self::ID_HUSBAND);
-					$this->addDummyPartner($record, self::ID_WIFE);
-				}
+				 $this->individuals[$record->xref()]['pic_link']] = $this->getPhoto($record->xref());
+			} elseif ($record instanceof Family && $this->combinedMode) {
+				$this->addDummyPartner($record, self::ID_HUSBAND);
+				$this->addDummyPartner($record, self::ID_WIFE);
 			}
 		}
 	}
@@ -165,7 +100,7 @@ class functionsClippingsCart {
 		} else {
 			return;
 		}
-		if (isset($partner) && !$this->isXrefInCart($partner->xref())) {
+		if (isset($partner) && !$this->cart->isXrefInCart($partner->xref())) {
 			$fid = $family->xref();
 			$pid = self::DUMMY_INDIVIDUAL_XREF.($partnerType == self::ID_HUSBAND ? 'H' : 'W').$fid;
 			$this->addIndiToList($pid);
@@ -296,89 +231,6 @@ class functionsClippingsCart {
 		$this->families[$fid]['fid'] = $fid;
 	}
 
-	/**
-	 * check if clippings cart of a tree is empty
-	 *
-	 * @param Tree $tree
-	 * @return bool
-	 */
-	public static function isCartEmpty(Tree $tree): bool
-	{
-		$cart     = Session::get('cart', []);
-		$contents = $cart[$tree->name()] ?? [];
-
-		return $contents === [];
-	}
-
-	/**
-	 * is an individual (INDI record) in the clippings cart
-	 *
-	 * @param Tree $tree
-	 * @return bool
-	 */
-	public static function isIndividualInCart(Tree $tree): bool
-	{
-		if (!self::isCartEmpty($tree)) {
-			$records = self::getRecordsInCart($tree);
-			foreach ($records as $record) {
-				if ($record instanceof Individual) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
-
-	/**
-	 * get the XREFs in the clippings cart
-	 *
-	 * @param Tree $tree
-	 *
-	 * @return array
-	 */
-	private static function getXrefsInCart(Tree $tree): array
-	{
-		$cart = Session::get('cart', []);
-		$xrefs = array_keys($cart[$tree->name()] ?? []);
-		// PHP converts numeric keys to integers
-		return array_map('strval', $xrefs);
-	}
-
-	/**
-	 * get the records in the clippings cart
-	 *
-	 * @param Tree $tree
-	 *
-	 * @return array
-	 */
-	private static function getRecordsInCart(Tree $tree): array
-	{
-		$xrefs = self::getXrefsInCart($tree);
-		$records = array_map(static function (string $xref) use ($tree): ?GedcomRecord {
-			return Registry::gedcomRecordFactory()->make($xref, $tree);
-		}, $xrefs);
-
-		// some records may have been deleted after they were added to the cart, remove them
-		$records = array_filter($records);
-
-		// group and sort the records
-		uasort($records, static function (GedcomRecord $x, GedcomRecord $y): int {
-			return $x->tag() <=> $y->tag() ?: GedcomRecord::nameComparator()($x, $y);
-		});
-
-		return $records;
-	}
-
-	/**
-	 * check if a XREF is an element in the clippings cart
-	 *
-	 * @param string $xref
-	 * @return bool
-	 */
-	private function isXrefInCart(string $xref): bool
-	{
-		return in_array($xref, $this->getXrefsInCart($this->tree), true);
-	}
 
 	/**
 	 * Adds a path to the highlighted photo of a given individual
@@ -391,7 +243,7 @@ class functionsClippingsCart {
 	 * @param string $pid XREF of individual
 	 * @return array [URL/path, title, link] or [null, "", null]
 	 */
-	private function searchPhotoToIndi(string $pid): array
+	private function getPhoto(string $pid): array
 	{
 		if ($this->photoIsRequired) {
 			$individual = Registry::individualFactory()->make($pid, $this->tree);
@@ -438,7 +290,7 @@ class functionsClippingsCart {
 				return $media instanceof Media && $media->firstImageFile() instanceof MediaFile;
 			});
 
-		if ($fact instanceof Fact && $fact->target() instanceof Media && $this->isXrefInCart($fact->target()->xref())) {
+		if ($fact instanceof Fact && $fact->target() instanceof Media && $this->cart->isXrefInCart($fact->target()->xref())) {
 			return $fact->target()->firstImageFile();
 		}
 
