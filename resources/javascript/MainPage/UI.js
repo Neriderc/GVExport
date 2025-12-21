@@ -333,6 +333,7 @@ const UI = {
             UI.contextMenu.addContextMenuOption('👶', 'Add a child', UI.tile.addChildContextMenu);
             UI.contextMenu.addContextMenuOption('🖍️', 'Add to list of families to highlight', UI.tile.highlightFamilyContextMenu);
             UI.contextMenu.addContextMenuOption('🧑‍🧑‍🧒‍🧒', 'Change family members', UI.tile.changeFamilyMembersContextMenu);
+            UI.contextMenu.addContextMenuOption('🧑‍🧑‍🧒‍🧒', 'Add to clippings cart', UI.tile.addFamilyToCartContextMenu);
             UI.contextMenu.enableContextMenu(window.innerWidth - e.clientX, e.clientY);
         },
 
@@ -437,6 +438,16 @@ const UI = {
          *
          * @param e Click event
          */
+        addFamilyToCartContextMenu(e) {
+            let xref = e.currentTarget.parentElement.getAttribute('data-xref');
+            UI.tile.addFamilyToClippingsCart(xref);
+        },
+
+        /**
+         * Function for context menu item
+         *
+         * @param e Click event
+         */
         addChildContextMenu(e) {
             let xref = e.currentTarget.parentElement.getAttribute('data-xref');
             let url = e.currentTarget.parentElement.getAttribute('data-url');
@@ -483,6 +494,32 @@ const UI = {
             let pos = urlDecoded.lastIndexOf('/family/');
             let addUrl = urlDecoded.substring(0,pos) + '/change-family-members' + (prettyUrls ? '?' : '&') + 'xref=' + xref;
             window.open(addUrl,'_blank');
+        },
+
+        /**
+         * Add the family to the clippings cart
+         */
+        addFamilyToClippingsCart(xref) {
+            this.addFamilyXrefsToClippingsCart([xref]).then((response) => {
+                if (response) {
+                    console.log(response);
+                    alert(response);
+                } else {
+                    UI.showToast(ERROR_CHAR + TRANSLATE['Unknown error']);
+                }
+            });
+        },
+
+        /**
+         * Add the array of family xrefs to the clippings cart
+         */
+        addFamilyXrefsToClippingsCart(xrefs) {
+                let request = {
+                "type": REQUEST_TYPE_ADD_CLIPPINGS_CART,
+                "record_type": 'family',
+                "records": xrefs,
+            };
+            return Data.callAPI(request);
         },
 
         /**

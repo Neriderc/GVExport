@@ -102,6 +102,10 @@ class ApiHandler
                 case "get_record_count":
                     $this->getRecordCount();
                     break;
+                    break;
+                case "add_clippings_cart":
+                    $this->addToClippingsCart();
+                    break;
                 default:
                     $this->response_data['success'] = false;
                     $this->response_data['json'] = $this->json_data;
@@ -423,9 +427,21 @@ class ApiHandler
         $this->response_data['response'] = view($this->module->name() . '::MainPage/Appearance/TileDesign/SharedNote', ['vars' => $vars, 'tree' => $this->tree, 'module' => $this->module]);
     }
 
+    /**
+     * Gets the number of records in the diagram
+     */
     private function getRecordCount()
     {
         $this->response_data['success'] = true;
         $this->response_data['response'] = Settings::loadRecordCount($this->json['token']);
+    }
+
+    /**
+     * Adds the relevant records to the clipping cart
+     */
+    private function addToClippingsCart()
+    {
+        $this->response_data['success'] = true;
+        $this->response_data['response'] = ['json response here'];
     }
 }
