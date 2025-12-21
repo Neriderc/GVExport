@@ -90,7 +90,6 @@ async function isStorageStateValid(
     baseURL: string,
     fileName: string
 ) {
-    console.log('check storage state')
     const context = await browser.newContext({
         baseURL,
         storageState: fileName,

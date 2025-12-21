@@ -2,13 +2,15 @@
  * This file is for testing individual options on the options panel - they will typically set a setting 
  * and check that the diagram is displaying things correctly for that specific setting.
  * 
+ * Only tests that need to run under both user and guest accounts go in this file.
+ * 
  * Group multiple tests if they test the same function. You can tag with a PR if relevant.
  */
 
-import { test, expect } from '../../fixtures.ts';
+import { test, expect, Page } from '../../fixtures.ts';
 import { checkDefaults } from './defaults.ts';
 import { checkNonDefaults, setNonDefaults } from './nondefaults.ts';
-import { loadGVExport, clearSavedSettingsList, toggleAdvancedPanels, toggleSettingsSubgroups } from './utils.ts';
+import { loadGVExport, clearSavedSettingsList, toggleAdvancedPanels, toggleSettingsSubgroups, getIndividualTile } from './utils.ts';
 
 export function runSharedOptionsTests(role: 'guest' | 'user') {
         test('person select works', async ({ page }) => {
@@ -93,5 +95,84 @@ export function runSharedOptionsTests(role: 'guest' | 'user') {
             svgHtml = await page.locator('#rendering svg').innerHTML();
             expect(svgHtml).toContain('∞ Marriage');
             expect(svgHtml).toContain('⚮ Divorce');
-        });    
-}
+        });
+
+        test.describe('option Action when individual clicked options', () => {
+            test('Open individual\'s page', async ({ page }) => {
+                await loadGVExport(page, true);
+                await page.locator('#click_action_indi').selectOption('0');
+                await testTileClickOpensPage(page, 'Joe BLOGGS', /individual/);
+            });
+
+            test('Add individual to list of starting individuals', async ({ page }) => {
+                await loadGVExport(page, true);
+                await page.locator('#click_action_indi').selectOption('10');
+                const tile = await getIndividualTile(page, 'Olivia BLOGGS');
+                tile.click();
+                await page.waitForSelector('svg');
+                await expect(page.locator('.indi_list_item')).toHaveCount(2);
+                await expect(page.locator('.indi_list_item').nth(0)).toContainText('Joe BLOGGS');
+                await expect(page.locator('.indi_list_item').nth(1)).toContainText('Olivia BLOGGS');
+            });
+
+            test('Replace starting individuals with this individual', async ({ page }) => {
+                await loadGVExport(page, true);
+                await expect(page.locator('.indi_list_item')).toHaveCount(1);
+                await expect(page.locator('.indi_list_item').nth(0)).toContainText('Joe BLOGGS');
+
+                await page.locator('#click_action_indi').selectOption('20');
+                const tile = await getIndividualTile(page, 'Olivia BLOGGS');
+                tile.click();
+                await page.waitForSelector('svg');
+                await expect(page.locator('.indi_list_item')).toHaveCount(1);
+                await expect(page.locator('.indi_list_item').nth(0)).toContainText('Olivia BLOGGS');
+            });
+
+            test('Add this individual to the list of stopping individuals', async ({ page }) => {
+                await loadGVExport(page, true);
+
+                await page.locator('#click_action_indi').selectOption('30');
+                const tile = await getIndividualTile(page, 'Olivia BLOGGS');
+                tile.click();
+                await page.waitForSelector('svg');
+                await expect(page.locator('#stop_xref_list')).toHaveValue('X54');
+                await expect(page.locator('#stop_indi_list .indi_list_item')).toHaveCount(1);
+                await expect(page.locator('#stop_indi_list .indi_list_item').nth(0)).toContainText('Olivia BLOGGS');
+            });
+
+            test('Add to list of individuals to highlight', async ({ page }) => {
+                await loadGVExport(page, true);
+                
+                await page.locator('#highlight_custom_indis').check();
+                await page.locator('#click_action_indi').selectOption('70');
+                const tile = await getIndividualTile(page, 'Olivia BLOGGS');
+                tile.click();
+                await page.waitForSelector('svg');
+                await expect(page.locator('#highlight_list .indi_list_item')).toHaveCount(1);
+                await expect(page.locator('#highlight_list .indi_list_item').nth(0)).toContainText('Olivia BLOGGS');
+            });
+
+            test('Show menu', async ({ page }) => {
+                await loadGVExport(page, true);
+                await page.locator('#click_action_indi').selectOption('50');
+                await expect(page.locator('#context_list')).toBeEmpty();
+                const tile = await getIndividualTile(page, 'Olivia BLOGGS');
+                tile.click();
+                await page.waitForSelector('svg');
+                await expect(page.locator('#context_list')).not.toBeEmpty();
+            });
+        });
+    }
+
+export async function testTileClickOpensPage(page: Page, name: string, urlRegex: RegExp) {
+    await page.waitForSelector('svg');
+    const link = await getIndividualTile(page, name);
+
+    const [popup] = await Promise.all([
+        page.waitForEvent('popup'),
+        link.click()
+    ]);
+
+    await expect(popup).toHaveURL(urlRegex);
+    await expect(popup.locator('h2.wt-page-title .NAME', { hasText: name })).toBeVisible();            
+};
