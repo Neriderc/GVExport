@@ -14,7 +14,7 @@ $page_name = Help::CONTEXT_MENU_HELP;
 $help = new Help();
 ?>
 
-<?= view($module->name() . '::MainPage/Help/HelpHeader',['name' => $page_name]); ?>
+<?= view($module->name() . '::MainPage/Help/HelpHeader', ['name' => $page_name]); ?>
 
 <p>
     <?= I18N::translate('In the General Settings section, there are options in the Browser options that lets you choose what happens when you click on an individual or a family in the diagram. One of the options is to show a menu, and the menu has the following options:'); ?>
@@ -29,6 +29,7 @@ $help = new Help();
     <li><?= I18N::translate('Add to list of individuals to highlight'); ?> - <?= I18N::translate('If this option is selected, clicking on an individual in the diagram will add them to the list of individuals with a coloured background for identification in the diagram. See the option "Show selected individuals in different colour", in the Colours section of the Tile design options.'); ?></li>
     <li><?= I18N::translate('Add a partner'); ?> - <?= I18N::translate('Open the webtrees page to add a partner to this individual'); ?></li>
     <li><?= I18N::translate('Add a parent'); ?> - <?= I18N::translate('Open the webtrees page to add a parent to this individual'); ?></li>
+    <li><?= I18N::translate('Add to clippings cart'); ?> - <?= I18N::translate('Add this individual and their linked objects to the clippings cart.'); ?></li>
 </ul>
 </p>
 
@@ -38,13 +39,14 @@ $help = new Help();
     <li><?= I18N::translate('Add a child'); ?> - <?= I18N::translate('Open the webtrees page to add a child to the family in a new tab or window.'); ?></li>
     <li><?= I18N::translate('Add to list of families to highlight'); ?> - <?= I18N::translate('If this option is selected, clicking on a family in the diagram will add them to the list of families highlighted with a coloured background for identification in the diagram. See the option "Show selected families in different colour", in the Colours section of the Tile design options.'); ?></li>
     <li><?= I18N::translate('Change family members'); ?> - <?= I18N::translate('Open the webtrees page for changing family members in a new tab or window.'); ?></li>
+    <li><?= I18N::translate('Add to clippings cart'); ?> - <?= I18N::translate('Add this family and their linked objects to the clippings cart.'); ?></li>
 </ul>
 
 <p>
     <?= I18N::translate('Related links'); ?>:
 </p>
 <ul>
-    <li><?= $help->getHelpLinkHtml(HELP::XREFs_OF_INDIVIDUALS);?></li>
-    <li><?= $help->getHelpLinkHtml(HELP::STOP_PROCESSING_ON);?></li>
-    <li><?= $help->getHelpLinkHtml(HELP::TILE_DESIGN);?></li>
+    <li><?= $help->getHelpLinkHtml(HELP::XREFs_OF_INDIVIDUALS); ?></li>
+    <li><?= $help->getHelpLinkHtml(HELP::STOP_PROCESSING_ON); ?></li>
+    <li><?= $help->getHelpLinkHtml(HELP::TILE_DESIGN); ?></li>
 </ul>
