@@ -441,18 +441,29 @@ class ApiHandler
      */
     private function addToClippingsCart()
     {
-        if ($this->json['record_type'] == 'family') {
-            $families = $this->json['xrefs'];
-            $cartAdder = new ClippingsCartAdder($this->tree);
+        $cartAdder = new ClippingsCartAdder($this->tree);
 
-            foreach ($families as $xref) {
-                if (FormSubmission::isXrefListValid($xref)) {
-                    $family = Registry::familyFactory()->make($xref, $this->tree);
-                    $cartAdder->addFamilyToCart($family);
+        foreach ($this->json['xrefs'] as $xref) {
+
+            if (!FormSubmission::isXrefListValid($xref)) {
+                continue;
+            }
+
+            if ($this->json['record_type'] === 'families') {
+                $record = Registry::familyFactory()->make($xref, $this->tree);
+                if ($record) {
+                    $cartAdder->addFamilyToCart($record);
+                }
+            }
+
+            if ($this->json['record_type'] === 'individuals') {
+                $record = Registry::individualFactory()->make($xref, $this->tree);
+                if ($record) {
+                    $cartAdder->addIndividualToCart($record);
                 }
             }
         }
         $this->response_data['success'] = true;
-        $this->response_data['response'] = ['Added successfully'];
+        $this->response_data['response'] = ['Added to clippings cart'];
     }
 }
