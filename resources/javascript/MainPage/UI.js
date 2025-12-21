@@ -244,7 +244,7 @@ const UI = {
                             case '40':// Remove list of stopping individuals and have just this person
                                 if (xref) {
                                     Form.stoppingIndiList.clearStopIndiList(false);
-                                    Form.indiList.addIndiToList(xref);
+                                    Form.stoppingIndiList.addIndiToStopList(xref);
                                     mainPage.Url.changeURLXref(xref);
                                     Form.handleFormChange();
                                 }
