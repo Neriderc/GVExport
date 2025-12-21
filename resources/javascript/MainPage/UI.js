@@ -502,8 +502,8 @@ const UI = {
         addFamilyToClippingsCart(xref) {
             this.addFamilyXrefsToClippingsCart([xref]).then((response) => {
                 if (response) {
-                    console.log(response);
-                    alert(response);
+                    UI.showToast(TRANSLATE['Added successfully']);
+                    UI.contextMenu.clearContextMenu();
                 } else {
                     UI.showToast(ERROR_CHAR + TRANSLATE['Unknown error']);
                 }
@@ -517,7 +517,7 @@ const UI = {
                 let request = {
                 "type": REQUEST_TYPE_ADD_CLIPPINGS_CART,
                 "record_type": 'family',
-                "records": xrefs,
+                "xrefs": xrefs,
             };
             return Data.callAPI(request);
         },
