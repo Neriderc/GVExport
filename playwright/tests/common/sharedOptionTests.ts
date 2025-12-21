@@ -140,6 +140,27 @@ export function runSharedOptionsTests(role: 'guest' | 'user') {
                 await expect(page.locator('#stop_indi_list .indi_list_item').nth(0)).toContainText('Olivia BLOGGS');
             });
 
+            test('Replace stopping individuals with this individual', async ({ page }) => {
+                await loadGVExport(page, true);
+
+                // Add first individual
+                await page.locator('#click_action_indi').selectOption('40');
+                let tile = await getIndividualTile(page, 'Olivia BLOGGS');
+                await tile.click();
+                await page.waitForSelector('svg');
+                await expect(page.locator('#stop_xref_list')).toHaveValue('X54');
+                await expect(page.locator('#stop_indi_list .indi_list_item')).toHaveCount(1);
+                await expect(page.locator('#stop_indi_list .indi_list_item').nth(0)).toContainText('Olivia BLOGGS');
+
+                // Add second individual and check they are replaced not added
+                tile = await getIndividualTile(page, 'Liam BLOGGS');
+                await tile.click();
+                await page.waitForSelector('svg');
+                await expect(page.locator('#stop_xref_list')).toHaveValue('X53');
+                await expect(page.locator('#stop_indi_list .indi_list_item')).toHaveCount(1);
+                await expect(page.locator('#stop_indi_list .indi_list_item').nth(0)).toContainText('Liam BLOGGS');
+            });
+
             test('Add to list of individuals to highlight', async ({ page }) => {
                 await loadGVExport(page, true);
                 
@@ -162,17 +183,108 @@ export function runSharedOptionsTests(role: 'guest' | 'user') {
                 await expect(page.locator('#context_list')).not.toBeEmpty();
             });
         });
+
+        test.describe('individual context menu when clicked', () => {
+            test('Open individual\'s page', async ({ page }) => {
+                await loadGVExport(page, true);
+                await page.locator('#click_action_indi').selectOption('50');
+                await testTileClickOpensPage(page, 'Joe BLOGGS', /individual/, 'Open individual\'s page');
+            });
+
+            test('Add individual to list of starting individuals', async ({ page }) => {
+                await loadGVExport(page, true);
+                await page.locator('#click_action_indi').selectOption('50');
+                const tile = await getIndividualTile(page, 'Olivia BLOGGS');
+                tile.click();
+                page.locator('.settings_ellipsis_menu_item', { hasText: 'Add individual to list of starting individuals' }).click()
+                await page.waitForSelector('svg');
+                await expect(page.locator('.indi_list_item')).toHaveCount(2);
+                await expect(page.locator('.indi_list_item').nth(0)).toContainText('Joe BLOGGS');
+                await expect(page.locator('.indi_list_item').nth(1)).toContainText('Olivia BLOGGS');
+            });
+
+            test('Replace starting individuals with this individual', async ({ page }) => {
+                await loadGVExport(page, true);
+                await expect(page.locator('.indi_list_item')).toHaveCount(1);
+                await expect(page.locator('.indi_list_item').nth(0)).toContainText('Joe BLOGGS');
+                await page.locator('#click_action_indi').selectOption('50');
+                const tile = await getIndividualTile(page, 'Olivia BLOGGS');
+                tile.click();
+                page.locator('.settings_ellipsis_menu_item', { hasText: 'Replace starting individuals with this individual' }).click()
+                await page.waitForSelector('svg');
+                await expect(page.locator('.indi_list_item')).toHaveCount(1);
+                await expect(page.locator('.indi_list_item').nth(0)).toContainText('Olivia BLOGGS');
+            });
+
+            test('Add this individual to the list of stopping individuals', async ({ page }) => {
+                await loadGVExport(page, true);
+
+                await page.locator('#click_action_indi').selectOption('50');
+                const tile = await getIndividualTile(page, 'Olivia BLOGGS');
+                tile.click();
+                page.locator('.settings_ellipsis_menu_item', { hasText: 'Add this individual to the list of stopping individuals' }).click()
+                await page.waitForSelector('svg');
+                await expect(page.locator('#stop_xref_list')).toHaveValue('X54');
+                await expect(page.locator('#stop_indi_list .indi_list_item')).toHaveCount(1);
+                await expect(page.locator('#stop_indi_list .indi_list_item').nth(0)).toContainText('Olivia BLOGGS');
+            });
+
+            test('Replace stopping individuals with this individual', async ({ page }) => {
+                await loadGVExport(page, true);
+
+                // Add first individual
+                await page.locator('#click_action_indi').selectOption('50');
+                let tile = await getIndividualTile(page, 'Olivia BLOGGS');
+                await tile.click();
+                await page.locator('.settings_ellipsis_menu_item', { hasText: 'Replace stopping individuals with this individual' }).click()
+                await page.waitForSelector('svg');
+                await expect(page.locator('#stop_xref_list')).toHaveValue('X54');
+                await expect(page.locator('#stop_indi_list .indi_list_item')).toHaveCount(1);
+                await expect(page.locator('#stop_indi_list .indi_list_item').nth(0)).toContainText('Olivia BLOGGS');
+
+                // Add second individual and check they are replaced not added
+                tile = await getIndividualTile(page, 'Liam BLOGGS');
+                await tile.click();
+                await page.locator('.settings_ellipsis_menu_item', { hasText: 'Replace stopping individuals with this individual' }).click()
+                await page.waitForSelector('svg');
+                await expect(page.locator('#stop_xref_list')).toHaveValue('X53');
+                await expect(page.locator('#stop_indi_list .indi_list_item')).toHaveCount(1);
+                await expect(page.locator('#stop_indi_list .indi_list_item').nth(0)).toContainText('Liam BLOGGS');
+            });
+
+            test('Add to list of individuals to highlight', async ({ page }) => {
+                await loadGVExport(page, true);
+                
+                await page.locator('#highlight_custom_indis').check();
+                await page.locator('#click_action_indi').selectOption('50');
+                const tile = await getIndividualTile(page, 'Olivia BLOGGS');
+                tile.click();
+                page.locator('.settings_ellipsis_menu_item', { hasText: 'Add to list of individuals to highlight' }).click()
+                await page.waitForSelector('svg');
+                await expect(page.locator('#highlight_list .indi_list_item')).toHaveCount(1);
+                await expect(page.locator('#highlight_list .indi_list_item').nth(0)).toContainText('Olivia BLOGGS');
+            });
+        });
     }
 
-export async function testTileClickOpensPage(page: Page, name: string, urlRegex: RegExp) {
+export async function testTileClickOpensPage(page: Page, name: string, urlRegex: RegExp, menuOption: string = '') {
+    let popup: Page;
     await page.waitForSelector('svg');
     const link = await getIndividualTile(page, name);
 
-    const [popup] = await Promise.all([
-        page.waitForEvent('popup'),
-        link.click()
-    ]);
-
+    if (menuOption === '') {
+        [popup] = await Promise.all([
+            page.waitForEvent('popup'),
+            link.click()
+        ]);
+    } else {
+    // If we are going via context menu, need extra click
+        await link.click();
+        [popup] = await Promise.all([
+            page.waitForEvent('popup'),
+            page.locator('.settings_ellipsis_menu_item', { hasText: menuOption }).click()
+        ]);
+    }
     await expect(popup).toHaveURL(urlRegex);
     await expect(popup.locator('h2.wt-page-title .NAME', { hasText: name })).toBeVisible();            
 };

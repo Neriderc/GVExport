@@ -24,7 +24,9 @@ export async function loadGVExport(page: Page, expandOptions: boolean = false) {
         const clear = page.getByRole('menuitem', { name: 'Empty the clippings cart' });
         if (await clear.count() > 0) {
             await clear.click();
+            await page.waitForURL('/module/clippings/Show/gvetest');
             await loadGVExport(page, true);
+            return;
         }
     }
     
@@ -36,7 +38,6 @@ export async function loadGVExport(page: Page, expandOptions: boolean = false) {
 
 export async function toggleAdvancedPanels(page: Page) {
     await page.locator('.advanced-settings-btn').first().isVisible();
-
     const advancedButtons = page.locator('.advanced-settings-btn');
     const count = await advancedButtons.count();
     expect(count).toBe(3);
