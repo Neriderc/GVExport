@@ -108,3 +108,11 @@ export async function clearSavedSettingsList(page: Page) {
 export async function getIndividualTile(page, name) {
     return page.locator('svg a').filter({has: page.locator('text', { hasText: name })}).first();
 };
+
+/**
+ * Gets the tile locator based on XREF
+ */
+export async function getTileByXref(page: Page, xref: string) {
+    return page.locator(  `//*[local-name()="g" and @class="node" and ./*[local-name()="title" and normalize-space(.) = "${xref}"]]`);
+
+};

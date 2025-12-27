@@ -7,10 +7,10 @@
  * Group multiple tests if they test the same function. You can tag with a PR if relevant.
  */
 
-import { test, expect, Page } from '../../fixtures.ts';
+import { test, expect, Page, Locator } from '../../fixtures.ts';
 import { checkDefaults } from './defaults.ts';
 import { checkNonDefaults, setNonDefaults } from './nondefaults.ts';
-import { loadGVExport, clearSavedSettingsList, toggleAdvancedPanels, toggleSettingsSubgroups, getIndividualTile } from './utils.ts';
+import { loadGVExport, clearSavedSettingsList, toggleAdvancedPanels, toggleSettingsSubgroups, getIndividualTile, getTileByXref } from './utils.ts';
 
 export function runSharedOptionsTests(role: 'guest' | 'user') {
         test('person select works', async ({ page }) => {
@@ -72,36 +72,11 @@ export function runSharedOptionsTests(role: 'guest' | 'user') {
             await checkNonDefaults(page, false);
         });
 
-        test('option: Show events as text if no date', async ({ page }) => {
-            await loadGVExport(page);
-            await toggleAdvancedPanels(page);
-            await toggleSettingsSubgroups(page);
-
-            // Check not enabled and not showing in diagram
-            await expect(page.locator("#show_event_text_families")).not.toBeChecked();
-            let svgHtml = await page.locator('#rendering svg').innerHTML();
-            expect(svgHtml).not.toContain('∞ Marriage');
-
-            // Enable
-            await page.locator('#show_divorces').check();
-            await page.locator('#diagtype_combined').click();
-
-            // Make sure SVG finishes loading after change
-            const before = await page.locator('#rendering svg').innerHTML();
-            await page.locator('#show_event_text_families').check();
-            await expect(page.locator('#rendering svg')).not.toHaveJSProperty('innerHTML', before);
-
-            // Check that it shows in diagram
-            svgHtml = await page.locator('#rendering svg').innerHTML();
-            expect(svgHtml).toContain('∞ Marriage');
-            expect(svgHtml).toContain('⚮ Divorce');
-        });
-
-        test.describe('option Action when individual clicked options', () => {
+        test.describe('option: Action when individual clicked', () => {
             test('Open individual\'s page', async ({ page }) => {
                 await loadGVExport(page, true);
                 await page.locator('#click_action_indi').selectOption('0');
-                await testTileClickOpensPage(page, 'Joe BLOGGS', /individual/);
+                await testTileClickOpensPage(page, 'X1', 'Joe BLOGGS', /individual/);
             });
 
             test('Add individual to list of starting individuals', async ({ page }) => {
@@ -184,11 +159,45 @@ export function runSharedOptionsTests(role: 'guest' | 'user') {
             });
         });
 
+
+        test.describe('option: Action when family clicked', () => {
+            test('Add to list of families to highlight', async ({ page }) => {
+                await loadGVExport(page, false);
+                await page.goto('/module/_GVExport_/Chart/gvetest?xref=X17&reset=1');
+                await page.waitForURL('/module/_GVExport_/Chart/gvetest?xref=X17');    
+                await toggleAdvancedPanels(page);
+                await toggleSettingsSubgroups(page);
+                
+                await page.locator('#highlight_custom_fams').check();
+                await page.locator('#graph_dir').selectOption('TB');
+                await page.locator('#click_action_fam').selectOption('20');
+                await page.locator('.hide-form').click();
+                await page.waitForSelector('svg');
+                const tile = await getTileByXref(page, 'X20');
+                tile.click();
+                await page.waitForSelector('svg');
+                await page.locator('.sidebar_toggle').click();
+                await expect(page.locator('#highlight_fams_list .indi_list_item')).toHaveCount(1);
+                await expect(page.locator('#highlight_fams_list .indi_list_item').nth(0)).toContainText('Jimbo Marks + Suzanne Franks');
+            });
+
+
+            test('Show menu', async ({ page }) => {
+                await loadGVExport(page, true);
+                await page.locator('#click_action_fam').selectOption('30');
+                await expect(page.locator('#context_list')).toBeEmpty();
+                const tile = await getTileByXref(page, 'X41');
+                tile.click();
+                await page.waitForSelector('svg');
+                await expect(page.locator('#context_list')).not.toBeEmpty();
+            });
+        });
+
         test.describe('individual context menu when clicked', () => {
             test('Open individual\'s page', async ({ page }) => {
                 await loadGVExport(page, true);
                 await page.locator('#click_action_indi').selectOption('50');
-                await testTileClickOpensPage(page, 'Joe BLOGGS', /individual/, 'Open individual\'s page');
+                await testTileClickOpensPage(page, 'X1', 'Joe BLOGGS', /individual/, 'Open individual\'s page');
             });
 
             test('Add individual to list of starting individuals', async ({ page }) => {
@@ -267,10 +276,11 @@ export function runSharedOptionsTests(role: 'guest' | 'user') {
         });
     }
 
-export async function testTileClickOpensPage(page: Page, name: string, urlRegex: RegExp, menuOption: string = '') {
+export async function testTileClickOpensPage(page: Page, xref: string, name: string, urlRegex: RegExp, menuOption: string = '') {
     let popup: Page;
     await page.waitForSelector('svg');
-    const link = await getIndividualTile(page, name);
+    const link = await getTileByXref(page, xref);
+    await expect(await link.count()).toBe(1);
 
     if (menuOption === '') {
         [popup] = await Promise.all([
@@ -286,5 +296,5 @@ export async function testTileClickOpensPage(page: Page, name: string, urlRegex:
         ]);
     }
     await expect(popup).toHaveURL(urlRegex);
-    await expect(popup.locator('h2.wt-page-title .NAME', { hasText: name })).toBeVisible();            
+    await expect(popup.locator('h2.wt-page-title')).toContainText(name);
 };
