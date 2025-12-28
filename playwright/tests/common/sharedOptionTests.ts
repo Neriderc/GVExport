@@ -18,7 +18,7 @@ export function runSharedOptionsTests(role: 'guest' | 'user') {
             // Check that single person from URL has been loaded
             await expect(page.locator('.indi_list_item')).toHaveCount(1);
             await page.locator('#pid-ts-control').click();
-            const input = page.locator('.dropdown-input').first();
+            const input = await page.locator('.dropdown-input').first();
             await input.fill('Steven');
             await page.locator('#pid-ts-dropdown .option', { hasText: 'Steven BLOGGS' }).click();
             await expect(page.locator('.indi_list_item')).toHaveCount(2);
@@ -83,7 +83,7 @@ export function runSharedOptionsTests(role: 'guest' | 'user') {
                 await loadGVExport(page, true);
                 await page.locator('#click_action_indi').selectOption('10');
                 const tile = await getIndividualTile(page, 'Olivia BLOGGS');
-                tile.click();
+                await tile.click();
                 await page.waitForSelector('svg');
                 await expect(page.locator('.indi_list_item')).toHaveCount(2);
                 await expect(page.locator('.indi_list_item').nth(0)).toContainText('Joe BLOGGS');
@@ -97,7 +97,7 @@ export function runSharedOptionsTests(role: 'guest' | 'user') {
 
                 await page.locator('#click_action_indi').selectOption('20');
                 const tile = await getIndividualTile(page, 'Olivia BLOGGS');
-                tile.click();
+                await tile.click();
                 await page.waitForSelector('svg');
                 await expect(page.locator('.indi_list_item')).toHaveCount(1);
                 await expect(page.locator('.indi_list_item').nth(0)).toContainText('Olivia BLOGGS');
@@ -108,7 +108,7 @@ export function runSharedOptionsTests(role: 'guest' | 'user') {
 
                 await page.locator('#click_action_indi').selectOption('30');
                 const tile = await getIndividualTile(page, 'Olivia BLOGGS');
-                tile.click();
+                await tile.click();
                 await page.waitForSelector('svg');
                 await expect(page.locator('#stop_xref_list')).toHaveValue('X54');
                 await expect(page.locator('#stop_indi_list .indi_list_item')).toHaveCount(1);
@@ -142,7 +142,7 @@ export function runSharedOptionsTests(role: 'guest' | 'user') {
                 await page.locator('#highlight_custom_indis').check();
                 await page.locator('#click_action_indi').selectOption('70');
                 const tile = await getIndividualTile(page, 'Olivia BLOGGS');
-                tile.click();
+                await tile.click();
                 await page.waitForSelector('svg');
                 await expect(page.locator('#highlight_list .indi_list_item')).toHaveCount(1);
                 await expect(page.locator('#highlight_list .indi_list_item').nth(0)).toContainText('Olivia BLOGGS');
@@ -153,7 +153,7 @@ export function runSharedOptionsTests(role: 'guest' | 'user') {
                 await page.locator('#click_action_indi').selectOption('50');
                 await expect(page.locator('#context_list')).toBeEmpty();
                 const tile = await getIndividualTile(page, 'Olivia BLOGGS');
-                tile.click();
+                await tile.click();
                 await page.waitForSelector('svg');
                 await expect(page.locator('#context_list')).not.toBeEmpty();
             });
@@ -174,7 +174,7 @@ export function runSharedOptionsTests(role: 'guest' | 'user') {
                 await page.locator('.hide-form').click();
                 await page.waitForSelector('svg');
                 const tile = await getTileByXref(page, 'X20');
-                tile.click();
+                await tile.click();
                 await page.waitForSelector('svg');
                 await page.locator('.sidebar_toggle').click();
                 await expect(page.locator('#highlight_fams_list .indi_list_item')).toHaveCount(1);
@@ -187,7 +187,7 @@ export function runSharedOptionsTests(role: 'guest' | 'user') {
                 await page.locator('#click_action_fam').selectOption('30');
                 await expect(page.locator('#context_list')).toBeEmpty();
                 const tile = await getTileByXref(page, 'X41');
-                tile.click();
+                await tile.click();
                 await page.waitForSelector('svg');
                 await expect(page.locator('#context_list')).not.toBeEmpty();
             });
@@ -204,8 +204,8 @@ export function runSharedOptionsTests(role: 'guest' | 'user') {
                 await loadGVExport(page, true);
                 await page.locator('#click_action_indi').selectOption('50');
                 const tile = await getIndividualTile(page, 'Olivia BLOGGS');
-                tile.click();
-                page.locator('.settings_ellipsis_menu_item', { hasText: 'Add individual to list of starting individuals' }).click()
+                await tile.click();
+                await page.locator('.settings_ellipsis_menu_item', { hasText: 'Add individual to list of starting individuals' }).click()
                 await page.waitForSelector('svg');
                 await expect(page.locator('.indi_list_item')).toHaveCount(2);
                 await expect(page.locator('.indi_list_item').nth(0)).toContainText('Joe BLOGGS');
@@ -218,8 +218,8 @@ export function runSharedOptionsTests(role: 'guest' | 'user') {
                 await expect(page.locator('.indi_list_item').nth(0)).toContainText('Joe BLOGGS');
                 await page.locator('#click_action_indi').selectOption('50');
                 const tile = await getIndividualTile(page, 'Olivia BLOGGS');
-                tile.click();
-                page.locator('.settings_ellipsis_menu_item', { hasText: 'Replace starting individuals with this individual' }).click()
+                await tile.click();
+                await page.locator('.settings_ellipsis_menu_item', { hasText: 'Replace starting individuals with this individual' }).click()
                 await page.waitForSelector('svg');
                 await expect(page.locator('.indi_list_item')).toHaveCount(1);
                 await expect(page.locator('.indi_list_item').nth(0)).toContainText('Olivia BLOGGS');
@@ -230,8 +230,8 @@ export function runSharedOptionsTests(role: 'guest' | 'user') {
 
                 await page.locator('#click_action_indi').selectOption('50');
                 const tile = await getIndividualTile(page, 'Olivia BLOGGS');
-                tile.click();
-                page.locator('.settings_ellipsis_menu_item', { hasText: 'Add this individual to the list of stopping individuals' }).click()
+                await tile.click();
+                await page.locator('.settings_ellipsis_menu_item', { hasText: 'Add this individual to the list of stopping individuals' }).click()
                 await page.waitForSelector('svg');
                 await expect(page.locator('#stop_xref_list')).toHaveValue('X54');
                 await expect(page.locator('#stop_indi_list .indi_list_item')).toHaveCount(1);
@@ -267,11 +267,33 @@ export function runSharedOptionsTests(role: 'guest' | 'user') {
                 await page.locator('#highlight_custom_indis').check();
                 await page.locator('#click_action_indi').selectOption('50');
                 const tile = await getIndividualTile(page, 'Olivia BLOGGS');
-                tile.click();
-                page.locator('.settings_ellipsis_menu_item', { hasText: 'Add to list of individuals to highlight' }).click()
+                await tile.click();
+                await page.locator('.settings_ellipsis_menu_item', { hasText: 'Add to list of individuals to highlight' }).click()
                 await page.waitForSelector('svg');
                 await expect(page.locator('#highlight_list .indi_list_item')).toHaveCount(1);
                 await expect(page.locator('#highlight_list .indi_list_item').nth(0)).toContainText('Olivia BLOGGS');
+            });
+        });
+
+        test.describe('Family context menu when clicked', () => {
+            test('Add to list of families to highlight', async ({ page }) => {
+                await loadGVExport(page, false);
+                await page.goto('/module/_GVExport_/Chart/gvetest?xref=X17&reset=1');
+                await page.waitForURL('/module/_GVExport_/Chart/gvetest?xref=X17');    
+                await toggleAdvancedPanels(page);
+                await toggleSettingsSubgroups(page);
+                
+                await page.locator('#click_action_fam').selectOption('30');
+                await page.locator('#highlight_custom_fams').check();
+                await page.locator('.hide-form').click();
+                await page.waitForSelector('svg');
+                const tile = await getTileByXref(page, 'X20');
+                await tile.click();
+                await page.locator('.settings_ellipsis_menu_item', { hasText: 'Add to list of families to highlight' }).click()
+                await page.waitForSelector('svg');
+                await page.locator('.sidebar_toggle').click();
+                await expect(page.locator('#highlight_fams_list .indi_list_item')).toHaveCount(1);
+                await expect(page.locator('#highlight_fams_list .indi_list_item').nth(0)).toContainText('Jimbo Marks + Suzanne Franks');
             });
         });
     }
