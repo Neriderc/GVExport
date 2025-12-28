@@ -296,6 +296,73 @@ export function runSharedOptionsTests(role: 'guest' | 'user') {
                 await expect(page.locator('#highlight_fams_list .indi_list_item').nth(0)).toContainText('Jimbo Marks + Suzanne Franks');
             });
         });
+
+        test.describe('option: Abbreviated place names', () => {
+            test('Full place name', async ({ page }) => {
+                await loadGVExport(page, true);
+                await page.locator('#use_abbr_place').selectOption('0');
+                await page.waitForSelector('svg');
+                const tile = await getTileByXref(page, 'X1');
+                await expect(tile).toContainText('(New Plymouth, Taranaki, NZ)');
+            });
+
+            test('City only', async ({ page }) => {
+                await loadGVExport(page, true);
+                await page.locator('#use_abbr_place').selectOption('5');
+                await page.waitForSelector('svg');
+                const tile = await getTileByXref(page, 'X1');
+                await expect(tile).toContainText('(New Plymouth)');
+            });
+
+            test('City and country', async ({ page }) => {
+                await loadGVExport(page, true);
+                await page.locator('#use_abbr_place').selectOption('10');
+                await page.waitForSelector('svg');
+                const tile = await getTileByXref(page, 'X1');
+                await expect(tile).toContainText('(New Plymouth, New Zealand)');
+            });
+
+            test('City and 2 letter ISO country code', async ({ page }) => {
+                await loadGVExport(page, true);
+                let tile = await getTileByXref(page, 'X19');
+                await expect(tile).toContainText('(Kerikeri, Te Tai Tokerau, New Zealand)');
+                await page.locator('#use_abbr_place').selectOption('20');
+                await page.waitForSelector('svg');
+                tile = await getTileByXref(page, 'X19');
+                await expect(tile).toContainText('(Kerikeri, NZ)');
+            });
+
+            test('City and 2 letter ISO country code - convert from 3 letter', async ({ page }) => {
+                await loadGVExport(page, true);
+                let tile = await getTileByXref(page, 'X17');
+                await expect(tile).toContainText('(Hamilton, Waikato, NZL)');
+                await page.locator('#use_abbr_place').selectOption('20');
+                await page.waitForSelector('svg');
+                tile = await getTileByXref(page, 'X17');
+                await expect(tile).toContainText('(Hamilton, NZ)');
+            });
+
+            test('City and 3 letter ISO country code', async ({ page }) => {
+                await loadGVExport(page, true);
+                let tile = await getTileByXref(page, 'X19');
+                await expect(tile).toContainText('(Kerikeri, Te Tai Tokerau, New Zealand)');
+                await page.locator('#use_abbr_place').selectOption('30');
+                await page.waitForSelector('svg');
+                tile = await getTileByXref(page, 'X19');
+                await expect(tile).toContainText('(Kerikeri, NZL)');
+            });
+
+
+            test('City and 3 letter ISO country code - convert from 2 letter', async ({ page }) => {
+                await loadGVExport(page, true);
+                let tile = await getTileByXref(page, 'X1');
+                await expect(tile).toContainText('(New Plymouth, Taranaki, NZ)');
+                await page.locator('#use_abbr_place').selectOption('30');
+                await page.waitForSelector('svg');
+                tile = await getTileByXref(page, 'X1');
+                await expect(tile).toContainText('(New Plymouth, NZL)');
+            });
+        });
     }
 
 export async function testTileClickOpensPage(page: Page, xref: string, name: string, urlRegex: RegExp, menuOption: string = '') {

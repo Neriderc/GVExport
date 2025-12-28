@@ -1701,7 +1701,7 @@ class Dot {
             $place .= ", ";
         }
 
-        $place .= Dot::getCountryIso($settings, $place_chunks, $chunk_count, $code);
+        $place .= Dot::getCountryIso($settings, $place_chunks[$chunk_count - 1], $chunk_count, $code);
         return $place;
     }
 	private static function getIsoCountry($settings, string $countryName): string
@@ -1715,15 +1715,20 @@ class Dot {
 		return trim($countryName);
 	}
 
-	private static function getCountryIso($settings, $place_chunks, $chunk_count, $isoCode) {
+	private static function getCountryIso($settings, $country, $chunk_count, $isoCode) {
+		// Our country might have been stored as a country code, in this case we should convert
+		// to the country, then convert back to the code. This allows conversion from 2 to 3 or
+		// 3 to 2 character ISO codes
+		$country = Dot::getIsoCountry($settings, $country);
+		
 		/* Look up our country in the array of country names.
            It must be an exact match, or it won't be abbreviated to the country code. */
-        if (isset($settings["countries"][$isoCode][strtolower(trim($place_chunks[$chunk_count - 1]))])) {
-            return $settings["countries"][$isoCode][strtolower(trim($place_chunks[$chunk_count - 1]))];
+        if (isset($settings["countries"][$isoCode][strtolower(trim($country))])) {
+            return $settings["countries"][$isoCode][strtolower(trim($country))];
         }
 		// We didn't find country in the abbreviation list, so just add the full country name
-		if (!empty($place_chunks[$chunk_count - 1])) {
-			return trim($place_chunks[$chunk_count - 1]);
+		if (!empty($country)) {
+			return trim($country);
 		}
 		return '';
 	}
