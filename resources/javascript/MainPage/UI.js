@@ -886,6 +886,18 @@ const UI = {
         },
 
         /**
+         * 
+         */
+        showHelpFullscreen() {
+            let menu = document.getElementsByClassName('help-sidebar').item(0);
+            if (menu.hidden) {
+                UI.helpPanel.showHelpSidebar('About GVExport');
+            } else {
+                UI.helpPanel.hideHelpSidebar();
+            }
+        },
+
+        /**
          * Handle click on help content form
          *
          * @param event
