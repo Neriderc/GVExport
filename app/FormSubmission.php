@@ -456,7 +456,7 @@ class FormSubmission
      * @param string $list
      * @return bool
      */
-    private function isXrefListValid(string $list): bool
+    static function isXrefListValid(string $list): bool
     {
         return preg_match('/^[A-Za-z0-9:,_.-]*$/',$list);
     }

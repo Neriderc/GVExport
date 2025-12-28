@@ -16,6 +16,7 @@ const REQUEST_TYPE_ADD_TREE_FAVORITE = "add_tree_favorite";
 const REQUEST_TYPE_GET_HELP = "get_help";
 const REQUEST_TYPE_GET_SHARED_NOTE_FORM = "get_shared_note_form";
 const REQUEST_TYPE_GET_RECORD_COUNT = "get_record_count";
+const REQUEST_TYPE_ADD_CLIPPINGS_CART = "add_clippings_cart";
 let treeName = null;
 let loggedIn = null;
 let xrefList = [];

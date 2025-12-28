@@ -2422,10 +2422,12 @@ msgid "This shows an estimated size of the PDF that will be generated from the d
 msgstr "Això mostra una mida estimada del PDF que es generarà a partir del diagrama. Això només és visible si Graphviz està instal·lat al servidor. Si s'habilita una configuració per generar el PDF al navegador (per exemple, formes de fotos), això no serà exacte."
 
 #: 
+#, fuzzy
 msgid "Married"
 msgstr "Casat"
 
 #: 
+#, fuzzy
 msgid "Divorced"
 msgstr "Divorciat"
 
@@ -2516,4 +2518,44 @@ msgstr "Difunt"
 #: 
 msgid "Generate a diagram of everyone in your family tree. Highly customisable, with the ability to navigate in your browser or export the diagram to a file."
 msgstr "Genera un diagrama de tots els membres del teu arbre genealògic. Altament personalitzable, amb la possibilitat de navegar pel navegador o exportar el diagrama a un fitxer."
+
+#: 
+msgid "Show events as text if no date"
+msgstr "Mostra els esdeveniments com a text si no hi ha data"
+
+#: 
+msgid "If selected, a marriage or divorce on a family tile will show \"Marriage\" or \"Divorce\" if there is no date available. Otherwise the event will only show the prefix."
+msgstr "Si es selecciona, un matrimoni o divorci en una fitxa familiar mostrarà \"Matrimoni\" o \"Divorci\" si no hi ha cap data disponible. En cas contrari, l'esdeveniment només mostrarà el prefix."
+
+#: 
+msgid "Add this individual and their linked objects to the clippings cart."
+msgstr "Afegeix aquesta persona i els seus objectes vinculats a la cistella de retalls."
+
+#: 
+msgid "Add this family and their linked objects to the clippings cart."
+msgstr "Afegeix aquesta família i els seus objectes vinculats al carretó de retalls."
+
+#: 
+msgid "Add to clippings cart"
+msgstr "Afegeix a la cistella de retalls"
+
+#: 
+msgid "Unknown error"
+msgstr "Error desconegut"
+
+#: 
+msgid "Added to clippings cart"
+msgstr "Afegit al carretó de retalls"
+
+#: 
+msgid "Foster parents"
+msgstr ""
+
+#: 
+msgid "Sealing parents"
+msgstr ""
+
+#: 
+msgid "Rada parents"
+msgstr ""
 

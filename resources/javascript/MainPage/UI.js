@@ -244,7 +244,7 @@ const UI = {
                             case '40':// Remove list of stopping individuals and have just this person
                                 if (xref) {
                                     Form.stoppingIndiList.clearStopIndiList(false);
-                                    Form.indiList.addIndiToList(xref);
+                                    Form.stoppingIndiList.addIndiToStopList(xref);
                                     mainPage.Url.changeURLXref(xref);
                                     Form.handleFormChange();
                                 }
@@ -261,6 +261,9 @@ const UI = {
                             case '90': // Add a parent
                                 UI.tile.goToAddParent(url, xref);
                                 break;
+                            case '100': // Add to clippings cart
+                                UI.tile.addIndividualsToClippingsCart([xref]);
+                                break;
                             case '60': // Do nothing option
                             default: // Unknown, so do nothing
                                 break;
@@ -271,7 +274,7 @@ const UI = {
                         let xref = titleEl.textContent;
                         // Is a family tile
                         switch (clickAction) {
-                            case '0':
+                            case '0': // Open family page
                                 window.open(url,'_blank');
                                 break;
                             case '10': // Add a child
@@ -279,6 +282,12 @@ const UI = {
                                 break;
                             case '20': // Add family to list of custom highlighted families
                                 UI.tile.highlightFamily(xref);
+                                break;
+                            case '50': // Change family members
+                                UI.tile.changeFamilyMembers(url, xref);
+                                break;
+                            case '60': // Add to clippings cart
+                                UI.tile.addFamiliesToClippingsCart([xref]);
                                 break;
                             case '30': // Show menu
                                 UI.tile.showFamilyContextMenu(e, url, xref);
@@ -314,6 +323,7 @@ const UI = {
             UI.contextMenu.addContextMenuOption('🖍️', 'Add to list of individuals to highlight', UI.tile.highlightIndividualContextMenu);
             UI.contextMenu.addContextMenuOption('❤️', 'Add a partner', UI.tile.addPartnerContextMenu);
             UI.contextMenu.addContextMenuOption('🧑‍🧒', 'Add a parent', UI.tile.addParentContextMenu);
+            UI.contextMenu.addContextMenuOption('🛒', 'Add to clippings cart', UI.tile.addIndividualToCartContextMenu);
             UI.contextMenu.enableContextMenu(window.innerWidth - e.clientX, e.clientY);
         },
 
@@ -333,6 +343,7 @@ const UI = {
             UI.contextMenu.addContextMenuOption('👶', 'Add a child', UI.tile.addChildContextMenu);
             UI.contextMenu.addContextMenuOption('🖍️', 'Add to list of families to highlight', UI.tile.highlightFamilyContextMenu);
             UI.contextMenu.addContextMenuOption('🧑‍🧑‍🧒‍🧒', 'Change family members', UI.tile.changeFamilyMembersContextMenu);
+            UI.contextMenu.addContextMenuOption('🛒', 'Add to clippings cart', UI.tile.addFamilyToCartContextMenu);
             UI.contextMenu.enableContextMenu(window.innerWidth - e.clientX, e.clientY);
         },
 
@@ -412,6 +423,17 @@ const UI = {
             UI.tile.goToAddParent(url, xref);
         },
 
+
+        /**
+         * Function for context menu item
+         *
+         * @param e Click event
+         */
+        addIndividualToCartContextMenu(e) {
+            let xref = e.currentTarget.parentElement.getAttribute('data-xref');
+            UI.tile.addIndividualsToClippingsCart([xref]);
+        },
+
         /**
          * Function for context menu item
          *
@@ -430,6 +452,16 @@ const UI = {
             let xref = e.currentTarget.parentElement.getAttribute('data-xref');
             let url = e.currentTarget.parentElement.getAttribute('data-url');
             UI.tile.changeFamilyMembers(url, xref);
+        },
+
+        /**
+         * Function for context menu item
+         *
+         * @param e Click event
+         */
+        addFamilyToCartContextMenu(e) {
+            let xref = e.currentTarget.parentElement.getAttribute('data-xref');
+            UI.tile.addFamiliesToClippingsCart([xref]);
         },
 
         /**
@@ -483,6 +515,46 @@ const UI = {
             let pos = urlDecoded.lastIndexOf('/family/');
             let addUrl = urlDecoded.substring(0,pos) + '/change-family-members' + (prettyUrls ? '?' : '&') + 'xref=' + xref;
             window.open(addUrl,'_blank');
+        },
+
+        /**
+         * Add the family to the clippings cart
+         */
+        addFamiliesToClippingsCart(xrefs) {
+            this.addXrefsToClippingsCart(xrefs, 'families').then((response) => {
+                if (response) {
+                    UI.showToast(TRANSLATE[response]);
+                    UI.contextMenu.clearContextMenu();
+                } else {
+                    UI.showToast(ERROR_CHAR + TRANSLATE['Unknown error']);
+                }
+            });
+        },
+
+        /**
+         * Add the family to the clippings cart
+         */
+        addIndividualsToClippingsCart(xrefs) {
+            this.addXrefsToClippingsCart(xrefs, 'individuals').then((response) => {
+                if (response) {
+                    UI.showToast(TRANSLATE[response]);
+                    UI.contextMenu.clearContextMenu();
+                } else {
+                    UI.showToast(ERROR_CHAR + TRANSLATE['Unknown error']);
+                }
+            });
+        },
+
+        /**
+         * Add the array of xrefs to the clippings cart
+         */
+        addXrefsToClippingsCart(xrefs, type) {
+                let request = {
+                "type": REQUEST_TYPE_ADD_CLIPPINGS_CART,
+                "record_type": type,
+                "xrefs": xrefs,
+            };
+            return Data.callAPI(request);
         },
 
         /**

@@ -5,7 +5,7 @@ import { Page, test, expect } from '../../fixtures';
  * 
  * @param page
  */
-export async function loadGVExport(page: Page) {
+export async function loadGVExport(page: Page, expandOptions: boolean = false) {
     await page.goto('/module/_GVExport_/Chart/gvetest?xref=X1&reset=1');
     await page.waitForURL('/module/_GVExport_/Chart/gvetest?xref=X1');
 
@@ -16,11 +16,28 @@ export async function loadGVExport(page: Page) {
         await languageToggle.click();
         await page.getByRole('menuitem', { name: 'British English' }).click();
     }
+
+    // If there are items in the cart from a previous run, we need to clean up
+    const cart = await page.getByRole('button', { name: 'Clippings cart' });
+    if (await cart.count() > 0) {
+        await cart.click();
+        const clear = page.getByRole('menuitem', { name: 'Empty the clippings cart' });
+        if (await clear.count() > 0) {
+            await clear.click();
+            await page.waitForURL('/module/clippings/Show/gvetest');
+            await loadGVExport(page, true);
+            return;
+        }
+    }
+    
+    if (expandOptions) {
+        await toggleAdvancedPanels(page);
+        await toggleSettingsSubgroups(page);
+    }
 };
 
 export async function toggleAdvancedPanels(page: Page) {
     await page.locator('.advanced-settings-btn').first().isVisible();
-
     const advancedButtons = page.locator('.advanced-settings-btn');
     const count = await advancedButtons.count();
     expect(count).toBe(3);
@@ -82,4 +99,20 @@ export async function clearSavedSettingsList(page: Page) {
             .getByText('❌')
             .click();
     }
+};
+
+
+/**
+ * Gets the tile locator for an individual based on a name
+ */
+export async function getIndividualTile(page, name) {
+    return page.locator('svg a').filter({has: page.locator('text', { hasText: name })}).first();
+};
+
+/**
+ * Gets the tile locator based on XREF
+ */
+export async function getTileByXref(page: Page, xref: string) {
+    return page.locator(  `//*[local-name()="g" and @class="node" and ./*[local-name()="title" and normalize-space(.) = "${xref}"]]`);
+
 };

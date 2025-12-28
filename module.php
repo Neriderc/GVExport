@@ -30,7 +30,6 @@
 namespace vendor\WebtreesModules\gvexport;
 
 require_once dirname(__FILE__) . "/config.php";
-require_once dirname(__FILE__) . "/app/functionsClippingsCart.php";
 
 // Auto-load class files
 spl_autoload_register(function ($class) {
@@ -223,7 +222,7 @@ class GVExport extends AbstractModule implements ModuleCustomInterface, ModuleCh
             'title'         => 'GVExport',
             'vars'          => $userDefaultVars,
             'otypes'        => $otypes,
-            'cartempty'     => !functionsClippingsCart::isIndividualInCart($tree),
+            'cartempty'     => !ClippingsCart::hasIndividuals($tree),
             'module'        => $this
         ]);
     }

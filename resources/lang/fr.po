@@ -233,8 +233,8 @@ msgid "Individual required"
 msgstr "Individu requis"
 
 #: 
-msgid "Generated %s individuals and %s family records"
-msgstr "%s individus et %s familles générés"
+msgid "Generated diagram with %s individuals, %s family records, and %s images"
+msgstr "Diagramme généré avec %s individus, %s familles et %s images"
 
 #: 
 msgid "Invalid starting individual:"
@@ -1733,8 +1733,8 @@ msgstr "le nom du lieu est imprimé en entier."
 
 #. Part of the help page for place abbreviations:  https://s3.eu-west-1.amazonaws.com/po-pub/i/wc6fNIyVirRJx9txr24YUfnP.png
 #: 
-msgid "the first and last section of the place name is used, using commas to split the sections. For example, &quot;London, England, United Kingdom&quot; would be shortened to &quot;London, United Kingdom&quot;"
-msgstr "la première et la dernière section du nom de lieu sont utilisées, avec une virgule entre chaque section. Par exemple, &quot;Londres, Angleterre, Royaume-Uni&quot ; sera abrégé en &quot;Londres, Royaume-Uni&quot ;"
+msgid "the first and last section of the place name is used, using commas to split the sections. For example, &quot;London, England, United Kingdom&quot; would be shortened to &quot;London, United Kingdom&quot;. This option will also convert a country code (like NZ or GBR) to the full name, and will translate that name to the language set in webtrees if webtrees has a translation available."
+msgstr "La première et la dernière partie du nom du lieu sont utilisées, séparées par des virgules. Par exemple, &quot; Londres, Angleterre, Royaume-Uni &quot; serait raccourci en &quot;Londres, Royaume-Uni &quot;. Cette option convertit également le code pays (comme NZ ou GBR) en nom complet et traduit ce nom dans la langue définie dans Webtrees si Webtrees dispose d'une traduction."
 
 #. Part of the help page for place abbreviations:  https://s3.eu-west-1.amazonaws.com/po-pub/i/wc6fNIyVirRJx9txr24YUfnP.png
 #: 
@@ -1979,17 +1979,6 @@ msgstr "Si cette option est choisie, cliquer sur un individu du diagramme affich
 msgid "When an individual is clicked on in the diagram, nothing will happen."
 msgstr "Quand on clique sur un individu du diagramme, rien ne se passe."
 
-#. Part of the help text for the option "Action when individual clicked".
-#. https://s3.eu-west-1.amazonaws.com/po-pub/i/oh4Yjz8fjz3l2aFFkAV608mv.png
-#: 
-msgid "Note that there is currently no option for what to do when a family record is clicked on in the diagram. However, the option to add URLs to individuals and families will also affect families in the browser diagram. That is, if you click a family then if this option is enabled, the family page will open in webtrees."
-msgstr "A noter qu'il n'y a pour l'instant aucune option associée au clic sur une famille dans le diagramme.Cependant, l'option d'ajout d'une URL à un individu ou une famille affectera également les familles dans le diagramme. Ainsi, si vous cliquez sur une famille alors que cette option est active, la page de la famille s'ouvrira dans Webtrees."
-
-#. An extra paragraph for the section on URL links in the help page:  https://s3.eu-west-1.amazonaws.com/po-pub/i/4Vxx95kI54pojXyfcC4CvyYc.png
-#: 
-msgid "Also see \\'Action when individual clicked\\' in the Browser render settings."
-msgstr "Voir également \\'Action quand un individu est cliqué\\' dans les options de rendu du navigateur."
-
 #. Option for what to do when individual clicked on in diagram
 #: 
 msgid "Add to list of individuals to highlight"
@@ -2033,7 +2022,7 @@ msgstr "C'est l'option par défaut."
 
 #. Part of the help text explaining the context menu when you click on an individual (if enabled): https://s3.eu-west-1.amazonaws.com/po-pub/i/JbiHUCluK5zzUvYxjbtvg3LS.png
 #: 
-msgid "In the General Settings section, there is an option in the Browser options that lets you choose what happens when you click on an individual in the diagram. One of the options is to show a menu, and the menu has the following options:"
+msgid "In the General Settings section, there are options in the Browser options that lets you choose what happens when you click on an individual or a family in the diagram. One of the options is to show a menu, and the menu has the following options:"
 msgstr "Dans le chapitre des options générales, il y a une option dans les options du navigateur qui permet de choisir ce qui arrive quand on clique sur un individu du diagramme. Une des options est d'afficher un menu, et le menu présente les choix suivants:"
 
 #. New option to "Use similar events if information not available". Current state is this is always on, but this new option allows you to force webtrees to only use the "birth" and "death" events to get the date or place. When enabled, this option allows webtrees to look for christening, baptism, burial, and cremation dates.
@@ -2289,8 +2278,8 @@ msgstr "Ajouter une URL vers les individus et familles"
 #. A new message that pops up when diagram is downloaded:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/XxcKvjkqSJtgUHUpr5e8vBOL.png
 #: 
-msgid "Downloaded diagram with %s individuals and %s families."
-msgstr "Diagramme téléchargé avec %s individus et %s familles."
+msgid "'Downloaded diagram with %s individuals, %s families, and %s images."
+msgstr "Diagramme téléchargé avec %s individus et %s familles et %s images."
 
 #. Message that shows if Graphviz installed but diagram can't be rendered on server due to options chosen:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/UBXubBpivJyzaSPmBiQoKicp.png
@@ -2420,4 +2409,124 @@ msgstr "Montrer la date du divorce"
 #: 
 msgid "This also affects families in the diagram. If this option is enabled, you can click on family records to open the family webtrees page. Also see \\'Action when individual clicked\\' in the Browser render settings."
 msgstr "Cela affecte également les familles dans le diagramme. Si cette option est activée, vous pouvez cliquer sur les enregistrements de famille pour ouvrir la page webtrees de la famille. Voir également \\' Action lorsque l'on clique sur un individu \\' dans les paramètres d'affichage du navigateur."
+
+#: 
+msgid "Show selected families in different colour"
+msgstr "Montrer les familles sélectionnées dans des couleurs différentes"
+
+#: 
+msgid "Add to list of families to highlight"
+msgstr "Ajouter à la liste des familles à mettre en évidence"
+
+#: 
+msgid "This option lets you set a custom background colour for selected families. The default highlight colour is used by default, but the colour can be customised for each individual. Also see option in Browser Render settings to choose what happens when a family is clicked, as this may be an easier way to add families to this list."
+msgstr "Cette option vous permet de définir une couleur d'arrière-plan personnalisée pour les familles sélectionnées. La couleur de surbrillance par défaut est utilisée par défaut, mais la couleur peut être personnalisée pour chaque individu. Consultez également l'option dans les paramètres de rendu du navigateur pour choisir ce qui se passe lorsqu'on clique sur une famille, car cela peut être un moyen plus simple d'ajouter des familles à cette liste."
+
+#: 
+msgid "When you click on a family, the webtrees page for that family will open in a new tab or window."
+msgstr "Lorsque vous cliquez sur une famille, la page Webtrees correspondant à cette famille s'ouvre dans un nouvel onglet ou une nouvelle fenêtre."
+
+#: 
+msgid "If this option is selected, clicking on a family in the diagram will add them to the list of families highlighted with a coloured background for identification in the diagram. See the option \"Show selected families in different colour\", in the Colours section of the Tile design options."
+msgstr "Si cette option est sélectionnée, cliquer sur une famille dans le diagramme l'ajoutera à la liste des familles mises en évidence avec un fond coloré pour les identifier dans le diagramme. Voir l'option « Afficher les familles sélectionnées dans une couleur différente » dans la section Couleurs des options de conception des tuiles."
+
+#: 
+msgid "If this option is chosen, when a family is clicked on in the diagram, a menu will be shown with the above items to choose from."
+msgstr "Si cette option est sélectionnée, lorsqu'on clique sur une famille dans le diagramme, un menu s'affiche avec les éléments ci-dessus parmi lesquels choisir."
+
+#: 
+msgid "When a family is clicked on in the diagram, nothing will happen."
+msgstr "Lorsque vous cliquez sur une famille dans le diagramme, rien ne se passe."
+
+#: 
+msgid "Action when family clicked"
+msgstr "Action lorsqu'une famille est sélectionnée"
+
+#: 
+msgid "Open family page"
+msgstr "Ouvre la page de la famille"
+
+#: 
+msgid "Open the webtrees page for the family in a new tab or window."
+msgstr "Ouvre la page Webtrees de la famille dans un nouvel onglet ou une nouvelle.fenêtre"
+
+#: 
+msgid "Open the webtrees page to add a child to the family in a new tab or window."
+msgstr "Ouvre la page Webtrees d'ajout d'un enfant à une famille dans un nouvel onglet ou une nouvelle fenêtre."
+
+#: 
+msgid "Open the webtrees page for the individual in a new tab or window."
+msgstr "Ouvre la page Webtrees de l'individu dans un nouvel onglet ou une nouvelle fenêtre."
+
+#: 
+msgid "Add a partner"
+msgstr "Ajoute un partenaire"
+
+#: 
+msgid "Add a parent"
+msgstr "Ajoute un parent"
+
+#: 
+msgid "Open the webtrees page to add a partner to this individual"
+msgstr "Ouvre la page Webtrees pour ajouter un partenaire à cet individu"
+
+#: 
+msgid "Open the webtrees page to add a parent to this individual"
+msgstr "Ouvre la page Webtrees pour ajouter un parent à cet individu"
+
+#: 
+msgid "Open the webtrees page for changing family members in a new tab or window."
+msgstr "Ouvre la page webtrees dans une nouvelle fenêtre ou un nouvel onglet afin de changer des membres de la famille."
+
+#: 
+msgid "Living"
+msgstr "En vie"
+
+#: 
+msgid "Deceased"
+msgstr "Décédé"
+
+#: 
+msgid "Generate a diagram of everyone in your family tree. Highly customisable, with the ability to navigate in your browser or export the diagram to a file."
+msgstr "Générez un diagramme représentant tous les membres de votre arbre généalogique. Hautement personnalisable, avec la possibilité de naviguer dans votre navigateur ou d'exporter le diagramme vers un fichier."
+
+#: 
+msgid "Show events as text if no date"
+msgstr "Afficher les événements sous forme de texte s'il n'y a pas de date"
+
+#: 
+msgid "If selected, a marriage or divorce on a family tile will show \"Marriage\" or \"Divorce\" if there is no date available. Otherwise the event will only show the prefix."
+msgstr "Si cette option est sélectionnée, un mariage ou un divorce sur une tuile familiale affichera « Mariage » ou « Divorce » si aucune date n'est disponible. Sinon, l'événement n'affichera que le préfixe."
+
+#: 
+msgid "Add this individual and their linked objects to the clippings cart."
+msgstr "Ajoutez cette personne et les objets qui lui sont associés au presse-papiers."
+
+#: 
+msgid "Add this family and their linked objects to the clippings cart."
+msgstr ""
+
+#: 
+msgid "Add to clippings cart"
+msgstr ""
+
+#: 
+msgid "Unknown error"
+msgstr ""
+
+#: 
+msgid "Added to clippings cart"
+msgstr ""
+
+#: 
+msgid "Foster parents"
+msgstr ""
+
+#: 
+msgid "Sealing parents"
+msgstr ""
+
+#: 
+msgid "Rada parents"
+msgstr ""
 
