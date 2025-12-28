@@ -886,6 +886,18 @@ const UI = {
         },
 
         /**
+         * 
+         */
+        showHelpFullscreen() {
+            let menu = document.getElementsByClassName('help-sidebar').item(0);
+            if (menu.hidden) {
+                UI.helpPanel.showHelpSidebar('Home');
+            } else {
+                UI.helpPanel.hideHelpSidebar();
+            }
+        },
+
+        /**
          * Handle click on help content form
          *
          * @param event

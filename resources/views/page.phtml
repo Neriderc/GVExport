@@ -48,14 +48,17 @@ $usegraphviz = $vars['graphviz_bin'] != "";
     <a class="btn btn-outline-secondary pointer"><?= I18N::translate('Show options') ?></a>
 </div>
 
-<?= view($module->name() . '::MainPage/Help', []); ?>
+<div class="help-toggle">
+    <a class="btn btn-outline-secondary pointer"><?= I18N::translate('Show help') ?></a>
+</div>
 
 <div id="render-container">
     <div id="rendering" hidden style="background-color: <?= $vars["background_col"] ?>;"></div>
     <div id="render_menu_container">
         <?php
         // Include the options sidebar menu
-        echo view($module->name() . '::MainPage/Sidebar',
+        echo view(
+            $module->name() . '::MainPage/Sidebar',
             [
                 'vars' => $vars,
                 'tree' => $tree,
@@ -66,7 +69,11 @@ $usegraphviz = $vars['graphviz_bin'] != "";
                 'individual' => $individual,
                 'otypes' => $otypes,
                 'usegraphviz' => $usegraphviz,
-            ]); ?>
+            ]
+        ); ?>
+    </div>
+    <div id="render_help_container">
+        <?= view($module->name() . '::MainPage/Help', []); ?>
     </div>
     <div id="render_button_container">
         <div>
@@ -75,10 +82,13 @@ $usegraphviz = $vars['graphviz_bin'] != "";
         </div>
         <div>
             <a title="<?= I18N::translate('Search diagram') ?>" onclick="" class="search_icon pointer" id="searchButton"><?= view('icons/search'); ?></a>
-            <div id="diagram_search_box_container" style="display: none"><?= view('components/select-individual', ['name' => 'diagram_search_box', 'id' => 'diagram_search_box', 'tree' => $tree, 'individual' => "", 'required'=>false]); ?></div>
+            <div id="diagram_search_box_container" style="display: none"><?= view('components/select-individual', ['name' => 'diagram_search_box', 'id' => 'diagram_search_box', 'tree' => $tree, 'individual' => "", 'required' => false]); ?></div>
         </div>
         <div>
             <a title="<?= I18N::translate('Show menu') ?>" onclick="UI.mainOptions.showOptionsFullscreen()" class="menu-fullscreen pointer" id="fullscreenShowMenu" style="display: none;"><i class="fa-solid fa-wrench"></i></a>
+        </div>
+        <div>
+            <a title="<?= I18N::translate('Show help') ?>" onclick="UI.helpPanel.showHelpFullscreen()" class="menu-fullscreen pointer" id="fullscreenShowHelp" style="display: none;"><i class="fa-solid fa-info-circle"></i></a>
         </div>
     </div>
     <div id="context_menu" style="display: none">
@@ -107,7 +117,7 @@ $usegraphviz = $vars['graphviz_bin'] != "";
             refreshIndisFromXREFS(false);
             removeError("indi-error");
         } else {
-            addError("indi-error","<?= I18N::translate('Individual required') ?>");
+            addError("indi-error", "<?= I18N::translate('Individual required') ?>");
         }
         e.preventDefault();
     });
@@ -118,14 +128,14 @@ $usegraphviz = $vars['graphviz_bin'] != "";
         if (Form.isIndiBlank() === false) {
             removeError("indi-error");
         } else {
-            addError("indi-error","<?= I18N::translate('Individual required') ?>");
+            addError("indi-error", "<?= I18N::translate('Individual required') ?>");
             e.preventDefault();
         }
 
         // If not client side, submit will be triggered and server side used
         if (Form.mustUseClientGeneration()) {
             const output = document.getElementById('output_type').value;
-            switch(output) {
+            switch (output) {
                 case "png":
                     Data.download.downloadSVGAsPNG();
                     break;
@@ -148,7 +158,9 @@ $usegraphviz = $vars['graphviz_bin'] != "";
         let timeToken = crypto?.randomUUID?.() || (Date.now()).toString(16);
 
         document.getElementById('time_token').value = timeToken;
-        setTimeout(() => { getResourceCountWithMyToken(timeToken)}, 500);
+        setTimeout(() => {
+            getResourceCountWithMyToken(timeToken)
+        }, 500);
     });
 
     /**
@@ -240,7 +252,7 @@ $usegraphviz = $vars['graphviz_bin'] != "";
         let footerEl = document.querySelector('.wt-footers');
         let footerHeight = footerEl ? footerEl.getBoundingClientRect().height : 50;
         const h = window.innerHeight - document.querySelector('.wt-header-wrapper').getBoundingClientRect().height - footerHeight;
-        const w = window.innerWidth - MARGIN*2;
+        const w = window.innerWidth - MARGIN * 2;
         const wtMainContainer = document.getElementsByClassName('wt-main-container').item(0);
         const wtTitle = document.getElementsByClassName("wt-page-title").item(0);
         // Set size of render element to fit browser
@@ -258,27 +270,29 @@ $usegraphviz = $vars['graphviz_bin'] != "";
                 'Content-Type': 'application/x-www-form-urlencoded',
             },
             body: data
-        }).then(function (response) {
+        }).then(function(response) {
             if (!response.ok) {
-                return response.text().then(function (errorText) {
+                return response.text().then(function(errorText) {
                     return Promise.reject(errorText)
                 });
             }
             return response.text();
-        }).then(function (response) {
+        }).then(function(response) {
             let jsonResponse;
             // If login expires, we will get error page instead of JSON.
             // Reload if loading JSON fails
             try {
                 jsonResponse = JSON.parse(response);
-            } catch(e) {
-                let errorpos = response.substring(0,1000).indexOf('Fatal error');
+            } catch (e) {
+                let errorpos = response.substring(0, 1000).indexOf('Fatal error');
                 if (errorpos === -1) {
-                    setTimeout(function(){location.reload();}, 3000);
+                    setTimeout(function() {
+                        location.reload();
+                    }, 3000);
                     UI.showToast(ERROR_CHAR + "<?= I18N::translate('Login expired. Reloading page...'); ?>");
                 } else {
                     UI.showToast(ERROR_CHAR + e);
-                    UI.showToast(ERROR_CHAR + response.substring(0,Math.min(1000, errorpos)));
+                    UI.showToast(ERROR_CHAR + response.substring(0, Math.min(1000, errorpos)));
                 }
                 return false;
             }
@@ -287,7 +301,7 @@ $usegraphviz = $vars['graphviz_bin'] != "";
                 messages = jsonResponse.messages;
                 debug_string = jsonResponse.enable_debug_mode;
             }
-            const images = [...lastDotStr.matchAll(/<IMG[^>]+SRC="([^"]*)/gmi)].map(function (matches) {
+            const images = [...lastDotStr.matchAll(/<IMG[^>]+SRC="([^"]*)/gmi)].map(function(matches) {
                 return {
                     name: matches[1],
                     width: '150px',
@@ -300,7 +314,7 @@ $usegraphviz = $vars['graphviz_bin'] != "";
                 });
             });
 
-        }).then(function (element) {
+        }).then(function(element) {
             // Now we have to clean up the generated SVG.
             cleanSVG(element);
 
@@ -313,7 +327,9 @@ $usegraphviz = $vars['graphviz_bin'] != "";
             const observer = new MutationObserver(() => {
                 UI.contextMenu.clearContextMenu();
             });
-            observer.observe(svg, { attributes: true });
+            observer.observe(svg, {
+                attributes: true
+            });
 
             const fullZoom = Math.min(4, rendering.getBoundingClientRect().width / element.getBBox().width);
             panzoomInst = panzoom(element, {
@@ -334,7 +350,7 @@ $usegraphviz = $vars['graphviz_bin'] != "";
             if (xref) {
                 UI.scrollToRecord(xref, xrefType, scrollX, scrollY, zoom);
             } else {
-            // Otherwise scroll to last individual on starting individuals list
+                // Otherwise scroll to last individual on starting individuals list
                 let indiList = document.getElementById('xref_list').value.split(",");
                 for (let i = indiList.length - 1; i >= 0; i--) {
                     if (indiList[i].trim() !== "") {
@@ -348,13 +364,13 @@ $usegraphviz = $vars['graphviz_bin'] != "";
             UI.tile.handleTileClick();
             createXrefListFromSvg();
             return element;
-        }).catch(function (error) {
+        }).catch(function(error) {
             console.log(error);
             if (error.message && error.message.includes("TOTAL_MEMORY")) {
                 if (graphvizAvailable) {
                     UI.showToast(ERROR_CHAR + "<?= I18N::translate('Memory limit reached. Please reduce number of records or use download option.'); ?>");
                 } else {
-                        UI.showToast(ERROR_CHAR + "<?= I18N::translate('Memory limit reached. Please reduce number of records or install Graphviz on server and use download option.'); ?>");
+                    UI.showToast(ERROR_CHAR + "<?= I18N::translate('Memory limit reached. Please reduce number of records or install Graphviz on server and use download option.'); ?>");
                 }
                 rendering.innerHTML = "";
             } else {
@@ -373,23 +389,23 @@ $usegraphviz = $vars['graphviz_bin'] != "";
     // message - the text to show in the error message
     function addError(id, message) {
         let er = document.getElementById(id);
-        er.innerText=message;
+        er.innerText = message;
         let el = document.getElementsByClassName("sidebar__formfields");
         let form = document.getElementsByTagName("FORM");
-        let pos = Form.getPos(er,form.item(1));
-        el.item(0).scrollTo(0,pos["y"]-70);
+        let pos = Form.getPos(er, form.item(1));
+        el.item(0).scrollTo(0, pos["y"] - 70);
     }
 
     // Removes the error text in the provided element
     function removeError(id) {
         let er = document.getElementById(id);
-        er.innerText="";
+        er.innerText = "";
     }
-
 </script>
 
 <script type="text/javascript">
     const mainPage = {};
+
     function runPageLoaded(Url) {
         if (typeof pageLoaded === 'function' && typeof jQuery === 'function') {
             Url.changeURLXref('<?= e($individual->xref()); ?>');
@@ -397,25 +413,29 @@ $usegraphviz = $vars['graphviz_bin'] != "";
         } else {
             // If external script loads before inline script, then wait
             // before trying to run page loaded function.
-            setTimeout(()=>{runPageLoaded(Url)}, 100);
+            setTimeout(() => {
+                runPageLoaded(Url)
+            }, 100);
         }
     }
-    import('<?= $module->assetUrl('javascript/MainPage/Url.js'); ?>').then((module)=>{
+    import('<?= $module->assetUrl('javascript/MainPage/Url.js'); ?>').then((module) => {
         mainPage.Url = new module.Url();
         runPageLoaded(mainPage.Url);
     })
-    import('<?= $module->assetUrl('javascript/MainPage/SettingsGroup.js'); ?>').then((module)=>{
-        new module.SettingsGroup('subgroup_background_vitals', 'bg_col_type', '<?= Settings::OPTION_BACKGROUND_VITAL_COLOUR;?>');
-        new module.SettingsGroup('shape_sex_subgroup', 'indi_tile_shape', '<?= Person::TILE_SHAPE_SEX;?>');
-        new module.SettingsGroup('vitals_shape_subgroup', 'indi_tile_shape', '<?= Person::TILE_SHAPE_VITAL;?>');
-        new module.SettingsGroup('subgroup_background_custom', 'bg_col_type', '<?= Settings::OPTION_BACKGROUND_CUSTOM_COLOUR;?>');
-        new module.SettingsGroup('subgroup_arrow_colour_type_custom', 'arrow_colour_type', '<?= Settings::OPTION_ARROW_CUSTOM_COLOUR;?>');
-        new module.SettingsGroup('subgroup_background_age', 'bg_col_type', '<?= Settings::OPTION_BACKGROUND_AGE_COLOUR;?>');
-        new module.SettingsGroup('subgroup_border_custom', 'border_col_type', '<?= Settings::OPTION_BORDER_CUSTOM_COLOUR;?>');
-        new module.SettingsGroup('subgroup_border_vitals', 'border_col_type', '<?= Settings::OPTION_BORDER_VITAL_COLOUR;?>');
-        new module.SettingsGroup('subgroup_border_age', 'border_col_type', '<?= Settings::OPTION_BORDER_AGE_COLOUR;?>');
-        new module.SettingsGroup('server_pdf_subgroup', 'output_type', 'pdf|svg|jpg', () => {return graphvizAvailable});
-        new module.SettingsGroup('subgroup_stripe_vitals', 'stripe_col_type', '<?= Settings::OPTION_STRIPE_VITAL_COLOUR;?>');
-        new module.SettingsGroup('subgroup_stripe_age', 'stripe_col_type', '<?= Settings::OPTION_STRIPE_AGE_COLOUR;?>');
+    import('<?= $module->assetUrl('javascript/MainPage/SettingsGroup.js'); ?>').then((module) => {
+        new module.SettingsGroup('subgroup_background_vitals', 'bg_col_type', '<?= Settings::OPTION_BACKGROUND_VITAL_COLOUR; ?>');
+        new module.SettingsGroup('shape_sex_subgroup', 'indi_tile_shape', '<?= Person::TILE_SHAPE_SEX; ?>');
+        new module.SettingsGroup('vitals_shape_subgroup', 'indi_tile_shape', '<?= Person::TILE_SHAPE_VITAL; ?>');
+        new module.SettingsGroup('subgroup_background_custom', 'bg_col_type', '<?= Settings::OPTION_BACKGROUND_CUSTOM_COLOUR; ?>');
+        new module.SettingsGroup('subgroup_arrow_colour_type_custom', 'arrow_colour_type', '<?= Settings::OPTION_ARROW_CUSTOM_COLOUR; ?>');
+        new module.SettingsGroup('subgroup_background_age', 'bg_col_type', '<?= Settings::OPTION_BACKGROUND_AGE_COLOUR; ?>');
+        new module.SettingsGroup('subgroup_border_custom', 'border_col_type', '<?= Settings::OPTION_BORDER_CUSTOM_COLOUR; ?>');
+        new module.SettingsGroup('subgroup_border_vitals', 'border_col_type', '<?= Settings::OPTION_BORDER_VITAL_COLOUR; ?>');
+        new module.SettingsGroup('subgroup_border_age', 'border_col_type', '<?= Settings::OPTION_BORDER_AGE_COLOUR; ?>');
+        new module.SettingsGroup('server_pdf_subgroup', 'output_type', 'pdf|svg|jpg', () => {
+            return graphvizAvailable
+        });
+        new module.SettingsGroup('subgroup_stripe_vitals', 'stripe_col_type', '<?= Settings::OPTION_STRIPE_VITAL_COLOUR; ?>');
+        new module.SettingsGroup('subgroup_stripe_age', 'stripe_col_type', '<?= Settings::OPTION_STRIPE_AGE_COLOUR; ?>');
     })
 </script>
