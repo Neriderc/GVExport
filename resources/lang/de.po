@@ -235,7 +235,7 @@ msgstr "Person wird benötigt"
 #: 
 #, fuzzy
 msgid "Generated diagram with %s individuals, %s family records, and %s images"
-msgstr "Es wurden  %s Personen-, %s Familien-Datensätze und %s Abbildungen erzeugt."
+msgstr "Es wurde ein Diagramm mit %s Personen-, %s Familien-Datensätze und %s Abbildungen erzeugt."
 
 #: 
 msgid "Invalid starting individual:"
@@ -1735,7 +1735,7 @@ msgstr "der Ortsname wird vollständig ausgegeben."
 #: 
 #, fuzzy
 msgid "the first and last section of the place name is used, using commas to split the sections. For example, &quot;London, England, United Kingdom&quot; would be shortened to &quot;London, United Kingdom&quot;. This option will also convert a country code (like NZ or GBR) to the full name, and will translate that name to the language set in webtrees if webtrees has a translation available."
-msgstr "der erste und der letzte Abschnitt des Ortsnamens wird verwendet, wobei Kommas verwendet werden, um die Abschnitte zu trennen. Beispiel: &quot;London, England, Vereinigtes Königreich&quot; würde zu &quot;London, Vereinigtes Königreich&quot; abgekürzt."
+msgstr "der erste und der letzte Abschnitt des Ortsnamens werden verwendet, wobei Kommas verwendet werden, um die Abschnitte zu trennen. Beispiel: &quot;London, England, Vereinigtes Königreich&quot; würde zu &quot;London, Vereinigtes Königreich&quot; abgekürzt. Diese Option ersetzt auch eine Länderkennung (wie DEU oder NZ) in den vollen Ländernamen (Deutschland bzw. Neuseeland); dieser wird dann in die in webtrees ausgewählte Sprache übersetzt, sofern eine Übersetzung verfügbar ist."
 
 #. Part of the help page for place abbreviations:  https://s3.eu-west-1.amazonaws.com/po-pub/i/wc6fNIyVirRJx9txr24YUfnP.png
 #: 
@@ -2023,7 +2023,7 @@ msgstr "Dies ist die Standardoption."
 #: 
 #, fuzzy
 msgid "In the General Settings section, there are options in the Browser options that lets you choose what happens when you click on an individual or a family in the diagram. One of the options is to show a menu, and the menu has the following options:"
-msgstr "Im Abschnitt \"Allgemeine Einstellungen\" gibt es bei den Browser-Optionen eine Auswahl, was passiert, wenn man auf eine Person oder Familie im Diagramm klickt. Eine der Auswahlmöglichkeiten zeigt ein Menü mit den folgenden Punkte an:"
+msgstr "Im Abschnitt \"Allgemeine Einstellungen\" gibt es bei den Browser-Optionen eine Auswahl, was passiert, wenn man auf eine Person oder Familie im Diagramm klickt. Eine der Auswahlmöglichkeiten zeigt ein Menü mit den folgenden Punkten an:"
 
 #. New option to "Use similar events if information not available". Current state is this is always on, but this new option allows you to force webtrees to only use the "birth" and "death" events to get the date or place. When enabled, this option allows webtrees to look for christening, baptism, burial, and cremation dates.
 #. 
@@ -2278,7 +2278,6 @@ msgstr "URL zu Personen und Familien hinzuf&uuml;gen"
 #. A new message that pops up when diagram is downloaded:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/XxcKvjkqSJtgUHUpr5e8vBOL.png
 #: 
-#, fuzzy
 msgid "'Downloaded diagram with %s individuals, %s families, and %s images."
 msgstr "Heruntergeladenes Diagramm mit %s Personen, %s Familien und %s Abbildungen."
 
@@ -2395,12 +2394,14 @@ msgid "This shows an estimated size of the PDF that will be generated from the d
 msgstr "Dieses zeigt die geschätzte Größe des PDF das durch das Diagramm erzeugt wird. Dies wird nur gezeigt, wenn Graphviz auf dem Server installiert ist. Bei Einstellungen, die ein PDF im Browser generieren (z.B. abgerundete Fotos) ist diese Angabe ungenau."
 
 #: 
+#, fuzzy
 msgid "Married"
-msgstr "Verheiratet"
+msgstr "verheiratet"
 
 #: 
+#, fuzzy
 msgid "Divorced"
-msgstr "Geschieden"
+msgstr "geschieden"
 
 #: 
 msgid "Show divorce date"
@@ -2488,5 +2489,45 @@ msgstr "verstorben"
 
 #: 
 msgid "Generate a diagram of everyone in your family tree. Highly customisable, with the ability to navigate in your browser or export the diagram to a file."
-msgstr "Erzeuge ein Diagramm von jedem in deiner Familie. Sehr viele Einstellmöglichkeiten, man kann im Browser navigieren oder das Diagramm in eine Datei exportieren."
+msgstr "Erzeuge ein Diagramm mit allen Personen in deinem Stammbaum. Sehr viele Einstellmöglichkeiten, man kann im Browser navigieren oder das Diagramm in eine Datei exportieren."
+
+#: 
+msgid "Show events as text if no date"
+msgstr "Wenn ohne Datum, Ereignisse als Text anzeigen"
+
+#: 
+msgid "If selected, a marriage or divorce on a family tile will show \"Marriage\" or \"Divorce\" if there is no date available. Otherwise the event will only show the prefix."
+msgstr "Falls ausgewählt, wird \"Heirat\" oder \"Scheidung\" angezeigt, wenn das Datum fehlt. Andernfalls wird nur das Symbol zum Ereignis gezeigt."
+
+#: 
+msgid "Add this individual and their linked objects to the clippings cart."
+msgstr "Diese Person mit ihren verbundenen Objekten zum Sammelbehälter hinzufügen"
+
+#: 
+msgid "Add this family and their linked objects to the clippings cart."
+msgstr "Diese Familie inkl. der beiden Partner mit ihren verbundenen Objekten zum Sammelbehälter hinzufügen"
+
+#: 
+msgid "Add to clippings cart"
+msgstr "Zum Sammelbehälter hinzufügen"
+
+#: 
+msgid "Unknown error"
+msgstr "Unbekannter Fehler"
+
+#: 
+msgid "Added to clippings cart"
+msgstr "Zum Sammelbehälter hinzugefügt"
+
+#: 
+msgid "Foster parents"
+msgstr "Pflegeeltern"
+
+#: 
+msgid "Sealing parents"
+msgstr "Siegelungseltern (Mormonen)"
+
+#: 
+msgid "Rada parents"
+msgstr "Amme (Radaʿa / Riḍāʿa) und Ihr Ehemann"
 

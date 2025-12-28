@@ -2486,3 +2486,43 @@ msgstr "Overleden"
 msgid "Generate a diagram of everyone in your family tree. Highly customisable, with the ability to navigate in your browser or export the diagram to a file."
 msgstr "Maak een diagram van iedereen in uw stamboom. Zeer aanpasbaar, met de mogelijkheid om in uw browser te navigeren of het diagram naar een bestand te exporteren."
 
+#: 
+msgid "Show events as text if no date"
+msgstr "Toon gebeurtenissen als tekst als er geen datum is"
+
+#: 
+msgid "If selected, a marriage or divorce on a family tile will show \"Marriage\" or \"Divorce\" if there is no date available. Otherwise the event will only show the prefix."
+msgstr "Indien geselecteerd, zal een huwelijk of echtscheiding op een gezinstegel \"Huwelijk\" of \"Echtscheiding\" weergeven als er geen datum beschikbaar is. Anders zal de gebeurtenis alleen het voorvoegsel weergeven."
+
+#: 
+msgid "Add this individual and their linked objects to the clippings cart."
+msgstr "Voeg deze persoon en de gekoppelde objecten toe aan de knipselverzameling."
+
+#: 
+msgid "Add this family and their linked objects to the clippings cart."
+msgstr "Voeg dit gezin en hun gekoppelde objecten toe aan de knipselverzameling."
+
+#: 
+msgid "Add to clippings cart"
+msgstr "Toevoegen aan knipselverzameling"
+
+#: 
+msgid "Unknown error"
+msgstr "Onbekende fout"
+
+#: 
+msgid "Added to clippings cart"
+msgstr "Toegevoegd aan knipselverzameling"
+
+#: 
+msgid "Foster parents"
+msgstr "Pleegouders"
+
+#: 
+msgid "Sealing parents"
+msgstr "Verzegelingsouders"
+
+#: 
+msgid "Rada parents"
+msgstr "Zoogouders"
+

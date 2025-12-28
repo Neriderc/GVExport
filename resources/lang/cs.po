@@ -2487,3 +2487,43 @@ msgstr "Zemřelí"
 msgid "Generate a diagram of everyone in your family tree. Highly customisable, with the ability to navigate in your browser or export the diagram to a file."
 msgstr "Modul pro generování diagramu všech osob v rodokmenu s pokročilými možnostmi přizpůsobení, procházením v prohlížeči a exportem do souboru."
 
+#: 
+msgid "Show events as text if no date"
+msgstr "Zobrazit stav slovně při chybějícím datu"
+
+#: 
+msgid "If selected, a marriage or divorce on a family tile will show \"Marriage\" or \"Divorce\" if there is no date available. Otherwise the event will only show the prefix."
+msgstr "Pokud je tato volba zapnutá, na dlaždici rodiny se zobrazí text \"Sezdaní\" nebo \"Rozvedení\", pokud není k dispozici datum. V opačném případě se zobrazí pouze předpona."
+
+#: 
+msgid "Add this individual and their linked objects to the clippings cart."
+msgstr ""
+
+#: 
+msgid "Add this family and their linked objects to the clippings cart."
+msgstr ""
+
+#: 
+msgid "Add to clippings cart"
+msgstr ""
+
+#: 
+msgid "Unknown error"
+msgstr ""
+
+#: 
+msgid "Added to clippings cart"
+msgstr ""
+
+#: 
+msgid "Foster parents"
+msgstr ""
+
+#: 
+msgid "Sealing parents"
+msgstr ""
+
+#: 
+msgid "Rada parents"
+msgstr ""
+

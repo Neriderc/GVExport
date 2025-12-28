@@ -2392,10 +2392,12 @@ msgid "This shows an estimated size of the PDF that will be generated from the d
 msgstr "This shows an estimated size of the PDF that will be generated from the diagram. This is only visible if Graphviz is installed on the server. If a setting is enabled to cause the PDF to be generated in the browser (for example photo shapes), this will not be accurate."
 
 #: 
+#, fuzzy
 msgid "Married"
 msgstr "Married"
 
 #: 
+#, fuzzy
 msgid "Divorced"
 msgstr "Divorced"
 
@@ -2486,4 +2488,44 @@ msgstr "Deceased"
 #: 
 msgid "Generate a diagram of everyone in your family tree. Highly customisable, with the ability to navigate in your browser or export the diagram to a file."
 msgstr "Generate a diagram of everyone in your family tree. Highly customisable, with the ability to navigate in your browser or export the diagram to a file."
+
+#: 
+msgid "Show events as text if no date"
+msgstr "Show events as text if no date"
+
+#: 
+msgid "If selected, a marriage or divorce on a family tile will show \"Marriage\" or \"Divorce\" if there is no date available. Otherwise the event will only show the prefix."
+msgstr "If selected, a marriage or divorce on a family tile will show \"Marriage\" or \"Divorce\" if there is no date available. Otherwise the event will only show the prefix."
+
+#: 
+msgid "Add this individual and their linked objects to the clippings cart."
+msgstr "Add this individual and their linked objects to the clippings cart."
+
+#: 
+msgid "Add this family and their linked objects to the clippings cart."
+msgstr "Add this family and their linked objects to the clippings cart."
+
+#: 
+msgid "Add to clippings cart"
+msgstr "Add to clippings cart"
+
+#: 
+msgid "Unknown error"
+msgstr "Unknown error"
+
+#: 
+msgid "Added to clippings cart"
+msgstr "Added to clippings cart"
+
+#: 
+msgid "Foster parents"
+msgstr "Foster parents"
+
+#: 
+msgid "Sealing parents"
+msgstr "Sealing parents"
+
+#: 
+msgid "Rada parents"
+msgstr "Rada parents"
 
