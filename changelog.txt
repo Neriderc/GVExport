@@ -3,6 +3,28 @@
 	GVExport module for Webtrees
 =====================================================================
 
+Version 2.2.5 (2025-12-28)
+  - New       : Added option for a label on the arrow for pedigrees other than birth (thanks @elysch)
+  - New       : Add option to show divorces (thanks @elysch)
+  - New       : Show approximate size of diagram if exported as PDF - only if Graphviz installed on server
+  - New       : Added option for what to do when a family record is clicked on (including to show a menu)
+  - New       : Added option to highlight a list of family records, similar to the option for individuals
+  - New       : Added option to add an individual or family to the clippings cart
+  - New       : Added option to go to the add a parter or add a parent page for an individual
+  - New       : Added option to go to the add a child page for a family
+  - Change    : Changed SVG image backend to allow change of backend SVG renderer, allowing links in SVG
+  - Change    : Added number of images into the notifications when diagram is generated
+  - Change    : The options panel is now hiden when going into fullscreen
+  - Change    : Updated the module description shown in the module list in webtrees, including allowing translation
+  - Change    : Option to show 2 or 3 letter ISO code will now convert between codes (e.g. if saved in webtrees as 2 letter, it will be converted to 3 letter if that option is selected)
+  - Fix       : Fixed modal popups not showing when in full screen
+  - Fix       : Fixed issue where if two names are shown, empty parenthesis were shown if the XREF option was enabled
+  - Fix       : Fixed issue where message that diagram was downloaded shows after the diagram is refreshed if the output is SVG 
+  - Fix       : Fixed issue with media objects in clippings cart (thanks @stefaz)
+  - Fix       : Added some missing translation terms to allow translators to translate the terms
+  - Fix       : Fixed issue where links in the About help page did not work in American English
+  - Fix       : Fixed issue where option to replace the list of stopping indiviudals with the clicked individual was actually adding them to the starting individual list
+  
 Version 2.2.4 (2025-05-19)
   - New       : Menu now accessible in full screen
   - New       : Now translated into Chinese (simplified)
