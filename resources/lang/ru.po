@@ -238,7 +238,8 @@ msgid "Individual required"
 msgstr "Индивидуальный требуется"
 
 #: 
-msgid "Generated %s individuals and %s family records"
+#, fuzzy
+msgid "Generated diagram with %s individuals, %s family records, and %s images"
 msgstr "Сгенерировано %s отдельных лиц и %s семейных записей"
 
 #: 
@@ -535,12 +536,6 @@ msgstr "GVExport — это модуль веб-деревьев, который
 #: 
 msgid "Help information not found"
 msgstr "Справочная информация не найдена"
-
-#. This is the help text that the user will see if they click the i next to the Clippings cart message that shows only when there is an item in the clippings cart:  https://s3.eu-west-1.amazonaws.com/po-pub/i/lzypnHfQAPcoljhGbgSsaEVb.png
-#: 
-#, fuzzy
-msgid "Within webtrees, you can add items to the clippings cart. This is usually done by navigating to a record within webtrees then selecting the &quot;Clippings cart&quot; option near the top of the screen.</p><p> If you have added individuals and the related family and media records to the clippings cart, these can be used to display the diagram instead of the criteria in the &quot;People to be included&quot; section.</p><p>If you have individuals in the clippings cart but don&apos;t wish to use these, you have the option to ignore the clippings cart."
-msgstr "В веб-деревьях вы можете добавлять элементы в корзину вырезок. Обычно это делается путем перехода к записи в веб-деревьях, а затем выбора параметра «Корзина вырезок» в верхней части экрана.</p><p>Если вы добавили людей в корзину вырезок, их можно использовать для отображения диаграмму вместо критериев в разделе «Люди, которые должны быть включены».</p><p>Если у вас есть люди в корзине вырезок, но вы не хотите их использовать, у вас есть возможность игнорировать корзину вырезок."
 
 #. This is help text shown when the user clicks the "i" button next to the "XREFs of included individuals" option:   https://s3.eu-west-1.amazonaws.com/po-pub/i/YVGpSuKpIAjyOMoLTigbrzcU.png
 #: 
@@ -1754,7 +1749,8 @@ msgstr "название места печатается полностью."
 
 #. Part of the help page for place abbreviations:  https://s3.eu-west-1.amazonaws.com/po-pub/i/wc6fNIyVirRJx9txr24YUfnP.png
 #: 
-msgid "the first and last section of the place name is used, using commas to split the sections. For example, &quot;London, England, United Kingdom&quot; would be shortened to &quot;London, United Kingdom&quot;"
+#, fuzzy
+msgid "the first and last section of the place name is used, using commas to split the sections. For example, &quot;London, England, United Kingdom&quot; would be shortened to &quot;London, United Kingdom&quot;. This option will also convert a country code (like NZ or GBR) to the full name, and will translate that name to the language set in webtrees if webtrees has a translation available."
 msgstr "используются первая и последняя части названия места, разделяемые запятыми. Например, &quot;Лондон, Англия, Соединенное Королевство&quot; будет сокращен до «Лондон, Великобритания»"
 
 #. Part of the help page for place abbreviations:  https://s3.eu-west-1.amazonaws.com/po-pub/i/wc6fNIyVirRJx9txr24YUfnP.png
@@ -1999,17 +1995,6 @@ msgstr ""
 msgid "When an individual is clicked on in the diagram, nothing will happen."
 msgstr ""
 
-#. Part of the help text for the option "Action when individual clicked".
-#. https://s3.eu-west-1.amazonaws.com/po-pub/i/oh4Yjz8fjz3l2aFFkAV608mv.png
-#: 
-msgid "Note that there is currently no option for what to do when a family record is clicked on in the diagram. However, the option to add URLs to individuals and families will also affect families in the browser diagram. That is, if you click a family then if this option is enabled, the family page will open in webtrees."
-msgstr ""
-
-#. An extra paragraph for the section on URL links in the help page:  https://s3.eu-west-1.amazonaws.com/po-pub/i/4Vxx95kI54pojXyfcC4CvyYc.png
-#: 
-msgid "Also see \\'Action when individual clicked\\' in the Browser render settings."
-msgstr ""
-
 #. Option for what to do when individual clicked on in diagram
 #: 
 msgid "Add to list of individuals to highlight"
@@ -2052,7 +2037,7 @@ msgstr ""
 
 #. Part of the help text explaining the context menu when you click on an individual (if enabled): https://s3.eu-west-1.amazonaws.com/po-pub/i/JbiHUCluK5zzUvYxjbtvg3LS.png
 #: 
-msgid "In the General Settings section, there is an option in the Browser options that lets you choose what happens when you click on an individual in the diagram. One of the options is to show a menu, and the menu has the following options:"
+msgid "In the General Settings section, there are options in the Browser options that lets you choose what happens when you click on an individual or a family in the diagram. One of the options is to show a menu, and the menu has the following options:"
 msgstr ""
 
 #. New option to "Use similar events if information not available". Current state is this is always on, but this new option allows you to force webtrees to only use the "birth" and "death" events to get the date or place. When enabled, this option allows webtrees to look for christening, baptism, burial, and cremation dates.
@@ -2308,7 +2293,7 @@ msgstr "Добавить URL для отдельных лиц и семей"
 #. A new message that pops up when diagram is downloaded:
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/XxcKvjkqSJtgUHUpr5e8vBOL.png
 #: 
-msgid "Downloaded diagram with %s individuals and %s families."
+msgid "'Downloaded diagram with %s individuals, %s families, and %s images."
 msgstr ""
 
 #. Message that shows if Graphviz installed but diagram can't be rendered on server due to options chosen:
@@ -2437,5 +2422,157 @@ msgstr ""
 
 #: 
 msgid "This also affects families in the diagram. If this option is enabled, you can click on family records to open the family webtrees page. Also see \\'Action when individual clicked\\' in the Browser render settings."
+msgstr ""
+
+#: 
+msgid "Show selected families in different colour"
+msgstr ""
+
+#: 
+msgid "Add to list of families to highlight"
+msgstr ""
+
+#: 
+msgid "This option lets you set a custom background colour for selected families. The default highlight colour is used by default, but the colour can be customised for each individual. Also see option in Browser Render settings to choose what happens when a family is clicked, as this may be an easier way to add families to this list."
+msgstr ""
+
+#: 
+msgid "When you click on a family, the webtrees page for that family will open in a new tab or window."
+msgstr ""
+
+#: 
+msgid "If this option is selected, clicking on a family in the diagram will add them to the list of families highlighted with a coloured background for identification in the diagram. See the option \"Show selected families in different colour\", in the Colours section of the Tile design options."
+msgstr ""
+
+#: 
+msgid "If this option is chosen, when a family is clicked on in the diagram, a menu will be shown with the above items to choose from."
+msgstr ""
+
+#: 
+msgid "When a family is clicked on in the diagram, nothing will happen."
+msgstr ""
+
+#: 
+msgid "Action when family clicked"
+msgstr ""
+
+#: 
+msgid "Open family page"
+msgstr ""
+
+#: 
+msgid "Open the webtrees page for the family in a new tab or window."
+msgstr ""
+
+#: 
+msgid "Open the webtrees page to add a child to the family in a new tab or window."
+msgstr ""
+
+#: 
+msgid "Open the webtrees page for the individual in a new tab or window."
+msgstr ""
+
+#: 
+msgid "Add a partner"
+msgstr ""
+
+#: 
+msgid "Add a parent"
+msgstr ""
+
+#: 
+msgid "Open the webtrees page to add a partner to this individual"
+msgstr ""
+
+#: 
+msgid "Open the webtrees page to add a parent to this individual"
+msgstr ""
+
+#: 
+msgid "Open the webtrees page for changing family members in a new tab or window."
+msgstr ""
+
+#: 
+msgid "Living"
+msgstr ""
+
+#: 
+msgid "Deceased"
+msgstr ""
+
+#: 
+msgid "Generate a diagram of everyone in your family tree. Highly customisable, with the ability to navigate in your browser or export the diagram to a file."
+msgstr ""
+
+#: 
+msgid "Show events as text if no date"
+msgstr ""
+
+#: 
+msgid "If selected, a marriage or divorce on a family tile will show \"Marriage\" or \"Divorce\" if there is no date available. Otherwise the event will only show the prefix."
+msgstr ""
+
+#: 
+msgid "Add this individual and their linked objects to the clippings cart."
+msgstr ""
+
+#: 
+msgid "Add this family and their linked objects to the clippings cart."
+msgstr ""
+
+#: 
+msgid "Add to clippings cart"
+msgstr ""
+
+#: 
+msgid "Unknown error"
+msgstr ""
+
+#: 
+msgid "Added to clippings cart"
+msgstr ""
+
+#: 
+msgid "Foster parents"
+msgstr ""
+
+#: 
+msgid "Sealing parents"
+msgstr ""
+
+#: 
+msgid "Rada parents"
+msgstr ""
+
+#: 
+msgid "Add all diagram items to clippings cart"
+msgstr ""
+
+#: 
+msgid "Within webtrees, you can add items to the clippings cart. This is usually done by navigating to a record within webtrees then selecting the &quot;Clippings cart&quot; option near the top of the screen."
+msgstr "В веб-деревьях вы можете добавлять элементы в корзину вырезок. Обычно это делается путем перехода к записи в веб-деревьях, а затем выбора параметра «Корзина вырезок» в верхней части экрана."
+
+#: 
+msgid "If you have added individuals and the related family and media records to the clippings cart, these can be used to display the diagram instead of the criteria in the &quot;People to be included&quot; section."
+msgstr "Если вы добавили людей в корзину вырезок, их можно использовать для отображения диаграмму вместо критериев в разделе «Люди, которые должны быть включены»."
+
+#: 
+msgid "If you have individuals in the clippings cart but don&apos;t wish to use these, you have the option to ignore the clippings cart."
+msgstr "Если у вас есть люди в корзине вырезок, но вы не хотите их использовать, у вас есть возможность игнорировать корзину вырезок."
+
+#: 
+msgid "Adding to the clippings cart from GVExport"
+msgstr ""
+
+#: 
+msgid "GVExport also includes ways to add individuals and families to the clippings cart."
+msgstr ""
+
+#: 
+msgid "By clicking this this button in the Clippings Cart area of the General Settings advanced section, all individuals and families in the diagram will be added to the clippings cart along with objects linked to them."
+msgstr ""
+
+#: 
+msgid "There is a setting to control what happens when an individual or family is clicked on in the diagram. This can be used to add an individual or family to the clipping cart. See the Browser render section."
 msgstr ""
 

@@ -28,7 +28,7 @@ export function runSharedGeneralTests(role: 'guest' | 'user') {
             await page.locator('#show_diagram_panel').check();
             const infoIcons = page.locator('#gvexport').locator('.info-icon');
             const count = await infoIcons.count();
-            expect(count).toBe(17);
+            expect(count).toBe(18);
 
             for (let i = 0; i < count; i++) {
                 const icon = infoIcons.nth(i);

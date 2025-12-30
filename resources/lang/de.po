@@ -526,11 +526,6 @@ msgstr "OptionGVExport ist ein webtrees-Modul, mit dem Sie komplexe Stammbaumdia
 msgid "Help information not found"
 msgstr "Hilfetext wurde nicht gefunden"
 
-#. This is the help text that the user will see if they click the i next to the Clippings cart message that shows only when there is an item in the clippings cart:  https://s3.eu-west-1.amazonaws.com/po-pub/i/lzypnHfQAPcoljhGbgSsaEVb.png
-#: 
-msgid "Within webtrees, you can add items to the clippings cart. This is usually done by navigating to a record within webtrees then selecting the &quot;Clippings cart&quot; option near the top of the screen.</p><p> If you have added individuals and the related family and media records to the clippings cart, these can be used to display the diagram instead of the criteria in the &quot;People to be included&quot; section.</p><p>If you have individuals in the clippings cart but don&apos;t wish to use these, you have the option to ignore the clippings cart."
-msgstr "In webtrees können Sie Datensätze zum Sammelbehälter hinzufügen. Dies können Sie etwa erreichen indem Sie zu einem Datensatz in webtrees navigieren und dann &quot;Sammelbehälter&quot; im Hauptmenü auswählen.</p><p>Wenn Sie Personen, Familien und Mediendateien zum Sammelkorb hinzugefügt haben, können diese verwendet werden, um sie im Diagramm anstelle der Kriterien im Abschnitt &quot;Einzubeziehende Personen&quot; anzuzeigen.</p><p>Wenn Sie Personen im Sammelbehälter haben, diese aber nicht verwenden möchten, haben Sie die Möglichkeit, den Sammelbehälter zu ignorieren."
-
 #. This is help text shown when the user clicks the "i" button next to the "XREFs of included individuals" option:   https://s3.eu-west-1.amazonaws.com/po-pub/i/YVGpSuKpIAjyOMoLTigbrzcU.png
 #: 
 msgid "This is a list of XREFs that represents the records listed in the &quot;Include anyone related to&quot; section. You may edit this box and click the refresh button in order to load your list of XREFs into the selection list."
@@ -2489,7 +2484,7 @@ msgstr "verstorben"
 
 #: 
 msgid "Generate a diagram of everyone in your family tree. Highly customisable, with the ability to navigate in your browser or export the diagram to a file."
-msgstr "Erzeuge ein Diagramm mit allen Personen in deinem Stammbaum. Sehr viele Einstellmöglichkeiten, man kann im Browser navigieren oder das Diagramm in eine Datei exportieren."
+msgstr "Erzeugt ein Diagramm mit allen Personen eines Stammbaums. Sehr viele Einstellmöglichkeiten, man kann im Browser navigieren oder das Diagramm als Datei exportieren."
 
 #: 
 msgid "Show events as text if no date"
@@ -2530,4 +2525,36 @@ msgstr "Siegelungseltern (Mormonen)"
 #: 
 msgid "Rada parents"
 msgstr "Amme (Radaʿa / Riḍāʿa) und Ihr Ehemann"
+
+#: 
+msgid "Add all diagram items to clippings cart"
+msgstr ""
+
+#: 
+msgid "Within webtrees, you can add items to the clippings cart. This is usually done by navigating to a record within webtrees then selecting the &quot;Clippings cart&quot; option near the top of the screen."
+msgstr "In webtrees können Sie Datensätze zum Sammelbehälter hinzufügen. Dies können Sie etwa erreichen indem Sie zu einem Datensatz in webtrees navigieren und dann &quot;Sammelbehälter&quot; im Hauptmenü auswählen."
+
+#: 
+msgid "If you have added individuals and the related family and media records to the clippings cart, these can be used to display the diagram instead of the criteria in the &quot;People to be included&quot; section."
+msgstr "Wenn Sie Personen, Familien und Mediendateien zum Sammelkorb hinzugefügt haben, können diese verwendet werden, um sie im Diagramm anstelle der Kriterien im Abschnitt &quot;Einzubeziehende Personen&quot; anzuzeigen."
+
+#: 
+msgid "If you have individuals in the clippings cart but don&apos;t wish to use these, you have the option to ignore the clippings cart."
+msgstr "Wenn Sie Personen im Sammelbehälter haben, diese aber nicht verwenden möchten, haben Sie die Möglichkeit, den Sammelbehälter zu ignorieren."
+
+#: 
+msgid "Adding to the clippings cart from GVExport"
+msgstr ""
+
+#: 
+msgid "GVExport also includes ways to add individuals and families to the clippings cart."
+msgstr ""
+
+#: 
+msgid "By clicking this this button in the Clippings Cart area of the General Settings advanced section, all individuals and families in the diagram will be added to the clippings cart along with objects linked to them."
+msgstr ""
+
+#: 
+msgid "There is a setting to control what happens when an individual or family is clicked on in the diagram. This can be used to add an individual or family to the clipping cart. See the Browser render section."
+msgstr ""
 

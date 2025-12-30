@@ -18,7 +18,7 @@ export async function loadGVExport(page: Page, expandOptions: boolean = false) {
     }
 
     // If there are items in the cart from a previous run, we need to clean up
-    const cart = await page.getByRole('button', { name: 'Clippings cart' });
+    const cart = await page.locator('.menu-clippings').getByRole('button', { name: 'Clippings cart' });
     if (await cart.count() > 0) {
         await cart.click();
         const clear = page.getByRole('menuitem', { name: 'Empty the clippings cart' });

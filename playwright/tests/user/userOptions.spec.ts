@@ -52,7 +52,7 @@ test.describe('option: Action when individual clicked', ()=>{
         await tile.click();
         await expect(page.locator('.toast-message').filter({ hasText: 'Added to clippings cart' })).toBeVisible();
         await page.waitForSelector('svg');
-        await page.getByRole('button', { name: 'Clippings cart' }).click();
+        await page.locator('.menu-clippings').getByRole('button', { name: 'Clippings cart' }).click();
         await page.getByRole('menuitem', { name: 'Clippings cart' }).click();
         await expect(page.locator('table a').nth(0)).toContainText('Olivia BLOGGS');
     });
@@ -82,7 +82,7 @@ test.describe('option: Action when family clicked', () => {
         await tile.click();
         await expect(page.locator('.toast-message').filter({ hasText: 'Added to clippings cart' })).toBeVisible();
         await page.waitForSelector('svg');
-        await page.getByRole('button', { name: 'Clippings cart' }).click();
+        await page.locator('.menu-clippings').getByRole('button', { name: 'Clippings cart' }).click();
         await page.getByRole('menuitem', { name: 'Clippings cart' }).click();
         await expect(page.locator('table a').nth(0)).toContainText('Joe BLOGGS + Jane Smith');
     });
@@ -110,7 +110,7 @@ test.describe('user-only tests for indi tile context menu', ()=>{
         await page.locator('.settings_ellipsis_menu_item', { hasText: 'Add to clippings cart' }).click()
         await expect(page.locator('.toast-message').filter({ hasText: 'Added to clippings cart' })).toBeVisible();
         await page.waitForSelector('svg');
-        await page.getByRole('button', { name: 'Clippings cart' }).click();
+        await page.locator('.menu-clippings').getByRole('button', { name: 'Clippings cart' }).click();
         await page.getByRole('menuitem', { name: 'Clippings cart' }).click();
         await expect(page.locator('table a').nth(0)).toContainText('Olivia BLOGGS');
     });
@@ -142,7 +142,7 @@ test.describe('user-only tests for family tile context menu', () => {
 
         await expect(page.locator('.toast-message').filter({ hasText: 'Added to clippings cart' })).toBeVisible();
         await page.waitForSelector('svg');
-        await page.getByRole('button', { name: 'Clippings cart' }).click();
+        await page.locator('.menu-clippings').getByRole('button', { name: 'Clippings cart' }).click();
         await page.getByRole('menuitem', { name: 'Clippings cart' }).click();
         await expect(page.locator('table a').nth(0)).toContainText('Joe BLOGGS + Jane Smith');
     });

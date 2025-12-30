@@ -962,4 +962,29 @@ const Form = {
             }
         }
     },
+
+
+    /**
+     * Trigger when button to add all to clippings cart is clicked
+     */
+    addAllToClippingsCartClicked() {
+        this.addAllToClippingsCart().then((response) => {
+            if (response) {
+                UI.showToast(TRANSLATE[response]);
+                UI.contextMenu.clearContextMenu();
+            } else {
+                UI.showToast(ERROR_CHAR + TRANSLATE['Unknown error']);
+            }
+        });
+    },
+
+    /**
+     * Add the array of xrefs to the clippings cart
+     */
+    addAllToClippingsCart() {
+            let request = {
+            "type": REQUEST_TYPE_ADD_ALL_CLIPPINGS_CART,
+        };
+        return Data.callAPI(request);
+    },
 }

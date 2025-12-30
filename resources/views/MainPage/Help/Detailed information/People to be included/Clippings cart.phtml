@@ -1,20 +1,43 @@
 <?php
 
-/**
- * This is part of the help sidebar content
- *
- * @var GVExport $module   The instance of this module from webtrees
- */
+    /**
+     * This is part of the help sidebar content
+     *
+     * @var GVExport $module   The instance of this module from webtrees
+     */
 
-use Fisharebest\Webtrees\I18N;
-use vendor\WebtreesModules\gvexport\GVExport;
-use vendor\WebtreesModules\gvexport\Help;
+    use Fisharebest\Webtrees\I18N;
+    use vendor\WebtreesModules\gvexport\Help;
 
-$page_name = Help::CLIPPINGS_CART;
+    $page_name = Help::CLIPPINGS_CART;
+    $help = new Help();
 ?>
 
-<?= view($module->name() . '::MainPage/Help/HelpHeader',['name' => $page_name]); ?>
+<?= view($module->name() . '::MainPage/Help/HelpHeader', ['name' => $page_name]); ?>
 
 <p>
-    <?= I18N::translate('Within webtrees, you can add items to the clippings cart. This is usually done by navigating to a record within webtrees then selecting the &quot;Clippings cart&quot; option near the top of the screen.</p><p> If you have added individuals and the related family and media records to the clippings cart, these can be used to display the diagram instead of the criteria in the &quot;People to be included&quot; section.</p><p>If you have individuals in the clippings cart but don&apos;t wish to use these, you have the option to ignore the clippings cart.'); ?>
+    <?= I18N::translate('Within webtrees, you can add items to the clippings cart. This is usually done by navigating to a record within webtrees then selecting the &quot;Clippings cart&quot; option near the top of the screen.'); ?>
 </p>
+
+<p>
+    <?= I18N::translate('If you have added individuals and the related family and media records to the clippings cart, these can be used to display the diagram instead of the criteria in the &quot;People to be included&quot; section.'); ?>
+</p>
+
+<p>
+    <?= I18N::translate('If you have individuals in the clippings cart but don&apos;t wish to use these, you have the option to ignore the clippings cart.'); ?>
+</p>
+
+<h4><?= I18N::translate('Adding to the clippings cart from GVExport'); ?></h4>
+<p>
+    <?= I18N::translate('GVExport also includes ways to add individuals and families to the clippings cart.'); ?>:
+</p>
+<ul>
+    <li><?= I18N::translate('Add all diagram items to clippings cart'); ?> - <?= I18N::translate('By clicking this this button in the Clippings Cart area of the General Settings advanced section, all individuals and families in the diagram will be added to the clippings cart along with objects linked to them.'); ?></li>
+    <li><?= I18N::translate('Add to clippings cart option on individual or family'); ?> - <?= I18N::translate('There is a setting to control what happens when an individual or family is clicked on in the diagram. This can be used to add an individual or family to the clipping cart. See the Browser render section.'); ?></li>
+</ul>
+<p>
+    <?= I18N::translate('Related links'); ?>:
+</p>
+<ul>
+    <li><?= $help->getHelpLinkHtml(Help::BROWSER_RENDER); ?></li>
+</ul>

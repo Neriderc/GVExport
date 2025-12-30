@@ -340,20 +340,12 @@ class GVExport extends AbstractModule implements ModuleCustomInterface, ModuleCh
     function createGraphVizDump($tree, $vars_data, $temp_dir): string
     {
         $out = "";
-        $dot = new Dot($tree, $this);
 
-
-
-        $formSubmission = new FormSubmission();
-        $vars = $formSubmission->load($vars_data, $this);
-        if (isset($temp_dir)) {
-            $vars['temp_dir'] = $temp_dir;
-        }
-        $dot->setSettings($vars);
-        $dot->settings['ancestor_levels'] = min($vars['ancestor_levels'], $dot->settings['limit_levels']);
-        $dot->settings['descendant_levels'] = min($vars['descendant_levels'], $dot->settings['limit_levels']);
         $settings = new Settings();
-        $settings->saveUserSettings($this, $tree,$dot->settings);
+        $dot = $this->createDot($tree, $vars_data, $settings);
+        
+        
+        
         // Get out DOT file
         $out .= $dot->createDOTDump();
         if (isset($_POST["browser"]) && $_POST["browser"] == "true") {
@@ -373,6 +365,27 @@ class GVExport extends AbstractModule implements ModuleCustomInterface, ModuleCh
         $settings->updateRecordCount($dot->settings['time_token'], sizeof($dot->individuals), sizeof($dot->families), substr_count($out, '<IMG'));
         return $r;
     }
+
+    function createIndiFamArrays($tree, $vars_data, $settings) {
+        $dot = $this->createDot($tree, $vars_data, $settings);
+        $dot->createDOTDump();
+        return [$dot->individuals, $dot->families];
+    }
+
+    function createDot($tree, $vars_data, $settings) {
+        $dot = new Dot($tree, $this);
+        $formSubmission = new FormSubmission();
+        $vars = $formSubmission->load($vars_data, $this);
+        if (isset($temp_dir)) {
+            $vars['temp_dir'] = $temp_dir;
+        }
+        $dot->setSettings($vars);
+        $dot->settings['ancestor_levels'] = min($vars['ancestor_levels'], $dot->settings['limit_levels']);
+        $dot->settings['descendant_levels'] = min($vars['descendant_levels'], $dot->settings['limit_levels']);
+        $settings->saveUserSettings($this, $tree, $dot->settings);
+        return $dot;
+    }
+    
 
     /**
      * Additional translations for module.

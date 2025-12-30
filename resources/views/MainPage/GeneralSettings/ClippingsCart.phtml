@@ -1,0 +1,14 @@
+<?php
+
+use vendor\WebtreesModules\gvexport\MainPage;
+use Fisharebest\Webtrees\I18N;
+
+/**
+ * @var bool        $admin          whether this is for the admin page (remove functions that aren't settings)
+ */
+?>
+
+<?= MainPage::addLabel('', 'Clippings cart', !$admin); ?>
+<div class="col-sm-8 options-panel-background">
+    <button class="btn btn-outline-secondary" type="button" name="message_history" onclick="Form.addAllToClippingsCartClicked()"><?= I18N::translate('Add all diagram items to clippings cart') ?></button>
+</div>
