@@ -534,12 +534,6 @@ msgstr "GVExport és un mòdul de webtrees que li permet crear arbres genealògi
 msgid "Help information not found"
 msgstr "Informació d'ajuda no trobada"
 
-#. This is the help text that the user will see if they click the i next to the Clippings cart message that shows only when there is an item in the clippings cart:  https://s3.eu-west-1.amazonaws.com/po-pub/i/lzypnHfQAPcoljhGbgSsaEVb.png
-#: 
-#, fuzzy
-msgid "Within webtrees, you can add items to the clippings cart. This is usually done by navigating to a record within webtrees then selecting the &quot;Clippings cart&quot; option near the top of the screen.</p><p> If you have added individuals and the related family and media records to the clippings cart, these can be used to display the diagram instead of the criteria in the &quot;People to be included&quot; section.</p><p>If you have individuals in the clippings cart but don&apos;t wish to use these, you have the option to ignore the clippings cart."
-msgstr "Dins dels arbres web, pot agregar articles al carret de retallades. Això generalment es fa navegant a un registre dins dels arbres web i després seleccionant l'opció \"Carro de retallades\" prop de la part superior de la pantalla.</p><p>Si ha agregat individus al carret de retallades, aquests es poden usar per a mostrar el diagrama en lloc dels criteris en la secció \"Persones a incloure\".</p><p>Si té persones en el carret de retallades, però no desitja utilitzar, tens l'opció d'ignorar el carret de retallades."
-
 #. This is help text shown when the user clicks the "i" button next to the "XREFs of included individuals" option:   https://s3.eu-west-1.amazonaws.com/po-pub/i/YVGpSuKpIAjyOMoLTigbrzcU.png
 #: 
 #, fuzzy
@@ -2557,5 +2551,37 @@ msgstr ""
 
 #: 
 msgid "Rada parents"
+msgstr ""
+
+#: 
+msgid "Add all diagram items to clippings cart"
+msgstr ""
+
+#: 
+msgid "Within webtrees, you can add items to the clippings cart. This is usually done by navigating to a record within webtrees then selecting the &quot;Clippings cart&quot; option near the top of the screen."
+msgstr "Dins dels arbres web, pot agregar articles al carret de retallades. Això generalment es fa navegant a un registre dins dels arbres web i després seleccionant l'opció \"Carro de retallades\" prop de la part superior de la pantalla."
+
+#: 
+msgid "If you have added individuals and the related family and media records to the clippings cart, these can be used to display the diagram instead of the criteria in the &quot;People to be included&quot; section."
+msgstr "Si ha agregat individus al carret de retallades, aquests es poden usar per a mostrar el diagrama en lloc dels criteris en la secció \"Persones a incloure\"."
+
+#: 
+msgid "If you have individuals in the clippings cart but don&apos;t wish to use these, you have the option to ignore the clippings cart."
+msgstr "Si té persones en el carret de retallades, però no desitja utilitzar, tens l'opció d'ignorar el carret de retallades."
+
+#: 
+msgid "Adding to the clippings cart from GVExport"
+msgstr ""
+
+#: 
+msgid "GVExport also includes ways to add individuals and families to the clippings cart."
+msgstr ""
+
+#: 
+msgid "By clicking this this button in the Clippings Cart area of the General Settings advanced section, all individuals and families in the diagram will be added to the clippings cart along with objects linked to them."
+msgstr ""
+
+#: 
+msgid "There is a setting to control what happens when an individual or family is clicked on in the diagram. This can be used to add an individual or family to the clipping cart. See the Browser render section."
 msgstr ""
 
