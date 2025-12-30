@@ -234,6 +234,7 @@ function handleFullscreenExit()
         Form.showHide(document.getElementById("fullscreenShowMenu"), true);
         Form.showHide(document.getElementById("fullscreenShowHelp"), true);
         UI.hideSidebar();
+        UI.helpPanel.hideHelpSidebar();
     }
 }
 
