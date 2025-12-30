@@ -106,6 +106,9 @@ class ApiHandler
                 case "add_clippings_cart":
                     $this->addToClippingsCart();
                     break;
+                case "add_all_clippings_cart":
+                    $this->addAllToClippingsCart();
+                    break;
                 default:
                     $this->response_data['success'] = false;
                     $this->response_data['json'] = $this->json_data;
@@ -463,6 +466,32 @@ class ApiHandler
                 }
             }
         }
+        $this->response_data['success'] = true;
+        $this->response_data['response'] = ['Added to clippings cart'];
+    }
+
+    /**
+     * Adds all individuals and families in the diagram to the clippings cart
+     */
+    private function addAllToClippingsCart() {
+        $vars = Validator::parsedBody($this->request)->array('vars');
+        $settings = new Settings();
+        [$individuals, $families] = $this->module->createIndiFamArrays($this->tree, $vars, $settings);
+
+        $cartAdder = new ClippingsCartAdder($this->tree);
+        foreach ($families as $xref => $val) {
+                $record = Registry::familyFactory()->make($xref, $this->tree);
+                if ($record) {
+                    $cartAdder->addFamilyToCart($record);
+                }
+        }
+        foreach ($individuals as $xref => $val) {
+            $record = Registry::individualFactory()->make($xref, $this->tree);
+            if ($record) {
+                $cartAdder->addIndividualToCart($record);
+            }
+        }
+
         $this->response_data['success'] = true;
         $this->response_data['response'] = ['Added to clippings cart'];
     }

@@ -10,5 +10,5 @@ use Fisharebest\Webtrees\I18N;
 
 <?= MainPage::addLabel('', 'Clippings cart', !$admin); ?>
 <div class="col-sm-8 options-panel-background">
-    <button class="btn btn-outline-secondary" type="button" name="message_history" onclick="#"><?= I18N::translate('Add all diagram items to clippings cart') ?></button>
+    <button class="btn btn-outline-secondary" type="button" name="message_history" onclick="Form.addAllToClippingsCartClicked()"><?= I18N::translate('Add all diagram items to clippings cart') ?></button>
 </div>
