@@ -27,6 +27,9 @@ use vendor\WebtreesModules\gvexport\GVExport;
             <?= view($module->name() . '::MainPage/GeneralSettings/SettingsFile', ['admin' => $admin]); ?>
         </div>
         <div class="row no-right-margin form-group">
+            <?= view($module->name() . '::MainPage/GeneralSettings/ClippingsCart', ['admin' => $admin]); ?>
+        </div>
+        <div class="row no-right-margin form-group">
             <?= view($module->name() . '::MainPage/GeneralSettings/MessageHistory', ['admin' => $admin]); ?>
         </div>
     </div>
