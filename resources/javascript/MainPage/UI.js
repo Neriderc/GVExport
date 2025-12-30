@@ -11,7 +11,6 @@ const UI = {
     hideSidebar: function() {
         document.querySelector(".sidebar").hidden = true;
         document.querySelector(".sidebar_toggle").hidden = false;
-        document.getElementById('help-content').innerHTML = '';
     },
 
     /**
@@ -895,7 +894,7 @@ const UI = {
         showHelpFullscreen() {
             let menu = document.getElementsByClassName('help-sidebar').item(0);
             if (menu.hidden) {
-                UI.helpPanel.showHelpSidebar('Home');
+                UI.helpPanel.showHelpSidebar();
             } else {
                 UI.helpPanel.hideHelpSidebar();
             }
