@@ -871,6 +871,10 @@ const UI = {
          * @param help
          */
         showHelpSidebar(help = '') {
+            if (document.getElementById('help-content').innerText === '') {
+                this.loadHelpHome();
+            }
+
             UI.helpPanel.loadHelp(help).then(() => {
                 document.querySelector(".help-toggle").hidden = true;
                 document.querySelector(".help-sidebar").hidden = false;
