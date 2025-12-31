@@ -488,7 +488,7 @@ class Dot {
  	 */
 	function getFamilyColour($xref = null): string
     {	
-		if (!empty($xref) && $this->settings['highlight_custom_fams'] && Settings::isKeyInJson($this->settings['highlight_custom_fams_json'], $xref)) {
+		if (!empty($xref) && $this->settings['highlight_custom_fams'] && Utils::isKeyInJson($this->settings['highlight_custom_fams_json'], $xref)) {
 			$data = json_decode($this->settings['highlight_custom_fams_json'], true);
             return $data[$xref];
         } 

@@ -274,7 +274,7 @@ class Person
         }
 
         // Get background colour
-        if ($this->dot->settings['highlight_custom_indis'] && Settings::isKeyInJson($this->dot->settings['highlight_custom_json'], $pid)) {
+        if ($this->dot->settings['highlight_custom_indis'] && Utils::isKeyInJson($this->dot->settings['highlight_custom_json'], $pid)) {
             $data = json_decode($this->dot->settings['highlight_custom_json'], true);
             $indi_bg_colour = $data[$pid];
         } else if ($this->dot->settings["sharednote_col_enable"] && $sharednotes->indiHasSharedNote($pid)) {
