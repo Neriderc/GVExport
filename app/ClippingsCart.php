@@ -72,6 +72,20 @@ class ClippingsCart {
 	}
 
 	/**
+	 * Count the XREFs in the clippings cart
+	 *
+	 * @param Tree $tree
+	 *
+	 * @return int Count of xrefs
+	 */
+	static function countXrefsInCart(Tree $tree): int
+	{
+		$cart = Session::get('cart', []);
+		$xrefs = array_keys($cart[$tree->name()] ?? []);
+		return sizeof($xrefs);
+	}
+
+	/**
 	 * Get the records in the clippings cart
 	 *
 	 * @param Tree $tree

@@ -605,5 +605,15 @@ const Data = {
                 UI.showToast(ERROR_CHAR + e);
             });
         }
-    }
+    },
+
+    /**
+     * Get current count of items in webtrees clippings cart
+     */
+    getClippingsCartCount() {
+            let request = {
+            "type": REQUEST_TYPE_COUNT_XREFS_CLIPPINGS_CART,
+        };
+        return Data.callAPI(request);
+    },
 }

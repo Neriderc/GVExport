@@ -522,6 +522,7 @@ const UI = {
         addFamiliesToClippingsCart(xrefs) {
             this.addXrefsToClippingsCart(xrefs, 'families').then((response) => {
                 if (response) {
+                    Form.updateClippingsCartCount();
                     UI.showToast(TRANSLATE[response]);
                     UI.contextMenu.clearContextMenu();
                 } else {
@@ -531,11 +532,12 @@ const UI = {
         },
 
         /**
-         * Add the family to the clippings cart
+         * Add the individual to the clippings cart
          */
         addIndividualsToClippingsCart(xrefs) {
             this.addXrefsToClippingsCart(xrefs, 'individuals').then((response) => {
                 if (response) {
+                    Form.updateClippingsCartCount();
                     UI.showToast(TRANSLATE[response]);
                     UI.contextMenu.clearContextMenu();
                 } else {

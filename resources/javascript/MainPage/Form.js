@@ -970,6 +970,7 @@ const Form = {
     addAllToClippingsCartClicked() {
         this.addAllToClippingsCart().then((response) => {
             if (response) {
+                Form.updateClippingsCartCount();
                 UI.showToast(TRANSLATE[response]);
                 UI.contextMenu.clearContextMenu();
             } else {
@@ -987,6 +988,19 @@ const Form = {
         };
         return Data.callAPI(request);
     },
+
+    /**
+     * Update the clipping cart count in the webtrees menu
+     */
+    async updateClippingsCartCount() {
+        const count = await Data.getClippingsCartCount();
+        const el = document.querySelector('.menu-clippings-cart .badge');
+        // Element may not exist - e.g. clippings cart module disabled
+        if (el) {
+            el.innerText = count;
+        }
+    },
+    
 
 
 
