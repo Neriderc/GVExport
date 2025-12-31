@@ -2,6 +2,8 @@
 
 namespace vendor\WebtreesModules\gvexport;
 
+use Exception;
+
 /**
  * Static functions that perform generic actions
  */
@@ -75,7 +77,7 @@ class Utils
                 if (Utils::is_exec_available()) {
                     exec($binPath . " -V" . " 2>&1", $stdout_output, $return_var);
                 }
-                if (Utils::is_exec_available() || $return_var !== 0) {
+                if (!Utils::is_exec_available() || $return_var !== 0) {
                     $outcome = false;
                 } else {
                     $outcome = true;
