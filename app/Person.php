@@ -406,7 +406,7 @@ class Person
     public function getFactImage(string $pid, bool $detailsExist, string $id) : string {
             $out = "";
             // Show photo
-            if (($detailsExist || $pid == "I_N") && ($this->dot->isPhotoRequired())) {
+            if ($this->dot->isPhotoRequired()) {
                 if (isset($this->dot->individuals[$pid][$id]) && !empty($this->dot->individuals[$pid][$id])) {
                     $photo_size = floatval($this->dot->settings["photo_size"]) / 100;
                     $padding = $this->getPhotoPaddingSize();
@@ -536,7 +536,7 @@ class Person
                 }
                 return $initials . " " . $nameArray["surn"];
             case 70: /* Don't show names */
-                return " ";
+                return "";
             default:
                 return $nameArray["full"];
 
