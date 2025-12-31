@@ -28,7 +28,7 @@ test('option: Add all diagram items to clippings cart', async ({ page }) => {
     await expect(page.locator('table a').nth(6)).toContainText('Alice BLOGGS');
     await expect(page.locator('table a').nth(7)).toContainText('Joe BLOGGS');
     await expect(page.locator('table a').nth(8)).toContainText('Liam BLOGGS');
-    await expect(page.locator('table a').nth(9)).toContainText('Martin BLOGGS');
+    await expect(page.locator('table a').nth(9)).toContainText('Martin John Johnny BLOGGS');
     await expect(page.locator('table a').nth(10)).toContainText('Matthew BLOGGS');
     await expect(page.locator('table a').nth(11)).toContainText('Olivia BLOGGS');
     await expect(page.locator('table a').nth(12)).toContainText('Steven BLOGGS');
