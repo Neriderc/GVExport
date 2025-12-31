@@ -109,6 +109,9 @@ class ApiHandler
                 case "add_all_clippings_cart":
                     $this->addAllToClippingsCart();
                     break;
+                case "count_xrefs_clippings_cart":
+                    $this->countXrefsClippingsCart();
+                    break;
                 case "dump_settings":
                     $this->dumpSettings();
                     break;
@@ -497,6 +500,14 @@ class ApiHandler
 
         $this->response_data['success'] = true;
         $this->response_data['response'] = ['Added to clippings cart'];
+    }
+
+    /**
+     * Adds all individuals and families in the diagram to the clippings cart
+     */
+    private function countXrefsClippingsCart() {
+        $this->response_data['success'] = true;
+        $this->response_data['response'] = ClippingsCart::countXrefsInCart($this->tree);;
     }
     
     /**
