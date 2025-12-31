@@ -436,7 +436,7 @@ class ApiHandler
     private function getRecordCount()
     {
         $this->response_data['success'] = true;
-        $this->response_data['response'] = Settings::loadRecordCount($this->json['token']);
+        $this->response_data['response'] = Utils::loadRecordCount($this->json['token']);
     }
 
     /**
