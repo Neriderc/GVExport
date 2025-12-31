@@ -490,7 +490,8 @@ class Person
             case 0: /* Full name */
                 return $nameArray["full"];
             case 10: /* Given and Surnames */
-                return $nameArray["givn"] . " " . $nameArray["surn"];
+                $cleanGivenNames = preg_replace('/\s*"[^"]+"/', '', $nameArray["givn"]);
+                return $cleanGivenNames . " " . $nameArray["surn"];
             case 20: /* Given names */
                 return $nameArray["givn"];
             case 30: /* First given name only */
