@@ -2,6 +2,8 @@
 
 namespace vendor\WebtreesModules\gvexport;
 
+use Fisharebest\Webtrees\Auth;
+
 /**
  * The current user
  */

@@ -7,7 +7,6 @@ use Fisharebest\Webtrees\Auth;
 use Fisharebest\Webtrees\Http\Exceptions\HttpBadRequestException;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Tree;
-use Fisharebest\Webtrees\GuestUser;
 
 
 /**
@@ -331,7 +330,7 @@ class Settings
      * @return void
      */
     public function deleteUserSettings(GVExport $module, Tree $tree, string $id) {
-        if (Settings::isUserLoggedIn()) {
+        if (User::isUserLoggedIn()) {
             $loaded = $module->getPreference(self::PREFERENCE_PREFIX . self::TREE_PREFIX . $tree->id() . self::USER_PREFIX . Auth::user()->id(), "preference not set");
             if ($loaded != "preference not set") {
                 $all_settings = json_decode($loaded, true);
@@ -770,5 +769,31 @@ class Settings
         } else {
             return $settings['limit_levels_visitor'];
         }
+    }
+
+    /**
+     * 
+     */
+    static function dumpSettings($module, $tree) {
+        $user_id = Auth::user()->id();
+        if ($user_id === 0) {
+            return 'Not available when logged out';
+        }
+        $output = "Admin: \n";
+
+        $output .= $module->getPreference(self::PREFERENCE_PREFIX . self::ADMIN_PREFERENCE_NAME, "preference not set");
+
+        $output .= "\n\nAdmin preference name:\n" . self::PREFERENCE_PREFIX . self::ADMIN_PREFERENCE_NAME;
+
+        $output .= "\n\nUser:\n";
+        $settings_pref_name = self::PREFERENCE_PREFIX . self::TREE_PREFIX . $tree->id() . self::USER_PREFIX . $user_id;
+        $output .=  $module->getPreference($settings_pref_name, "preference not set");
+
+        $output .= "\n\nUser preference name:\n" . $settings_pref_name;
+
+        $output .= "\n\nPreference list:\n";
+        $output .=  $module->getPreference(self::PREFERENCE_PREFIX . self::SETTINGS_LIST_PREFERENCE_NAME . self::TREE_PREFIX . $tree->id(), "preference not set");
+    
+        return $output;
     }
 }

@@ -109,6 +109,9 @@ class ApiHandler
                 case "add_all_clippings_cart":
                     $this->addAllToClippingsCart();
                     break;
+                case "dump_settings":
+                    $this->dumpSettings();
+                    break;
                 default:
                     $this->response_data['success'] = false;
                     $this->response_data['json'] = $this->json_data;
@@ -286,7 +289,7 @@ class ApiHandler
     public function deleteSettings(): void
     {
         if (isset($this->json['settings_id']) && ctype_alnum((string) $this->json['settings_id']) && !in_array($this->json['settings_id'], [Settings::ID_ALL_SETTINGS, Settings::ID_MAIN_SETTINGS])) {
-            if (Settings::isUserLoggedIn()) {
+            if (User::isUserLoggedIn()) {
                 $settings = new Settings();
                 $settings->deleteUserSettings($this->module, $this->tree, $this->json['settings_id']);
                 $this->response_data['success'] = true;
@@ -334,7 +337,7 @@ class ApiHandler
      */
     private function isLoggedIn()
     {
-        if (Settings::isUserLoggedIn()) {
+        if (User::isUserLoggedIn()) {
             $this->response_data['loggedIn'] = true;
         } else {
             $this->response_data['loggedIn'] = false;
@@ -494,5 +497,15 @@ class ApiHandler
 
         $this->response_data['success'] = true;
         $this->response_data['response'] = ['Added to clippings cart'];
+    }
+    
+    /**
+     * Adds all individuals and families in the diagram to the clippings cart
+     */
+    private function dumpSettings() {
+        $output = Settings::dumpSettings($this->module, $this->tree);
+
+        $this->response_data['success'] = true;
+        $this->response_data['response'] = $output;
     }
 }
