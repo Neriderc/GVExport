@@ -26,47 +26,109 @@ class Utils
     }
 
     /**
-     * Saves record count of diagram to session storage
-     *
-     * @param string $token Token used by front end to check record has been updated
-     * @param int $indis
-     * @param int $fams
-     * @return void
+     * Check if exec function is available to prevent error if webserver has disabled it
+     * From: https://stackoverflow.com/questions/3938120/check-if-exec-is-disabled
+     * @return bool
      */
-    public static function updateRecordCount(string $token, int $indis, int $fams, int $images)
+    static function is_exec_available(): bool
     {
-        $data = json_encode([
-            'time_token' => $token,
-            'indis' => $indis,
-            'fams' => $fams,
-            'images' => $images
-        ]);
-        $_SESSION[Settings::PREFERENCE_PREFIX . '_' . Settings::RECORD_COUNT_PREFERENCE_NAME] = $data;
+        static $available;
+
+        if (!isset($available)) {
+            $available = true;
+            if (ini_get('safe_mode')) {
+                $available = false;
+            } else {
+                $d = ini_get('disable_functions');
+                $s = ini_get('suhosin.executor.func.blacklist');
+                if ("$d$s") {
+                    $array = preg_split('/,\s*/', "$d,$s");
+                    if (in_array('exec', $array)) {
+                        $available = false;
+                    }
+                }
+            }
+        }
+
+        return $available;
+    }
+
+
+    /**
+     * Check if Graphviz is available
+     *
+     * @param $binPath
+     * @return mixed|string
+     */
+    static function isGraphvizAvailable($binPath)
+    {
+        static $outcome;
+
+        if (!isset($outcome)) {
+            if ($binPath == "") {
+                $outcome = false;
+                return false;
+            }
+            $stdout_output = null;
+            $return_var = null;
+            try {
+                if (Utils::is_exec_available()) {
+                    exec($binPath . " -V" . " 2>&1", $stdout_output, $return_var);
+                }
+                if (Utils::is_exec_available() || $return_var !== 0) {
+                    $outcome = false;
+                } else {
+                    $outcome = true;
+                }
+            } catch (Exception $error) {
+                return false;
+            }
+        }
+        return $outcome;
     }
 
     /**
-     * Loads record count of diagram from session storage
+     * Loads country data from JSON file for converting to ISO code
      *
-     * @param $token
-     * @return string
+     * @param $type
+     * @return array|false
      */
-    static public function loadRecordCount($token): string
+    static function loadCountryDataFile($type)
     {
-        $defaults = [
-            'time_token' => '',
-            'indis' => -1,
-            'fams' => -1,
-            'images' => -1
-        ];
-
-        $records = $_SESSION[Settings::PREFERENCE_PREFIX . '_' . Settings::RECORD_COUNT_PREFERENCE_NAME] ?? null;
-
-        $decoded = $records ? json_decode($records, true) : null;
-
-        if ($decoded && isset($decoded['time_token']) && $decoded['time_token'] === $token) {
-            return $records;
+        switch ($type) {
+            case 'iso2':
+                $string = file_get_contents(dirname(__FILE__) . "/../resources/data/CountryRegionCodes2Char.json");
+                break;
+            case 'iso3':
+                $string = file_get_contents(dirname(__FILE__) . "/../resources/data/CountryRegionCodes3Char.json");
+                break;
+            default:
+                return false;
         }
+        $json = json_decode($string, true);
+        $countries = [];
+        foreach ($json as $row => $value) {
+            $countries[strtolower($row)] = strtoupper($value);
+        }
+        return $countries;
+    }
 
-        return json_encode($defaults);
+    /**
+     * Loads country data from JSON file for converting from ISO code to English name
+     *
+     * @param $type
+     * @return array|false
+     */
+    static function loadCountryDataFileToNameArray()
+    {
+        $codeToCountry = file_get_contents(dirname(__FILE__) . "/../resources/data/CountryFromCode.json");
+
+        $countries = [];
+
+        $json = json_decode($codeToCountry, true);
+        foreach ($json as $code => $country) {
+            $countries[strtoupper($code)] = $country;
+        }
+        return $countries;
     }
 }
