@@ -7,7 +7,6 @@ use Fisharebest\Webtrees\Auth;
 use Fisharebest\Webtrees\Http\Exceptions\HttpBadRequestException;
 use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Tree;
-use Fisharebest\Webtrees\GuestUser;
 
 
 /**
@@ -84,10 +83,10 @@ class Settings
         $this->defaultSettings['arrow_style_options'] = [0 => 'Solid', 10 => 'Dotted', 20 => 'Dashed', 30 => 'Bold', 40 => 'Tapered', 50 => 'Random', 60 => 'None'];
         $this->defaultSettings['arrow_colour_type_options'] = [Settings::OPTION_ARROW_CUSTOM_COLOUR => 'Custom', Settings::OPTION_ARROW_RANDOM_COLOUR => 'Random'];
         $this->defaultSettings['countries'] = $this->getCountryAbbreviations();
-        if (!$this->isGraphvizAvailable($this->defaultSettings['graphviz_bin'])) {
+        if (!Utils::isGraphvizAvailable($this->defaultSettings['graphviz_bin'])) {
             $this->defaultSettings['graphviz_bin'] = "";
         }
-        $this->defaultSettings['graphviz_config'] = $this->getGraphvizSettings($this->defaultSettings);
+        $this->defaultSettings['graphviz_config'] = Diagram::getGraphvizSettings($this->defaultSettings);
         $this->defaultSettings['sharednote_col_data'] = '[]';
         $this->defaultSettings['updated_date'] = '';
         $this->defaultSettings['highlight_custom_json'] = '{}';
@@ -134,7 +133,7 @@ class Settings
                 throw new HttpBadRequestException(I18N::translate('Invalid JSON') . " 1: " . json_last_error_msg() . $loaded);
             }
         }
-        $settings['graphviz_config'] = $this->getGraphvizSettings($settings);
+        $settings['graphviz_config'] = Diagram::getGraphvizSettings($settings);
         return $settings;
 
     }
@@ -331,7 +330,7 @@ class Settings
      * @return void
      */
     public function deleteUserSettings(GVExport $module, Tree $tree, string $id) {
-        if (Settings::isUserLoggedIn()) {
+        if (User::isUserLoggedIn()) {
             $loaded = $module->getPreference(self::PREFERENCE_PREFIX . self::TREE_PREFIX . $tree->id() . self::USER_PREFIX . Auth::user()->id(), "preference not set");
             if ($loaded != "preference not set") {
                 $all_settings = json_decode($loaded, true);
@@ -351,66 +350,6 @@ class Settings
         }
     }
 
-    /**
-     * Check if exec function is available to prevent error if webserver has disabled it
-     * From: https://stackoverflow.com/questions/3938120/check-if-exec-is-disabled
-     * @return bool
-     */
-    private function is_exec_available(): bool
-    {
-        static $available;
-
-        if (!isset($available)) {
-            $available = true;
-            if (ini_get('safe_mode')) {
-                $available = false;
-            } else {
-                $d = ini_get('disable_functions');
-                $s = ini_get('suhosin.executor.func.blacklist');
-                if ("$d$s") {
-                    $array = preg_split('/,\s*/', "$d,$s");
-                    if (in_array('exec', $array)) {
-                        $available = false;
-                    }
-                }
-            }
-        }
-
-        return $available;
-    }
-
-    /**
-     * Check if Graphviz is available
-     *
-     * @param $binPath
-     * @return mixed|string
-     */
-    private function isGraphvizAvailable($binPath)
-    {
-        static $outcome;
-
-        if (!isset($outcome)) {
-            if ($binPath == "") {
-                $outcome = false;
-                return false;
-            }
-            $stdout_output = null;
-            $return_var = null;
-            try {
-                if ($this->is_exec_available()) {
-                    exec($binPath . " -V" . " 2>&1", $stdout_output, $return_var);
-                }
-                if (!$this->is_exec_available() || $return_var !== 0) {
-                    $outcome = false;
-                } else {
-                    $outcome = true;
-                }
-            } catch (Exception $error) {
-                return false;
-            }
-        }
-        return $outcome;
-    }
 
     /**
      * Load country data for abbreviating place names
@@ -420,98 +359,14 @@ class Settings
      */
     private function getCountryAbbreviations(): array
     {
-        $countries['iso2'] = $this->loadCountryDataFile('iso2');
-        $countries['iso3'] = $this->loadCountryDataFile('iso3');
-        $countries['isoToName'] = $this->loadCountryDataFileToNameArray();
+        $countries['iso2'] = Utils::loadCountryDataFile('iso2');
+        $countries['iso3'] = Utils::loadCountryDataFile('iso3');
+        $countries['isoToName'] = Utils::loadCountryDataFileToNameArray();
         return $countries;
     }
 
-    /**
-     * Loads country data from JSON file for converting to ISO code
-     *
-     * @param $type
-     * @return array|false
-     */
-    private function loadCountryDataFile($type) {
-        switch ($type) {
-            case 'iso2':
-                $string = file_get_contents(dirname(__FILE__) . "/../resources/data/CountryRegionCodes2Char.json");
-                break;
-            case 'iso3':
-                $string = file_get_contents(dirname(__FILE__) . "/../resources/data/CountryRegionCodes3Char.json");
-                break;
-            default:
-                return false;
-        }
-        $json = json_decode($string, true);
-        $countries = [];
-        foreach ($json as $row => $value) {
-            $countries[strtolower($row)] = strtoupper($value);
-        }
-        return $countries;
-    }
+   
 
-    /**
-     * Loads country data from JSON file for converting from ISO code to English name
-     *
-     * @param $type
-     * @return array|false
-     */
-    private function loadCountryDataFileToNameArray() {
-        $codeToCountry = file_get_contents(dirname(__FILE__) . "/../resources/data/CountryFromCode.json");
-
-        $countries = [];
-
-        $json = json_decode($codeToCountry, true);
-        foreach ($json as $code => $country) {
-            $countries[strtoupper($code)] = $country;
-        }
-        return $countries;
-    }
-
-    private function getGraphvizSettings($settings): array
-    {
-        // Output file formats
-        $Graphviz['output']['svg']['label'] = "SVG"; #ESL!!! 20090213
-        $Graphviz['output']['svg']['extension'] = "svg";
-        $Graphviz['output']['svg']['exec'] = $settings['graphviz_bin'] . " -Tsvg -o" . $settings['filename'] . ".svg " . $settings['filename'] . ".dot";
-        $Graphviz['output']['svg']['cont_type'] = "image/svg+xml";
-
-        $Graphviz['output']['dot']['label'] = "DOT"; #ESL!!! 20090213
-        $Graphviz['output']['dot']['extension'] = "dot";
-        $Graphviz['output']['dot']['exec'] = "";
-        $Graphviz['output']['dot']['cont_type'] = "text/plain; charset=utf-8";
-
-        $Graphviz['output']['png']['label'] = "PNG"; #ESL!!! 20090213
-        $Graphviz['output']['png']['extension'] = "png";
-        $Graphviz['output']['png']['exec'] = $settings['graphviz_bin'] . " -Tpng -o" . $settings['filename'] . ".png " . $settings['filename'] . ".dot";
-        $Graphviz['output']['png']['cont_type'] = "image/png";
-
-        $Graphviz['output']['jpg']['label'] = "JPG"; #ESL!!! 20090213
-        $Graphviz['output']['jpg']['extension'] = "jpg";
-        $Graphviz['output']['jpg']['exec'] = $settings['graphviz_bin'] . " -Tjpg -o" . $settings['filename'] . ".jpg " . $settings['filename'] . ".dot";
-        $Graphviz['output']['jpg']['cont_type'] = "image/jpeg";
-
-        $Graphviz['output']['pdf']['label'] = "PDF"; #ESL!!! 20090213
-        $Graphviz['output']['pdf']['extension'] = "pdf";
-        $Graphviz['output']['pdf']['exec'] = $settings['graphviz_bin'] . " -Tpdf -o" . $settings['filename'] . ".pdf " . $settings['filename'] . ".dot";
-        $Graphviz['output']['pdf']['cont_type'] = "application/pdf";
-
-        if ( !empty( $settings['graphviz_bin']) && $settings['graphviz_bin'] != "") {
-
-            $Graphviz['output']['gif']['label'] = "GIF"; #ESL!!! 20090213
-            $Graphviz['output']['gif']['extension'] = "gif";
-            $Graphviz['output']['gif']['exec'] = $settings['graphviz_bin'] . " -Tgif -o" . $settings['filename'] . ".gif " . $settings['filename'] . ".dot";
-            $Graphviz['output']['gif']['cont_type'] = "image/gif";
-
-            $Graphviz['output']['ps']['label'] = "PS"; #ESL!!! 20090213
-            $Graphviz['output']['ps']['extension'] = "ps";
-            $Graphviz['output']['ps']['exec'] = $settings['graphviz_bin'] . " -Tps2 -o" . $settings['filename'] . ".ps " . $settings['filename'] . ".dot";
-            $Graphviz['output']['ps']['cont_type'] = "application/postscript";
-        }
-
-        return $Graphviz;
-    }
 
     /**
      * Returns whether a setting should or shouldn't be saved to cookies/preferences
@@ -611,7 +466,7 @@ class Settings
     }
 
     /**
-     * Currently an alias for shouldSaveSetting as the criteria are the same
+     * Whether the provided setting should be loaded
      *
      * @param $setting
      * @param int $context
@@ -792,19 +647,6 @@ class Settings
         return $pref_list;
     }
 
-    /**
-     * Check if current user is logged in
-     *
-     * @return bool
-     */
-    public static function isUserLoggedIn(): bool
-    {
-        if (Auth::user()->id() == self::GUEST_USER_ID) {
-            return false;
-        } else {
-            return true;
-        }
-    }
 
     /**
      * Saves the provided settings into the webtrees preferences
@@ -930,64 +772,28 @@ class Settings
     }
 
     /**
-     * Saves record count of diagram to session storage
-     *
-     * @param string $token Token used by front end to check record has been updated
-     * @param int $indis
-     * @param int $fams
-     * @return void
+     * 
      */
-    public function updateRecordCount(string $token, int $indis, int $fams, int $images)
-    {
-        $data = json_encode([
-            'time_token' => $token,
-            'indis' => $indis,
-            'fams' => $fams,
-            'images' => $images
-        ]);
-        $_SESSION[Settings::PREFERENCE_PREFIX . '_' . Settings::RECORD_COUNT_PREFERENCE_NAME] = $data;
-    }
-
-    /**
-     * Loads record count of diagram from session storage
-     *
-     * @param $token
-     * @return string
-     */
-    static public function loadRecordCount($token): string
-    {
-        $defaults = [
-            'time_token' => '',
-            'indis' => -1,
-            'fams' => -1,
-            'images' => -1
-        ];
-
-        $records = $_SESSION[Settings::PREFERENCE_PREFIX . '_' . Settings::RECORD_COUNT_PREFERENCE_NAME] ?? null;
-
-        $decoded = $records ? json_decode($records, true) : null;
-
-        if ($decoded && isset($decoded['time_token']) && $decoded['time_token'] === $token) {
-            return $records;
+    static function dumpSettings($module, $tree) {
+        $user_id = Auth::user()->id();
+        if ($user_id === 0) {
+            return 'Not available when logged out';
         }
+        $output = "Admin: \n";
 
-        return json_encode($defaults);
-    }
+        $output .= $module->getPreference(self::PREFERENCE_PREFIX . self::ADMIN_PREFERENCE_NAME, "preference not set");
 
-    /**
-     * Check if key is found in json
-     *
-     * @param string $json the json as a string
-     * @param string $key the key to look for
-     * @return bool
-     */
-    static function isKeyInJson(string $json, string $key): bool
-    {
-        try {
-            $data = json_decode($json, true);
-        } catch (Exception $e) {
-            return false;
-        }
-        return isset($data[$key]);
+        $output .= "\n\nAdmin preference name:\n" . self::PREFERENCE_PREFIX . self::ADMIN_PREFERENCE_NAME;
+
+        $output .= "\n\nUser:\n";
+        $settings_pref_name = self::PREFERENCE_PREFIX . self::TREE_PREFIX . $tree->id() . self::USER_PREFIX . $user_id;
+        $output .=  $module->getPreference($settings_pref_name, "preference not set");
+
+        $output .= "\n\nUser preference name:\n" . $settings_pref_name;
+
+        $output .= "\n\nPreference list:\n";
+        $output .=  $module->getPreference(self::PREFERENCE_PREFIX . self::SETTINGS_LIST_PREFERENCE_NAME . self::TREE_PREFIX . $tree->id(), "preference not set");
+    
+        return $output;
     }
 }

@@ -362,7 +362,7 @@ class GVExport extends AbstractModule implements ModuleCustomInterface, ModuleCh
         } else {
             $r = $out;
         }
-        $settings->updateRecordCount($dot->settings['time_token'], sizeof($dot->individuals), sizeof($dot->families), substr_count($out, '<IMG'));
+        Diagram::updateRecordCount($dot->settings['time_token'], sizeof($dot->individuals), sizeof($dot->families), substr_count($out, '<IMG'));
         return $r;
     }
 

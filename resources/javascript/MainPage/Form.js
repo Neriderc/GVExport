@@ -987,4 +987,24 @@ const Form = {
         };
         return Data.callAPI(request);
     },
+
+
+
+    debug: {
+        /**
+         * Debug function to get raw data from saved preferences
+         */
+        dumpSettings() {
+                let request = {
+                "type": REQUEST_TYPE_DUMP_SETTINGS,
+            };
+            return Data.callAPI(request);
+        },
+
+        showDatabaseEntries() {
+            this.dumpSettings().then((response) => {
+                showModal('<textarea cols=50 rows=20\">' + response + '</textarea>');
+            });
+        }
+    }
 }

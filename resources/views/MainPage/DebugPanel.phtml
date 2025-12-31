@@ -15,6 +15,7 @@ use vendor\WebtreesModules\gvexport\Settings;
         <label for="enable_debug_mode"><?= I18N::translate('Enable debug mode') ?></label>
         <input type="checkbox" name="vars[enable_debug_mode]" id="enable_debug_mode" value="enable_debug_mode" <?= $vars["enable_debug_mode"] ? 'checked' : '' ?>><br>
         <button class="btn btn-outline-secondary" type="button" name="debug_view" onclick="return showHelp('enable_debug_mode');"><?= I18N::translate('View debug log') ?></button>
+        <button class="btn btn-outline-secondary" type="button" name="debug_database" onclick="return Form.debug.showDatabaseEntries();"><?= I18N::translate('View database entries') ?></button>
     </div>
     <?= MainPage::addLabel('enable_graphviz', 'Graphviz', FALSE); ?>
     <div class="col-sm-8 options-panel-background">

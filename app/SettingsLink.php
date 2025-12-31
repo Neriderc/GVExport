@@ -30,7 +30,7 @@ class SettingsLink
         $this->tree = $tree;
         $this->id = $id;
         $this->settings_obj = $parent_obj;
-        if (Settings::isUserLoggedIn()) {
+        if (User::isUserLoggedIn()) {
             $this->userId = Auth::user()->id();
             $this->base_url = $module->base_url;
         }
