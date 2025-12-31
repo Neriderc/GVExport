@@ -432,6 +432,8 @@ class Dot {
 
 		$out .= $this->printDOTFooter();
 
+		$out = str_replace('<TR>  </TR>', '', $out);
+
 		return $out;
 	}
 

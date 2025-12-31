@@ -297,6 +297,73 @@ export function runSharedOptionsTests(role: 'guest' | 'user') {
             });
         });
 
+        test.describe('option: Abbreviated names', () => {
+            test('Full name', async ({ page }) => {
+                await loadGVExport(page, true);
+                await page.locator('#use_abbr_name').selectOption('0');
+                await page.waitForSelector('svg');
+                const tile = await getTileByXref(page, 'X58');
+                await expect(tile).toContainText('Martin John "Johnny" BLOGGS');
+            });
+            test('Given and surname', async ({ page }) => {
+                await loadGVExport(page, true);
+                await page.locator('#use_abbr_name').selectOption('10');
+                await page.waitForSelector('svg');
+                const tile = await getTileByXref(page, 'X58');
+                await expect(tile).toContainText('Martin John BLOGGS');
+            });
+            test('Given names', async ({ page }) => {
+                await loadGVExport(page, true);
+                await page.locator('#use_abbr_name').selectOption('20');
+                await page.waitForSelector('svg');
+                const tile = await getTileByXref(page, 'X58');
+                await expect(tile).toContainText('Martin John "Johnny"');
+            });
+            test('First name only', async ({ page }) => {
+                await loadGVExport(page, true);
+                await page.locator('#use_abbr_name').selectOption('30');
+                await page.waitForSelector('svg');
+                const tile = await getTileByXref(page, 'X58');
+                await expect(tile).toContainText('Martin');
+            });
+            test('Preferred given name and surname', async ({ page }) => {
+                await loadGVExport(page, true);
+                await page.locator('#use_abbr_name').selectOption('80');
+                await page.waitForSelector('svg');
+                const tile = await getTileByXref(page, 'X58');
+                await expect(tile).toContainText('John BLOGGS');
+            });
+            test('Surnames', async ({ page }) => {
+                await loadGVExport(page, true);
+                await page.locator('#use_abbr_name').selectOption('40');
+                await page.waitForSelector('svg');
+                const tile = await getTileByXref(page, 'X58');
+                await expect(tile).toContainText('BLOGGS');
+            });
+            test('Initials only', async ({ page }) => {
+                await loadGVExport(page, true);
+                await page.locator('#use_abbr_name').selectOption('50');
+                await page.waitForSelector('svg');
+                const tile = await getTileByXref(page, 'X58');
+                await expect(tile).toContainText('MJB');
+            });
+            test('Given name initials and surname', async ({ page }) => {
+                await loadGVExport(page, true);
+                await page.locator('#use_abbr_name').selectOption('60');
+                await page.waitForSelector('svg');
+                const tile = await getTileByXref(page, 'X58');
+                await expect(tile).toContainText('M.J. BLOGGS');
+            });
+            test('Don\'t show names', async ({ page }) => {
+                await loadGVExport(page, true);
+                await page.locator('#use_abbr_name').selectOption('70');
+                await page.waitForSelector('svg');
+                const tile = await getTileByXref(page, 'X58');
+                await expect(tile).not.toContainText('Martin');
+                await expect(tile).not.toContainText('BLOGGS');
+            });
+        });
+
         test.describe('option: Abbreviated place names', () => {
             test('Full place name', async ({ page }) => {
                 await loadGVExport(page, true);
