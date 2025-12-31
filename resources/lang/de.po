@@ -2528,7 +2528,7 @@ msgstr "Amme (Radaʿa / Riḍāʿa) und Ihr Ehemann"
 
 #: 
 msgid "Add all diagram items to clippings cart"
-msgstr ""
+msgstr "Alle Elemente zum Sammelbehälter hinzufügen"
 
 #: 
 msgid "Within webtrees, you can add items to the clippings cart. This is usually done by navigating to a record within webtrees then selecting the &quot;Clippings cart&quot; option near the top of the screen."
@@ -2544,17 +2544,21 @@ msgstr "Wenn Sie Personen im Sammelbehälter haben, diese aber nicht verwenden m
 
 #: 
 msgid "Adding to the clippings cart from GVExport"
-msgstr ""
+msgstr "Hinzufügen zum Sammelbehälter aus GVExport"
 
 #: 
 msgid "GVExport also includes ways to add individuals and families to the clippings cart."
-msgstr ""
+msgstr "GVExport bietet verschiedene Möglichkeiten, Einzelpersonen und Familien zum Sammelbehälter hinzuzufügen."
 
 #: 
 msgid "By clicking this this button in the Clippings Cart area of the General Settings advanced section, all individuals and families in the diagram will be added to the clippings cart along with objects linked to them."
-msgstr ""
+msgstr "Durch Klicken auf diese Schaltfläche im Bereich \"Allgemeine Einstellungen\" werden alle Personen und Familien im Diagramm zusammen mit den mit ihnen verknüpften Objekten zum Sammelbehälter hinzugefügt."
 
 #: 
 msgid "There is a setting to control what happens when an individual or family is clicked on in the diagram. This can be used to add an individual or family to the clipping cart. See the Browser render section."
-msgstr ""
+msgstr "Es gibt eine Einstellung, mit der Sie festlegen können, was passiert, wenn Sie im Diagramm auf eine Person oder Familie klicken. Damit können Sie eine Person oder eine Familie zum Sammelbehälter hinzufügen. Siehe Abschnitt „Browser-Rendering“."
+
+#: 
+msgid "Context menu when tile clicked"
+msgstr "Kontext-Menü beim Klicken auf ein Kästchen"
 
