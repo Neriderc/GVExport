@@ -18,6 +18,7 @@ test('option: Add all diagram items to clippings cart', async ({ page }) => {
     await page.getByRole('button', { name: 'Add all diagram items to clippings cart' }).click();
     await expect(page.locator('.toast-message').filter({ hasText: 'Added to clippings cart' })).toBeVisible();
     await page.locator('.menu-clippings').getByRole('button', { name: 'Clippings cart' }).click();
+    await expect(page.locator('.menu-clippings-cart .badge').first()).toHaveText('29')
     await page.getByRole('menuitem', { name: 'Clippings cart' }).click();
     await expect(page.locator('table a').nth(0)).toContainText('Joe BLOGGS + Jane Smith');
     await expect(page.locator('table a').nth(1)).toContainText('Matthew BLOGGS + Mary Black');
