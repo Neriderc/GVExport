@@ -611,7 +611,7 @@ class Settings
     }
 
     /**
-     * Currently an alias for shouldSaveSetting as the criteria are the same
+     * Whether the provided setting should be loaded
      *
      * @param $setting
      * @param int $context
@@ -792,19 +792,6 @@ class Settings
         return $pref_list;
     }
 
-    /**
-     * Check if current user is logged in
-     *
-     * @return bool
-     */
-    public static function isUserLoggedIn(): bool
-    {
-        if (Auth::user()->id() == self::GUEST_USER_ID) {
-            return false;
-        } else {
-            return true;
-        }
-    }
 
     /**
      * Saves the provided settings into the webtrees preferences
