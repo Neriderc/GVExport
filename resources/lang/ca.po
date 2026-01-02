@@ -2542,20 +2542,8 @@ msgid "Added to clippings cart"
 msgstr "Afegit al carretó de retalls"
 
 #: 
-msgid "Foster parents"
-msgstr ""
-
-#: 
-msgid "Sealing parents"
-msgstr ""
-
-#: 
-msgid "Rada parents"
-msgstr ""
-
-#: 
 msgid "Add all diagram items to clippings cart"
-msgstr ""
+msgstr "Afegeix tots els elements del diagrama al carretó de retalls"
 
 #: 
 msgid "Within webtrees, you can add items to the clippings cart. This is usually done by navigating to a record within webtrees then selecting the &quot;Clippings cart&quot; option near the top of the screen."
@@ -2571,17 +2559,21 @@ msgstr "Si té persones en el carret de retallades, però no desitja utilitzar, 
 
 #: 
 msgid "Adding to the clippings cart from GVExport"
-msgstr ""
+msgstr "Afegint al carretó de retalls des de GVExport"
 
 #: 
 msgid "GVExport also includes ways to add individuals and families to the clippings cart."
-msgstr ""
+msgstr "GVExport també inclou maneres d'afegir individus i famílies al carretó de retalls."
 
 #: 
 msgid "By clicking this this button in the Clippings Cart area of the General Settings advanced section, all individuals and families in the diagram will be added to the clippings cart along with objects linked to them."
-msgstr ""
+msgstr "En fer clic en aquest botó a l'àrea Cistella de retalls de la secció avançada Configuració general, tots els individus i famílies del diagrama s'afegiran a la cistella de retalls juntament amb els objectes que hi estan vinculats."
 
 #: 
 msgid "There is a setting to control what happens when an individual or family is clicked on in the diagram. This can be used to add an individual or family to the clipping cart. See the Browser render section."
-msgstr ""
+msgstr "Hi ha una configuració per controlar què passa quan es fa clic en un individu o una família al diagrama. Això es pot utilitzar per afegir un individu o una família al carretó de retalls. Vegeu la secció Renderització del navegador."
+
+#: 
+msgid "Context menu when tile clicked"
+msgstr "Menú contextual quan es fa clic a la peça"
 

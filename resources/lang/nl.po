@@ -2510,20 +2510,8 @@ msgid "Added to clippings cart"
 msgstr "Toegevoegd aan knipselverzameling"
 
 #: 
-msgid "Foster parents"
-msgstr "Pleegouders"
-
-#: 
-msgid "Sealing parents"
-msgstr "Verzegelingsouders"
-
-#: 
-msgid "Rada parents"
-msgstr "Zoogouders"
-
-#: 
 msgid "Add all diagram items to clippings cart"
-msgstr ""
+msgstr "Voeg alle diagramitems toe aan knipselverzameling"
 
 #: 
 msgid "Within webtrees, you can add items to the clippings cart. This is usually done by navigating to a record within webtrees then selecting the &quot;Clippings cart&quot; option near the top of the screen."
@@ -2539,17 +2527,21 @@ msgstr "Als u personen in de knipselverzameling hebt maar deze niet wilt gebruik
 
 #: 
 msgid "Adding to the clippings cart from GVExport"
-msgstr ""
+msgstr "Toevoegen aan de knipselverzameling vanuit GVExport"
 
 #: 
 msgid "GVExport also includes ways to add individuals and families to the clippings cart."
-msgstr ""
+msgstr "GVExport biedt ook mogelijkheden om personen en gezinnen toe te voegen aan de knipselverzameling."
 
 #: 
 msgid "By clicking this this button in the Clippings Cart area of the General Settings advanced section, all individuals and families in the diagram will be added to the clippings cart along with objects linked to them."
-msgstr ""
+msgstr "Door op deze knop te klikken in het gedeelte Stamboomknipsels van het geavanceerde gedeelte van de Algemene instellingen, worden alle personen en gezinnen in het diagram samen met de aan hen gekoppelde objecten aan de knipselverzameling toegevoegd."
 
 #: 
 msgid "There is a setting to control what happens when an individual or family is clicked on in the diagram. This can be used to add an individual or family to the clipping cart. See the Browser render section."
-msgstr ""
+msgstr "Er is een instelling waarmee u kunt bepalen wat er gebeurt wanneer u op een persoon of gezin in het diagram klikt. Hiermee kunt u een persoon of gezin aan de knipselverzameling toevoegen. Zie het gedeelte Browserweergave."
+
+#: 
+msgid "Context menu when tile clicked"
+msgstr "Contextmenu wanneer op tegel wordt geklikt"
 

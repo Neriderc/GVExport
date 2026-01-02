@@ -233,7 +233,6 @@ msgid "Individual required"
 msgstr "Person wird benötigt"
 
 #: 
-#, fuzzy
 msgid "Generated diagram with %s individuals, %s family records, and %s images"
 msgstr "Es wurde ein Diagramm mit %s Personen-, %s Familien-Datensätze und %s Abbildungen erzeugt."
 
@@ -1728,7 +1727,6 @@ msgstr "der Ortsname wird vollständig ausgegeben."
 
 #. Part of the help page for place abbreviations:  https://s3.eu-west-1.amazonaws.com/po-pub/i/wc6fNIyVirRJx9txr24YUfnP.png
 #: 
-#, fuzzy
 msgid "the first and last section of the place name is used, using commas to split the sections. For example, &quot;London, England, United Kingdom&quot; would be shortened to &quot;London, United Kingdom&quot;. This option will also convert a country code (like NZ or GBR) to the full name, and will translate that name to the language set in webtrees if webtrees has a translation available."
 msgstr "der erste und der letzte Abschnitt des Ortsnamens werden verwendet, wobei Kommas verwendet werden, um die Abschnitte zu trennen. Beispiel: &quot;London, England, Vereinigtes Königreich&quot; würde zu &quot;London, Vereinigtes Königreich&quot; abgekürzt. Diese Option ersetzt auch eine Länderkennung (wie DEU oder NZ) in den vollen Ländernamen (Deutschland bzw. Neuseeland); dieser wird dann in die in webtrees ausgewählte Sprache übersetzt, sofern eine Übersetzung verfügbar ist."
 
@@ -2016,7 +2014,6 @@ msgstr "Dies ist die Standardoption."
 
 #. Part of the help text explaining the context menu when you click on an individual (if enabled): https://s3.eu-west-1.amazonaws.com/po-pub/i/JbiHUCluK5zzUvYxjbtvg3LS.png
 #: 
-#, fuzzy
 msgid "In the General Settings section, there are options in the Browser options that lets you choose what happens when you click on an individual or a family in the diagram. One of the options is to show a menu, and the menu has the following options:"
 msgstr "Im Abschnitt \"Allgemeine Einstellungen\" gibt es bei den Browser-Optionen eine Auswahl, was passiert, wenn man auf eine Person oder Familie im Diagramm klickt. Eine der Auswahlmöglichkeiten zeigt ein Menü mit den folgenden Punkten an:"
 
@@ -2389,12 +2386,10 @@ msgid "This shows an estimated size of the PDF that will be generated from the d
 msgstr "Dieses zeigt die geschätzte Größe des PDF das durch das Diagramm erzeugt wird. Dies wird nur gezeigt, wenn Graphviz auf dem Server installiert ist. Bei Einstellungen, die ein PDF im Browser generieren (z.B. abgerundete Fotos) ist diese Angabe ungenau."
 
 #: 
-#, fuzzy
 msgid "Married"
 msgstr "verheiratet"
 
 #: 
-#, fuzzy
 msgid "Divorced"
 msgstr "geschieden"
 
@@ -2513,18 +2508,6 @@ msgstr "Unbekannter Fehler"
 #: 
 msgid "Added to clippings cart"
 msgstr "Zum Sammelbehälter hinzugefügt"
-
-#: 
-msgid "Foster parents"
-msgstr "Pflegeeltern"
-
-#: 
-msgid "Sealing parents"
-msgstr "Siegelungseltern (Mormonen)"
-
-#: 
-msgid "Rada parents"
-msgstr "Amme (Radaʿa / Riḍāʿa) und Ihr Ehemann"
 
 #: 
 msgid "Add all diagram items to clippings cart"

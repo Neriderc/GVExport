@@ -2513,18 +2513,6 @@ msgid "Added to clippings cart"
 msgstr "Added to clippings cart"
 
 #: 
-msgid "Foster parents"
-msgstr "Foster parents"
-
-#: 
-msgid "Sealing parents"
-msgstr "Sealing parents"
-
-#: 
-msgid "Rada parents"
-msgstr "Rada parents"
-
-#: 
 msgid "Add all diagram items to clippings cart"
 msgstr "Add all diagram items to clippings cart"
 
@@ -2555,4 +2543,8 @@ msgstr "By clicking this this button in the Clippings Cart area of the General S
 #: 
 msgid "There is a setting to control what happens when an individual or family is clicked on in the diagram. This can be used to add an individual or family to the clipping cart. See the Browser render section."
 msgstr "There is a setting to control what happens when an individual or family is clicked on in the diagram. This can be used to add an individual or family to the clipping cart. See the Browser render section."
+
+#: 
+msgid "Context menu when tile clicked"
+msgstr "Context menu when tile clicked"
 

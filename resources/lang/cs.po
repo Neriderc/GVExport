@@ -2492,15 +2492,15 @@ msgstr "Pokud je tato volba zapnutá, na dlaždici rodiny se zobrazí text \"Sez
 
 #: 
 msgid "Add this individual and their linked objects to the clippings cart."
-msgstr "Přidat tuto osobu a všechny s ní propojené objekty do košíku výstřižků."
+msgstr "Přidat tuto osobu a všechny s ní propojené objekty do výstřižků."
 
 #: 
 msgid "Add this family and their linked objects to the clippings cart."
-msgstr "Přidat tuto rodinu a všechny s ní propojené objekty do košíku výstřižků."
+msgstr "Přidat tuto rodinu a všechny s ní propojené objekty do výstřižků."
 
 #: 
 msgid "Add to clippings cart"
-msgstr "Přidat do košíku výstřižků"
+msgstr "Přidat do výstřižků"
 
 #: 
 msgid "Unknown error"
@@ -2508,23 +2508,11 @@ msgstr "Neznámá chyba"
 
 #: 
 msgid "Added to clippings cart"
-msgstr "Přidáno do košíku výstřižků"
-
-#: 
-msgid "Foster parents"
-msgstr "Pěstouni"
-
-#: 
-msgid "Sealing parents"
-msgstr "Sealing rodiče"
-
-#: 
-msgid "Rada parents"
-msgstr "Rada rodiče"
+msgstr "Přidáno do výstřižků"
 
 #: 
 msgid "Add all diagram items to clippings cart"
-msgstr ""
+msgstr "Přidat všechny položky diagramu do výstřižků"
 
 #: 
 msgid "Within webtrees, you can add items to the clippings cart. This is usually done by navigating to a record within webtrees then selecting the &quot;Clippings cart&quot; option near the top of the screen."
@@ -2540,17 +2528,21 @@ msgstr "Pokud máte osoby ve schránce výstřižků, ale nechcete je použít, 
 
 #: 
 msgid "Adding to the clippings cart from GVExport"
-msgstr ""
+msgstr "Přidávání do výstřižků z GVExportu"
 
 #: 
 msgid "GVExport also includes ways to add individuals and families to the clippings cart."
-msgstr ""
+msgstr "GVExport nabízí způsoby, jak přidávat osoby a rodiny do výstřižků."
 
 #: 
 msgid "By clicking this this button in the Clippings Cart area of the General Settings advanced section, all individuals and families in the diagram will be added to the clippings cart along with objects linked to them."
-msgstr ""
+msgstr "Kliknutím na toto tlačítko v části Výstřižky v rozšířeném nastavení Obecných nastavení se do Výstřižků přidají všechny osoby a rodiny z diagramu, včetně objektů, které jsou s nimi propojené."
 
 #: 
 msgid "There is a setting to control what happens when an individual or family is clicked on in the diagram. This can be used to add an individual or family to the clipping cart. See the Browser render section."
-msgstr ""
+msgstr "V nastavení lze určit, co se stane při kliknutí na osobu nebo rodinu v diagramu. Tuto možnost lze využít k přidání osoby nebo rodiny do Výstřižků. Viz sekci Vykreslení v prohlížeči."
+
+#: 
+msgid "Context menu when tile clicked"
+msgstr "Kontextová nabídka při kliknutí na dlaždici"
 
