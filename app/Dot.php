@@ -39,6 +39,7 @@ use Fisharebest\Webtrees\Registry;
 use Fisharebest\Webtrees\Tree;
 use Psr\Http\Message\StreamFactoryInterface;
 use Fisharebest\Webtrees\Gedcom;
+use Fisharebest\Webtrees\Http\Exceptions\HttpAccessDeniedException;
 
 use Fisharebest\Webtrees\Auth;
 use Fisharebest\Webtrees\Elements\AdoptedByWhichParent;
@@ -1920,9 +1921,12 @@ class Dot {
 
         $famID = $family->xref();
 
-        # Analize if this is really necesary
-        $individual = Auth::checkIndividualAccess($child, true);
-        $family = Auth::checkFamilyAccess($family, true);
+		try {
+        	$individual = Auth::checkIndividualAccess($child, true);
+        	$family = Auth::checkFamilyAccess($family, true);
+		} catch (HttpAccessDeniedException $e) {
+			return '';
+		}
 
         $fact_id = '';
         $pedigree = '';
