@@ -147,3 +147,14 @@ test.describe('user-only tests for family tile context menu', () => {
         await expect(page.locator('table a').nth(0)).toContainText('Joe BLOGGS + Jane Smith');
     });
 });
+
+test('option: Add arrow label when pedigree type is not "birth"', async ({ page }) => {
+    await loadGVExport(page, true);
+    await page.locator('#show_pedigree_type').check();
+    await page.waitForSelector('svg');
+    const svgHtml = await page.locator('#rendering svg').innerHTML();
+    await expect(svgHtml).toContain('Radāʿ');
+    await expect(svgHtml).toContain('Sealing');
+    await expect(svgHtml).toContain('Foster');
+    await expect(svgHtml).toContain('Adopted by both parents');
+});

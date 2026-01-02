@@ -39,6 +39,7 @@ use Fisharebest\Webtrees\Registry;
 use Fisharebest\Webtrees\Tree;
 use Psr\Http\Message\StreamFactoryInterface;
 use Fisharebest\Webtrees\Gedcom;
+use Fisharebest\Webtrees\Http\Exceptions\HttpAccessDeniedException;
 
 use Fisharebest\Webtrees\Auth;
 use Fisharebest\Webtrees\Elements\AdoptedByWhichParent;
@@ -1920,9 +1921,12 @@ class Dot {
 
         $famID = $family->xref();
 
-        # Analize if this is really necesary
-        $individual = Auth::checkIndividualAccess($child, true);
-        $family = Auth::checkFamilyAccess($family, true);
+		try {
+        	$individual = Auth::checkIndividualAccess($child, true);
+        	$family = Auth::checkFamilyAccess($family, true);
+		} catch (HttpAccessDeniedException $e) {
+			return '';
+		}
 
         $fact_id = '';
         $pedigree = '';
@@ -1956,7 +1960,7 @@ class Dot {
                         $which_parent = new AdoptedByWhichParent(I18N::translate('Adoption'));
                         $label_adopted_by = $which_parent->values()[$adopted_by];
                         if (empty($label_adopted_by)) {
-                            $label_adopted_by = I18N::translate('Adopted');
+                            $label_adopted_by = I18N::translateContext('Pedigree', 'Adopted');
                         }
                     }
         
@@ -1969,11 +1973,11 @@ class Dot {
             "" => "",
             PedigreeLinkageType::VALUE_BIRTH   => "",
             PedigreeLinkageType::VALUE_ADOPTED => $label_adopted_by,
-            PedigreeLinkageType::VALUE_FOSTER  => I18N::translate('Foster parents'),
+            PedigreeLinkageType::VALUE_FOSTER  => I18N::translateContext('Pedigree', 'Foster'),
             /* I18N: “sealing” is a Mormon ceremony. */
-            PedigreeLinkageType::VALUE_SEALING => I18N::translate('Sealing parents'),
-            /* I18N: “rada” is an Arabic word, pronounced “ra DAH”. It is child-to-parent pedigree, established by wet-nursing. */
-            PedigreeLinkageType::VALUE_RADA    => I18N::translate('Rada parents'),
+            PedigreeLinkageType::VALUE_SEALING => I18N::translateContext('Pedigree', 'Sealing'),
+			/* I18N: “Radāʿ” is an Arabic word, pronounced “ra DAH”. It is child-to-parent pedigree, established by wet-nursing. */
+			PedigreeLinkageType::VALUE_RADA    => I18N::translateContext('Pedigree', 'Rada'),
         ];
 
         $result = $values[$pedigree] ?? $values[PedigreeLinkageType::VALUE_BIRTH];
