@@ -75,7 +75,7 @@ class GVExport extends AbstractModule implements ModuleCustomInterface, ModuleCh
     use ModuleCustomTrait;
     use ModuleChartTrait;
     use ModuleConfigTrait;
-    public const CUSTOM_VERSION     = '2.2.5';
+    public const CUSTOM_VERSION     = '2.2.6';
     public const CUSTOM_MODULE      = "GVExport";
     public const CUSTOM_DESCRIPTION = "Generate a diagram of everyone in your family tree. Highly customisable, with the ability to navigate in your browser or export the diagram to a file.";
     public const CUSTOM_LATEST      = 'https://raw.githubusercontent.com/Neriderc/' . self::CUSTOM_MODULE. '/main/latest-version.txt';
