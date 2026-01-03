@@ -76,12 +76,12 @@ export function runSharedGeneralTests(role: 'guest' | 'user') {
 }
 
 export function runDownloadTests(options: Array<string>) {
-
     for (const value of options) {
         test(`Download triggers for ${value}`, async ({ page }) => {
             await loadGVExport(page);
 
             await page.selectOption('#output_type', value);
+            await page.waitForSelector('svg');
 
             const pageErrors: Error[] = [];
             page.on('pageerror', err => pageErrors.push(err));
