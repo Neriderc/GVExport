@@ -8,7 +8,7 @@ Version 2.2.6 (2026-01-03)
   - New       : Added debug button to show the contents of the saved GVExport settings - must be logged in, must have debug panel enabled from GVExport settings in webtrees Control Panel
   - Changed   : Pedigree arrow labels now don't say "parent" as this is confusing, they point at the child
   - Changed   : Help window now closes on changing to full screen
-  - Changed   : Help window now remembers the page you werre on previously
+  - Changed   : Help window now remembers the page you were on previously
   - Fixed     : Fixed issue downloading diagram files or saved settings that was introduced in the last version
   - Fixed     : Fixed issue where selecting the name abbreviation "no names" would cause the diagram to fail to load if an individual had no other details
   - Fixed     : Added missing translation term "Context menu when tile clicked" so translators can now translate this
