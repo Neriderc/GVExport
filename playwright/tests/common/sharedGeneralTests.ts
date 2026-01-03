@@ -3,22 +3,9 @@ import { getTileByXref, loadGVExport, toggleAdvancedPanels, toggleSettingsSubgro
 
 export function runSharedGeneralTests(role: 'guest' | 'user') {
     test.describe('Check all download types trigger download', () => {
-        const options = ['svg', 'pdf', 'png', 'jpg', 'gif', 'ps', 'dot'];
-
-        for (const value of options) {
-        test(`Download triggers for ${value}`, async ({ page }) => {
-            await loadGVExport(page);
-
-            await page.selectOption('#output_type', value);
-
-            const downloadPromise = page.waitForEvent('download');
-            await page.getByRole('button', { name: /Download/i }).click();
-
-            const download = await downloadPromise;
-            expect(download).toBeTruthy();
-        });
-        }
+        runDownloadTests(['svg', 'pdf', 'png', 'jpg', 'gif', 'ps', 'dot']);
     });
+
 
     test.describe('Test help pages load', () => {
         test('Checks help modals do not display info not found message', async ({ page }) => {
@@ -86,4 +73,25 @@ export function runSharedGeneralTests(role: 'guest' | 'user') {
             await expect(page.locator('#help-content')).toContainText('This help contains detailed information');
         });
     });
+}
+
+export function runDownloadTests(options: Array<string>) {
+    for (const value of options) {
+        test(`Download triggers for ${value}`, async ({ page }) => {
+            await loadGVExport(page);
+
+            await page.selectOption('#output_type', value);
+            await page.waitForSelector('svg');
+
+            const pageErrors: Error[] = [];
+            page.on('pageerror', err => pageErrors.push(err));
+
+            const [download] = await Promise.all([
+                page.waitForEvent('download'),
+                page.getByRole('button', { name: /Download/i }).click(),
+            ]);
+
+            expect(pageErrors).toHaveLength(0);
+        });
+    }
 }
