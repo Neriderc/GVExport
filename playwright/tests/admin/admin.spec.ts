@@ -15,7 +15,11 @@ test.describe('control panel tests', () => {
         await checkNonDefaults(page, true);
     });
 
-    test.describe('Downloads work when Graphviz disabled', () => {
+    test.describe('Downloads work when Graphviz disabled', { 
+        annotation: { 
+            type: 'issue', 
+            description: 'https://github.com/Neriderc/GVExport/issues/625' 
+        },}, () => {
         test('Setup by disabling graphviz', async ({ page }) => {
             await page.goto('/module/_GVExport_/Admin');
             await page.getByRole('link', { name: 'reset to defaults' }).click();
