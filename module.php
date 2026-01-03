@@ -297,7 +297,7 @@ class GVExport extends AbstractModule implements ModuleCustomInterface, ModuleCh
     public function postAdminAction(ServerRequestInterface $request): ResponseInterface
     {
         $params = (array) $request->getParsedBody();
-        $formSubmission = new FormSubmission();
+        $formSubmission = new FormSubmission($request->getAttribute('tree'));
         $vars_data = Validator::parsedBody($request)->array('vars');
         $vars = $formSubmission->load($vars_data, $this);
         if ($params['save'] === '1') {
@@ -374,7 +374,7 @@ class GVExport extends AbstractModule implements ModuleCustomInterface, ModuleCh
 
     function createDot($tree, $vars_data, $settings) {
         $dot = new Dot($tree, $this);
-        $formSubmission = new FormSubmission();
+        $formSubmission = new FormSubmission($tree);
         $vars = $formSubmission->load($vars_data, $this);
         if (isset($temp_dir)) {
             $vars['temp_dir'] = $temp_dir;

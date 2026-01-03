@@ -3,12 +3,19 @@
 namespace vendor\WebtreesModules\gvexport;
 
 use Fisharebest\Webtrees\I18N;
+use Fisharebest\Webtrees\Tree;
 
 /**
  * Form handling functionality
  */
 class FormSubmission
 {
+    private ?Tree $tree;
+
+    public function __construct(?Tree $tree)
+    {
+        $this->tree = $tree;
+    }
     /**
      * Takes list of values from form submission and returns structures and
      * validated settings list
@@ -216,8 +223,14 @@ class FormSubmission
 
         $settings['use_abbr_month'] = isset($vars['use_abbr_month']);
 
+        $settings['saved_cart_xrefs'] = '';
         if (isset($vars['use_cart'])) {
             $settings['use_cart'] = ($vars['use_cart'] !== "ignorecart");
+
+            // Can be called from webtrees Control Panel page, where there is no Tree
+            if ($settings['use_cart'] && $this->tree != null) {
+                $settings['saved_cart_xrefs'] = ClippingsCart::getXrefsInCart($this->tree);
+            }
         } else {
             $settings['use_cart'] = false;
         }
