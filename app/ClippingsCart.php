@@ -62,7 +62,7 @@ class ClippingsCart {
 	 *
 	 * @return array of XREFs
 	 */
-	private static function getXrefsInCart(Tree $tree): array
+	public static function getXrefsInCart(Tree $tree): array
 	{
 		$cart = Session::get('cart', []);
 		$xrefs = array_keys($cart[$tree->name()] ?? []);

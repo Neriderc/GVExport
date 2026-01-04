@@ -149,7 +149,7 @@ class ApiHandler
     public function saveSettings(): void
     {
         $vars = Validator::parsedBody($this->request)->array('vars');
-        $formSubmission = new FormSubmission();
+        $formSubmission = new FormSubmission($this->request->getAttribute('tree'));
         $vars = $formSubmission->load($vars, $this->module);
         if (isset($this->json['settings_id']) && ctype_alnum((string) $this->json['settings_id']) && !in_array($this->json['settings_id'], [Settings::ID_ALL_SETTINGS, Settings::ID_MAIN_SETTINGS])) {
             if ($this->doesSettingsIdBelongsToUser()) {
@@ -200,7 +200,7 @@ class ApiHandler
             // Treat logged-out users special if requesting ID_MAIN_SETTINGS
             if ($this->json['settings_id'] == Settings::ID_MAIN_SETTINGS && Auth::user()->id() == Settings::GUEST_USER_ID) {
                 $vars = Validator::parsedBody($this->request)->array('vars');
-                $form = new FormSubmission();
+                $form = new FormSubmission($this->request->getAttribute('tree'));
                 $settings_response = $form->load($vars, $this->module);
                 try {
                     $this->response_data['settings'] = $settings->getJsonFromSettings($settings_response, Settings::CONTEXT_MAIN_SETTINGS);
@@ -457,19 +457,14 @@ class ApiHandler
             if (!FormSubmission::isXrefListValid($xref)) {
                 continue;
             }
-
-            if ($this->json['record_type'] === 'families') {
-                $record = Registry::familyFactory()->make($xref, $this->tree);
-                if ($record) {
-                    $cartAdder->addFamilyToCart($record);
-                }
+            $record = Registry::familyFactory()->make($xref, $this->tree);
+            if ($record) {
+                $cartAdder->addFamilyToCart($record);
             }
 
-            if ($this->json['record_type'] === 'individuals') {
-                $record = Registry::individualFactory()->make($xref, $this->tree);
-                if ($record) {
-                    $cartAdder->addIndividualToCart($record);
-                }
+            $record = Registry::individualFactory()->make($xref, $this->tree);
+            if ($record) {
+                $cartAdder->addIndividualToCart($record);
             }
         }
         $this->response_data['success'] = true;

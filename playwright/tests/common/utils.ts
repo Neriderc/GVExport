@@ -88,11 +88,11 @@ export async function getLogin(role = 'user', id: number) {
  * @param page 
  */
 export async function clearSavedSettingsList(page: Page) {
-    const items = page.locator('.settings_list_item');
+    const items = await page.locator('.settings_list_item');
     const count = await items.count();
     
     for (let i = 0; i < count; i++) {
-        const item = items.nth(0);
+        const item = await items.nth(0);
         await item.getByText('…').click();
         await item
             .locator('.settings_ellipsis_menu')
