@@ -261,7 +261,7 @@ const UI = {
                                 UI.tile.goToAddParent(url, xref);
                                 break;
                             case '100': // Add to clippings cart
-                                UI.tile.addIndividualsToClippingsCart([xref]);
+                                UI.tile.addXrefsToClippingsCart([xref]);
                                 break;
                             case '60': // Do nothing option
                             default: // Unknown, so do nothing
@@ -286,7 +286,7 @@ const UI = {
                                 UI.tile.changeFamilyMembers(url, xref);
                                 break;
                             case '60': // Add to clippings cart
-                                UI.tile.addFamiliesToClippingsCart([xref]);
+                                UI.tile.addXrefsToClippingsCart([xref]);
                                 break;
                             case '30': // Show menu
                                 UI.tile.showFamilyContextMenu(e, url, xref);
@@ -430,7 +430,7 @@ const UI = {
          */
         addIndividualToCartContextMenu(e) {
             let xref = e.currentTarget.parentElement.getAttribute('data-xref');
-            UI.tile.addIndividualsToClippingsCart([xref]);
+            UI.tile.addXrefsToClippingsCart([xref]);
         },
 
         /**
@@ -460,7 +460,7 @@ const UI = {
          */
         addFamilyToCartContextMenu(e) {
             let xref = e.currentTarget.parentElement.getAttribute('data-xref');
-            UI.tile.addFamiliesToClippingsCart([xref]);
+            UI.tile.addXrefsToClippingsCart([xref]);
         },
 
         /**
@@ -517,10 +517,10 @@ const UI = {
         },
 
         /**
-         * Add the family to the clippings cart
+         * Add the XREF records to the clippings cart
          */
-        addFamiliesToClippingsCart(xrefs) {
-            this.addXrefsToClippingsCart(xrefs, 'families').then((response) => {
+        addXrefsToClippingsCart(xrefs) {
+            this.addXrefsToClippingsCartRequest(xrefs).then((response) => {
                 if (response) {
                     Form.updateClippingsCartCount();
                     UI.showToast(TRANSLATE[response]);
@@ -532,27 +532,11 @@ const UI = {
         },
 
         /**
-         * Add the individual to the clippings cart
+         * Send the server request to add the array of xrefs to the clippings cart
          */
-        addIndividualsToClippingsCart(xrefs) {
-            this.addXrefsToClippingsCart(xrefs, 'individuals').then((response) => {
-                if (response) {
-                    Form.updateClippingsCartCount();
-                    UI.showToast(TRANSLATE[response]);
-                    UI.contextMenu.clearContextMenu();
-                } else {
-                    UI.showToast(ERROR_CHAR + TRANSLATE['Unknown error']);
-                }
-            });
-        },
-
-        /**
-         * Add the array of xrefs to the clippings cart
-         */
-        addXrefsToClippingsCart(xrefs, type) {
+        addXrefsToClippingsCartRequest(xrefs) {
                 let request = {
                 "type": REQUEST_TYPE_ADD_CLIPPINGS_CART,
-                "record_type": type,
                 "xrefs": xrefs,
             };
             return Data.callAPI(request);

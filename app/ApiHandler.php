@@ -457,19 +457,14 @@ class ApiHandler
             if (!FormSubmission::isXrefListValid($xref)) {
                 continue;
             }
-
-            if ($this->json['record_type'] === 'families') {
-                $record = Registry::familyFactory()->make($xref, $this->tree);
-                if ($record) {
-                    $cartAdder->addFamilyToCart($record);
-                }
+            $record = Registry::familyFactory()->make($xref, $this->tree);
+            if ($record) {
+                $cartAdder->addFamilyToCart($record);
             }
 
-            if ($this->json['record_type'] === 'individuals') {
-                $record = Registry::individualFactory()->make($xref, $this->tree);
-                if ($record) {
-                    $cartAdder->addIndividualToCart($record);
-                }
+            $record = Registry::individualFactory()->make($xref, $this->tree);
+            if ($record) {
+                $cartAdder->addIndividualToCart($record);
             }
         }
         $this->response_data['success'] = true;
