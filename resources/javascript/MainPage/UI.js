@@ -519,6 +519,30 @@ const UI = {
         /**
          * Add the XREF records to the clippings cart
          */
+        addXrefsToClippingsCartSavedSetting(xrefs, userPrompted = false) {
+            if (userPrompted) {
+                this.addXrefsToClippingsCart(xrefs);
+            } else {
+                let message = TRANSLATE["This saved setting contains clippings cart items, add them to the clippings cart?"];
+                let buttons = '<div class="modal-button-container"><button id="modal-cancel" class="btn btn-secondary modal-button" >' + TRANSLATE['Cancel'] + '</button><button id="modal-yes" class="btn btn-primary modal-button" >' + TRANSLATE['Yes'] + '</button></div>';
+                showModal('<div class="modal-container">' + message + '<br>' + buttons + '</div>');
+                
+                document.getElementById('modal-cancel').onclick = () => {
+                    document.getElementById('modal').remove();
+                };
+
+                document.getElementById('modal-yes').onclick = () => {
+                    UI.tile.addXrefsToClippingsCartSavedSetting(xrefs, true);
+                    document.getElementById('modal').remove();
+                };
+
+                return false;
+            }
+        },
+
+        /**
+         * Add the XREF records to the clippings cart
+         */
         addXrefsToClippingsCart(xrefs) {
             this.addXrefsToClippingsCartRequest(xrefs).then((response) => {
                 if (response) {

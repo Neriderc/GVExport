@@ -835,6 +835,11 @@ const Form = {
                 let el = document.getElementById(key);
                 if (el == null) {
                     switch (key) {
+                        case 'saved_cart_xrefs':
+                            if (settings[key] !== '') {
+                                UI.tile.addXrefsToClippingsCartSavedSetting(settings[key]);
+                            }
+                            break;
                         case 'diagram_type':
                             if (settings[key] === 'simple') {
                                 setTimeout(() => {
