@@ -522,6 +522,9 @@ const UI = {
         addXrefsToClippingsCartSavedSetting(xrefs, userPrompted = false) {
             if (userPrompted) {
                 this.addXrefsToClippingsCart(xrefs);
+                Form.showHide(document.getElementById('cart-section'), true);
+                cartempty = false;
+                Form.toggleCart(true);
             } else {
                 let message = TRANSLATE["This saved setting contains clippings cart items, add them to the clippings cart?"];
                 let buttons = '<div class="modal-button-container"><button id="modal-cancel" class="btn btn-secondary modal-button" >' + TRANSLATE['Cancel'] + '</button><button id="modal-yes" class="btn btn-primary modal-button" >' + TRANSLATE['Yes'] + '</button></div>';
@@ -529,6 +532,8 @@ const UI = {
                 
                 document.getElementById('modal-cancel').onclick = () => {
                     document.getElementById('modal').remove();
+                    Form.showHide(document.getElementById('cart-section'), !cartempty);
+                    Form.toggleCart(!cartempty);
                 };
 
                 document.getElementById('modal-yes').onclick = () => {

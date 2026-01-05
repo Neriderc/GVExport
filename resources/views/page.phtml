@@ -26,7 +26,7 @@ $usegraphviz = $vars['graphviz_bin'] != "";
 <link href="<?= $module->assetUrl('css/gvexport.css'); ?>" rel="stylesheet">
 <?= view($module->name() . '::MainPage/Translations'); ?>
 <script type="text/javascript">
-    const cartempty = <?= $cartempty ? "true" : "false" ?>;
+    let cartempty = <?= $cartempty ? "true" : "false" ?>;
     let autoUpdate = <?= $vars["auto_update"] ? 'true' : 'false' ?>;
     let debug_string = "";
     let TOMSELECT_URL = "";

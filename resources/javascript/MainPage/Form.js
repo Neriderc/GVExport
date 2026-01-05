@@ -840,6 +840,14 @@ const Form = {
                                 UI.tile.addXrefsToClippingsCartSavedSetting(settings[key]);
                             }
                             break;
+                        case 'use_cart':
+                            setCheckStatus(document.getElementById('usecart_yes'), settings[key] === 'true');
+                            setCheckStatus(document.getElementById('usecart_no'), settings[key] === 'false');
+                            if (settings[key] === 'false') {
+                                Form.showHide(document.getElementById('cart-section'), false);
+                                cartempty = true;
+                                Form.toggleCart(false);
+                            }
                         case 'diagram_type':
                             if (settings[key] === 'simple') {
                                 setTimeout(() => {
