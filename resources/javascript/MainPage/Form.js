@@ -1011,6 +1011,10 @@ const Form = {
         // Element may not exist - e.g. clippings cart module disabled
         if (el) {
             el.innerText = count;
+            
+            Form.showHide(document.getElementById('cart-section'), count > 0);
+            cartempty = cart === 0;
+            Form.toggleCart(cart > 0);
         }
     },
     
