@@ -116,3 +116,15 @@ export async function getTileByXref(page: Page, xref: string) {
     return page.locator(  `//*[local-name()="g" and @class="node" and ./*[local-name()="title" and normalize-space(.) = "${xref}"]]`);
 
 };
+
+export async function addFamilyToClippingsCartViaMenu(page: Page) {
+    await loadGVExport(page, true);
+    await page.locator('#click_action_fam').selectOption('60');
+    const tile = await getTileByXref(page, 'X41');
+    await tile.click();
+    await expect(page.locator('.toast-message').filter({ hasText: 'Added to clippings cart' })).toBeVisible();
+    await page.waitForSelector('svg');
+    await page.locator('.menu-clippings').getByRole('button', { name: 'Clippings cart' }).click();
+    await page.getByRole('menuitem', { name: 'Clippings cart' }).click();
+    await expect(page.locator('table a').nth(0)).toContainText('Joe BLOGGS + Jane Smith');
+}

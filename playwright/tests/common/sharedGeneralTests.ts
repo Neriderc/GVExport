@@ -1,5 +1,5 @@
 import { test, expect } from '../../fixtures.ts';
-import { getTileByXref, loadGVExport, toggleAdvancedPanels, toggleSettingsSubgroups } from '../common/utils.ts'
+import { getTileByXref, loadGVExport, addFamilyToClippingsCartViaMenu } from '../common/utils.ts'
 
 export function runSharedGeneralTests(role: 'guest' | 'user') {
     test.describe('Check all download types trigger download', () => {
@@ -9,15 +9,16 @@ export function runSharedGeneralTests(role: 'guest' | 'user') {
 
     test.describe('Test help pages load', () => {
         test('Checks help modals do not display info not found message', async ({ page }) => {
-            await loadGVExport(page);
-            await toggleAdvancedPanels(page);
-            await toggleSettingsSubgroups(page);
+            await loadGVExport(page, true);
             await page.locator('#show_diagram_panel').check();
             const infoIcons = page.locator('#gvexport').locator('.info-icon');
             const count = await infoIcons.count();
-            expect(count).toBe(18);
+            expect(count).toBe(19);
 
             for (let i = 0; i < count; i++) {
+                // Ignore cart help for now
+                if (i === 1) continue;
+
                 const icon = infoIcons.nth(i);
                 await icon.click();
                 await expect(page.locator('.help-sidebar'))
@@ -28,6 +29,17 @@ export function runSharedGeneralTests(role: 'guest' | 'user') {
             await page.locator('#help-about').click();
             await expect(page.locator('.help-sidebar')).not.toContainText('Help information not found');
             await page.locator('.hide-help').click();
+
+            // Separately check cart help (if module enabled):
+            let cartCount = await page.locator('.menu-clippings').getByRole('button', { name: 'Clippings cart' }).count();
+            if (cartCount === 1) {
+                await addFamilyToClippingsCartViaMenu(page);
+                await page.goto('/module/_GVExport_/Chart/gvetest?xref=X1');
+                let cartHelp = page.locator('span.info-icon[data-help="Clippings cart"]').nth(0);
+                await cartHelp.click();
+                await expect(page.locator('.help-sidebar'))
+                    .not.toContainText('Help information not found');
+            }
         });
     });
 
