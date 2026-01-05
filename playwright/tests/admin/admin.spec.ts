@@ -2,7 +2,6 @@ import { test, expect } from '../../fixtures';;
 import { checkDefaults } from '../common/defaults.ts';
 import { checkNonDefaults, setNonDefaults } from '../common/nondefaults.ts';
 import { runDownloadTests } from '../common/sharedGeneralTests.ts';
-import { loadGVExport } from '../common/utils.ts';
 
 test.describe('control panel tests', () => {
     

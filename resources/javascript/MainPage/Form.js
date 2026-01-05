@@ -836,7 +836,7 @@ const Form = {
                 if (el == null) {
                     switch (key) {
                         case 'saved_cart_xrefs':
-                            if (settings[key] !== '') {
+                            if (Array.isArray(settings[key]) && settings[key].length > 0) {
                                 UI.tile.addXrefsToClippingsCartSavedSetting(settings[key]);
                             }
                             break;
@@ -848,6 +848,7 @@ const Form = {
                                 cartempty = true;
                                 Form.toggleCart(false);
                             }
+                            break;
                         case 'diagram_type':
                             if (settings[key] === 'simple') {
                                 setTimeout(() => {
@@ -1013,8 +1014,8 @@ const Form = {
             el.innerText = count;
             
             Form.showHide(document.getElementById('cart-section'), count > 0);
-            cartempty = cart === 0;
-            Form.toggleCart(cart > 0);
+            cartempty = count === 0;
+            Form.toggleCart(count > 0);
         }
     },
     
