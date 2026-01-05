@@ -836,8 +836,17 @@ const Form = {
                 if (el == null) {
                     switch (key) {
                         case 'saved_cart_xrefs':
-                            if (settings[key] !== '') {
+                            if (Array.isArray(settings[key]) && settings[key].length > 0) {
                                 UI.tile.addXrefsToClippingsCartSavedSetting(settings[key]);
+                            }
+                            break;
+                        case 'use_cart':
+                            setCheckStatus(document.getElementById('usecart_yes'), settings[key] === 'true');
+                            setCheckStatus(document.getElementById('usecart_no'), settings[key] === 'false');
+                            if (settings[key] === 'false') {
+                                Form.showHide(document.getElementById('cart-section'), false);
+                                cartempty = true;
+                                Form.toggleCart(false);
                             }
                             break;
                         case 'diagram_type':
@@ -1003,6 +1012,10 @@ const Form = {
         // Element may not exist - e.g. clippings cart module disabled
         if (el) {
             el.innerText = count;
+            
+            Form.showHide(document.getElementById('cart-section'), count > 0);
+            cartempty = count === 0;
+            Form.toggleCart(count > 0);
         }
     },
     

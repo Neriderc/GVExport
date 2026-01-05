@@ -15,16 +15,14 @@ use vendor\WebtreesModules\gvexport\GVExport;
 
     $grey_people = false;
     // Check if there are INDI records in the clippings cart, to decide what options to allow
-    if (!$cartempty) {
-    if ($vars["use_cart"]) {
-    $grey_people = true;
+    if ($vars["use_cart"] && !$cartempty) {
+        $grey_people = true;
     }
     ?>
 
-    <div class="row no-right-margin form-group">
+    <div id="cart-section" class="row no-right-margin form-group" <?= $cartempty ? 'style="display: none"' : ''; ?> >
         <?= view($module->name() . '::MainPage/PeopleToInclude/ItemsInClippingsCart',['vars' => $vars, 'admin' => $admin]); ?>
     </div>
-<?php } ?>
 
 <div class="row no-right-margin form-group">
     <?= view($module->name() . '::MainPage/PeopleToInclude/IncludeAnyoneRelatedTo',['vars' => $vars, 'tree' => $tree, 'greypeople' => $grey_people, 'admin' => $admin]); ?>

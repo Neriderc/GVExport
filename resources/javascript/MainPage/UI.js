@@ -529,6 +529,8 @@ const UI = {
                 
                 document.getElementById('modal-cancel').onclick = () => {
                     document.getElementById('modal').remove();
+                    Form.showHide(document.getElementById('cart-section'), !cartempty);
+                    Form.toggleCart(!cartempty);
                 };
 
                 document.getElementById('modal-yes').onclick = () => {

@@ -1,6 +1,6 @@
 import { runSharedOptionsTests } from '../common/sharedOptionTests.ts'
 import { Page, test, expect } from '../../fixtures.ts';
-import { loadGVExport, clearSavedSettingsList, getIndividualTile, getTileByXref } from '../common/utils.ts';
+import { loadGVExport, clearSavedSettingsList, getIndividualTile, getTileByXref, addFamilyToClippingsCartViaMenu } from '../common/utils.ts';
 import { testTileClickOpensPage } from '../common/sharedOptionTests.ts';
 
 /**
@@ -253,15 +253,3 @@ test.describe('Test saving and loading clippings cart items to the saved setting
 });
 
 
-async function addFamilyToClippingsCartViaMenu(page: Page) {
-    await loadGVExport(page, true);
-    await page.locator('#highlight_custom_fams').check();
-    await page.locator('#click_action_fam').selectOption('60');
-    const tile = await getTileByXref(page, 'X41');
-    await tile.click();
-    await expect(page.locator('.toast-message').filter({ hasText: 'Added to clippings cart' })).toBeVisible();
-    await page.waitForSelector('svg');
-    await page.locator('.menu-clippings').getByRole('button', { name: 'Clippings cart' }).click();
-    await page.getByRole('menuitem', { name: 'Clippings cart' }).click();
-    await expect(page.locator('table a').nth(0)).toContainText('Joe BLOGGS + Jane Smith');
-}
