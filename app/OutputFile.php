@@ -55,23 +55,20 @@ class OutputFile
             $shell_cmd = str_replace($this->settings['filename'], $this->tempDir . "/" . $this->settings['filename'], $this->settings['graphviz_config']['output'][$this->fileType]['exec']);
             $descriptor_spec = array(
                 0 => array("pipe", "r"),
-                1 => array("pipe", "w"),
+                1 => ["file", "/dev/null", "w"],
                 2 => array("pipe", "w")
             );
             $env = $_ENV;
             unset($env['SERVER_NAME']);
             if (!function_exists('proc_open')) {
-                exec($shell_cmd . " 2>&1", $stdout_output, $return_var);
+                exec($shell_cmd . " 2>&1", $output, $return_var);
                 if ($return_var !== 0) {
-                    die("Error (return code $return_var) executing command \"$shell_cmd\" in \"" . getcwd() . "\".<br>Graphviz error:<br><pre>" . (join("\n", $stdout_output)) . "</pre>");
+                    die("Error (return code $return_var) executing command \"$shell_cmd\" in \"" . getcwd() . "\".<br>Graphviz error:<br><pre>" . (join("\n", $output)) . "</pre>");
                 }
             } else {
                 $process = proc_open($shell_cmd, $descriptor_spec, $pipes, null, $env);
                 if (is_resource($process)) {
                     fclose($pipes[0]);
-
-                    $stdout_output = stream_get_contents($pipes[1]);
-                    fclose($pipes[1]);
 
                     $stderr_output = stream_get_contents($pipes[2]);
                     fclose($pipes[2]);
@@ -79,7 +76,7 @@ class OutputFile
                     $return_code = proc_close($process);
 
                     if ($return_code !== 0) {
-                        die("Error (return code $return_code) executing command \"$shell_cmd\" in \"" . getcwd() . "\".<br>Graphviz error:<br><pre>" . htmlspecialchars($stderr_output ?: $stdout_output) . "</pre>");
+                        die("Error (return code $return_code) executing command \"$shell_cmd\" in \"" . getcwd() . "\".<br>Graphviz error:<br><pre>" . htmlspecialchars($stderr_output ?: '') . "</pre>");
                     }
                 } else {
                     die("Failed to start process for command: $shell_cmd");
