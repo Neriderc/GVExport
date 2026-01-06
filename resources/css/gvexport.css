@@ -154,7 +154,10 @@
     z-index: 1;
     margin-bottom: 5px;
 }
-
+#people-advanced-button, #appearance-advanced-button, #files-advanced-button {
+    transform: translateX(-2px);
+    display: block;
+}
 #people-advanced-button, #appearance-advanced-button, #files-advanced-button,
 .settings_ellipsis_menu_item, .pointer {
     cursor: pointer;
