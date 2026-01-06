@@ -197,6 +197,8 @@ const Data = {
          * @param type one of the supported image types
          */
         downloadSVGAsImage(type) {
+            let dataURL;
+            
             const svg = document.getElementById('rendering').getElementsByTagName('svg')[0].cloneNode(true);
             // Style attribute used for the draggable browser view, remove this to reset to standard SVG
             svg.removeAttribute("style");
@@ -221,14 +223,23 @@ const Data = {
             img.onload = function () {
                 canvas.setAttribute('width', img.width.toString());
                 canvas.setAttribute('height', img.height.toString());
+
+                try {
                 // draw the image onto the canvas
                 let context = canvas.getContext('2d');
                 context.drawImage(img, 0, 0, img.width, img.height);
+                
+                dataURL = canvas.toDataURL('image/' + type);
+                } catch (e) {
+                    if (e instanceof DOMException) {
+                        UI.showToast(ERROR_CHAR + TRANSLATE['Your browser does not support exporting images this large. Please reduce number of records, reduce DPI setting, or use SVG option.']);
+                        return;
+                    }
+                    throw e;
+                }
+
                 // Download it
-                const dataURL = canvas.toDataURL('image/' + type);
-                if (dataURL.length < 10) {
-                    UI.showToast(ERROR_CHAR + TRANSLATE['Your browser does not support exporting images this large. Please reduce number of records, reduce DPI setting, or use SVG option.']);
-                } else if (type === "pdf") {
+                if (type === "pdf") {
                     Data.download.createPdfFromImage(dataURL, img.width, img.height);
                 } else {
                     let name = download_file_name + "." + (type === 'jpeg' ? 'jpg' : type);
