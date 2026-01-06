@@ -240,7 +240,11 @@ const Data = {
 
                 // Download it
                 if (type === "pdf") {
-                    Data.download.createPdfFromImage(dataURL, img.width, img.height);
+                    if (img.width.toString() > 14400 || img.height.toString() > 14400) {
+                        UI.showToast(ERROR_CHAR + TRANSLATE['Diagram is larger than the PDF page size limit. Please reduce number of records, reduce DPI setting, or use another export option.']);
+                    } else {
+                        Data.download.createPdfFromImage(dataURL, img.width, img.height);
+                    }
                 } else {
                     let name = download_file_name + "." + (type === 'jpeg' ? 'jpg' : type);
                     Data.download.downloadLink(dataURL, name);
