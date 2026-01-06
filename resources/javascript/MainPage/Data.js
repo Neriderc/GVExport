@@ -231,7 +231,8 @@ const Data = {
                 } else if (type === "pdf") {
                     Data.download.createPdfFromImage(dataURL, img.width, img.height);
                 } else {
-                    Data.download.downloadLink(dataURL, download_file_name + "." + type);
+                    let name = download_file_name + "." + (type === 'jpeg' ? 'jpg' : type);
+                    Data.download.downloadLink(dataURL, name);
                 }
             }
         },
