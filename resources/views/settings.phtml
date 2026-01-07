@@ -26,11 +26,7 @@ $prefix_regex = '^[A-Za-z0-9 ' . $regex_symbols . ']*$';
 <p><?= I18N::translate('Values here are used as default values for new users of GVExport, and are used when users choose to reset the settings.'); ?></p>
 <script src="<?= $module->assetUrl('javascript/gvexport.js'); ?>"></script>
 <script type="text/javascript">
-    let Url;
-    import('<?= $module->assetUrl('javascript/MainPage/Url.js'); ?>').then((module)=>{
-        Url = new module.Url();
-        Url.removeURLParameter('reset');
-    })
+    Data.url.removeURLParameter('reset');
 </script>
 <link href="<?= $module->assetUrl('css/gvexport.css'); ?>" rel="stylesheet">
 

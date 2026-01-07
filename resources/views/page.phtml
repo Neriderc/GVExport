@@ -103,6 +103,7 @@ $usegraphviz = $vars['graphviz_bin'] != "";
 <script src="<?= $module->assetUrl('javascript/MainPage/UI.js'); ?>"></script>
 <script src="<?= $module->assetUrl('javascript/MainPage/Form.js'); ?>"></script>
 <script src="<?= $module->assetUrl('javascript/MainPage/Data.js'); ?>"></script>
+<script src="<?= $module->assetUrl('javascript/MainPage/Diagram.js'); ?>"></script>
 <script src="<?= $module->assetUrl('javascript/jspdf.umd.min.js') ?>"></script>
 <script type="text/javascript">
     let graphvizAvailable = <?= $usegraphviz ? "true" : "false" ?>;
@@ -316,7 +317,7 @@ $usegraphviz = $vars['graphviz_bin'] != "";
 
         }).then(function(element) {
             // Now we have to clean up the generated SVG.
-            cleanSVG(element);
+            Diagram.svg.clean(element);
 
             // Clear current rendering then append new element to the page
             rendering.innerHTML = "";
@@ -362,7 +363,7 @@ $usegraphviz = $vars['graphviz_bin'] != "";
 
             UI.calculateDiagramSize.updateDiagramSize();
             UI.tile.handleTileClick();
-            createXrefListFromSvg();
+            Diagram.search.createXrefListFromSvg();
             return element;
         }).catch(function(error) {
             console.log(error);
@@ -406,22 +407,19 @@ $usegraphviz = $vars['graphviz_bin'] != "";
 <script type="text/javascript">
     const mainPage = {};
 
-    function runPageLoaded(Url) {
+    function runPageLoaded() {
         if (typeof pageLoaded === 'function' && typeof jQuery === 'function') {
-            Url.changeURLXref('<?= e($individual->xref()); ?>');
-            pageLoaded(Url);
+            Data.url.changeURLXref('<?= e($individual->xref()); ?>');
+            pageLoaded();
         } else {
             // If external script loads before inline script, then wait
             // before trying to run page loaded function.
             setTimeout(() => {
-                runPageLoaded(Url)
+                runPageLoaded()
             }, 100);
         }
     }
-    import('<?= $module->assetUrl('javascript/MainPage/Url.js'); ?>').then((module) => {
-        mainPage.Url = new module.Url();
-        runPageLoaded(mainPage.Url);
-    })
+    runPageLoaded();
     import('<?= $module->assetUrl('javascript/MainPage/SettingsGroup.js'); ?>').then((module) => {
         new module.SettingsGroup('subgroup_background_vitals', 'bg_col_type', '<?= Settings::OPTION_BACKGROUND_VITAL_COLOUR; ?>');
         new module.SettingsGroup('shape_sex_subgroup', 'indi_tile_shape', '<?= Person::TILE_SHAPE_SEX; ?>');

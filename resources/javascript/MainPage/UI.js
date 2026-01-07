@@ -138,14 +138,14 @@ const UI = {
          * @returns {boolean}
          */
         isNodeAnIndividual(node) {
-            if (Data.cleanUrl(node.getAttribute('xlink:href')).indexOf('/individual/') !== -1) {
+            if (Data.url.cleanUrl(node.getAttribute('xlink:href')).indexOf('/individual/') !== -1) {
                 return true;
             }
             // Also check children
             for (let i = 0; i < node.childNodes.length; i++) {
                 const child = node.childNodes[i];
                 if (child.tagName && child.tagName.toLowerCase() === 'a') {
-                    if (Data.cleanUrl(node.getAttribute('xlink:href')).indexOf('/individual/') !== -1) {
+                    if (Data.url.cleanUrl(node.getAttribute('xlink:href')).indexOf('/individual/') !== -1) {
                         return true;
                     }
                 }
@@ -193,7 +193,7 @@ const UI = {
                     }
 
                     if (isIndividual) {
-                        let xref = Data.getXrefFromUrl(url);
+                        let xref = Data.url.getXrefFromUrl(url);
                         switch (clickAction) {
                             case '0':
                                 window.open(url,'_blank');
@@ -205,7 +205,7 @@ const UI = {
                                 if (xref) {
                                     Form.indiList.clearIndiList(false);
                                     Form.indiList.addIndiToList(xref);
-                                    mainPage.Url.changeURLXref(xref);
+                                    Data.url.changeURLXref(xref);
                                     Form.handleFormChange();
                                 }
                                 break;
@@ -219,7 +219,7 @@ const UI = {
                                 if (xref) {
                                     Form.stoppingIndiList.clearStopIndiList(false);
                                     Form.stoppingIndiList.addIndiToStopList(xref);
-                                    mainPage.Url.changeURLXref(xref);
+                                    Data.url.changeURLXref(xref);
                                     Form.handleFormChange();
                                 }
                                 break;
@@ -577,7 +577,7 @@ const UI = {
             if (xref) {
                 Form.indiList.clearIndiList(false);
                 Form.indiList.addIndiToList(xref);
-                mainPage.Url.changeURLXref(xref);
+                Data.url.changeURLXref(xref);
                 Form.handleFormChange(xref);
                 UI.contextMenu.clearContextMenu();
             }
