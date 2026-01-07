@@ -632,4 +632,68 @@ const Data = {
         };
         return Data.callAPI(request);
     },
+
+    /**
+     * Takes a webtrees individual's URL as input, and returns their XREF
+     *
+     * @param url
+     * @returns {*}
+     */
+    getXrefFromUrl(url) {
+        url = this.cleanUrl(url);
+        const regex = /\/tree\/[^/]+\/(individual|family)\/(.+)\//;
+        return url.match(regex)[2];
+    },
+
+    /**
+     * Fixes URL so regular expression doesn't get confused
+     *
+     * @param url
+     * @returns {string}
+     */
+    cleanUrl(url){
+        if (url) {
+            return url.replaceAll('%2F', '/');
+        } else {
+            return '';
+        }
+    },
+
+    /**
+     * Returns a map of counts of the items in the array
+     * 
+     * @param Array xrefs 
+     * @returns 
+     */
+    countItems(array) {
+        const counts = new Map();
+
+        for (const item of array) {
+            counts.set(item, (counts.get(item) || 0) + 1);
+        }
+        return counts;
+    },
+
+    diagram: {
+        getXrefs() {
+            const rendering = document.getElementById('rendering');
+            const svg = rendering.getElementsByTagName('svg')[0].cloneNode(true);
+            if (!svg) return [];
+            const xrefs = [];
+            svg.querySelectorAll('g.node').forEach(nodeEl => {
+                // Only include the indi once per node, but can occur multiple times in different nodes
+                let nodeXrefs = [];
+                nodeEl.querySelectorAll('a').forEach(anchorEl => {
+                    let url = anchorEl.getAttribute('xlink:href');
+                    xref = Data.getXrefFromUrl(url);
+                    if (!nodeXrefs.includes(xref)) {
+                        xrefs.push(xref);
+                        nodeXrefs.push(xref);
+                    }
+                    
+                });
+            });
+            return xrefs;
+        },
+    }
 }

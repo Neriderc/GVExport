@@ -22,7 +22,7 @@ const REQUEST_TYPE_COUNT_XREFS_CLIPPINGS_CART = "count_xrefs_clippings_cart";
 const REQUEST_TYPE_DUMP_SETTINGS = "dump_settings";
 let treeName = null;
 let loggedIn = null;
-let xrefList = [];
+let xrefCount = [];
 let messageHistory = [];
 
 function loadURLXref(Url) {
@@ -128,7 +128,7 @@ function removeSearchOptions() {
     let dropdown = document.getElementById('diagram_search_box');
     if (dropdown.tomselect != null) {
         Object.keys(dropdown.tomselect.options).forEach(function (option) {
-            if (!xrefList.includes(option)) {
+            if (!xrefCount.has(option)) {
                 removeSearchOptionFromList(option, 'diagram_search_box');
             }
         });
@@ -283,6 +283,7 @@ async function pageLoaded(Url) {
     setInterval(function () {removeSearchOptions()}, 100);
     // Listen for fullscreen change
     handleFullscreen();
+    diagramSearchBoxSetup()
 
     if (document.getElementById("diagtype_simple") != null) {
         handleSimpleDiagram();
@@ -782,11 +783,52 @@ function cleanSVG(element) {
     element.setAttribute("viewBox", "0 0 " + element.getAttribute("width").replace("pt", "") + " " + element.getAttribute("height").replace("pt", ""));
 }
 
+/**
+ * Some individuals may appear in the diagram multiple times (especially in combined mode)
+ * When this happens, the diagram search function needs a way to present multiple copies
+ * of the same individual so the user can select which one to scroll to
+ * 
+ * @returns 
+ */
+function diagramSearchBoxSetup() {
+    const dropdown = document.getElementById('diagram_search_box-ts-dropdown');
+    if (!dropdown) return;
+    
+    const observer = new MutationObserver((mutationsList) => {
+        const xrefCounts = Data.countItems(Data.diagram.getXrefs());
+
+        for (const mutation of mutationsList) {
+            if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+                mutation.addedNodes.forEach(node => {
+                    if (node.nodeType === Node.ELEMENT_NODE && node.dataset?.value) {
+                        const xref = node.dataset.value;
+                        const count = xrefCounts.get(xref) || 0;
+                        if (count > 1 && !node.id.includes('-dup')) {
+                            for (let i = 0; i < count - 1; i++) {
+                                const clone = node.cloneNode(true);
+                                clone.id += '-dup'+i;
+                                node.parentNode.insertBefore(clone, node.nextSibling);
+                                clone.dataset.value = 'skip_value'; // value is not important as long as not a valid XREF, so other scroll action doesn't kick in
+                                clone.addEventListener('click', (e) => {
+                                    UI.scrollToRecord(xref, 'indi', undefined, undefined, undefined, i+1);
+                                    Form.showHideSearchBox(e, false);
+                                });
+                            }
+                        }
+                    }
+                });
+            }
+        }
+    });
+
+    observer.observe(dropdown, { childList: true, subtree: true });
+}
+
 function diagramSearchBoxChange(e) {
     let xref = document.getElementById('diagram_search_box').value.trim();
     // Skip the first trigger, only fire for the follow-up trigger when the XREF is set
     if (xref !== ""){
-        if (!UI.scrollToRecord(xref, 'indi')) {
+        if (!UI.scrollToRecord(xref, 'indi', 0)) {
             UI.showToast(TRANSLATE['Individual not found']);
         }
         Form.clearSelect('diagram_search_box');
@@ -795,19 +837,7 @@ function diagramSearchBoxChange(e) {
 }
 
 function createXrefListFromSvg() {
-    xrefList = [];
-    const rendering = document.getElementById('rendering');
-    const svg = rendering.getElementsByTagName('svg')[0].cloneNode(true);
-    let titles = svg.getElementsByTagName('title');
-    for (let i=0; i<titles.length; i++) {
-        let xrefs = titles[i].innerHTML.split("_");
-        for (let j = 0; j < xrefs.length; j++) {
-            // Ignore the arrows that go between records
-            if (!xrefs[j].includes("&gt;")) {
-                xrefList.push(xrefs[j]);
-            }
-        }
-    }
+    xrefCount = Data.countItems(Data.diagram.getXrefs());
 }
 
 // In a tomselect, the option chosen goes into a box that is initially blank. For the search box,
