@@ -93,7 +93,7 @@ export function runDownloadTests(options: Array<string>) {
             await loadGVExport(page);
 
             await page.selectOption('#output_type', value);
-            await page.waitForSelector('svg');
+            await expect(page.locator('#rendering svg')).toBeVisible();
 
             const pageErrors: Error[] = [];
             page.on('pageerror', err => pageErrors.push(err));

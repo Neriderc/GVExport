@@ -65,11 +65,12 @@ const UI = {
      * @param zoom Set zoom level to this number
      * @returns {boolean}
      */
-    scrollToRecord(xref, type = 'indi', scrollX = null, scrollY = null, zoom = null) {
+    scrollToRecord(xref, type = 'indi', scrollX = null, scrollY = null, zoom = null, nth = 0) {
+        console.log(nth)
         // Why do we multiply the scale by 1 and 1/3?
         let zoomBase = (zoom ? zoom : panzoomInst.getTransform().scale) * (1 + 1 / 3);
         let zoom_value = zoomBase * parseFloat(document.getElementById("dpi").value) / 72;
-        let [found, x, y] = UI.tile.getElementPositionFromXref(xref, type);
+        let [found, x, y] = UI.tile.getElementPositionFromXref(xref, type, nth);
         if (!found) {
             // The xref isn't in the diagram
             return false;
@@ -132,33 +133,19 @@ const UI = {
 
     tile: {
         /**
-         * Fixes URL so regular expression doesn't get confused
-         *
-         * @param url
-         * @returns {string}
-         */
-        cleanUrl(url){
-            if (url) {
-                return url.replaceAll('%2F', '/');
-            } else {
-                return '';
-            }
-        },
-
-        /**
          * Check if the SVG node has <A> tags with a URL with '/individual/' in it.
          * @param node
          * @returns {boolean}
          */
         isNodeAnIndividual(node) {
-            if (this.cleanUrl(node.getAttribute('xlink:href')).indexOf('/individual/') !== -1) {
+            if (Data.url.cleanUrl(node.getAttribute('xlink:href')).indexOf('/individual/') !== -1) {
                 return true;
             }
             // Also check children
             for (let i = 0; i < node.childNodes.length; i++) {
                 const child = node.childNodes[i];
                 if (child.tagName && child.tagName.toLowerCase() === 'a') {
-                    if (this.cleanUrl(node.getAttribute('xlink:href')).indexOf('/individual/') !== -1) {
+                    if (Data.url.cleanUrl(node.getAttribute('xlink:href')).indexOf('/individual/') !== -1) {
                         return true;
                     }
                 }
@@ -171,18 +158,6 @@ const UI = {
             }
 
             return false;
-        },
-
-        /**
-         * Takes a webtrees individual's URL as input, and returns their XREF
-         *
-         * @param url
-         * @returns {*}
-         */
-        getXrefFromUrl(url) {
-            url = this.cleanUrl(url);
-            const regex = /\/tree\/[^/]+\/individual\/(.+)\//;
-            return url.match(regex)[1];
         },
 
         /**
@@ -218,7 +193,7 @@ const UI = {
                     }
 
                     if (isIndividual) {
-                        let xref = UI.tile.getXrefFromUrl(url);
+                        let xref = Data.url.getXrefFromUrl(url);
                         switch (clickAction) {
                             case '0':
                                 window.open(url,'_blank');
@@ -230,7 +205,7 @@ const UI = {
                                 if (xref) {
                                     Form.indiList.clearIndiList(false);
                                     Form.indiList.addIndiToList(xref);
-                                    mainPage.Url.changeURLXref(xref);
+                                    Data.url.changeURLXref(xref);
                                     Form.handleFormChange();
                                 }
                                 break;
@@ -244,7 +219,7 @@ const UI = {
                                 if (xref) {
                                     Form.stoppingIndiList.clearStopIndiList(false);
                                     Form.stoppingIndiList.addIndiToStopList(xref);
-                                    mainPage.Url.changeURLXref(xref);
+                                    Data.url.changeURLXref(xref);
                                     Form.handleFormChange();
                                 }
                                 break;
@@ -602,7 +577,7 @@ const UI = {
             if (xref) {
                 Form.indiList.clearIndiList(false);
                 Form.indiList.addIndiToList(xref);
-                mainPage.Url.changeURLXref(xref);
+                Data.url.changeURLXref(xref);
                 Form.handleFormChange(xref);
                 UI.contextMenu.clearContextMenu();
             }
@@ -732,9 +707,9 @@ const UI = {
          * @param {*} type the type of the entity (individual or family)
          */
 
-        getElementPositionFromXref(xref, type) {
+        getElementPositionFromXref(xref, type, nth = 0) {
             if (type === 'indi') {
-                return this.getPolygonPositionFromXref(xref);
+                return this.getPolygonPositionFromXref(xref, nth);
             } else if (type === 'fam') {
                 return this.getEllipsePositionFromXref(xref);
             }
@@ -747,15 +722,20 @@ const UI = {
          * @param xref The XREF of the individual we are looking for
          * @returns {boolean[]|(boolean|string|number)[]} An array [true if found, x position, y position]
          */
-        getPolygonPositionFromXref(xref) {
-
+        getPolygonPositionFromXref(xref, nth = 0) {
             const rendering = document.getElementById('rendering');
             const svg = rendering.getElementsByTagName('svg')[0].cloneNode(true);
             let titles = svg.getElementsByTagName('title');
+
+            let count = 0;
             for (let i=0; i<titles.length; i++) {
                 let xrefs = titles[i].innerHTML.split("_");
                 for (let j=0; j<xrefs.length; j++) {
                     if (xrefs[j] === xref) {
+                        if (count !== nth) {
+                            count ++;
+                            continue;
+                        }
                         let minX = null;
                         let minY = null;
                         let maxX = null;

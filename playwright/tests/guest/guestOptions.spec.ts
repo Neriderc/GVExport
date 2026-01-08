@@ -10,7 +10,7 @@ runSharedOptionsTests('user');
 test('option: Add arrow label when pedigree type is not "birth"', async ({ page }) => {
         await loadGVExport(page, true);
         await page.locator('#show_pedigree_type').check();
-        await page.waitForSelector('svg');
+        await expect(page.locator('#rendering svg')).toBeVisible();
         const svgHtml = await page.locator('#rendering svg').innerHTML();
 
         // Values not expected as private when logged out

@@ -21,39 +21,6 @@ const Data = {
     },
 
     /**
-     * Find image URLs and replace with embedded versions
-     *
-     * @param svg
-     * @param type
-     * @param img
-     */
-    replaceImageURLs: function(svg, type, img) {
-        let startPos, len, url;
-        let match = /<image.*xlink:href="http/.exec(svg);
-        if (match != null) {
-            startPos = match.index+match[0].length-4;
-            len = svg.substring(startPos).indexOf("\"");
-            url = svg.substring(startPos,startPos+len);
-            const img2 = document.createElement("img");
-            img2.onload = function() {
-                let base64 = Data.getBase64Image(img2);
-                svg = svg.replace(url,base64);
-                Data.replaceImageURLs(svg, type, img);
-                img2.remove();
-            }
-            img2.src = url.replace(/&amp;/g,"&");
-        } else {
-            if (type === "svg") {
-                const svgBlob = new Blob([svg], {type: "image/svg+xml;charset=utf-8"});
-                const svgUrl = URL.createObjectURL(svgBlob);
-                Data.download.downloadLink(svgUrl, download_file_name + "."+type);
-            } else {
-                img.src = "data:image/svg+xml;utf8," + svg;
-            }
-        }
-    },
-
-    /**
      *
      * @param help
      * @returns {Promise<unknown>}
@@ -167,7 +134,7 @@ const Data = {
                 svgData = Data.download.removeHrefLinksFromSVG(svgData);
             }
             // Replace image URLs with embedded data for SVG - also triggers download
-            Data.replaceImageURLs(svgData, "svg", null);
+            Data.url.replaceImageURLs(svgData, "svg", null);
         },
 
         /**
@@ -218,7 +185,7 @@ const Data = {
                     + parseInt(b, 16) + ')';
             });
             // Replace image URLs with embedded images
-            Data.replaceImageURLs(xml, type, img);
+            Data.url.replaceImageURLs(xml, type, img);
             // Once image loaded, draw to canvas then download it
             img.onload = function () {
                 canvas.setAttribute('width', img.width.toString());
@@ -550,6 +517,10 @@ const Data = {
          * @returns {boolean}
          */
         saveSettingsAdvanced(userPrompted = false) {
+            let saveButton = document.getElementById('save_settings_button');
+            saveButton.disabled = true;
+            setTimeout(() => {saveButton.disabled=false}, 500);
+
             let settingsList = document.getElementsByClassName('settings_list_item');
             let settingsName = document.getElementById('save_settings_name').value;
             if (settingsName === '') settingsName = "Settings";
@@ -632,4 +603,205 @@ const Data = {
         };
         return Data.callAPI(request);
     },
+    
+
+    /**
+     * Returns a map of counts of the items in the array
+     * 
+     * @param Array xrefs 
+     * @returns 
+     */
+    countItems(array) {
+        const counts = new Map();
+
+        for (const item of array) {
+            counts.set(item, (counts.get(item) || 0) + 1);
+        }
+        return counts;
+    },
+
+    diagram: {
+        getXrefs() {
+            const rendering = document.getElementById('rendering');
+            const svg = rendering.getElementsByTagName('svg')[0].cloneNode(true);
+            if (!svg) return [];
+            const xrefs = [];
+            svg.querySelectorAll('g.node').forEach(nodeEl => {
+                // Only include the indi once per node, but can occur multiple times in different nodes
+                let nodeXrefs = [];
+                nodeEl.querySelectorAll('a').forEach(anchorEl => {
+                    let url = anchorEl.getAttribute('xlink:href');
+                    xref = Data.url.getXrefFromUrl(url);
+                    if (!nodeXrefs.includes(xref)) {
+                        xrefs.push(xref);
+                        nodeXrefs.push(xref);
+                    }
+                    
+                });
+            });
+            return xrefs;
+        },
+    },
+
+    url:  Object.freeze({
+        ACTION_GET: 0,
+        ACTION_REMOVE: 10,
+        ACTION_UPDATE: 20,
+
+
+        /**
+         * Fixes URL so regular expression doesn't get confused
+         *
+         * @param url
+         * @returns {string}
+         */
+        cleanUrl(url){
+            if (url) {
+                return url.replaceAll('%2F', '/');
+            } else {
+                return '';
+            }
+        },
+
+
+        /**
+         * Takes a webtrees individual's URL as input, and returns their XREF
+         *
+         * @param url
+         * @returns {*}
+         */
+        getXrefFromUrl(url) {
+            url = this.cleanUrl(url);
+            const regex = /\/tree\/[^/]+\/(individual|family)\/(.+)\//;
+            return url.match(regex)[2];
+        },
+
+        /**
+         * Find image URLs and replace with embedded versions
+         *
+         * @param svg
+         * @param type
+         * @param img
+         */
+        replaceImageURLs: function(svg, type, img) {
+            let startPos, len, url;
+            let match = /<image.*xlink:href="http/.exec(svg);
+            if (match != null) {
+                startPos = match.index+match[0].length-4;
+                len = svg.substring(startPos).indexOf("\"");
+                url = svg.substring(startPos,startPos+len);
+                const img2 = document.createElement("img");
+                img2.onload = function() {
+                    let base64 = Data.getBase64Image(img2);
+                    svg = svg.replace(url,base64);
+                    Data.url.replaceImageURLs(svg, type, img);
+                    img2.remove();
+                }
+                img2.src = url.replace(/&amp;/g,"&");
+            } else {
+                if (type === "svg") {
+                    const svgBlob = new Blob([svg], {type: "image/svg+xml;charset=utf-8"});
+                    const svgUrl = URL.createObjectURL(svgBlob);
+                    Data.download.downloadLink(svgUrl, download_file_name + "."+type);
+                } else {
+                    img.src = "data:image/svg+xml;utf8," + svg;
+                }
+            }
+        },
+        
+        /**
+         * Removes parameter from the URL
+         *
+         * @param {string} parameter
+         */
+        removeURLParameter(parameter) {
+            this.updateURLParameter(parameter, "", this.ACTION_REMOVE);
+        },
+
+
+
+        /**
+         * Updates the XREF in the URL
+         *
+         * @param {string} xref
+         */
+        changeURLXref(xref) {
+            if (xref !== "") {
+                this.updateURLParameter("xref", xref, this.ACTION_UPDATE);
+            }
+        },
+
+        /**
+         * Updates a specified parameter in the URL using the specified action
+         *
+         * @param {string} parameter
+         * @param {string} value
+         * @param {number} action
+         * @returns {string}
+         */
+        updateURLParameter(parameter, value, action) {
+            let href = document.location.href;
+            if (href.indexOf('#') !== -1) {
+                href = href.split('#')[0];
+            }
+            let split = href.split("?");
+            let url = split[0];
+            if (split.length > 1) {
+                let args = split[1];
+                let params = new URLSearchParams(args);
+                if (params.toString().search(parameter) !== -1) {
+                    if (action === this.ACTION_REMOVE) {
+                        params.delete(parameter);
+                    } else if (action === this.ACTION_UPDATE) {
+                        params.set(parameter, value);
+                    } else if (action === this.ACTION_GET) {
+                        return params.get(parameter);
+                    }
+                }
+                history.pushState(null, '', url + "?" + params.toString());
+            } else if (action === this.ACTION_UPDATE) {
+                history.pushState(null, '', url + "?" +  parameter + "=" + value);
+            }
+            return "";
+        },
+
+        /**
+         * Returns the value of the URL parameter with the given name
+         *
+         * @param parameter
+         * @returns {string}
+         */
+        getURLParameter(parameter) {
+            let result = this.updateURLParameter(parameter, '', this.ACTION_GET);
+            if (result !== null && result !== '') {
+                return result.replace('#','');
+            } else {
+                return '';
+            }
+        },
+
+        loadURLXref() {
+            const xref = Data.url.getURLParameter("xref");
+            if (xref !== '') {
+                const el = document.getElementById('xref_list');
+                if (el.value.replace(',', "").trim() === "") {
+                    el.value = xref;
+                } else if (!el.value.split(',').includes(xref)) {
+                    const xrefs = el.value.split(',');
+                    if (url_xref_treatment === 'default' && xrefs.length === 1 || url_xref_treatment === 'overwrite') {
+                        el.value = "";
+                    }
+                    if (url_xref_treatment !== 'nothing') {
+                        let startValue = el.value;
+                        Form.indiList.addIndiToList(xref);
+                        if (url_xref_treatment === 'default' && xrefs.length === 1 ) {
+                            setTimeout(function () {UI.showToast(TRANSLATE['Source individual has replaced existing individual'])}, 100);
+                        } else if (startValue !== el.value && (url_xref_treatment === 'default' || url_xref_treatment === 'add')) {
+                            setTimeout(function () {UI.showToast(TRANSLATE['One new source individual added to %s existing individuals'].replace('%s', xrefs.length.toString()))}, 100);
+                        }
+                    }
+                }
+            }
+        }
+    })
 }

@@ -288,7 +288,7 @@ const Form = {
         Form.showHide(el, visible);
         if (visible) {
             // Remove blank section from search box
-            tidyTomSelect();
+            Diagram.search.tidyTomSelect();
             // Give search box focus
             let dropdown = document.getElementById('diagram_search_box');
             if (typeof dropdown.tomselect !== 'undefined') {
@@ -490,7 +490,7 @@ const Form = {
             let xref = document.getElementById('pid').value.trim();
             if (xref !== "") {
                 Form.indiList.addIndiToList(xref);
-                mainPage.Url.changeURLXref(xref);
+                Data.url.changeURLXref(xref);
                 if (autoUpdate) {
                     updateRender();
                 }
@@ -584,7 +584,7 @@ const Form = {
             removeFromXrefList(xref, xrefListId);
             element.remove();
             if (xrefListId === 'xref_list') {
-                mainPage.Url.changeURLXref(list.value.split(',')[0].trim());
+                Data.url.changeURLXref(list.value.split(',')[0].trim());
             }
             updateClearAll();
             if (xrefListId === 'highlight_custom_json' || xrefListId === 'highlight_custom_fams_json') {
