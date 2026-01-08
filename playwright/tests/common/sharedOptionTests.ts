@@ -84,7 +84,7 @@ export function runSharedOptionsTests(role: 'guest' | 'user') {
             await page.locator('#click_action_indi').selectOption('10');
             const tile = await getIndividualTile(page, 'Olivia BLOGGS');
             await tile.click();
-            await page.waitForSelector('svg');
+            await expect(page.locator('#rendering svg')).toBeVisible();
             await expect(page.locator('.indi_list_item')).toHaveCount(2);
             await expect(page.locator('.indi_list_item').nth(0)).toContainText('Joe BLOGGS');
             await expect(page.locator('.indi_list_item').nth(1)).toContainText('Olivia BLOGGS');
@@ -98,7 +98,7 @@ export function runSharedOptionsTests(role: 'guest' | 'user') {
             await page.locator('#click_action_indi').selectOption('20');
             const tile = await getIndividualTile(page, 'Olivia BLOGGS');
             await tile.click();
-            await page.waitForSelector('svg');
+            await expect(page.locator('#rendering svg')).toBeVisible();
             await expect(page.locator('.indi_list_item')).toHaveCount(1);
             await expect(page.locator('.indi_list_item').nth(0)).toContainText('Olivia BLOGGS');
         });
@@ -109,7 +109,7 @@ export function runSharedOptionsTests(role: 'guest' | 'user') {
             await page.locator('#click_action_indi').selectOption('30');
             const tile = await getIndividualTile(page, 'Olivia BLOGGS');
             await tile.click();
-            await page.waitForSelector('svg');
+            await expect(page.locator('#rendering svg')).toBeVisible();
             await expect(page.locator('#stop_xref_list')).toHaveValue('X54');
             await expect(page.locator('#stop_indi_list .indi_list_item')).toHaveCount(1);
             await expect(page.locator('#stop_indi_list .indi_list_item').nth(0)).toContainText('Olivia BLOGGS');
@@ -122,7 +122,7 @@ export function runSharedOptionsTests(role: 'guest' | 'user') {
             await page.locator('#click_action_indi').selectOption('40');
             let tile = await getIndividualTile(page, 'Olivia BLOGGS');
             await tile.click();
-            await page.waitForSelector('svg');
+            await expect(page.locator('#rendering svg')).toBeVisible();
             await expect(page.locator('#stop_xref_list')).toHaveValue('X54');
             await expect(page.locator('#stop_indi_list .indi_list_item')).toHaveCount(1);
             await expect(page.locator('#stop_indi_list .indi_list_item').nth(0)).toContainText('Olivia BLOGGS');
@@ -130,7 +130,7 @@ export function runSharedOptionsTests(role: 'guest' | 'user') {
             // Add second individual and check they are replaced not added
             tile = await getIndividualTile(page, 'Liam BLOGGS');
             await tile.click();
-            await page.waitForSelector('svg');
+            await expect(page.locator('#rendering svg')).toBeVisible();
             await expect(page.locator('#stop_xref_list')).toHaveValue('X53');
             await expect(page.locator('#stop_indi_list .indi_list_item')).toHaveCount(1);
             await expect(page.locator('#stop_indi_list .indi_list_item').nth(0)).toContainText('Liam BLOGGS');
@@ -143,7 +143,7 @@ export function runSharedOptionsTests(role: 'guest' | 'user') {
             await page.locator('#click_action_indi').selectOption('70');
             const tile = await getIndividualTile(page, 'Olivia BLOGGS');
             await tile.click();
-            await page.waitForSelector('svg');
+            await expect(page.locator('#rendering svg')).toBeVisible();
             await expect(page.locator('#highlight_list .indi_list_item')).toHaveCount(1);
             await expect(page.locator('#highlight_list .indi_list_item').nth(0)).toContainText('Olivia BLOGGS');
         });
@@ -154,7 +154,7 @@ export function runSharedOptionsTests(role: 'guest' | 'user') {
             await expect(page.locator('#context_list')).toBeEmpty();
             const tile = await getIndividualTile(page, 'Olivia BLOGGS');
             await tile.click();
-            await page.waitForSelector('svg');
+            await expect(page.locator('#rendering svg')).toBeVisible();
             await expect(page.locator('#context_list')).not.toBeEmpty();
         });
     });
@@ -172,10 +172,10 @@ export function runSharedOptionsTests(role: 'guest' | 'user') {
             await page.locator('#graph_dir').selectOption('TB');
             await page.locator('#click_action_fam').selectOption('20');
             await page.locator('.hide-form').click();
-            await page.waitForSelector('svg');
+            await expect(page.locator('#rendering svg')).toBeVisible();
             const tile = await getTileByXref(page, 'X20');
             await tile.click();
-            await page.waitForSelector('svg');
+            await expect(page.locator('#rendering svg')).toBeVisible();
             await page.locator('.sidebar_toggle').click();
             await expect(page.locator('#highlight_fams_list .indi_list_item')).toHaveCount(1);
             await expect(page.locator('#highlight_fams_list .indi_list_item').nth(0)).toContainText('Jimbo Marks + Suzanne Franks');
@@ -188,7 +188,7 @@ export function runSharedOptionsTests(role: 'guest' | 'user') {
             await expect(page.locator('#context_list')).toBeEmpty();
             const tile = await getTileByXref(page, 'X41');
             await tile.click();
-            await page.waitForSelector('svg');
+            await expect(page.locator('#rendering svg')).toBeVisible();
             await expect(page.locator('#context_list')).not.toBeEmpty();
         });
     });
@@ -206,7 +206,7 @@ export function runSharedOptionsTests(role: 'guest' | 'user') {
             const tile = await getIndividualTile(page, 'Olivia BLOGGS');
             await tile.click();
             await page.locator('.settings_ellipsis_menu_item', { hasText: 'Add individual to list of starting individuals' }).click()
-            await page.waitForSelector('svg');
+            await expect(page.locator('#rendering svg')).toBeVisible();
             await expect(page.locator('.indi_list_item')).toHaveCount(2);
             await expect(page.locator('.indi_list_item').nth(0)).toContainText('Joe BLOGGS');
             await expect(page.locator('.indi_list_item').nth(1)).toContainText('Olivia BLOGGS');
@@ -220,7 +220,7 @@ export function runSharedOptionsTests(role: 'guest' | 'user') {
             const tile = await getIndividualTile(page, 'Olivia BLOGGS');
             await tile.click();
             await page.locator('.settings_ellipsis_menu_item', { hasText: 'Replace starting individuals with this individual' }).click()
-            await page.waitForSelector('svg');
+            await expect(page.locator('#rendering svg')).toBeVisible();
             await expect(page.locator('.indi_list_item')).toHaveCount(1);
             await expect(page.locator('.indi_list_item').nth(0)).toContainText('Olivia BLOGGS');
         });
@@ -232,7 +232,7 @@ export function runSharedOptionsTests(role: 'guest' | 'user') {
             const tile = await getIndividualTile(page, 'Olivia BLOGGS');
             await tile.click();
             await page.locator('.settings_ellipsis_menu_item', { hasText: 'Add this individual to the list of stopping individuals' }).click()
-            await page.waitForSelector('svg');
+            await expect(page.locator('#rendering svg')).toBeVisible();
             await expect(page.locator('#stop_xref_list')).toHaveValue('X54');
             await expect(page.locator('#stop_indi_list .indi_list_item')).toHaveCount(1);
             await expect(page.locator('#stop_indi_list .indi_list_item').nth(0)).toContainText('Olivia BLOGGS');
@@ -246,7 +246,7 @@ export function runSharedOptionsTests(role: 'guest' | 'user') {
             let tile = await getIndividualTile(page, 'Olivia BLOGGS');
             await tile.click();
             await page.locator('.settings_ellipsis_menu_item', { hasText: 'Replace stopping individuals with this individual' }).click()
-            await page.waitForSelector('svg');
+            await expect(page.locator('#rendering svg')).toBeVisible();
             await expect(page.locator('#stop_xref_list')).toHaveValue('X54');
             await expect(page.locator('#stop_indi_list .indi_list_item')).toHaveCount(1);
             await expect(page.locator('#stop_indi_list .indi_list_item').nth(0)).toContainText('Olivia BLOGGS');
@@ -255,7 +255,7 @@ export function runSharedOptionsTests(role: 'guest' | 'user') {
             tile = await getIndividualTile(page, 'Liam BLOGGS');
             await tile.click();
             await page.locator('.settings_ellipsis_menu_item', { hasText: 'Replace stopping individuals with this individual' }).click()
-            await page.waitForSelector('svg');
+            await expect(page.locator('#rendering svg')).toBeVisible();
             await expect(page.locator('#stop_xref_list')).toHaveValue('X53');
             await expect(page.locator('#stop_indi_list .indi_list_item')).toHaveCount(1);
             await expect(page.locator('#stop_indi_list .indi_list_item').nth(0)).toContainText('Liam BLOGGS');
@@ -269,7 +269,7 @@ export function runSharedOptionsTests(role: 'guest' | 'user') {
             const tile = await getIndividualTile(page, 'Olivia BLOGGS');
             await tile.click();
             await page.locator('.settings_ellipsis_menu_item', { hasText: 'Add to list of individuals to highlight' }).click()
-            await page.waitForSelector('svg');
+            await expect(page.locator('#rendering svg')).toBeVisible();
             await expect(page.locator('#highlight_list .indi_list_item')).toHaveCount(1);
             await expect(page.locator('#highlight_list .indi_list_item').nth(0)).toContainText('Olivia BLOGGS');
         });
@@ -286,11 +286,11 @@ export function runSharedOptionsTests(role: 'guest' | 'user') {
             await page.locator('#click_action_fam').selectOption('30');
             await page.locator('#highlight_custom_fams').check();
             await page.locator('.hide-form').click();
-            await page.waitForSelector('svg');
+            await expect(page.locator('#rendering svg')).toBeVisible();
             const tile = await getTileByXref(page, 'X20');
             await tile.click();
             await page.locator('.settings_ellipsis_menu_item', { hasText: 'Add to list of families to highlight' }).click()
-            await page.waitForSelector('svg');
+            await expect(page.locator('#rendering svg')).toBeVisible();
             await page.locator('.sidebar_toggle').click();
             await expect(page.locator('#highlight_fams_list .indi_list_item')).toHaveCount(1);
             await expect(page.locator('#highlight_fams_list .indi_list_item').nth(0)).toContainText('Jimbo Marks + Suzanne Franks');
@@ -301,63 +301,63 @@ export function runSharedOptionsTests(role: 'guest' | 'user') {
         test('Full name', async ({ page }) => {
             await loadGVExport(page, true);
             await page.locator('#use_abbr_name').selectOption('0');
-            await page.waitForSelector('svg');
+            await expect(page.locator('#rendering svg')).toBeVisible();
             const tile = await getTileByXref(page, 'X58');
             await expect(tile).toContainText('Martin John "Johnny" BLOGGS');
         });
         test('Given and surname', async ({ page }) => {
             await loadGVExport(page, true);
             await page.locator('#use_abbr_name').selectOption('10');
-            await page.waitForSelector('svg');
+            await expect(page.locator('#rendering svg')).toBeVisible();
             const tile = await getTileByXref(page, 'X58');
             await expect(tile).toContainText('Martin John BLOGGS');
         });
         test('Given names', async ({ page }) => {
             await loadGVExport(page, true);
             await page.locator('#use_abbr_name').selectOption('20');
-            await page.waitForSelector('svg');
+            await expect(page.locator('#rendering svg')).toBeVisible();
             const tile = await getTileByXref(page, 'X58');
             await expect(tile).toContainText('Martin John "Johnny"');
         });
         test('First name only', async ({ page }) => {
             await loadGVExport(page, true);
             await page.locator('#use_abbr_name').selectOption('30');
-            await page.waitForSelector('svg');
+            await expect(page.locator('#rendering svg')).toBeVisible();
             const tile = await getTileByXref(page, 'X58');
             await expect(tile).toContainText('Martin');
         });
         test('Preferred given name and surname', async ({ page }) => {
             await loadGVExport(page, true);
             await page.locator('#use_abbr_name').selectOption('80');
-            await page.waitForSelector('svg');
+            await expect(page.locator('#rendering svg')).toBeVisible();
             const tile = await getTileByXref(page, 'X58');
             await expect(tile).toContainText('John BLOGGS');
         });
         test('Surnames', async ({ page }) => {
             await loadGVExport(page, true);
             await page.locator('#use_abbr_name').selectOption('40');
-            await page.waitForSelector('svg');
+            await expect(page.locator('#rendering svg')).toBeVisible();
             const tile = await getTileByXref(page, 'X58');
             await expect(tile).toContainText('BLOGGS');
         });
         test('Initials only', async ({ page }) => {
             await loadGVExport(page, true);
             await page.locator('#use_abbr_name').selectOption('50');
-            await page.waitForSelector('svg');
+            await expect(page.locator('#rendering svg')).toBeVisible();
             const tile = await getTileByXref(page, 'X58');
             await expect(tile).toContainText('MJB');
         });
         test('Given name initials and surname', async ({ page }) => {
             await loadGVExport(page, true);
             await page.locator('#use_abbr_name').selectOption('60');
-            await page.waitForSelector('svg');
+            await expect(page.locator('#rendering svg')).toBeVisible();
             const tile = await getTileByXref(page, 'X58');
             await expect(tile).toContainText('M.J. BLOGGS');
         });
         test('Don\'t show names', async ({ page }) => {
             await loadGVExport(page, true);
             await page.locator('#use_abbr_name').selectOption('70');
-            await page.waitForSelector('svg');
+            await expect(page.locator('#rendering svg')).toBeVisible();
             const tile = await getTileByXref(page, 'X58');
             await expect(tile).not.toContainText('Martin');
             await expect(tile).not.toContainText('BLOGGS');
@@ -368,7 +368,7 @@ export function runSharedOptionsTests(role: 'guest' | 'user') {
         test('Full place name', async ({ page }) => {
             await loadGVExport(page, true);
             await page.locator('#use_abbr_place').selectOption('0');
-            await page.waitForSelector('svg');
+            await expect(page.locator('#rendering svg')).toBeVisible();
             const tile = await getTileByXref(page, 'X1');
             await expect(tile).toContainText('(New Plymouth, Taranaki, NZ)');
         });
@@ -376,7 +376,7 @@ export function runSharedOptionsTests(role: 'guest' | 'user') {
         test('City only', async ({ page }) => {
             await loadGVExport(page, true);
             await page.locator('#use_abbr_place').selectOption('5');
-            await page.waitForSelector('svg');
+            await expect(page.locator('#rendering svg')).toBeVisible();
             const tile = await getTileByXref(page, 'X1');
             await expect(tile).toContainText('(New Plymouth)');
         });
@@ -384,7 +384,7 @@ export function runSharedOptionsTests(role: 'guest' | 'user') {
         test('City and country', async ({ page }) => {
             await loadGVExport(page, true);
             await page.locator('#use_abbr_place').selectOption('10');
-            await page.waitForSelector('svg');
+            await expect(page.locator('#rendering svg')).toBeVisible();
             const tile = await getTileByXref(page, 'X1');
             await expect(tile).toContainText('(New Plymouth, New Zealand)');
         });
@@ -394,7 +394,7 @@ export function runSharedOptionsTests(role: 'guest' | 'user') {
             let tile = await getTileByXref(page, 'X19');
             await expect(tile).toContainText('(Kerikeri, Te Tai Tokerau, New Zealand)');
             await page.locator('#use_abbr_place').selectOption('20');
-            await page.waitForSelector('svg');
+            await expect(page.locator('#rendering svg')).toBeVisible();
             tile = await getTileByXref(page, 'X19');
             await expect(tile).toContainText('(Kerikeri, NZ)');
         });
@@ -404,7 +404,7 @@ export function runSharedOptionsTests(role: 'guest' | 'user') {
             let tile = await getTileByXref(page, 'X17');
             await expect(tile).toContainText('(Hamilton, Waikato, NZL)');
             await page.locator('#use_abbr_place').selectOption('20');
-            await page.waitForSelector('svg');
+            await expect(page.locator('#rendering svg')).toBeVisible();
             tile = await getTileByXref(page, 'X17');
             await expect(tile).toContainText('(Hamilton, NZ)');
         });
@@ -414,7 +414,7 @@ export function runSharedOptionsTests(role: 'guest' | 'user') {
             let tile = await getTileByXref(page, 'X19');
             await expect(tile).toContainText('(Kerikeri, Te Tai Tokerau, New Zealand)');
             await page.locator('#use_abbr_place').selectOption('30');
-            await page.waitForSelector('svg');
+            await expect(page.locator('#rendering svg')).toBeVisible();
             tile = await getTileByXref(page, 'X19');
             await expect(tile).toContainText('(Kerikeri, NZL)');
         });
@@ -425,7 +425,7 @@ export function runSharedOptionsTests(role: 'guest' | 'user') {
             let tile = await getTileByXref(page, 'X1');
             await expect(tile).toContainText('(New Plymouth, Taranaki, NZ)');
             await page.locator('#use_abbr_place').selectOption('30');
-            await page.waitForSelector('svg');
+            await expect(page.locator('#rendering svg')).toBeVisible();
             tile = await getTileByXref(page, 'X1');
             await expect(tile).toContainText('(New Plymouth, NZL)');
         });
@@ -434,7 +434,7 @@ export function runSharedOptionsTests(role: 'guest' | 'user') {
 
 export async function testTileClickOpensPage(page: Page, xref: string, name: string, urlRegex: RegExp, menuOption: string = '') {
     let popup: Page;
-    await page.waitForSelector('svg');
+    await expect(page.locator('#rendering svg')).toBeVisible();
     const link = await getTileByXref(page, xref);
     await expect(await link.count()).toBe(1);
 

@@ -42,7 +42,7 @@ export async function toggleAdvancedPanels(page: Page) {
     const count = await advancedButtons.count();
     expect(count).toBe(3);
     for (let i = 0; i < count; i++) {
-        await advancedButtons.nth(i).click();   
+        await advancedButtons.nth(i).click();
     }
     await page.locator('.subgroup').first().isVisible();
 };
@@ -89,15 +89,16 @@ export async function getLogin(role = 'user', id: number) {
  */
 export async function clearSavedSettingsList(page: Page) {
     const items = await page.locator('.settings_list_item');
-    const count = await items.count();
-    
-    for (let i = 0; i < count; i++) {
-        const item = await items.nth(0);
+
+    while (await items.count() > 0) {
+        const item = items.first();
+
         await item.getByText('…').click();
-        await item
-            .locator('.settings_ellipsis_menu')
-            .getByText('❌')
-            .click();
+        const menu = item.locator('.settings_ellipsis_menu');
+        await expect(menu).toBeVisible();
+        await menu.getByText('Delete').click();
+        await expect(item).toBeHidden();
+        await page.waitForTimeout(3000);
     }
 };
 
@@ -123,7 +124,7 @@ export async function addFamilyToClippingsCartViaMenu(page: Page) {
     const tile = await getTileByXref(page, 'X41');
     await tile.click();
     await expect(page.locator('.toast-message').filter({ hasText: 'Added to clippings cart' })).toBeVisible();
-    await page.waitForSelector('svg');
+    await expect(page.locator('#rendering svg')).toBeVisible();
     await page.locator('.menu-clippings').getByRole('button', { name: 'Clippings cart' }).click();
     await page.getByRole('menuitem', { name: 'Clippings cart' }).click();
     await expect(page.locator('table a').nth(0)).toContainText('Joe BLOGGS + Jane Smith');

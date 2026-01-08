@@ -51,7 +51,7 @@ test.describe('option: Action when individual clicked', ()=>{
         const tile = await getIndividualTile(page, 'Olivia BLOGGS');
         await tile.click();
         await expect(page.locator('.toast-message').filter({ hasText: 'Added to clippings cart' })).toBeVisible();
-        await page.waitForSelector('svg');
+        await expect(page.locator('#rendering svg')).toBeVisible();
         await page.locator('.menu-clippings').getByRole('button', { name: 'Clippings cart' }).click();
         await page.getByRole('menuitem', { name: 'Clippings cart' }).click();
         await expect(page.locator('table a').nth(0)).toContainText('Olivia BLOGGS');
@@ -81,7 +81,7 @@ test.describe('option: Action when family clicked', () => {
         const tile = await getTileByXref(page, 'X41');
         await tile.click();
         await expect(page.locator('.toast-message').filter({ hasText: 'Added to clippings cart' })).toBeVisible();
-        await page.waitForSelector('svg');
+        await expect(page.locator('#rendering svg')).toBeVisible();
         await page.locator('.menu-clippings').getByRole('button', { name: 'Clippings cart' }).click();
         await page.getByRole('menuitem', { name: 'Clippings cart' }).click();
         await expect(page.locator('table a').nth(0)).toContainText('Joe BLOGGS + Jane Smith');
@@ -109,7 +109,7 @@ test.describe('user-only tests for indi tile context menu', ()=>{
         await tile.click();
         await page.locator('.settings_ellipsis_menu_item', { hasText: 'Add to clippings cart' }).click()
         await expect(page.locator('.toast-message').filter({ hasText: 'Added to clippings cart' })).toBeVisible();
-        await page.waitForSelector('svg');
+        await expect(page.locator('#rendering svg')).toBeVisible();
         await page.locator('.menu-clippings').getByRole('button', { name: 'Clippings cart' }).click();
         await page.getByRole('menuitem', { name: 'Clippings cart' }).click();
         await expect(page.locator('table a').nth(0)).toContainText('Olivia BLOGGS');
@@ -140,7 +140,7 @@ test.describe('user-only tests for family tile context menu', () => {
 test('option: Add arrow label when pedigree type is not "birth"', async ({ page }) => {
     await loadGVExport(page, true);
     await page.locator('#show_pedigree_type').check();
-    await page.waitForSelector('svg');
+    await expect(page.locator('#rendering svg')).toBeVisible();
     const svgHtml = await page.locator('#rendering svg').innerHTML();
     await expect(svgHtml).toContain('Radāʿ');
     await expect(svgHtml).toContain('Sealing');
@@ -157,8 +157,9 @@ test.describe('Test saving and loading clippings cart items to the saved setting
         // Save a setting
         await page.goto('/module/_GVExport_/Chart/gvetest?xref=X1');
         await page.locator('#usecart_yes').check();
-        await page.waitForSelector('svg');
+        await expect(page.locator('#rendering svg')).toBeVisible();
         await clearSavedSettingsList(page);
+        await expect(page.locator(".settings_list_item")).toHaveCount(0);
         await page.fill('#save_settings_name', "Clippings cart items");
         await page.locator("#save_settings_button").click();
         await expect(page.locator(".settings_list_item")).toHaveText("Clippings cart items…");
@@ -177,7 +178,7 @@ test.describe('Test saving and loading clippings cart items to the saved setting
         await page.locator('#modal-yes').click();
 
         // Check items added to clippings cart
-        await page.waitForSelector('svg');
+        await expect(page.locator('#rendering svg')).toBeVisible();
         await page.locator('.menu-clippings').getByRole('button', { name: 'Clippings cart' }).click();
         await page.getByRole('menuitem', { name: 'Clippings cart' }).click();
         await expect(page.locator('table a').nth(0)).toContainText('Joe BLOGGS + Jane Smith');
@@ -189,11 +190,17 @@ test.describe('Test saving and loading clippings cart items to the saved setting
         // Save a setting
         await page.goto('/module/_GVExport_/Chart/gvetest?xref=X1');
         await page.locator('#usecart_yes').check();
-        await page.waitForSelector('svg');
+        await expect(page.locator('#rendering svg')).toBeVisible();
+
+        await page.waitForTimeout(100);
         await clearSavedSettingsList(page);
+
+        await expect(page.locator(".settings_list_item")).toHaveCount(0);
+        console.log('test')
         await page.fill('#save_settings_name', "Clippings cart items");
         await page.locator("#save_settings_button").click();
         await expect(page.locator(".settings_list_item")).toHaveText("Clippings cart items…");
+        await expect(page.locator(".settings_list_item")).toHaveCount(1);
 
         // Clear clippings cart
         await page.locator('.menu-clippings').getByRole('button', { name: 'Clippings cart' }).click();
@@ -207,6 +214,7 @@ test.describe('Test saving and loading clippings cart items to the saved setting
         
         // Accept clippings cart items
         await page.locator('#modal-cancel').click();
+        await expect(page.locator('#modal-cancel')).toBeHidden();
 
         // Check items NOT added to clippings cart
         await page.locator('.menu-clippings').getByRole('button', { name: 'Clippings cart' }).click();
@@ -222,7 +230,7 @@ test.describe('Test saving and loading clippings cart items to the saved setting
         // Save a setting
         await page.goto('/module/_GVExport_/Chart/gvetest?xref=X1');
         await page.locator('#usecart_no').check();
-        await page.waitForSelector('svg');
+        await expect(page.locator('#rendering svg')).toBeVisible();
         await clearSavedSettingsList(page);
         const items = await page.locator('.settings_list_item');
         await expect(await items.count()).toBe(0);
