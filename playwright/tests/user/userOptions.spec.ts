@@ -196,7 +196,6 @@ test.describe('Test saving and loading clippings cart items to the saved setting
         await clearSavedSettingsList(page);
 
         await expect(page.locator(".settings_list_item")).toHaveCount(0);
-        console.log('test')
         await page.fill('#save_settings_name', "Clippings cart items");
         await page.locator("#save_settings_button").click();
         await expect(page.locator(".settings_list_item")).toHaveText("Clippings cart items…");

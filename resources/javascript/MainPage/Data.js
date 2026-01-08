@@ -517,6 +517,10 @@ const Data = {
          * @returns {boolean}
          */
         saveSettingsAdvanced(userPrompted = false) {
+            let saveButton = document.getElementById('save_settings_button');
+            saveButton.disabled = true;
+            setTimeout(() => {saveButton.disabled=false}, 500);
+
             let settingsList = document.getElementsByClassName('settings_list_item');
             let settingsName = document.getElementById('save_settings_name').value;
             if (settingsName === '') settingsName = "Settings";
