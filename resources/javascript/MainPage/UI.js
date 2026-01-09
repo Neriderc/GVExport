@@ -66,7 +66,6 @@ const UI = {
      * @returns {boolean}
      */
     scrollToRecord(xref, type = 'indi', scrollX = null, scrollY = null, zoom = null, nth = 0) {
-        console.log(nth)
         // Why do we multiply the scale by 1 and 1/3?
         let zoomBase = (zoom ? zoom : panzoomInst.getTransform().scale) * (1 + 1 / 3);
         let zoom_value = zoomBase * parseFloat(document.getElementById("dpi").value) / 72;
