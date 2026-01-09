@@ -1038,5 +1038,28 @@ const Form = {
                 showModal('<textarea cols=50 rows=20\">' + response + '</textarea>');
             });
         }
+    },
+    
+
+
+
+    event: {
+        /**
+         * Triggered by change event
+         */
+        changeIndiTileShape(e) {
+            Form.event.roundedRectangleNotificationCheck();
+        },
+
+        changeDiagramType(e) {
+            
+            Form.event.roundedRectangleNotificationCheck()
+        },
+
+        roundedRectangleNotificationCheck() {
+            if (document.getElementById('indi_tile_shape')?.value !== '0' && document.getElementById('diagtype_combined').checked) {
+                UI.showToast(TRANSLATE["Rounded rectangle option is not supported for the Combined diagram type"]);
+            }
+        }
     }
 }

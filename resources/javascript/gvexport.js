@@ -346,6 +346,13 @@ async function pageLoaded() {
     document.querySelector("#diagram_search_box_container").addEventListener('change', Diagram.search.change);
     document.querySelector('#searchButton').addEventListener('click', Form.showHideSearchBox);
     document.querySelector('#photo_shape')?.addEventListener('change', showGraphvizUnsupportedMessage);
+    document.querySelector('#indi_tile_shape')?.addEventListener('change', Form.event.changeIndiTileShape);
+
+    document.addEventListener('change', (e) => {
+        if (e.target.matches('input[name="vars[diagram_type]"]')) {
+            Form.event.changeDiagramType(e);
+        }
+    });
 }
 
 // Function to show a help message
