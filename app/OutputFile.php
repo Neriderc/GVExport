@@ -53,9 +53,11 @@ class OutputFile
         $filename = $this->tempDir . "/" . $this->baseName;
         if (!empty($this->settings['graphviz_config']['output'][$this->fileType]['exec'])) {
             $shell_cmd = str_replace($this->settings['filename'], $this->tempDir . "/" . $this->settings['filename'], $this->settings['graphviz_config']['output'][$this->fileType]['exec']);
+
+            $tmp = tempnam(sys_get_temp_dir(), 'gvexport_');
             $descriptor_spec = array(
                 0 => array("pipe", "r"),
-                1 => ["file", "/dev/null", "w"],
+                1 => ["file", $tmp, "w"],
                 2 => array("pipe", "w")
             );
             $env = $_ENV;
