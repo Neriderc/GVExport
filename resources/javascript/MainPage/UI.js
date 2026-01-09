@@ -690,7 +690,7 @@ const UI = {
          * Save settings without refreshing diagram
          */
         clickOptionChanged() {
-            isUserLoggedIn().then((loggedIn) => {
+            Data.api.isUserLoggedIn().then((loggedIn) => {
                 if (loggedIn) {
                     saveSettingsServer().then();
                 } else {
@@ -1096,7 +1096,7 @@ const UI = {
             let id = event.target.parentElement.parentElement.getAttribute('data-id');
             let token = event.target.parentElement.parentElement.getAttribute('data-token');
             removeSettingsEllipsisMenu(event.target);
-            isUserLoggedIn().then((loggedIn) => {
+            Data.api.isUserLoggedIn().then((loggedIn) => {
                 if (id != null) {
                     id = id.trim();
                     let div = document.createElement('div');
@@ -1184,7 +1184,7 @@ const UI = {
             e.stopPropagation();
             try {
                 const id = e.currentTarget.id;
-                const loggedIn = await isUserLoggedIn();
+                const loggedIn = await Data.api.isUserLoggedIn();
 
                 if (loggedIn) {
                     await Data.savedSettings.deleteSettingsServer(id);
@@ -1225,7 +1225,7 @@ const UI = {
         revokeSavedSettingsLinkMenuAction(e) {
             e.stopPropagation();
             let token = e.currentTarget.token;
-            isUserLoggedIn().then((loggedIn) => {
+            Data.api.isUserLoggedIn().then((loggedIn) => {
                 if (loggedIn) {
                     let request = {
                         "type": REQUEST_TYPE_REVOKE_SAVED_SETTINGS_LINK,
@@ -1258,7 +1258,7 @@ const UI = {
         addUrlToMyFavouritesMenuAction(e) {
             e.stopPropagation();
             let id = e.currentTarget.id;
-            isUserLoggedIn().then((loggedIn) => {
+            Data.api.isUserLoggedIn().then((loggedIn) => {
                 if (loggedIn) {
                     let request = {
                         "type": REQUEST_TYPE_ADD_MY_FAVORITE,
@@ -1294,7 +1294,7 @@ const UI = {
                 parent = parent.parentElement;
             }
             let id = parent.getAttribute('data-id');
-            isUserLoggedIn().then((loggedIn) => {
+            Data.api.isUserLoggedIn().then((loggedIn) => {
                 if (loggedIn) {
                     let request = {
                         "type": REQUEST_TYPE_ADD_TREE_FAVORITE,

@@ -7,6 +7,7 @@ const Data = {
 
     api: {
         _treename: null,
+        _loggedIn: null,
 
         getTreeName() {
             if (Data.api._treename != null)  {
@@ -22,6 +23,30 @@ const Data = {
                         if (json.success) {
                             Data.api._treename = json.treeName.replace(/[^a-zA-Z0-9_]/g, ""); // Only allow characters that play nice
                             return Data.api._treename;
+                        } else {
+                            return Promise.reject(ERROR_CHAR + json.errorMessage);
+                        }
+                    } catch (e) {
+                        return Promise.reject("Failed to load response: " + e);
+                    }
+                });
+            }
+        },
+
+        isUserLoggedIn() {
+            if (Data.api._loggedIn != null)  {
+                return Promise.resolve(Data.api._loggedIn);
+            } else {
+                let request = {
+                    "type": REQUEST_TYPE_IS_LOGGED_IN
+                };
+                let json = JSON.stringify(request);
+                return sendRequest(json).then((response) => {
+                    try {
+                        let json = JSON.parse(response);
+                        if (json.success) {
+                            Data.api._loggedIn = json.loggedIn;
+                            return json.loggedIn;
                         } else {
                             return Promise.reject(ERROR_CHAR + json.errorMessage);
                         }
@@ -304,7 +329,7 @@ const Data = {
                 showModal('<div class="modal-container">' + message + '<br>' + buttons + '</div>');
                 return false;
             }
-            isUserLoggedIn().then((loggedIn) => {
+            Data.api.isUserLoggedIn().then((loggedIn) => {
                 if (loggedIn) {
                     let request = {
                         "type": REQUEST_TYPE_RENAME_SETTINGS,
@@ -382,7 +407,7 @@ const Data = {
          * @returns {Promise<unknown>}
          */
         getSavedSettingsLink(id) {
-            return isUserLoggedIn().then((loggedIn) => {
+            return Data.api.isUserLoggedIn().then((loggedIn) => {
                 if (loggedIn) {
                     let request = {
                         "type": REQUEST_TYPE_GET_SAVED_SETTINGS_LINK,
@@ -486,7 +511,7 @@ const Data = {
          * @param id
          */
         saveSettings(id) {
-            isUserLoggedIn().then((loggedIn) => {
+            Data.api.isUserLoggedIn().then((loggedIn) => {
                 if (loggedIn) {
                     return saveSettingsServer(false, id).then((response)=>{
                         try {

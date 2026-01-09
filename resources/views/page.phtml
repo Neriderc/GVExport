@@ -38,7 +38,6 @@ $usegraphviz = $vars['graphviz_bin'] != "";
     const TREE_NAME = "<?= e($tree->name()); ?>";
     const TREE_FAVORITES_MODULE_ACTIVE = <?= $module->module_service->findByInterface(FamilyTreeFavoritesModule::class)->first() === null || !Auth::isManager($tree) ? "false" : "true" ?>;
     const MY_FAVORITES_MODULE_ACTIVE = <?= $module->module_service->findByInterface(UserFavoritesModule::class)->first() === null ? "false" : "true" ?>;
-
 </script>
 <h2 class="wt-page-title">
     <?= $title ?>
@@ -214,7 +213,7 @@ $usegraphviz = $vars['graphviz_bin'] != "";
         // Don't overwrite browser settings with default settings
         if (!firstRender) {
             // Update settings in browser storage if logged out
-            isUserLoggedIn().then((loggedIn) => {
+            Data.api.isUserLoggedIn().then((loggedIn) => {
                 if (!loggedIn) {
                     Data.storeSettings.saveSettingsClient(ID_MAIN_SETTINGS);
                 }

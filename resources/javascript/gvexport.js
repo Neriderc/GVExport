@@ -20,7 +20,6 @@ const REQUEST_TYPE_ADD_CLIPPINGS_CART = "add_clippings_cart";
 const REQUEST_TYPE_ADD_ALL_CLIPPINGS_CART = "add_all_clippings_cart";
 const REQUEST_TYPE_COUNT_XREFS_CLIPPINGS_CART = "count_xrefs_clippings_cart";
 const REQUEST_TYPE_DUMP_SETTINGS = "dump_settings";
-let loggedIn = null;
 let xrefCount = [];
 let messageHistory = []; 
 
@@ -234,7 +233,7 @@ function showGraphvizUnsupportedMessage() {
 // This function is run when the page is loaded
 async function pageLoaded() {
     if (firstRender) {
-        const loggedIn = await isUserLoggedIn();
+        const loggedIn = await Data.api.isUserLoggedIn();
         if (!loggedIn) {
             const settings = await Data.storeSettings.getSettingsClient(ID_MAIN_SETTINGS);
             if (settings !== null) {
@@ -450,7 +449,7 @@ function getSettingsServer(id = ID_ALL_SETTINGS) {
 }
 
 function getSettings(id = ID_ALL_SETTINGS) {
-    return isUserLoggedIn().then((loggedIn) => {
+    return Data.api.isUserLoggedIn().then((loggedIn) => {
         if (loggedIn || id === ID_MAIN_SETTINGS) {
             return getSettingsServer(id);
         } else {
@@ -568,31 +567,7 @@ function loadUrlToken(Url) {
             }
         });
     }
-}
-
-function isUserLoggedIn() {
-    if (loggedIn != null)  {
-        return Promise.resolve(loggedIn);
-    } else {
-        let request = {
-            "type": REQUEST_TYPE_IS_LOGGED_IN
-        };
-        let json = JSON.stringify(request);
-        return sendRequest(json).then((response) => {
-            try {
-                let json = JSON.parse(response);
-                if (json.success) {
-                    loggedIn = json.loggedIn;
-                    return json.loggedIn;
-                } else {
-                    return Promise.reject(ERROR_CHAR + json.errorMessage);
-                }
-            } catch (e) {
-                return Promise.reject("Failed to load response: " + e);
-            }
-        });
-    }
-}
+} 
 
 function getIdLocal() {
     return Data.api.getTreeName().then((treeName) => {
