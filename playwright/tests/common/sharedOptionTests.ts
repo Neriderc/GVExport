@@ -169,14 +169,17 @@ export function runSharedOptionsTests(role: 'guest' | 'user') {
             await toggleSettingsSubgroups(page);
             
             await page.locator('#highlight_custom_fams').check();
-            await page.locator('#graph_dir').selectOption('TB');
-            await page.locator('#click_action_fam').selectOption('20');
-            await page.locator('.hide-form').click();
             await expect(page.locator('#rendering svg')).toBeVisible();
+            await page.locator('#graph_dir').selectOption('TB');
+            await expect(page.locator('#rendering svg')).toBeVisible();
+            await page.locator('#click_action_fam').selectOption('20');
+            await expect(page.locator('#rendering svg')).toBeVisible();
+            await page.locator('.hide-form').click();
             const tile = await getTileByXref(page, 'X20');
             await tile.click();
             await expect(page.locator('#rendering svg')).toBeVisible();
             await page.locator('.sidebar_toggle').click();
+            await expect(page.locator('#gvexport')).toBeVisible();
             await expect(page.locator('#highlight_fams_list .indi_list_item')).toHaveCount(1);
             await expect(page.locator('#highlight_fams_list .indi_list_item').nth(0)).toContainText('Jimbo Marks + Suzanne Franks');
         });
@@ -292,6 +295,7 @@ export function runSharedOptionsTests(role: 'guest' | 'user') {
             await page.locator('.settings_ellipsis_menu_item', { hasText: 'Add to list of families to highlight' }).click()
             await expect(page.locator('#rendering svg')).toBeVisible();
             await page.locator('.sidebar_toggle').click();
+            await expect(page.locator('#gvexport')).toBeVisible();
             await expect(page.locator('#highlight_fams_list .indi_list_item')).toHaveCount(1);
             await expect(page.locator('#highlight_fams_list .indi_list_item').nth(0)).toContainText('Jimbo Marks + Suzanne Franks');
         });
