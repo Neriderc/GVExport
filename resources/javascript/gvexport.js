@@ -325,11 +325,6 @@ async function pageLoaded() {
         Form.showHideMatchCheckbox('show_marriages', 'marriages_subgroup');
     });
 
-    window.addEventListener("scroll", (event) => {
-        // Hide diagram context menu on scroll
-        UI.contextMenu.clearContextMenu();
-    });
-
     document.addEventListener("mousedown", function(event) {
         // Hide diagram context menu if clicked off a tile
         if (event.target.closest('.settings_ellipsis_menu_item') == null && event.target.parentElement?.id !== 'menu-info') {
