@@ -672,8 +672,13 @@ const Data = {
          */
         getXrefFromUrl(url) {
             url = this.cleanUrl(url);
-            const regex = /\/tree\/[^/]+\/(individual|family)\/(.+)\//;
-            return url.match(regex)[2];
+            const regex = /\/tree\/[^/]+\/(individual|family)\/([^/]+)\/?/;
+            if (!url.match(regex)) {
+                console.log(url);
+                return '';
+            } else {
+                return url.match(regex)[2];
+            }
         },
 
         /**
