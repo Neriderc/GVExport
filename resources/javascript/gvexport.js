@@ -325,11 +325,6 @@ async function pageLoaded() {
         Form.showHideMatchCheckbox('show_marriages', 'marriages_subgroup');
     });
 
-    window.addEventListener("scroll", (event) => {
-        // Hide diagram context menu on scroll
-        UI.contextMenu.clearContextMenu();
-    });
-
     document.addEventListener("mousedown", function(event) {
         // Hide diagram context menu if clicked off a tile
         if (event.target.closest('.settings_ellipsis_menu_item') == null && event.target.parentElement?.id !== 'menu-info') {
@@ -346,6 +341,13 @@ async function pageLoaded() {
     document.querySelector("#diagram_search_box_container").addEventListener('change', Diagram.search.change);
     document.querySelector('#searchButton').addEventListener('click', Form.showHideSearchBox);
     document.querySelector('#photo_shape')?.addEventListener('change', showGraphvizUnsupportedMessage);
+    document.querySelector('#indi_tile_shape')?.addEventListener('change', Form.event.changeIndiTileShape);
+
+    document.addEventListener('change', (e) => {
+        if (e.target.matches('input[name="vars[diagram_type]"]')) {
+            Form.event.changeDiagramType(e);
+        }
+    });
 }
 
 // Function to show a help message

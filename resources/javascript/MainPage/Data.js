@@ -674,7 +674,6 @@ const Data = {
             url = this.cleanUrl(url);
             const regex = /\/tree\/[^/]+\/(individual|family)\/([^/]+)\/?/;
             if (!url.match(regex)) {
-                console.log(url);
                 return '';
             } else {
                 return url.match(regex)[2];
