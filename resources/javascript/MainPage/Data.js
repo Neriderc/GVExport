@@ -4,6 +4,34 @@
  * @type {{}}
  */
 const Data = {
+
+    api: {
+        _treename: null,
+
+        getTreeName() {
+            if (Data.api._treename != null)  {
+                return Promise.resolve(Data.api._treename);
+            } else {
+                let request = {
+                    "type": REQUEST_TYPE_GET_TREE_NAME
+                };
+                let json = JSON.stringify(request);
+                return sendRequest(json).then((response) => {
+                    try {
+                        let json = JSON.parse(response);
+                        if (json.success) {
+                            Data.api._treename = json.treeName.replace(/[^a-zA-Z0-9_]/g, ""); // Only allow characters that play nice
+                            return Data.api._treename;
+                        } else {
+                            return Promise.reject(ERROR_CHAR + json.errorMessage);
+                        }
+                    } catch (e) {
+                        return Promise.reject("Failed to load response: " + e);
+                    }
+                });
+            }
+        }
+    },
     /**
      * Convert image URL to base64 data - we use for embedding images in SVG
      * From https://stackoverflow.com/questions/22172604/convert-image-from-url-to-base64
@@ -337,7 +365,7 @@ const Data = {
          * @param id
          */
         deleteSettingsClient(id) {
-            getTreeName().then((treeName) => {
+            Data.api.getTreeName().then((treeName) => {
                 try {
                     localStorage.removeItem("GVE_Settings_" + treeName + "_" + id);
                     deleteIdLocal(id);
@@ -496,7 +524,7 @@ const Data = {
          * @returns {Promise<void>}
          */
         saveSettingsClient(id) {
-            return Promise.all([saveSettingsServer(true), getTreeName()])
+            return Promise.all([saveSettingsServer(true), Data.api.getTreeName()])
                 .then(([, treeNameLocal]) => {
                     return getSettings(ID_MAIN_SETTINGS).then((settings_json_string) => [settings_json_string,treeNameLocal]);
                 })
@@ -553,7 +581,7 @@ const Data = {
          * @returns {Promise<{} | {} | any | undefined | void>}
          */
         getSettingsClient(id = ID_ALL_SETTINGS) {
-            return getTreeName().then(async (treeName) => {
+            return Data.api.getTreeName().then(async (treeName) => {
                 try {
                     if (id === ID_ALL_SETTINGS) {
                         let settings_list = localStorage.getItem(SETTINGS_ID_LIST_NAME + "_" + treeName);

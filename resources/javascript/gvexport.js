@@ -20,7 +20,6 @@ const REQUEST_TYPE_ADD_CLIPPINGS_CART = "add_clippings_cart";
 const REQUEST_TYPE_ADD_ALL_CLIPPINGS_CART = "add_all_clippings_cart";
 const REQUEST_TYPE_COUNT_XREFS_CLIPPINGS_CART = "count_xrefs_clippings_cart";
 const REQUEST_TYPE_DUMP_SETTINGS = "dump_settings";
-let treeName = null;
 let loggedIn = null;
 let xrefCount = [];
 let messageHistory = []; 
@@ -595,32 +594,8 @@ function isUserLoggedIn() {
     }
 }
 
-function getTreeName() {
-    if (treeName != null)  {
-        return Promise.resolve(treeName);
-    } else {
-        let request = {
-            "type": REQUEST_TYPE_GET_TREE_NAME
-        };
-        let json = JSON.stringify(request);
-        return sendRequest(json).then((response) => {
-            try {
-                let json = JSON.parse(response);
-                if (json.success) {
-                    treeName = json.treeName.replace(/[^a-zA-Z0-9_]/g, ""); // Only allow characters that play nice
-                    return treeName;
-                } else {
-                    return Promise.reject(ERROR_CHAR + json.errorMessage);
-                }
-            } catch (e) {
-                return Promise.reject("Failed to load response: " + e);
-            }
-        });
-    }
-}
-
 function getIdLocal() {
-    return getTreeName().then((treeName) => {
+    return Data.api.getTreeName().then((treeName) => {
         let next_id;
         let settings_list = localStorage.getItem(SETTINGS_ID_LIST_NAME + "_" + treeName);
         if (settings_list) {
@@ -639,7 +614,7 @@ function getIdLocal() {
 }
 
 function deleteIdLocal(id) {
-    getTreeName().then((treeName) => {
+    Data.api.getTreeName().then((treeName) => {
         let settings_list;
         if (localStorage.getItem(SETTINGS_ID_LIST_NAME + "_" + treeName) != null) {
             settings_list = localStorage.getItem(SETTINGS_ID_LIST_NAME + "_" + treeName);
