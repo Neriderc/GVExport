@@ -83,6 +83,7 @@ class OutputFile
                 } else {
                     die("Failed to start process for command: $shell_cmd");
                 }
+                @unlink($tmp);
             }
         }
         if ($this->settings["add_links"] && ($this->fileType == 'svg')) { #This is needed since option -Tsvg doesnt embed images
