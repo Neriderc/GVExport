@@ -114,6 +114,9 @@ class ApiHandler
                 case "get_xrefs_clippings_cart":
                     $this->getXrefsClippingsCart();
                     break;
+                case "is_xref_in_clippings_cart":
+                    $this->isXrefInClippingsCart();
+                    break;
                 case "dump_settings":
                     $this->dumpSettings();
                     break;
@@ -513,6 +516,18 @@ class ApiHandler
     private function getXrefsClippingsCart() {
         $this->response_data['success'] = true;
         $this->response_data['response'] = ClippingsCart::getXrefsInCart($this->tree);;
+    }
+
+    /**
+     * Returns xrefs of contents of clippings cart
+     */
+    private function isXrefInClippingsCart() {
+        if (isset($this->json['xref']) && (ctype_alnum($this->json['xref']))) {
+            $this->response_data['success'] = true;
+            $this->response_data['response'] = ClippingsCart::isXrefInCart($this->tree, $this->json['xref']);
+        } else {
+            $this->setFailResponse('Invalid XREF', 'E19');
+        }
     }
     
     /**

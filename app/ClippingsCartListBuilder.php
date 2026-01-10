@@ -98,7 +98,7 @@ class ClippingsCartListBuilder {
 		} else {
 			return;
 		}
-		if (isset($partner) && !$this->cart->isXrefInCart($partner->xref())) {
+		if (isset($partner) && !ClippingsCart::isXrefInCart($this->tree, $partner->xref())) {
 			$fid = $family->xref();
 			$pid = Dot::DUMMY_INDIVIDUAL_XREF . ($partnerType == Dot::ID_HUSBAND ? 'H' : 'W') . $fid;
 			$this->addIndiToList($pid);

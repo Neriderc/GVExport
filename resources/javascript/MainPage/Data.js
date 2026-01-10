@@ -113,6 +113,19 @@ const Data = {
             };
             return Data.callAPI(request);
         },
+
+        /**
+         * Get current count of items in webtrees clippings cart
+         */
+        isXrefInClippingsCart(xref) {
+                let request = {
+                "type": REQUEST_TYPE_IS_XREF_IN_CLIPPINGS_CART,
+                "xref": xref
+            };
+            return Data.callAPI(request);
+        },
+
+
     },
     /**
      * Convert image URL to base64 data - we use for embedding images in SVG

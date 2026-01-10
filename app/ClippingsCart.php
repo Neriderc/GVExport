@@ -116,8 +116,8 @@ class ClippingsCart {
 	 * @param string $xref
 	 * @return bool
 	 */
-	public function isXrefInCart(string $xref): bool
+	static function isXrefInCart($tree, string $xref): bool
 	{
-		return in_array($xref, $this->getXrefsInCart($this->tree), true);
+		return in_array($xref, self::getXrefsInCart($tree), true);
 	}
 }

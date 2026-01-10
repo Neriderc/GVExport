@@ -283,8 +283,9 @@ const UI = {
          * @param url The URL of the individual's webtrees page
          * @param xref The xref of the individual
          */
-        showIndiContextMenu(e, url, xref) {
+        async showIndiContextMenu(e, url, xref) {
             UI.contextMenu.clearContextMenu();
+            const xrefInCart = await Data.api.isXrefInClippingsCart(xref);
             const div = document.getElementById('context_list');
             div.setAttribute("data-xref",  xref);
             div.setAttribute("data-url",  url);
@@ -296,7 +297,11 @@ const UI = {
             UI.contextMenu.addContextMenuOption('🖍️', 'Add to list of individuals to highlight', UI.tile.highlightIndividualContextMenu);
             UI.contextMenu.addContextMenuOption('❤️', 'Add a partner', UI.tile.addPartnerContextMenu);
             UI.contextMenu.addContextMenuOption('🧑‍🧒', 'Add a parent', UI.tile.addParentContextMenu);
-            UI.contextMenu.addContextMenuOption('🛒', 'Add to clippings cart', UI.tile.addIndividualToCartContextMenu);
+            if (xrefInCart) {
+                UI.contextMenu.addContextMenuOption('🛒', 'Remove from clippings cart', UI.tile.addIndividualToCartContextMenu);
+            } else {
+                UI.contextMenu.addContextMenuOption('🛒', 'Add to clippings cart', UI.tile.addIndividualToCartContextMenu);
+            }
             UI.contextMenu.enableContextMenu(window.innerWidth - e.clientX, e.clientY);
         },
 
