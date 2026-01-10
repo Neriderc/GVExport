@@ -433,16 +433,28 @@ export function runSharedOptionsTests(role: 'guest' | 'user') {
             tile = await getTileByXref(page, 'X1');
             await expect(tile).toContainText('(New Plymouth, NZL)');
         });
+     });
+
+     
+    test('option: Show sex of individuals', async ({ page }) => {
+        await loadGVExport(page, true);
+        let tile = await getTileByXref(page, 'X1');
+        await expect(tile).not.toContainText('Male');
+        await page.locator('#show_indi_sex').check();
+        await expect(page.locator('#rendering svg')).toBeVisible();
+        tile = await getTileByXref(page, 'X1');
+        await expect(tile).toContainText('Male');
+    });
+   
     
     test('option: Show occupation of individuals', async ({ page }) => {
-            await loadGVExport(page, true);
-            let tile = await getTileByXref(page, 'X54');
-            await expect(tile).not.toContainText('Circus performer');
-            await page.locator('#show_indi_occupation').check();
-            await expect(page.locator('#rendering svg')).toBeVisible();
-            tile = await getTileByXref(page, 'X54');
-            await expect(tile).toContainText('Circus performer');
-        });
+        await loadGVExport(page, true);
+        let tile = await getTileByXref(page, 'X54');
+        await expect(tile).not.toContainText('Circus performer');
+        await page.locator('#show_indi_occupation').check();
+        await expect(page.locator('#rendering svg')).toBeVisible();
+        tile = await getTileByXref(page, 'X54');
+        await expect(tile).toContainText('Circus performer');
     });
 }
 
