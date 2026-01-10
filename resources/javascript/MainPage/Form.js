@@ -1060,6 +1060,16 @@ const Form = {
             if (document.getElementById('indi_tile_shape')?.value !== '0' && document.getElementById('diagtype_combined').checked) {
                 UI.showToast(TRANSLATE["Rounded rectangle option is not supported for the Combined diagram type"]);
             }
-        }
+        },
+
+        stopIndiSelectChanged() {
+            let stopXref = document.getElementById('stop_pid').value.trim();
+            if (stopXref !== "") {
+                Form.stoppingIndiList.addIndiToStopList(stopXref);
+            }
+            if (autoUpdate) {
+                updateRender();
+            }
+        },
     }
 }

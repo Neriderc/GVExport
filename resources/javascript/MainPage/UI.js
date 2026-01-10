@@ -1446,6 +1446,36 @@ const UI = {
         }
     },
 
+    // Add a listener to trigger when the user goes fullscreen or exits fullscreen
+    handleFullscreen() {
+        if (document.addEventListener)
+        {
+            document.addEventListener('fullscreenchange', this.handleFullscreenExit, false);
+            document.addEventListener('mozfullscreenchange', this.handleFullscreenExit, false);
+            document.addEventListener('MSFullscreenChange', this.handleFullscreenExit, false);
+            document.addEventListener('webkitfullscreenchange', this.handleFullscreenExit, false);
+        }
+    },
+
+    // This function is run when the fullscreen state is changed
+    handleFullscreenExit() {
+        if (!document.webkitIsFullScreen && !document.mozFullScreen && !document.msFullscreenElement)
+        {
+            Form.showHide(document.getElementById("fullscreenButton"), true);
+            Form.showHide(document.getElementById("fullscreenClose"), false);
+            Form.showHide(document.getElementById("fullscreenShowMenu"), false);
+            Form.showHide(document.getElementById("fullscreenShowHelp"), false);
+            UI.showSidebar();
+        } else {
+            Form.showHide(document.getElementById("fullscreenButton"), false);
+            Form.showHide(document.getElementById("fullscreenClose"), true);
+            Form.showHide(document.getElementById("fullscreenShowMenu"), true);
+            Form.showHide(document.getElementById("fullscreenShowHelp"), true);
+            UI.hideSidebar();
+            UI.helpPanel.hideHelpSidebar();
+        }
+    },
+
     /**
      *  Shows a pop-up modal with the provided content
      */
