@@ -155,6 +155,7 @@ export async function checkNonDefaults(page: Page, admin: Boolean) {
     await expect(page.locator('#show_burial_date')).toBeChecked();
     await expect(page.locator('#show_burial_place')).toBeChecked();
     await expect(page.locator('#show_indi_sex')).toBeChecked();
+    await expect(page.locator('#show_indi_occupation')).toBeChecked();
     await expect(page.locator('#use_alt_events')).not.toBeChecked();
 
     // Information on families
@@ -349,6 +350,7 @@ export async function setNonDefaults(page: Page, admin: Boolean) {
     await page.check('#show_burial_date');
     await page.check('#show_burial_place');
     await page.check('#show_indi_sex');
+    await page.check('#show_indi_occupation');
     await page.uncheck('#use_alt_events');  
     // Information on families
     await page.check('#show_xref_families');
