@@ -17,7 +17,7 @@ const Data = {
                     "type": REQUEST_TYPE_GET_TREE_NAME
                 };
                 let json = JSON.stringify(request);
-                return sendRequest(json).then((response) => {
+                return Data.api.sendRequest(json).then((response) => {
                     try {
                         let json = JSON.parse(response);
                         if (json.success) {
@@ -41,7 +41,7 @@ const Data = {
                     "type": REQUEST_TYPE_IS_LOGGED_IN
                 };
                 let json = JSON.stringify(request);
-                return sendRequest(json).then((response) => {
+                return Data.api.sendRequest(json).then((response) => {
                     try {
                         let json = JSON.parse(response);
                         if (json.success) {
@@ -55,6 +55,42 @@ const Data = {
                     }
                 });
             }
+        },
+
+        /**
+         *
+         * @param json
+         * @returns {Promise<unknown>}
+         */
+        sendRequest(json) {
+            return new Promise((resolve, reject) => {
+                const form = document.getElementById('gvexport');
+                const el = document.createElement("input");
+                el.name = "json_data";
+                el.value = json;
+                form.appendChild(el);
+                document.getElementById("browser").value = "true";
+                let data = jQuery(form).serialize();
+                document.getElementById("browser").value = "false";
+                el.remove();
+                window.fetch(form.getAttribute('action'), {
+                    method: form.getAttribute('method'),
+                    credentials: 'same-origin', // include, *same-origin, omit
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: data
+                }).then(function (response) {
+                    if (!response.ok) {
+                        return response.text().then(function (errorText) {
+                            return reject(errorText)
+                        });
+                    }
+                    resolve(response.text());
+                }).catch((e) => {
+                    reject(e);
+                });
+            });
         }
     },
     /**
@@ -119,7 +155,7 @@ const Data = {
 
     callAPI(request) {
         let json = JSON.stringify(request);
-        return sendRequest(json).then((response) => {
+        return Data.api.sendRequest(json).then((response) => {
             let responseJson = Data.parseResponse(response);
             if (responseJson) {
                 return responseJson['response'];
@@ -326,7 +362,7 @@ const Data = {
                 let originalName = document.querySelector('[data-id="' + id + '"]').getAttribute('data-name');
                 let message = TRANSLATE["Enter new setting name"] + ': <input type="text" onfocus="this.selectionStart = this.selectionEnd = this.value.length;" id="rename_text" value="' + originalName + '" autofocus="autofocus">';
                 let buttons = '<div class="modal-button-container"><button class="btn btn-secondary modal-button" onclick="document.getElementById(' + "'modal'" + ').remove()">' + TRANSLATE['Cancel'] + '</button><button class="btn btn-primary modal-button" onclick="Data.savedSettings.renameSetting(\'' + id + '\', true)">' + TRANSLATE['Rename'] + '</button></div>';
-                showModal('<div class="modal-container">' + message + '<br>' + buttons + '</div>');
+                UI.showModal('<div class="modal-container">' + message + '<br>' + buttons + '</div>');
                 return false;
             }
             Data.api.isUserLoggedIn().then((loggedIn) => {
@@ -337,7 +373,7 @@ const Data = {
                         "name": name
                     };
                     let json = JSON.stringify(request);
-                    sendRequest(json).then((response) => {
+                    Data.api.sendRequest(json).then((response) => {
                         try {
                             let json = JSON.parse(response);
                             if (json.success) {
@@ -376,7 +412,7 @@ const Data = {
                 "settings_id": id
             };
             const json = JSON.stringify(request);
-            const response = await sendRequest(json);
+            const response = await Data.api.sendRequest(json);
             const parsedResponse = JSON.parse(response);
 
             if (!parsedResponse.success) {
@@ -414,7 +450,7 @@ const Data = {
                         "settings_id": id
                     };
                     let json = JSON.stringify(request);
-                    return sendRequest(json).then((response) => {
+                    return Data.api.sendRequest(json).then((response) => {
                         loadSettingsDetails();
                         try {
                             let json = JSON.parse(response);
@@ -590,7 +626,7 @@ const Data = {
                 } else {
                     let message = TRANSLATE["Overwrite settings '%s'?"].replace('%s', settingsName);
                     let buttons = '<div class="modal-button-container"><button class="btn btn-secondary modal-button" onclick="document.getElementById(' + "'modal'" + ').remove()">' + TRANSLATE['Cancel'] + '</button><button class="btn btn-primary modal-button" onclick="Data.storeSettings.saveSettingsAdvanced(true)">' + TRANSLATE['Overwrite'] + '</button></div>';
-                    showModal('<div class="modal-container">' + message + '<br>' + buttons + '</div>');
+                    UI.showModal('<div class="modal-container">' + message + '<br>' + buttons + '</div>');
                     return false;
                 }
             } else {

@@ -499,7 +499,7 @@ const UI = {
             } else {
                 let message = TRANSLATE["This saved setting contains clippings cart items, add them to the clippings cart?"];
                 let buttons = '<div class="modal-button-container"><button id="modal-cancel" class="btn btn-secondary modal-button" >' + TRANSLATE['Cancel'] + '</button><button id="modal-yes" class="btn btn-primary modal-button" >' + TRANSLATE['Yes'] + '</button></div>';
-                showModal('<div class="modal-container">' + message + '<br>' + buttons + '</div>');
+                UI.showModal('<div class="modal-container">' + message + '<br>' + buttons + '</div>');
                 
                 document.getElementById('modal-cancel').onclick = () => {
                     document.getElementById('modal').remove();
@@ -1213,7 +1213,7 @@ const UI = {
             } catch (error) {
                 console.error('Error copying saved settings link:', error);
                 UI.showToast(TRANSLATE['Failed to copy link to clipboard']);
-                showModal(`<p>${TRANSLATE['Failed to copy link to clipboard']}. ${TRANSLATE['Copy manually below']}:</p><textarea style="width: 100%">${url}</textarea>`);
+                UI.showModal(`<p>${TRANSLATE['Failed to copy link to clipboard']}. ${TRANSLATE['Copy manually below']}:</p><textarea style="width: 100%">${url}</textarea>`);
             }
         },
 
@@ -1232,7 +1232,7 @@ const UI = {
                         "token": token
                     };
                     let json = JSON.stringify(request);
-                    sendRequest(json).then((response) => {
+                    Data.api.sendRequest(json).then((response) => {
                         loadSettingsDetails();
                         try {
                             let json = JSON.parse(response);
@@ -1265,7 +1265,7 @@ const UI = {
                         "settings_id": id
                     };
                     let json = JSON.stringify(request);
-                    sendRequest(json).then((response) => {
+                    Data.api.sendRequest(json).then((response) => {
                         try {
                             let json = JSON.parse(response);
                             if (json.success) {
@@ -1301,7 +1301,7 @@ const UI = {
                         "settings_id": id
                     };
                     let json = JSON.stringify(request);
-                    sendRequest(json).then((response) => {
+                    Data.api.sendRequest(json).then((response) => {
                         try {
                             let json = JSON.parse(response);
                             if (json.success) {
@@ -1444,5 +1444,27 @@ const UI = {
                 element.msRequestFullscreen();
             }
         }
-    }
+    },
+
+    /**
+     *  Shows a pop-up modal with the provided content
+     */
+        showModal(content) {
+        const modal = document.createElement("div");
+        modal.className = "modal";
+        modal.id = "modal";
+        modal.innerHTML = "<div class=\"modal-content\">\n" +
+            '<span class="close" onclick="document.getElementById(' + "'modal'" + ').remove()">&times;</span>\n' +
+            content + "\n" +
+            "</div>"
+        const renderContainer = document.getElementById("render-container")
+        renderContainer.appendChild(modal);
+        // When the user clicks anywhere outside the modal, close it
+        window.onclick = function(event) {
+            if (event.target === modal) {
+                modal.remove();
+            }
+        }
+        return false;
+    },
 };

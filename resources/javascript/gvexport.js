@@ -317,26 +317,6 @@ async function pageLoaded() {
 
 // Function to show a help message
 // item - the help item identifier
-function showModal(content) {
-    const modal = document.createElement("div");
-    modal.className = "modal";
-    modal.id = "modal";
-    modal.innerHTML = "<div class=\"modal-content\">\n" +
-        '<span class="close" onclick="document.getElementById(' + "'modal'" + ').remove()">&times;</span>\n' +
-        content + "\n" +
-        "</div>"
-    const renderContainer = document.getElementById("render-container")
-    renderContainer.appendChild(modal);
-    // When the user clicks anywhere outside the modal, close it
-    window.onclick = function(event) {
-        if (event.target === modal) {
-            modal.remove();
-        }
-    }
-    return false;
-}
-// Function to show a help message
-// item - the help item identifier
 function showHelp(item) {
     let helpText = '';
     if (item === 'message_history') {
@@ -348,7 +328,7 @@ function showHelp(item) {
         helpText = '<textarea cols=50 rows=20 onclick=\"this.select()\">' + debug_string + '</textarea>';
     }
     let content = "<p>" + helpText + "</p>";
-    showModal(content);
+    UI.showModal(content);
     return false;
 }
 
@@ -391,7 +371,7 @@ function saveSettingsServer(main = true, id = null) {
         "settings_id": id
     };
     let json = JSON.stringify(request);
-    return sendRequest(json);
+    return Data.api.sendRequest(json);
 }
 
 function getSettingsServer(id = ID_ALL_SETTINGS) {
@@ -400,7 +380,7 @@ function getSettingsServer(id = ID_ALL_SETTINGS) {
         "settings_id": id
     };
     let json = JSON.stringify(request);
-    return sendRequest(json).then((response) => {
+    return Data.api.sendRequest(json).then((response) => {
         try {
             let json = JSON.parse(response);
             if (json.success) {
@@ -426,42 +406,6 @@ function getSettings(id = ID_ALL_SETTINGS) {
         }
     }).catch((error) => {
         UI.showToast(ERROR_CHAR + error);
-    });
-}
-
-/**
- *
- * @param json
- * @returns {Promise<unknown>}
- */
-function sendRequest(json) {
-    return new Promise((resolve, reject) => {
-        const form = document.getElementById('gvexport');
-        const el = document.createElement("input");
-        el.name = "json_data";
-        el.value = json;
-        form.appendChild(el);
-        document.getElementById("browser").value = "true";
-        let data = jQuery(form).serialize();
-        document.getElementById("browser").value = "false";
-        el.remove();
-        window.fetch(form.getAttribute('action'), {
-            method: form.getAttribute('method'),
-            credentials: 'same-origin', // include, *same-origin, omit
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: data
-        }).then(function (response) {
-            if (!response.ok) {
-                return response.text().then(function (errorText) {
-                    return reject(errorText)
-                });
-            }
-            resolve(response.text());
-        }).catch((e) => {
-            reject(e);
-        });
     });
 }
 
@@ -516,7 +460,7 @@ function loadUrlToken(Url) {
             "token": token
         };
         let json = JSON.stringify(request);
-        sendRequest(json).then((response) => {
+        Data.api.sendRequest(json).then((response) => {
             try {
                 let json = JSON.parse(response);
                 if (json.success) {

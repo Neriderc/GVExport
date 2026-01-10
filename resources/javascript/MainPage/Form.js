@@ -382,7 +382,7 @@ const Form = {
         showNoteModal() {
             return Data.getSharedNoteForm().then(function (response) {
                 if (response) {
-                    showModal(Data.decodeHTML(response));
+                    UI.showModal(Data.decodeHTML(response));
                     const items = document.querySelectorAll('#shared_note_list .sharednote-list-item');
                     [].forEach.call(items, UI.draggableList.addDragHandlers);
                     // save to update count in case user backs out without saving as note is already added
@@ -1035,7 +1035,7 @@ const Form = {
 
         showDatabaseEntries() {
             this.dumpSettings().then((response) => {
-                showModal('<textarea cols=50 rows=20\">' + response + '</textarea>');
+                UI.showModal('<textarea cols=50 rows=20\">' + response + '</textarea>');
             });
         }
     },
