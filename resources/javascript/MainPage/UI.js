@@ -1411,5 +1411,38 @@ const UI = {
                 UI.hideSidebar();
             }
         }
+    },
+
+    // Toggle full screen for element
+    // Modified from https://stackoverflow.com/questions/7130397/how-do-i-make-a-div-full-screen
+    toggleFullscreen(elementId = '') {
+        // If already fullscreen, exit fullscreen
+        if (
+            document.fullscreenElement ||
+            document.webkitFullscreenElement ||
+            document.mozFullScreenElement ||
+            document.msFullscreenElement
+        ) {
+            if (document.exitFullscreen) {
+                document.exitFullscreen().then(r => {});
+            } else if (document.mozCancelFullScreen) {
+                document.mozCancelFullScreen();
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
+            }
+        } else { // Not full screen, so go fullscreen
+            const element = document.getElementById(elementId);
+            if (element.requestFullscreen) {
+                element.requestFullscreen().then(r => {});
+            } else if (element.mozRequestFullScreen) {
+                element.mozRequestFullScreen();
+            } else if (element.webkitRequestFullscreen) {
+                element.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+            } else if (element.msRequestFullscreen) {
+                element.msRequestFullscreen();
+            }
+        }
     }
 };
