@@ -312,16 +312,21 @@ const UI = {
          * @param url The URL of the individual or family webtrees page
          * @param xref The xref of the family
          */
-        showFamilyContextMenu(e, url, xref) {
+        async showFamilyContextMenu(e, url, xref) {
             UI.contextMenu.clearContextMenu();
             const div = document.getElementById('context_list');
+            const xrefInCart = await Data.api.isXrefInClippingsCart(xref);
             div.setAttribute("data-xref",  xref);
             div.setAttribute("data-url",  url);
             UI.contextMenu.addContextMenuOption('👥', 'Open family page', UI.tile.openContextMenuUrl);
             UI.contextMenu.addContextMenuOption('👶', 'Add a child', UI.tile.addChildContextMenu);
             UI.contextMenu.addContextMenuOption('🖍️', 'Add to list of families to highlight', UI.tile.highlightFamilyContextMenu);
             UI.contextMenu.addContextMenuOption('🧑‍🧑‍🧒‍🧒', 'Change family members', UI.tile.changeFamilyMembersContextMenu);
-            UI.contextMenu.addContextMenuOption('🛒', 'Add to clippings cart', UI.tile.addFamilyToCartContextMenu);
+            if (xrefInCart) {
+                UI.contextMenu.addContextMenuOption('🛒', 'Remove from clippings cart', UI.tile.removeFamilyFromCartContextMenu);
+            } else {
+                UI.contextMenu.addContextMenuOption('🛒', 'Add to clippings cart', UI.tile.addFamilyToCartContextMenu);
+            }
             UI.contextMenu.enableContextMenu(window.innerWidth - e.clientX, e.clientY);
         },
 
@@ -417,7 +422,20 @@ const UI = {
          *
          * @param e Click event
          */
-        async removeIndividualFromCartContextMenu(e) {
+        removeIndividualFromCartContextMenu(e) {
+            UI.tile.removeFromClippingsCart(e);
+        },
+
+        /**
+         * Function for context menu item
+         *
+         * @param e Click event
+         */
+        removeFamilyFromCartContextMenu(e) {
+            UI.tile.removeFromClippingsCart(e);
+        },
+
+        async removeFromClippingsCart (e) {
             let xref = e.currentTarget.parentElement.getAttribute('data-xref');
             await Data.api.removeXrefFromClippingsCart(xref);
             Form.updateClippingsCartCount();
