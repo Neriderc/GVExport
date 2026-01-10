@@ -101,6 +101,7 @@ class Person
     function printPersonLabel(string $pid, SharedNoteList $sharednotes, bool $related = TRUE): string
     {
         $sex = '';
+        $occupation = '';
         $out = '';
         $border_colour = $this->dot->settings["border_col"];    // Border colour of the INDI's box
         $death_place = "";
@@ -257,6 +258,10 @@ class Person
             if ($this->dot->settings['show_indi_sex']) {
                 $sex = $this->getSexFull($i);
             }
+
+            if ($this->dot->settings['show_indi_occupation']) {
+                $occupation = $this->getOccupation($i);
+            }
         }
 
 
@@ -354,13 +359,20 @@ class Person
             // Show name
             if (trim($name) != "") {
                 $out .= "<FONT COLOR=\"" . $this->dot->settings["font_colour_name"] . "\" POINT-SIZE=\"" . ($this->dot->settings["font_size_name"]) . "\">" . $name . "</FONT>";
-                if (trim($birthData . $deathData . $burialData . $sex) != "") {
+                if (trim($birthData . $deathData . $burialData . $sex . $occupation) != "") {
                     $out .= "<BR />";
                 }
             }
             // Show sex
             if (trim($sex) != "") {
                 $out .= "<FONT COLOR=\"" . $this->dot->settings["font_colour_details"] . "\" POINT-SIZE=\"" . ($this->dot->settings["font_size"]) . "\">" . $sex . "</FONT>";
+                if (trim($birthData . $deathData . $burialData . $occupation != "")) {
+                    $out .= "<BR />";
+                }
+            }
+            // Show occupation
+            if (trim($occupation) != "") {
+                $out .= "<FONT COLOR=\"" . $this->dot->settings["font_colour_details"] . "\" POINT-SIZE=\"" . ($this->dot->settings["font_size"]) . "\">" . $occupation . "</FONT>";
                 if (trim($birthData . $deathData . $burialData) != "") {
                     $out .= "<BR />";
                 }
@@ -565,6 +577,20 @@ class Person
             default:
                 return "";
         }
+    }
+
+    /**
+     * Given an individual, return their occupation
+     *
+     * @param Individual|null $i
+     * @return string
+     */
+    private function getOccupation(?Individual $i): string
+    {
+        foreach ($i->facts(['OCCU']) as $fact) {
+            return $fact->value();
+        }
+        return '';
     }
 
     /**

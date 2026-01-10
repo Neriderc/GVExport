@@ -144,6 +144,7 @@ export async function checkDefaults(page: Page, admin: Boolean) {
     await expect(page.locator('#show_burial_date')).not.toBeChecked();
     await expect(page.locator('#show_burial_place')).not.toBeChecked();
     await expect(page.locator('#show_indi_sex')).not.toBeChecked();
+    await expect(page.locator('#show_indi_occupation')).not.toBeChecked();
     await expect(page.locator('#use_alt_events')).toBeChecked();
     // Information on families
     await expect(page.locator('#show_xref_families')).not.toBeChecked();

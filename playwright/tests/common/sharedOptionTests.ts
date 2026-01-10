@@ -51,7 +51,7 @@ export function runSharedOptionsTests(role: 'guest' | 'user') {
     test('saving and loading works from advanced save option', async ({ page }) => {
         await loadGVExport(page);
         await setNonDefaults(page, false);
-        // If we don't uncheck this, it won't save some of the settings (by design), so better check it
+        // If we don't uncheck this, it won't save some of the settings (by design), so better uncheck it
         await page.uncheck('#only_save_diagram_settings');
         await page.getByRole('button', { name: 'Update' }).click();
         await clearSavedSettingsList(page);
@@ -433,6 +433,28 @@ export function runSharedOptionsTests(role: 'guest' | 'user') {
             tile = await getTileByXref(page, 'X1');
             await expect(tile).toContainText('(New Plymouth, NZL)');
         });
+     });
+
+     
+    test('option: Show sex of individuals', async ({ page }) => {
+        await loadGVExport(page, true);
+        let tile = await getTileByXref(page, 'X1');
+        await expect(tile).not.toContainText('Male');
+        await page.locator('#show_indi_sex').check();
+        await expect(page.locator('#rendering svg')).toBeVisible();
+        tile = await getTileByXref(page, 'X1');
+        await expect(tile).toContainText('Male');
+    });
+   
+    
+    test('option: Show occupation of individuals', async ({ page }) => {
+        await loadGVExport(page, true);
+        let tile = await getTileByXref(page, 'X54');
+        await expect(tile).not.toContainText('Circus performer');
+        await page.locator('#show_indi_occupation').check();
+        await expect(page.locator('#rendering svg')).toBeVisible();
+        tile = await getTileByXref(page, 'X54');
+        await expect(tile).toContainText('Circus performer');
     });
 }
 
