@@ -1014,8 +1014,6 @@ const Form = {
             el.innerText = count;
             
             Form.showHide(document.getElementById('cart-section'), count > 0);
-            cartempty = count === 0;
-            Form.toggleCart(count > 0);
         }
     },
     

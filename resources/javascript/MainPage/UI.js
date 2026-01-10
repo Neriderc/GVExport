@@ -298,7 +298,7 @@ const UI = {
             UI.contextMenu.addContextMenuOption('❤️', 'Add a partner', UI.tile.addPartnerContextMenu);
             UI.contextMenu.addContextMenuOption('🧑‍🧒', 'Add a parent', UI.tile.addParentContextMenu);
             if (xrefInCart) {
-                UI.contextMenu.addContextMenuOption('🛒', 'Remove from clippings cart', UI.tile.addIndividualToCartContextMenu);
+                UI.contextMenu.addContextMenuOption('🛒', 'Remove from clippings cart', UI.tile.removeIndividualFromCartContextMenu);
             } else {
                 UI.contextMenu.addContextMenuOption('🛒', 'Add to clippings cart', UI.tile.addIndividualToCartContextMenu);
             }
@@ -410,6 +410,18 @@ const UI = {
         addIndividualToCartContextMenu(e) {
             let xref = e.currentTarget.parentElement.getAttribute('data-xref');
             UI.tile.addXrefsToClippingsCart([xref]);
+        },
+
+        /**
+         * Function for context menu item
+         *
+         * @param e Click event
+         */
+        async removeIndividualFromCartContextMenu(e) {
+            let xref = e.currentTarget.parentElement.getAttribute('data-xref');
+            await Data.api.removeXrefFromClippingsCart(xref);
+            Form.updateClippingsCartCount();
+            UI.contextMenu.clearContextMenu();
         },
 
         /**

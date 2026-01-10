@@ -13,7 +13,6 @@ export async function loadGVExport(page: Page, expandOptions: boolean = false) {
     const languageToggle = page.locator('li.menu-language > a.dropdown-toggle');
 
     if ((await languageToggle.innerText()).trim() !== 'Language') {
-        console.log((await languageToggle.innerText()).trim())
         await languageToggle.click();
         await page.getByRole('menuitem', { name: 'British English' }).click();
         await expect(page.locator('#rendering svg')).toBeVisible();

@@ -109,8 +109,12 @@ class ApiHandler
                 case "add_all_clippings_cart":
                     $this->addAllToClippingsCart();
                     break;
+                case "remove_clippings_cart":
+                    $this->removeFromClippingsCart();
+                    break;
                 case "count_xrefs_clippings_cart":
                     $this->countXrefsClippingsCart();
+                    break;
                 case "get_xrefs_clippings_cart":
                     $this->getXrefsClippingsCart();
                     break;
@@ -500,6 +504,20 @@ class ApiHandler
 
         $this->response_data['success'] = true;
         $this->response_data['response'] = ['Added to clippings cart'];
+    }
+
+    /**
+     * Removes the relevant records from the clipping cart
+     */
+    private function removeFromClippingsCart()
+    {
+        if (isset($this->json['xref']) && (ctype_alnum($this->json['xref']))) {
+            ClippingsCart::removeXrefFromCart($this->tree, $this->json['xref']);
+            $this->response_data['success'] = true;
+            $this->response_data['response'] = ['Removed from clippings cart'];
+        } else {
+            $this->setFailResponse('Invalid XREF', 'E19');
+        }
     }
 
     /**

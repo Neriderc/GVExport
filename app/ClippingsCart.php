@@ -120,4 +120,25 @@ class ClippingsCart {
 	{
 		return in_array($xref, self::getXrefsInCart($tree), true);
 	}
+
+
+	/**
+	 * Remove xref from cart
+	 *
+	 * @param string $xref
+	 * @return bool
+	 */
+	static function removeXrefFromCart(Tree $tree, string $xref)
+	{
+		$cart = Session::get('cart');
+		$cart = is_array($cart) ? $cart : [];
+
+		if (($cart[$tree->name()][$xref] ?? false)) {
+			unset($cart[$tree->name()][$xref]);
+			Session::put('cart', $cart);
+			return true;
+		}
+
+		return false;
+	}
 }

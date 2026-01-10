@@ -125,6 +125,17 @@ const Data = {
             return Data.callAPI(request);
         },
 
+        /**
+         * Remove an XREF from the clippings cart
+         */
+        removeXrefFromClippingsCart(xref) {
+                let request = {
+                "type": REQUEST_TYPE_REMOVE_CLIPPINGS_CART,
+                "xref": xref
+            };
+            return Data.callAPI(request);
+        },
+
 
     },
     /**
