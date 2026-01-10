@@ -315,7 +315,7 @@ class Person
         $deathData = " $death_date " . (empty($death_place) ? "" : "($death_place)");
         $burialData = " $burial_date " . (empty($burial_place) ? "" : "($burial_place)");
 
-        $detailsExist = trim($name . $birthData . $deathData . $burialData . $sex) != "";
+        $detailsExist = trim($name . $birthData . $deathData . $burialData . $sex . $occupation) != "";
 
         if (!$detailsExist && !$this->dot->isPhotoRequired()) {
             // No information in our tiles so make coloured boxes
