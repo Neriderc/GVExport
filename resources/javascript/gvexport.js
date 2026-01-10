@@ -19,6 +19,7 @@ const REQUEST_TYPE_GET_RECORD_COUNT = "get_record_count";
 const REQUEST_TYPE_ADD_CLIPPINGS_CART = "add_clippings_cart";
 const REQUEST_TYPE_ADD_ALL_CLIPPINGS_CART = "add_all_clippings_cart";
 const REQUEST_TYPE_COUNT_XREFS_CLIPPINGS_CART = "count_xrefs_clippings_cart";
+const REQUEST_TYPE_GET_XREFS_CLIPPINGS_CART = "get_xrefs_clippings_cart";
 const REQUEST_TYPE_DUMP_SETTINGS = "dump_settings";
 let xrefCount = [];
 let messageHistory = []; 

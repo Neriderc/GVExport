@@ -1007,7 +1007,7 @@ const Form = {
      * Update the clipping cart count in the webtrees menu
      */
     async updateClippingsCartCount() {
-        const count = await Data.getClippingsCartCount();
+        const count = await Data.api.getClippingsCartCount();
         const el = document.querySelector('.menu-clippings-cart .badge');
         // Element may not exist - e.g. clippings cart module disabled
         if (el) {

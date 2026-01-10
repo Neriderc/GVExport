@@ -1,5 +1,5 @@
 /**
- * Data object to hold data fetching and validation functionality not related to the form
+ * Data object to hold data fetching, and validation functionality not related to the form
  *
  * @type {{}}
  */
@@ -91,7 +91,28 @@ const Data = {
                     reject(e);
                 });
             });
-        }
+        },
+
+
+        /**
+         * Get current count of items in webtrees clippings cart
+         */
+        getClippingsCartCount() {
+                let request = {
+                "type": REQUEST_TYPE_COUNT_XREFS_CLIPPINGS_CART,
+            };
+            return Data.callAPI(request);
+        },
+
+        /**
+         * Get current count of items in webtrees clippings cart
+         */
+        getClippingsCartXrefs() {
+                let request = {
+                "type": REQUEST_TYPE_GET_XREFS_CLIPPINGS_CART,
+            };
+            return Data.callAPI(request);
+        },
     },
     /**
      * Convert image URL to base64 data - we use for embedding images in SVG
@@ -681,16 +702,6 @@ const Data = {
                 UI.showToast(ERROR_CHAR + e);
             });
         }
-    },
-
-    /**
-     * Get current count of items in webtrees clippings cart
-     */
-    getClippingsCartCount() {
-            let request = {
-            "type": REQUEST_TYPE_COUNT_XREFS_CLIPPINGS_CART,
-        };
-        return Data.callAPI(request);
     },
     
 
