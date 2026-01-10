@@ -4,6 +4,95 @@
  * @type {{}}
  */
 const Data = {
+
+    api: {
+        _treename: null,
+        _loggedIn: null,
+
+        getTreeName() {
+            if (Data.api._treename != null)  {
+                return Promise.resolve(Data.api._treename);
+            } else {
+                let request = {
+                    "type": REQUEST_TYPE_GET_TREE_NAME
+                };
+                let json = JSON.stringify(request);
+                return Data.api.sendRequest(json).then((response) => {
+                    try {
+                        let json = JSON.parse(response);
+                        if (json.success) {
+                            Data.api._treename = json.treeName.replace(/[^a-zA-Z0-9_]/g, ""); // Only allow characters that play nice
+                            return Data.api._treename;
+                        } else {
+                            return Promise.reject(ERROR_CHAR + json.errorMessage);
+                        }
+                    } catch (e) {
+                        return Promise.reject("Failed to load response: " + e);
+                    }
+                });
+            }
+        },
+
+        isUserLoggedIn() {
+            if (Data.api._loggedIn != null)  {
+                return Promise.resolve(Data.api._loggedIn);
+            } else {
+                let request = {
+                    "type": REQUEST_TYPE_IS_LOGGED_IN
+                };
+                let json = JSON.stringify(request);
+                return Data.api.sendRequest(json).then((response) => {
+                    try {
+                        let json = JSON.parse(response);
+                        if (json.success) {
+                            Data.api._loggedIn = json.loggedIn;
+                            return json.loggedIn;
+                        } else {
+                            return Promise.reject(ERROR_CHAR + json.errorMessage);
+                        }
+                    } catch (e) {
+                        return Promise.reject("Failed to load response: " + e);
+                    }
+                });
+            }
+        },
+
+        /**
+         *
+         * @param json
+         * @returns {Promise<unknown>}
+         */
+        sendRequest(json) {
+            return new Promise((resolve, reject) => {
+                const form = document.getElementById('gvexport');
+                const el = document.createElement("input");
+                el.name = "json_data";
+                el.value = json;
+                form.appendChild(el);
+                document.getElementById("browser").value = "true";
+                let data = jQuery(form).serialize();
+                document.getElementById("browser").value = "false";
+                el.remove();
+                window.fetch(form.getAttribute('action'), {
+                    method: form.getAttribute('method'),
+                    credentials: 'same-origin', // include, *same-origin, omit
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: data
+                }).then(function (response) {
+                    if (!response.ok) {
+                        return response.text().then(function (errorText) {
+                            return reject(errorText)
+                        });
+                    }
+                    resolve(response.text());
+                }).catch((e) => {
+                    reject(e);
+                });
+            });
+        }
+    },
     /**
      * Convert image URL to base64 data - we use for embedding images in SVG
      * From https://stackoverflow.com/questions/22172604/convert-image-from-url-to-base64
@@ -66,7 +155,7 @@ const Data = {
 
     callAPI(request) {
         let json = JSON.stringify(request);
-        return sendRequest(json).then((response) => {
+        return Data.api.sendRequest(json).then((response) => {
             let responseJson = Data.parseResponse(response);
             if (responseJson) {
                 return responseJson['response'];
@@ -273,10 +362,10 @@ const Data = {
                 let originalName = document.querySelector('[data-id="' + id + '"]').getAttribute('data-name');
                 let message = TRANSLATE["Enter new setting name"] + ': <input type="text" onfocus="this.selectionStart = this.selectionEnd = this.value.length;" id="rename_text" value="' + originalName + '" autofocus="autofocus">';
                 let buttons = '<div class="modal-button-container"><button class="btn btn-secondary modal-button" onclick="document.getElementById(' + "'modal'" + ').remove()">' + TRANSLATE['Cancel'] + '</button><button class="btn btn-primary modal-button" onclick="Data.savedSettings.renameSetting(\'' + id + '\', true)">' + TRANSLATE['Rename'] + '</button></div>';
-                showModal('<div class="modal-container">' + message + '<br>' + buttons + '</div>');
+                UI.showModal('<div class="modal-container">' + message + '<br>' + buttons + '</div>');
                 return false;
             }
-            isUserLoggedIn().then((loggedIn) => {
+            Data.api.isUserLoggedIn().then((loggedIn) => {
                 if (loggedIn) {
                     let request = {
                         "type": REQUEST_TYPE_RENAME_SETTINGS,
@@ -284,7 +373,7 @@ const Data = {
                         "name": name
                     };
                     let json = JSON.stringify(request);
-                    sendRequest(json).then((response) => {
+                    Data.api.sendRequest(json).then((response) => {
                         try {
                             let json = JSON.parse(response);
                             if (json.success) {
@@ -323,7 +412,7 @@ const Data = {
                 "settings_id": id
             };
             const json = JSON.stringify(request);
-            const response = await sendRequest(json);
+            const response = await Data.api.sendRequest(json);
             const parsedResponse = JSON.parse(response);
 
             if (!parsedResponse.success) {
@@ -337,7 +426,7 @@ const Data = {
          * @param id
          */
         deleteSettingsClient(id) {
-            getTreeName().then((treeName) => {
+            Data.api.getTreeName().then((treeName) => {
                 try {
                     localStorage.removeItem("GVE_Settings_" + treeName + "_" + id);
                     deleteIdLocal(id);
@@ -354,14 +443,14 @@ const Data = {
          * @returns {Promise<unknown>}
          */
         getSavedSettingsLink(id) {
-            return isUserLoggedIn().then((loggedIn) => {
+            return Data.api.isUserLoggedIn().then((loggedIn) => {
                 if (loggedIn) {
                     let request = {
                         "type": REQUEST_TYPE_GET_SAVED_SETTINGS_LINK,
                         "settings_id": id
                     };
                     let json = JSON.stringify(request);
-                    return sendRequest(json).then((response) => {
+                    return Data.api.sendRequest(json).then((response) => {
                         loadSettingsDetails();
                         try {
                             let json = JSON.parse(response);
@@ -458,7 +547,7 @@ const Data = {
          * @param id
          */
         saveSettings(id) {
-            isUserLoggedIn().then((loggedIn) => {
+            Data.api.isUserLoggedIn().then((loggedIn) => {
                 if (loggedIn) {
                     return saveSettingsServer(false, id).then((response)=>{
                         try {
@@ -496,7 +585,7 @@ const Data = {
          * @returns {Promise<void>}
          */
         saveSettingsClient(id) {
-            return Promise.all([saveSettingsServer(true), getTreeName()])
+            return Promise.all([saveSettingsServer(true), Data.api.getTreeName()])
                 .then(([, treeNameLocal]) => {
                     return getSettings(ID_MAIN_SETTINGS).then((settings_json_string) => [settings_json_string,treeNameLocal]);
                 })
@@ -537,7 +626,7 @@ const Data = {
                 } else {
                     let message = TRANSLATE["Overwrite settings '%s'?"].replace('%s', settingsName);
                     let buttons = '<div class="modal-button-container"><button class="btn btn-secondary modal-button" onclick="document.getElementById(' + "'modal'" + ').remove()">' + TRANSLATE['Cancel'] + '</button><button class="btn btn-primary modal-button" onclick="Data.storeSettings.saveSettingsAdvanced(true)">' + TRANSLATE['Overwrite'] + '</button></div>';
-                    showModal('<div class="modal-container">' + message + '<br>' + buttons + '</div>');
+                    UI.showModal('<div class="modal-container">' + message + '<br>' + buttons + '</div>');
                     return false;
                 }
             } else {
@@ -553,7 +642,7 @@ const Data = {
          * @returns {Promise<{} | {} | any | undefined | void>}
          */
         getSettingsClient(id = ID_ALL_SETTINGS) {
-            return getTreeName().then(async (treeName) => {
+            return Data.api.getTreeName().then(async (treeName) => {
                 try {
                     if (id === ID_ALL_SETTINGS) {
                         let settings_list = localStorage.getItem(SETTINGS_ID_LIST_NAME + "_" + treeName);

@@ -38,7 +38,6 @@ $usegraphviz = $vars['graphviz_bin'] != "";
     const TREE_NAME = "<?= e($tree->name()); ?>";
     const TREE_FAVORITES_MODULE_ACTIVE = <?= $module->module_service->findByInterface(FamilyTreeFavoritesModule::class)->first() === null || !Auth::isManager($tree) ? "false" : "true" ?>;
     const MY_FAVORITES_MODULE_ACTIVE = <?= $module->module_service->findByInterface(UserFavoritesModule::class)->first() === null ? "false" : "true" ?>;
-
 </script>
 <h2 class="wt-page-title">
     <?= $title ?>
@@ -77,8 +76,8 @@ $usegraphviz = $vars['graphviz_bin'] != "";
     </div>
     <div id="render_button_container">
         <div>
-            <a title="<?= I18N::translate('Fullscreen') ?>" onclick="toggleFullscreen()" class="fullscreen pointer" id="fullscreenButton">⛶</a>
-            <a title="<?= I18N::translate('Exit fullscreen') ?>" onclick="toggleFullscreen()" class="close-fullscreen pointer" id="fullscreenClose" style="display: none;"><i class="fa-solid fa-xmark"></i></a>
+            <a title="<?= I18N::translate('Fullscreen') ?>" onclick="UI.toggleFullscreen('render-container')" class="fullscreen pointer" id="fullscreenButton">⛶</a>
+            <a title="<?= I18N::translate('Exit fullscreen') ?>" onclick="UI.toggleFullscreen()" class="close-fullscreen pointer" id="fullscreenClose" style="display: none;"><i class="fa-solid fa-xmark"></i></a>
         </div>
         <div>
             <a title="<?= I18N::translate('Search diagram') ?>" onclick="" class="search_icon pointer" id="searchButton"><?= view('icons/search'); ?></a>
@@ -100,6 +99,7 @@ $usegraphviz = $vars['graphviz_bin'] != "";
 <script src="<?= $module->assetUrl('javascript/viz-standalone.js'); ?>"></script>
 <script src="<?= $module->assetUrl('javascript/panzoom.min.js'); ?>"></script>
 <script src="<?= $module->assetUrl('javascript/gvexport.js'); ?>"></script>
+<script src="<?= $module->assetUrl('javascript/MainPage/App.js'); ?>"></script>
 <script src="<?= $module->assetUrl('javascript/MainPage/UI.js'); ?>"></script>
 <script src="<?= $module->assetUrl('javascript/MainPage/Form.js'); ?>"></script>
 <script src="<?= $module->assetUrl('javascript/MainPage/Data.js'); ?>"></script>
@@ -214,7 +214,7 @@ $usegraphviz = $vars['graphviz_bin'] != "";
         // Don't overwrite browser settings with default settings
         if (!firstRender) {
             // Update settings in browser storage if logged out
-            isUserLoggedIn().then((loggedIn) => {
+            Data.api.isUserLoggedIn().then((loggedIn) => {
                 if (!loggedIn) {
                     Data.storeSettings.saveSettingsClient(ID_MAIN_SETTINGS);
                 }
@@ -408,9 +408,9 @@ $usegraphviz = $vars['graphviz_bin'] != "";
     const mainPage = {};
 
     function runPageLoaded() {
-        if (typeof pageLoaded === 'function' && typeof jQuery === 'function') {
+        if (typeof App.pageLoaded === 'function' && typeof jQuery === 'function') {
             Data.url.changeURLXref('<?= e($individual->xref()); ?>');
-            pageLoaded();
+            App.pageLoaded();
         } else {
             // If external script loads before inline script, then wait
             // before trying to run page loaded function.

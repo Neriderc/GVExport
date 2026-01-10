@@ -499,7 +499,7 @@ const UI = {
             } else {
                 let message = TRANSLATE["This saved setting contains clippings cart items, add them to the clippings cart?"];
                 let buttons = '<div class="modal-button-container"><button id="modal-cancel" class="btn btn-secondary modal-button" >' + TRANSLATE['Cancel'] + '</button><button id="modal-yes" class="btn btn-primary modal-button" >' + TRANSLATE['Yes'] + '</button></div>';
-                showModal('<div class="modal-container">' + message + '<br>' + buttons + '</div>');
+                UI.showModal('<div class="modal-container">' + message + '<br>' + buttons + '</div>');
                 
                 document.getElementById('modal-cancel').onclick = () => {
                     document.getElementById('modal').remove();
@@ -690,7 +690,7 @@ const UI = {
          * Save settings without refreshing diagram
          */
         clickOptionChanged() {
-            isUserLoggedIn().then((loggedIn) => {
+            Data.api.isUserLoggedIn().then((loggedIn) => {
                 if (loggedIn) {
                     saveSettingsServer().then();
                 } else {
@@ -1096,7 +1096,7 @@ const UI = {
             let id = event.target.parentElement.parentElement.getAttribute('data-id');
             let token = event.target.parentElement.parentElement.getAttribute('data-token');
             removeSettingsEllipsisMenu(event.target);
-            isUserLoggedIn().then((loggedIn) => {
+            Data.api.isUserLoggedIn().then((loggedIn) => {
                 if (id != null) {
                     id = id.trim();
                     let div = document.createElement('div');
@@ -1184,7 +1184,7 @@ const UI = {
             e.stopPropagation();
             try {
                 const id = e.currentTarget.id;
-                const loggedIn = await isUserLoggedIn();
+                const loggedIn = await Data.api.isUserLoggedIn();
 
                 if (loggedIn) {
                     await Data.savedSettings.deleteSettingsServer(id);
@@ -1208,12 +1208,12 @@ const UI = {
             const id = e.currentTarget.id;
             try {
                 const url = await Data.savedSettings.getSavedSettingsLink(id);
-                await copyToClipboard(url);
+                await UI.copyToClipboard(url);
                 UI.showToast(TRANSLATE['Copied link to clipboard']);
             } catch (error) {
                 console.error('Error copying saved settings link:', error);
                 UI.showToast(TRANSLATE['Failed to copy link to clipboard']);
-                showModal(`<p>${TRANSLATE['Failed to copy link to clipboard']}. ${TRANSLATE['Copy manually below']}:</p><textarea style="width: 100%">${url}</textarea>`);
+                UI.showModal(`<p>${TRANSLATE['Failed to copy link to clipboard']}. ${TRANSLATE['Copy manually below']}:</p><textarea style="width: 100%">${url}</textarea>`);
             }
         },
 
@@ -1225,14 +1225,14 @@ const UI = {
         revokeSavedSettingsLinkMenuAction(e) {
             e.stopPropagation();
             let token = e.currentTarget.token;
-            isUserLoggedIn().then((loggedIn) => {
+            Data.api.isUserLoggedIn().then((loggedIn) => {
                 if (loggedIn) {
                     let request = {
                         "type": REQUEST_TYPE_REVOKE_SAVED_SETTINGS_LINK,
                         "token": token
                     };
                     let json = JSON.stringify(request);
-                    sendRequest(json).then((response) => {
+                    Data.api.sendRequest(json).then((response) => {
                         loadSettingsDetails();
                         try {
                             let json = JSON.parse(response);
@@ -1258,14 +1258,14 @@ const UI = {
         addUrlToMyFavouritesMenuAction(e) {
             e.stopPropagation();
             let id = e.currentTarget.id;
-            isUserLoggedIn().then((loggedIn) => {
+            Data.api.isUserLoggedIn().then((loggedIn) => {
                 if (loggedIn) {
                     let request = {
                         "type": REQUEST_TYPE_ADD_MY_FAVORITE,
                         "settings_id": id
                     };
                     let json = JSON.stringify(request);
-                    sendRequest(json).then((response) => {
+                    Data.api.sendRequest(json).then((response) => {
                         try {
                             let json = JSON.parse(response);
                             if (json.success) {
@@ -1294,14 +1294,14 @@ const UI = {
                 parent = parent.parentElement;
             }
             let id = parent.getAttribute('data-id');
-            isUserLoggedIn().then((loggedIn) => {
+            Data.api.isUserLoggedIn().then((loggedIn) => {
                 if (loggedIn) {
                     let request = {
                         "type": REQUEST_TYPE_ADD_TREE_FAVORITE,
                         "settings_id": id
                     };
                     let json = JSON.stringify(request);
-                    sendRequest(json).then((response) => {
+                    Data.api.sendRequest(json).then((response) => {
                         try {
                             let json = JSON.parse(response);
                             if (json.success) {
@@ -1411,5 +1411,115 @@ const UI = {
                 UI.hideSidebar();
             }
         }
-    }
+    },
+
+    // Toggle full screen for element
+    // Modified from https://stackoverflow.com/questions/7130397/how-do-i-make-a-div-full-screen
+    toggleFullscreen(elementId = '') {
+        // If already fullscreen, exit fullscreen
+        if (
+            document.fullscreenElement ||
+            document.webkitFullscreenElement ||
+            document.mozFullScreenElement ||
+            document.msFullscreenElement
+        ) {
+            if (document.exitFullscreen) {
+                document.exitFullscreen().then(r => {});
+            } else if (document.mozCancelFullScreen) {
+                document.mozCancelFullScreen();
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
+            }
+        } else { // Not full screen, so go fullscreen
+            const element = document.getElementById(elementId);
+            if (element.requestFullscreen) {
+                element.requestFullscreen().then(r => {});
+            } else if (element.mozRequestFullScreen) {
+                element.mozRequestFullScreen();
+            } else if (element.webkitRequestFullscreen) {
+                element.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+            } else if (element.msRequestFullscreen) {
+                element.msRequestFullscreen();
+            }
+        }
+    },
+
+    // Add a listener to trigger when the user goes fullscreen or exits fullscreen
+    handleFullscreen() {
+        if (document.addEventListener)
+        {
+            document.addEventListener('fullscreenchange', this.handleFullscreenExit, false);
+            document.addEventListener('mozfullscreenchange', this.handleFullscreenExit, false);
+            document.addEventListener('MSFullscreenChange', this.handleFullscreenExit, false);
+            document.addEventListener('webkitfullscreenchange', this.handleFullscreenExit, false);
+        }
+    },
+
+    // This function is run when the fullscreen state is changed
+    handleFullscreenExit() {
+        if (!document.webkitIsFullScreen && !document.mozFullScreen && !document.msFullscreenElement)
+        {
+            Form.showHide(document.getElementById("fullscreenButton"), true);
+            Form.showHide(document.getElementById("fullscreenClose"), false);
+            Form.showHide(document.getElementById("fullscreenShowMenu"), false);
+            Form.showHide(document.getElementById("fullscreenShowHelp"), false);
+            UI.showSidebar();
+        } else {
+            Form.showHide(document.getElementById("fullscreenButton"), false);
+            Form.showHide(document.getElementById("fullscreenClose"), true);
+            Form.showHide(document.getElementById("fullscreenShowMenu"), true);
+            Form.showHide(document.getElementById("fullscreenShowHelp"), true);
+            UI.hideSidebar();
+            UI.helpPanel.hideHelpSidebar();
+        }
+    },
+
+    /**
+     *  Shows a pop-up modal with the provided content
+     */
+        showModal(content) {
+        const modal = document.createElement("div");
+        modal.className = "modal";
+        modal.id = "modal";
+        modal.innerHTML = "<div class=\"modal-content\">\n" +
+            '<span class="close" onclick="document.getElementById(' + "'modal'" + ').remove()">&times;</span>\n' +
+            content + "\n" +
+            "</div>"
+        const renderContainer = document.getElementById("render-container")
+        renderContainer.appendChild(modal);
+        // When the user clicks anywhere outside the modal, close it
+        window.onclick = function(event) {
+            if (event.target === modal) {
+                modal.remove();
+            }
+        }
+        return false;
+    },
+
+    // From https://stackoverflow.com/questions/51805395/navigator-clipboard-is-undefined
+    copyToClipboard(textToCopy) {
+        // navigator clipboard api needs a secure context (https)
+        if (navigator.clipboard && window.isSecureContext) {
+            // navigator clipboard api method
+            return navigator.clipboard.writeText(textToCopy);
+        } else {
+            // text area method
+            let textArea = document.createElement("textarea");
+            textArea.value = textToCopy;
+            // make the textarea out of viewport
+            textArea.style.position = "fixed";
+            textArea.style.left = "-999999px";
+            textArea.style.top = "-999999px";
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            return new Promise((res, rej) => {
+                // here the magic happens
+                document.execCommand('copy') ? res() : rej();
+                textArea.remove();
+            });
+        }
+    },
 };

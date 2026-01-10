@@ -20,20 +20,10 @@ const REQUEST_TYPE_ADD_CLIPPINGS_CART = "add_clippings_cart";
 const REQUEST_TYPE_ADD_ALL_CLIPPINGS_CART = "add_all_clippings_cart";
 const REQUEST_TYPE_COUNT_XREFS_CLIPPINGS_CART = "count_xrefs_clippings_cart";
 const REQUEST_TYPE_DUMP_SETTINGS = "dump_settings";
-let treeName = null;
-let loggedIn = null;
 let xrefCount = [];
 let messageHistory = []; 
 
-function stopIndiSelectChanged() {
-    let stopXref = document.getElementById('stop_pid').value.trim();
-    if (stopXref !== "") {
-        Form.stoppingIndiList.addIndiToStopList(stopXref);
-    }
-    if (autoUpdate) {
-        updateRender();
-    }
-}
+
 
 function loadXrefList(url, xrefListId, indiListId) {
     if (url === '') return false;
@@ -152,70 +142,6 @@ function updateClearAllElements(clearElementId, listItemElementId) {
     }
 }
 
-// Toggle full screen for element
-// Modified from https://stackoverflow.com/questions/7130397/how-do-i-make-a-div-full-screen
-function toggleFullscreen() {
-    // If already fullscreen, exit fullscreen
-    if (
-        document.fullscreenElement ||
-        document.webkitFullscreenElement ||
-        document.mozFullScreenElement ||
-        document.msFullscreenElement
-    ) {
-        if (document.exitFullscreen) {
-            document.exitFullscreen().then(r => {});
-        } else if (document.mozCancelFullScreen) {
-            document.mozCancelFullScreen();
-        } else if (document.webkitExitFullscreen) {
-            document.webkitExitFullscreen();
-        } else if (document.msExitFullscreen) {
-            document.msExitFullscreen();
-        }
-    } else { // Not full screen, so go fullscreen
-        const element = document.getElementById('render-container');
-        if (element.requestFullscreen) {
-            element.requestFullscreen().then(r => {});
-        } else if (element.mozRequestFullScreen) {
-            element.mozRequestFullScreen();
-        } else if (element.webkitRequestFullscreen) {
-            element.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
-        } else if (element.msRequestFullscreen) {
-            element.msRequestFullscreen();
-        }
-    }
-}
-
-// Add a listener to trigger when the user goes fullscreen or exits fullscreen
-function handleFullscreen() {
-    if (document.addEventListener)
-    {
-        document.addEventListener('fullscreenchange', handleFullscreenExit, false);
-        document.addEventListener('mozfullscreenchange', handleFullscreenExit, false);
-        document.addEventListener('MSFullscreenChange', handleFullscreenExit, false);
-        document.addEventListener('webkitfullscreenchange', handleFullscreenExit, false);
-    }
-}
-
-// This function is run when the fullscreen state is changed
-function handleFullscreenExit()
-{
-    if (!document.webkitIsFullScreen && !document.mozFullScreen && !document.msFullscreenElement)
-    {
-        Form.showHide(document.getElementById("fullscreenButton"), true);
-        Form.showHide(document.getElementById("fullscreenClose"), false);
-        Form.showHide(document.getElementById("fullscreenShowMenu"), false);
-        Form.showHide(document.getElementById("fullscreenShowHelp"), false);
-        UI.showSidebar();
-    } else {
-        Form.showHide(document.getElementById("fullscreenButton"), false);
-        Form.showHide(document.getElementById("fullscreenClose"), true);
-        Form.showHide(document.getElementById("fullscreenShowMenu"), true);
-        Form.showHide(document.getElementById("fullscreenShowHelp"), true);
-        UI.hideSidebar();
-        UI.helpPanel.hideHelpSidebar();
-    }
-}
-
 // Get the computed property of an element
 function getComputedProperty(element, property) {
     const style = getComputedStyle(element);
@@ -232,144 +158,6 @@ function showGraphvizUnsupportedMessage() {
     if (graphvizAvailable && document.getElementById('photo_shape')?.value !== '0') UI.showToast(TRANSLATE["Diagram will be rendered in browser as server doesn't support photo shapes"]);
 }
 
-// This function is run when the page is loaded
-async function pageLoaded() {
-    if (firstRender) {
-        const loggedIn = await isUserLoggedIn();
-        if (!loggedIn) {
-            const settings = await Data.storeSettings.getSettingsClient(ID_MAIN_SETTINGS);
-            if (settings !== null) {
-                Form.settings.load(JSON.stringify(settings));
-            } else {
-                firstRender = false;
-            }
-        }
-    }
-
-    TOMSELECT_URL = document.getElementById('pid').getAttribute("data-wt-url") + "&query=";
-    TOMSELECT_FAM_URL = document.getElementById('highlight_fid').getAttribute("data-wt-url") + "&query=";
-    loadUrlToken();
-    loadSettingsDetails();
-    Data.url.loadURLXref();
-    refreshIndisFromXREFS(false);
-    // Remove reset parameter from URL when page loaded, to prevent
-    // further resets when page reloaded
-    Data.url.removeURLParameter("reset");
-    // Remove options from selection list if already selected
-    setInterval(function () {removeSearchOptions()}, 100);
-    // Listen for fullscreen change
-    handleFullscreen();
-    Diagram.search.setup();
-
-    if (document.getElementById("diagtype_simple") != null) {
-        handleSimpleDiagram();
-        document.getElementById("diagtype_simple").remove();
-    }
-
-    // Load browser render when page has loaded
-    if (autoUpdate) updateRender();
-    // Handle sidebars
-    document.querySelector(".hide-form").addEventListener("click", UI.hideSidebar);
-    document.querySelector(".sidebar_toggle a").addEventListener("click", UI.showSidebar);
-    UI.helpPanel.init();
-    UI.contextMenu.init();
-    UI.fixTheme();
-    Form.sharedNotePanel.init();
-
-    // Change events
-    const form = document.getElementById('gvexport');
-    let changeElems = form.querySelectorAll("input:not([type='file']):not(#save_settings_name):not(#stop_pid):not(#highlight_pid):not(#highlight_fid):not(#highlight_custom_json):not(#sharednote_col_add), select:not(#simple_settings_list):not(#pid):not(#stop_pid):not(#sharednote_col_add):not(#settings_sort_order):not(#click_action_indi):not(#click_action_fam)");
-    for (let i = 0; i < changeElems.length; i++) {
-        changeElems[i].addEventListener("change", Form.handleFormChangeEvent);
-    }
-    let indiSelectEl = form.querySelector("#pid");
-    indiSelectEl.addEventListener('change', Form.indiList.indiSelectChanged);
-    let clickActionSelectEl = form.querySelector("#click_action_indi");
-    clickActionSelectEl.addEventListener('change', UI.tile.clickOptionChanged);
-    clickActionSelectEl = form.querySelector("#click_action_fam");
-    clickActionSelectEl.addEventListener('change', UI.tile.clickOptionChanged);
-    let stopIndiSelectEl = form.querySelector("#stop_pid");
-    stopIndiSelectEl.addEventListener('change', stopIndiSelectChanged);
-    let highlightIndiSelectEl = form.querySelector("#highlight_pid");
-    highlightIndiSelectEl.addEventListener('change', Form.indiList.highlightIndiSelectChanged);
-    let highlightFamSelectEl = form.querySelector("#highlight_fid");
-    highlightFamSelectEl.addEventListener('change', Form.famList.highlightFamSelectChanged);
-    let settingsSortOrder = form.querySelector("#settings_sort_order");
-    settingsSortOrder.addEventListener('change', loadSettingsDetails);
-    let simpleSettingsEl = form.querySelector("#simple_settings_list");
-    simpleSettingsEl.addEventListener('change', function(e) {
-        let element = document.querySelector('.settings_list_item[data-id="' + e.target.value + '"]');
-        if (element !== null) {
-            Form.settings.load(element.getAttribute('data-settings'), true);
-        } else if (e.target.value !== '-') {
-            UI.showToast(ERROR_CHAR + 'Settings not found')
-        }
-    })
-    document.addEventListener("keydown", function(e) {
-        if (e.key === "Esc" || e.key === "Escape") {
-            document.querySelector(".sidebar").hidden ? UI.showSidebar(e) : UI.hideSidebar(e);
-            UI.helpPanel.hideHelpSidebar(e);
-        }
-    });
-    let marriagetypeEl = form.querySelector("#show_marriage_type");
-    marriagetypeEl.addEventListener('change', function(e) {
-        Form.showHideMatchCheckbox('show_marriage_type', 'marriage_type_subgroup');
-    });
-    let divorcesEl = form.querySelector("#show_divorces");
-    divorcesEl.addEventListener('change', function(e) {
-        Form.showHideMatchCheckbox('show_divorces', 'divorces_subgroup');
-    });
-
-    let marriagesEl = form.querySelector("#show_marriages");
-    marriagesEl.addEventListener('change', function(e) {
-        Form.showHideMatchCheckbox('show_marriages', 'marriages_subgroup');
-    });
-
-    document.addEventListener("mousedown", function(event) {
-        // Hide diagram context menu if clicked off a tile
-        if (event.target.closest('.settings_ellipsis_menu_item') == null && event.target.parentElement?.id !== 'menu-info') {
-            UI.contextMenu.clearContextMenu();
-        }
-    });
-
-    document.addEventListener("click", function(event) {
-        removeSettingsEllipsisMenu(event.target);
-        if (!document.getElementById('searchButton').contains(event.target) && !document.getElementById('diagram_search_box_container').contains(event.target)) {
-            Form.showHideSearchBox(event, false);
-        }
-    });
-    document.querySelector("#diagram_search_box_container").addEventListener('change', Diagram.search.change);
-    document.querySelector('#searchButton').addEventListener('click', Form.showHideSearchBox);
-    document.querySelector('#photo_shape')?.addEventListener('change', showGraphvizUnsupportedMessage);
-    document.querySelector('#indi_tile_shape')?.addEventListener('change', Form.event.changeIndiTileShape);
-
-    document.addEventListener('change', (e) => {
-        if (e.target.matches('input[name="vars[diagram_type]"]')) {
-            Form.event.changeDiagramType(e);
-        }
-    });
-}
-
-// Function to show a help message
-// item - the help item identifier
-function showModal(content) {
-    const modal = document.createElement("div");
-    modal.className = "modal";
-    modal.id = "modal";
-    modal.innerHTML = "<div class=\"modal-content\">\n" +
-        '<span class="close" onclick="document.getElementById(' + "'modal'" + ').remove()">&times;</span>\n' +
-        content + "\n" +
-        "</div>"
-    const renderContainer = document.getElementById("render-container")
-    renderContainer.appendChild(modal);
-    // When the user clicks anywhere outside the modal, close it
-    window.onclick = function(event) {
-        if (event.target === modal) {
-            modal.remove();
-        }
-    }
-    return false;
-}
 // Function to show a help message
 // item - the help item identifier
 function showHelp(item) {
@@ -383,7 +171,7 @@ function showHelp(item) {
         helpText = '<textarea cols=50 rows=20 onclick=\"this.select()\">' + debug_string + '</textarea>';
     }
     let content = "<p>" + helpText + "</p>";
-    showModal(content);
+    UI.showModal(content);
     return false;
 }
 
@@ -426,7 +214,7 @@ function saveSettingsServer(main = true, id = null) {
         "settings_id": id
     };
     let json = JSON.stringify(request);
-    return sendRequest(json);
+    return Data.api.sendRequest(json);
 }
 
 function getSettingsServer(id = ID_ALL_SETTINGS) {
@@ -435,7 +223,7 @@ function getSettingsServer(id = ID_ALL_SETTINGS) {
         "settings_id": id
     };
     let json = JSON.stringify(request);
-    return sendRequest(json).then((response) => {
+    return Data.api.sendRequest(json).then((response) => {
         try {
             let json = JSON.parse(response);
             if (json.success) {
@@ -451,7 +239,7 @@ function getSettingsServer(id = ID_ALL_SETTINGS) {
 }
 
 function getSettings(id = ID_ALL_SETTINGS) {
-    return isUserLoggedIn().then((loggedIn) => {
+    return Data.api.isUserLoggedIn().then((loggedIn) => {
         if (loggedIn || id === ID_MAIN_SETTINGS) {
             return getSettingsServer(id);
         } else {
@@ -461,42 +249,6 @@ function getSettings(id = ID_ALL_SETTINGS) {
         }
     }).catch((error) => {
         UI.showToast(ERROR_CHAR + error);
-    });
-}
-
-/**
- *
- * @param json
- * @returns {Promise<unknown>}
- */
-function sendRequest(json) {
-    return new Promise((resolve, reject) => {
-        const form = document.getElementById('gvexport');
-        const el = document.createElement("input");
-        el.name = "json_data";
-        el.value = json;
-        form.appendChild(el);
-        document.getElementById("browser").value = "true";
-        let data = jQuery(form).serialize();
-        document.getElementById("browser").value = "false";
-        el.remove();
-        window.fetch(form.getAttribute('action'), {
-            method: form.getAttribute('method'),
-            credentials: 'same-origin', // include, *same-origin, omit
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-            },
-            body: data
-        }).then(function (response) {
-            if (!response.ok) {
-                return response.text().then(function (errorText) {
-                    return reject(errorText)
-                });
-            }
-            resolve(response.text());
-        }).catch((e) => {
-            reject(e);
-        });
     });
 }
 
@@ -551,7 +303,7 @@ function loadUrlToken(Url) {
             "token": token
         };
         let json = JSON.stringify(request);
-        sendRequest(json).then((response) => {
+        Data.api.sendRequest(json).then((response) => {
             try {
                 let json = JSON.parse(response);
                 if (json.success) {
@@ -569,58 +321,10 @@ function loadUrlToken(Url) {
             }
         });
     }
-}
-
-function isUserLoggedIn() {
-    if (loggedIn != null)  {
-        return Promise.resolve(loggedIn);
-    } else {
-        let request = {
-            "type": REQUEST_TYPE_IS_LOGGED_IN
-        };
-        let json = JSON.stringify(request);
-        return sendRequest(json).then((response) => {
-            try {
-                let json = JSON.parse(response);
-                if (json.success) {
-                    loggedIn = json.loggedIn;
-                    return json.loggedIn;
-                } else {
-                    return Promise.reject(ERROR_CHAR + json.errorMessage);
-                }
-            } catch (e) {
-                return Promise.reject("Failed to load response: " + e);
-            }
-        });
-    }
-}
-
-function getTreeName() {
-    if (treeName != null)  {
-        return Promise.resolve(treeName);
-    } else {
-        let request = {
-            "type": REQUEST_TYPE_GET_TREE_NAME
-        };
-        let json = JSON.stringify(request);
-        return sendRequest(json).then((response) => {
-            try {
-                let json = JSON.parse(response);
-                if (json.success) {
-                    treeName = json.treeName.replace(/[^a-zA-Z0-9_]/g, ""); // Only allow characters that play nice
-                    return treeName;
-                } else {
-                    return Promise.reject(ERROR_CHAR + json.errorMessage);
-                }
-            } catch (e) {
-                return Promise.reject("Failed to load response: " + e);
-            }
-        });
-    }
-}
+} 
 
 function getIdLocal() {
-    return getTreeName().then((treeName) => {
+    return Data.api.getTreeName().then((treeName) => {
         let next_id;
         let settings_list = localStorage.getItem(SETTINGS_ID_LIST_NAME + "_" + treeName);
         if (settings_list) {
@@ -639,7 +343,7 @@ function getIdLocal() {
 }
 
 function deleteIdLocal(id) {
-    getTreeName().then((treeName) => {
+    Data.api.getTreeName().then((treeName) => {
         let settings_list;
         if (localStorage.getItem(SETTINGS_ID_LIST_NAME + "_" + treeName) != null) {
             settings_list = localStorage.getItem(SETTINGS_ID_LIST_NAME + "_" + treeName);
@@ -653,31 +357,6 @@ function setSavedDiagramsPanel() {
     const checkbox = document.getElementById('show_diagram_panel');
     const el = document.getElementById('saved_diagrams_panel');
     Form.showHide(el, checkbox.checked);
-}
-
-// From https://stackoverflow.com/questions/51805395/navigator-clipboard-is-undefined
-function copyToClipboard(textToCopy) {
-    // navigator clipboard api needs a secure context (https)
-    if (navigator.clipboard && window.isSecureContext) {
-        // navigator clipboard api method
-        return navigator.clipboard.writeText(textToCopy);
-    } else {
-        // text area method
-        let textArea = document.createElement("textarea");
-        textArea.value = textToCopy;
-        // make the textarea out of viewport
-        textArea.style.position = "fixed";
-        textArea.style.left = "-999999px";
-        textArea.style.top = "-999999px";
-        document.body.appendChild(textArea);
-        textArea.focus();
-        textArea.select();
-        return new Promise((res, rej) => {
-            // here the magic happens
-            document.execCommand('copy') ? res() : rej();
-            textArea.remove();
-        });
-    }
 }
 
 function toggleHighlightCheckbox(e) {

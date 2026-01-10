@@ -13,8 +13,10 @@ export async function loadGVExport(page: Page, expandOptions: boolean = false) {
     const languageToggle = page.locator('li.menu-language > a.dropdown-toggle');
 
     if ((await languageToggle.innerText()).trim() !== 'Language') {
+        console.log((await languageToggle.innerText()).trim())
         await languageToggle.click();
         await page.getByRole('menuitem', { name: 'British English' }).click();
+        await expect(page.locator('#rendering svg')).toBeVisible();
     }
 
     // If there are items in the cart from a previous run, we need to clean up
@@ -37,14 +39,12 @@ export async function loadGVExport(page: Page, expandOptions: boolean = false) {
 };
 
 export async function toggleAdvancedPanels(page: Page) {
-    await page.locator('.advanced-settings-btn').first().isVisible();
-    const advancedButtons = page.locator('.advanced-settings-btn');
-    const count = await advancedButtons.count();
-    expect(count).toBe(3);
-    for (let i = 0; i < count; i++) {
-        await advancedButtons.nth(i).click();
-    }
-    await page.locator('.subgroup').first().isVisible();
+    await page.locator('#people-advanced-button').click();
+    await expect(await page.locator('#people-advanced')).toBeVisible();    
+    await page.locator('#appearance-advanced-button').click();
+    await expect(await page.locator('#appearance-advanced')).toBeVisible();    
+    await page.locator('#files-advanced-button').click();
+    await expect(await page.locator('#files-advanced')).toBeVisible();    
 };
 
 export async function toggleSettingsSubgroups(page: Page) {
