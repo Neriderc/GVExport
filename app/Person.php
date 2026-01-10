@@ -101,6 +101,7 @@ class Person
     function printPersonLabel(string $pid, SharedNoteList $sharednotes, bool $related = TRUE): string
     {
         $sex = '';
+        $occupation = '';
         $out = '';
         $border_colour = $this->dot->settings["border_col"];    // Border colour of the INDI's box
         $death_place = "";
