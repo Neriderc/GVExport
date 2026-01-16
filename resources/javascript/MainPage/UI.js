@@ -159,10 +159,25 @@ const UI = {
             return false;
         },
 
+
+        mouseOverEvent(xref) {
+            if (clippingsCartXrefs.has(xref)) {
+                let render = document.getElementById('rendering');
+                render.classList.add("border-red");
+                render.classList.remove("border-black");
+            }
+        },
+
+        mouseOutEvent() {
+            let render = document.getElementById('rendering');
+            render.classList.remove("border-red");
+            render.classList.add("border-black");
+        },
+
         /**
          * Add event listeners to handle clicks on the individuals and family nodes in the diagram
          */
-        handleTileClick() {
+        handleTileEvents() {
             const MIN_DRAG = 100;
             const DEFAULT_ACTION = '0';
             let startx;
@@ -177,6 +192,14 @@ const UI = {
                 linkElements[i].addEventListener("mousedown", function (e) {
                     startx = e.clientX;
                     starty = e.clientY;
+                });
+                linkElements[i].addEventListener("mouseover", function (e) {
+                    let url = linkElements[i].getAttribute('xlink:href');
+                    let xref = Data.url.getXrefFromUrl(url);
+                    UI.tile.mouseOverEvent(xref);
+                });
+                linkElements[i].addEventListener("mouseout", function (e) {
+                    UI.tile.mouseOutEvent();
                 });
                 // Only trigger links if not dragging
                 linkElements[i].addEventListener('click', function (e) {
@@ -453,6 +476,7 @@ const UI = {
                 Form.updateClippingsCartCount();
                 UI.showToast(TRANSLATE[response]);
                 UI.contextMenu.clearContextMenu();
+                clippingsCartXrefs.delete(xref);
             } else {
                 UI.showToast(ERROR_CHAR + TRANSLATE['Unknown error']);
             }
@@ -584,6 +608,7 @@ const UI = {
                     Form.updateClippingsCartCount();
                     UI.showToast(TRANSLATE[response]);
                     UI.contextMenu.clearContextMenu();
+                    clippingsCartXrefs.add(xref);
                 } else {
                     UI.showToast(ERROR_CHAR + TRANSLATE['Unknown error']);
                 }

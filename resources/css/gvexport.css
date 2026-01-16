@@ -212,8 +212,15 @@ toast-message.error {
     height: 100%;
     margin: 0;
     touch-action: none;
-    border: 1px solid black;
     overflow: hidden;
+}
+
+.border-red {
+    border: 1px solid red;
+}
+
+.border-black {
+    border: 1px solid black;
 }
 
 .picker-label {

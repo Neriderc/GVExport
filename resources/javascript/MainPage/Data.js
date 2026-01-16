@@ -108,12 +108,14 @@ const Data = {
          * Get xrefs from webtrees clippings cart.
          * allTypes defaults to true because it's faster (no need to fetch records for each xref)
          */
-        getClippingsCartXrefs(allTypes = true) {
+        async getClippingsCartXrefs(allTypes = true) {
                 let request = {
                 "type": REQUEST_TYPE_GET_XREFS_CLIPPINGS_CART,
                 "allTypes": allTypes
             };
-            return Data.callAPI(request);
+            const response = await Data.callAPI(request);
+            clippingsCartXrefs = new Set(response);
+            return response;
         },
 
         /**
