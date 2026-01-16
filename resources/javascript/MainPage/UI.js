@@ -456,6 +456,14 @@ const UI = {
             } else {
                 UI.showToast(ERROR_CHAR + TRANSLATE['Unknown error']);
             }
+            // Only refresh if we are in the 'use cart' view, otherwise nothing would change
+            if (document.getElementById("usecart_yes").checked) {
+                // We are removing the xref, so need to use another for scroll positioning
+                const cart = await Data.api.getClippingsCartXrefs(false);
+                if (cart != []) {
+                    Form.handleFormChange(cart[0]);
+                }
+            }
         },
 
         /**

@@ -72,6 +72,25 @@ class ClippingsCart {
 	}
 
 	/**
+	 * Get the XREFs in the clippings cart for only Individuals and Families
+	 *
+	 * @param Tree $tree
+	 *
+	 * @return array of XREFs
+	 */
+	public static function getIndiFamXrefsInCart(Tree $tree): array
+	{
+		$records = self::getRecordsInCart($tree);
+		$xrefs = [];
+		foreach ($records as $record) {
+			if ($record instanceof Individual || $record instanceof Family) {
+				$xrefs[] = $record->xref();
+			}
+		}
+		return $xrefs;
+	}
+
+	/**
 	 * Count the XREFs in the clippings cart
 	 *
 	 * @param Tree $tree

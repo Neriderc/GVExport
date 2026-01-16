@@ -24,18 +24,17 @@ const Form = {
             if (xref) {
                 let [found, x, y] = UI.tile.getElementPositionFromXref(xref, xrefType);
                 if (found) {
-                    let scale = panzoomInst.getTransform().scale;
+                    let transform = panzoomInst.getTransform();
                     // Why is this 1 1/3 number needed?
-                    let zoomBase = scale * (1 + 1/3);
+                    let zoomBase = transform.scale * (1 + 1 / 3);
                     let zoom_value = zoomBase * parseFloat(document.getElementById("dpi").value) / 72;
                     const rendering = document.getElementById('rendering');
                     const svg = rendering.getElementsByTagName('svg')[0];
-                    let transform = panzoomInst.getTransform();
                     updateRender(x*zoom_value + transform.x, parseFloat(svg.getAttribute('height'))*zoomBase + y*zoom_value + transform.y, transform.scale, xref, xrefType);
                 } else {
                     updateRender();
                 }
-            // Nothing fany happening, just update
+            // Nothing fancy happening, just update
             } else {
                 updateRender();
             }

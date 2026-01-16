@@ -564,8 +564,10 @@ class ApiHandler
      * Returns xrefs of contents of clippings cart
      */
     private function getXrefsClippingsCart() {
+        $all = !empty($this->json['allTypes']);
         $this->response_data['success'] = true;
-        $this->response_data['response'] = ClippingsCart::getXrefsInCart($this->tree);
+        $response = $all ? ClippingsCart::getXrefsInCart($this->tree) : ClippingsCart::getIndiFamXrefsInCart($this->tree);
+        $this->response_data['response'] = $response;
     }
 
     /**
