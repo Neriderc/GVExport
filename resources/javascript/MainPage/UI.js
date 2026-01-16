@@ -234,8 +234,8 @@ const UI = {
                             case '90': // Add a parent
                                 UI.tile.goToAddParent(url, xref);
                                 break;
-                            case '100': // Add to clippings cart
-                                UI.tile.addXrefsToClippingsCart([xref]);
+                            case '100': // Toggle clippings cart status
+                                UI.tile.toggleClippingsCartForXref(xref);
                                 break;
                             case '60': // Do nothing option
                             default: // Unknown, so do nothing
@@ -259,8 +259,8 @@ const UI = {
                             case '50': // Change family members
                                 UI.tile.changeFamilyMembers(url, xref);
                                 break;
-                            case '60': // Add to clippings cart
-                                UI.tile.addXrefsToClippingsCart([xref]);
+                            case '60': // Toggle clippings cart status
+                                UI.tile.toggleClippingsCartForXref(xref);
                                 break;
                             case '30': // Show menu
                                 UI.tile.showFamilyContextMenu(e, url, xref);
@@ -423,7 +423,8 @@ const UI = {
          * @param e Click event
          */
         removeIndividualFromCartContextMenu(e) {
-            UI.tile.removeFromClippingsCart(e);
+            let xref = e.currentTarget.parentElement.getAttribute('data-xref');
+            UI.tile.removeFromClippingsCart(xref);
         },
 
         /**
@@ -432,14 +433,29 @@ const UI = {
          * @param e Click event
          */
         removeFamilyFromCartContextMenu(e) {
-            UI.tile.removeFromClippingsCart(e);
+            let xref = e.currentTarget.parentElement.getAttribute('data-xref');
+            UI.tile.removeFromClippingsCart(xref);
         },
 
-        async removeFromClippingsCart (e) {
-            let xref = e.currentTarget.parentElement.getAttribute('data-xref');
-            await Data.api.removeXrefFromClippingsCart(xref);
+        async toggleClippingsCartForXref(xref) {
+            const xrefInCart = await Data.api.isXrefInClippingsCart(xref);
+            if (xrefInCart) {
+                this.removeFromClippingsCart(xref);
+            } else {
+                this.addXrefsToClippingsCart([xref]);
+            }
             Form.updateClippingsCartCount();
-            UI.contextMenu.clearContextMenu();
+        },
+            
+        async removeFromClippingsCart (xref) {
+           const response = await Data.api.removeXrefFromClippingsCart(xref);
+           if (response) {
+                Form.updateClippingsCartCount();
+                UI.showToast(TRANSLATE[response]);
+                UI.contextMenu.clearContextMenu();
+            } else {
+                UI.showToast(ERROR_CHAR + TRANSLATE['Unknown error']);
+            }
         },
 
         /**
