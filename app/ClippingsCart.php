@@ -141,4 +141,13 @@ class ClippingsCart {
 
 		return false;
 	}
+
+	static function emptyCart($tree) {
+
+		$cart = Session::get('cart');
+		$cart = is_array($cart) ? $cart : [];
+
+		$cart[$tree->name()] = [];
+		Session::put('cart', $cart);
+	}
 }

@@ -997,8 +997,33 @@ const Form = {
      * Add the array of xrefs to the clippings cart
      */
     addAllToClippingsCart() {
-            let request = {
+        let request = {
             "type": REQUEST_TYPE_ADD_ALL_CLIPPINGS_CART,
+        };
+        return Data.callAPI(request);
+    },
+
+    /**
+     * Trigger when button to rebuild clippings cart is clicked
+     */
+    rebuildClippingsCartClicked() {
+        this.rebuildClippingsCart().then((response) => {
+            if (response) {
+                Form.updateClippingsCartCount();
+                UI.showToast(TRANSLATE[response]);
+                UI.contextMenu.clearContextMenu();
+            } else {
+                UI.showToast(ERROR_CHAR + TRANSLATE['Unknown error']);
+            }
+        });
+    },
+
+    /**
+     * Remove linked objects and rebuild them based on current state of individuals and families
+     */
+    rebuildClippingsCart() {
+        let request = {
+            "type": REQUEST_TYPE_REBUILD_CLIPPINGS_CART,
         };
         return Data.callAPI(request);
     },

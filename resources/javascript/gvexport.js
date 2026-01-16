@@ -18,6 +18,7 @@ const REQUEST_TYPE_GET_SHARED_NOTE_FORM = "get_shared_note_form";
 const REQUEST_TYPE_GET_RECORD_COUNT = "get_record_count";
 const REQUEST_TYPE_ADD_CLIPPINGS_CART = "add_clippings_cart";
 const REQUEST_TYPE_ADD_ALL_CLIPPINGS_CART = "add_all_clippings_cart";
+const REQUEST_TYPE_REBUILD_CLIPPINGS_CART = "rebuild_clippings_cart";
 const REQUEST_TYPE_REMOVE_CLIPPINGS_CART = "remove_clippings_cart";
 const REQUEST_TYPE_COUNT_XREFS_CLIPPINGS_CART = "count_xrefs_clippings_cart";
 const REQUEST_TYPE_GET_XREFS_CLIPPINGS_CART = "get_xrefs_clippings_cart";

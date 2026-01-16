@@ -109,6 +109,9 @@ class ApiHandler
                 case "add_all_clippings_cart":
                     $this->addAllToClippingsCart();
                     break;
+                case "rebuild_clippings_cart":
+                    $this->rebuildClippingsCart();
+                    break;
                 case "remove_clippings_cart":
                     $this->removeFromClippingsCart();
                     break;
@@ -459,9 +462,22 @@ class ApiHandler
      */
     private function addToClippingsCart()
     {
+
+        $this->addXrefsToClippingsCart($this->json['xrefs']);
+        
+        $this->response_data['success'] = true;
+        $this->response_data['response'] = ['Added to clippings cart'];
+    }
+
+    
+    /**
+     * Adds the relevant records to the clipping cart
+     */
+    private function addXrefsToClippingsCart($xrefs)
+    {
         $cartAdder = new ClippingsCartAdder($this->tree);
 
-        foreach ($this->json['xrefs'] as $xref) {
+        foreach ($xrefs as $xref) {
 
             if (!FormSubmission::isXrefListValid($xref)) {
                 continue;
@@ -476,9 +492,9 @@ class ApiHandler
                 $cartAdder->addIndividualToCart($record);
             }
         }
-        $this->response_data['success'] = true;
-        $this->response_data['response'] = ['Added to clippings cart'];
     }
+
+
 
     /**
      * Adds all individuals and families in the diagram to the clippings cart
@@ -504,6 +520,22 @@ class ApiHandler
 
         $this->response_data['success'] = true;
         $this->response_data['response'] = ['Added to clippings cart'];
+    }
+
+    /**
+     * Refreshes the linked objects based on indis and fams in cart
+     */
+    private function rebuildClippingsCart() {
+        $xrefs = ClippingsCart::getXrefsInCart($this->tree);
+        ClippingsCart::emptyCart($this->tree);
+        try {
+            $this->addXrefsToClippingsCart($xrefs);
+            $this->response_data['success'] = true;
+            $this->response_data['response'] = ['Clippings cart rebuilt'];
+        } catch (\Throwable $e) {
+            $this->response_data['success'] = false;
+            $this->response_data['response'] = ['Unknown error'];
+        }
     }
 
     /**
@@ -533,7 +565,7 @@ class ApiHandler
      */
     private function getXrefsClippingsCart() {
         $this->response_data['success'] = true;
-        $this->response_data['response'] = ClippingsCart::getXrefsInCart($this->tree);;
+        $this->response_data['response'] = ClippingsCart::getXrefsInCart($this->tree);
     }
 
     /**
