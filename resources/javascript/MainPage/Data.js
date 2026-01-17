@@ -4,6 +4,7 @@
  * @type {{}}
  */
 const Data = {
+    clippingsCartXrefs: new Set(),
 
     api: {
         _treename: null,
@@ -114,7 +115,7 @@ const Data = {
                 "allTypes": allTypes
             };
             const response = await Data.callAPI(request);
-            clippingsCartXrefs = new Set(response);
+            Data.clippingsCartXrefs = new Set(response);
             return response;
         },
 

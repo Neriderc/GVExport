@@ -4,6 +4,12 @@
  * @type {{}}
  */
 const Diagram = {
+    element: document.getElementById('rendering'),
+    state: {
+        border: 'default',
+
+    },
+
     svg: {
         /**
          * Clip path for different photo shapes
@@ -140,5 +146,18 @@ const Diagram = {
                 })
             }
         }
-    }
+    },
+
+    setBorder(border) {
+        this.border = border;
+        this.updateBorder();
+    },
+
+    updateBorder() {
+        this.element.classList.remove(
+            'border-red',
+            'border-default',
+        );
+        this.element.classList.add(`border-${this.border}`);
+    },
 }

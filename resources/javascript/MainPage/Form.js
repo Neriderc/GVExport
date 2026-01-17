@@ -4,6 +4,10 @@
  * @type {{}}
  */
 const Form = {
+    // Remember state so we don't have to keep querying the DOM
+    state: {
+        useCart: null,
+    },
     
     /**
      * Form change event
@@ -196,6 +200,12 @@ const Form = {
         }
         Form.showHideClass("cart_toggle_hide", !enable);
         Form.showHideClass("cart_toggle_show", enable);
+        Form.state.useCart = enable;
+        if (enable) {
+            Diagram.setBorder('red');
+        } else {
+            Diagram.setBorder('default');
+        }
     },
 
     /**

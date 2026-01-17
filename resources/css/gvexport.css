@@ -215,11 +215,11 @@ toast-message.error {
     overflow: hidden;
 }
 
-.border-red {
+#rendering.border-red {
     border: 1px solid red;
 }
 
-.border-black {
+#rendering.border-default {
     border: 1px solid black;
 }
 

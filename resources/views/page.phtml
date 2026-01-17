@@ -27,7 +27,6 @@ $usegraphviz = $vars['graphviz_bin'] != "";
 <?= view($module->name() . '::MainPage/Translations'); ?>
 <script type="text/javascript">
     let cartempty = <?= $cartempty ? "true" : "false" ?>;
-    let clippingsCartXrefs = new Set();
     let autoUpdate = <?= $vars["auto_update"] ? 'true' : 'false' ?>;
     let debug_string = "";
     let TOMSELECT_URL = "";
@@ -53,7 +52,7 @@ $usegraphviz = $vars['graphviz_bin'] != "";
 </div>
 
 <div id="render-container">
-    <div id="rendering" class="border-black" hidden style="background-color: <?= $vars["background_col"] ?>;"></div>
+    <div id="rendering" class="border-default" hidden style="background-color: <?= $vars["background_col"] ?>;"></div>
     <div id="render_menu_container">
         <?php
         // Include the options sidebar menu

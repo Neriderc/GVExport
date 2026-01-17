@@ -161,17 +161,17 @@ const UI = {
 
 
         mouseOverEvent(xref) {
-            if (clippingsCartXrefs.has(xref)) {
-                let render = document.getElementById('rendering');
-                render.classList.add("border-red");
-                render.classList.remove("border-black");
+            if (!Form.state.useCart) {
+                if (Data.clippingsCartXrefs.has(xref)) {
+                    Diagram.setBorder('red');
+                }
             }
         },
 
         mouseOutEvent() {
-            let render = document.getElementById('rendering');
-            render.classList.remove("border-red");
-            render.classList.add("border-black");
+            if (!Form.state.useCart) {
+                Diagram.setBorder('default');
+            }
         },
 
         /**
@@ -476,7 +476,7 @@ const UI = {
                 Form.updateClippingsCartCount();
                 UI.showToast(TRANSLATE[response]);
                 UI.contextMenu.clearContextMenu();
-                clippingsCartXrefs.delete(xref);
+                Data.clippingsCartXrefs.delete(xref);
             } else {
                 UI.showToast(ERROR_CHAR + TRANSLATE['Unknown error']);
             }
@@ -613,7 +613,9 @@ const UI = {
                     Form.updateClippingsCartCount();
                     UI.showToast(TRANSLATE[response]);
                     UI.contextMenu.clearContextMenu();
-                    clippingsCartXrefs.add(xref);
+                    for (const xref of xrefs) {
+                        Data.clippingsCartXrefs.add(xref);
+                    }
                 } else {
                     UI.showToast(ERROR_CHAR + TRANSLATE['Unknown error']);
                 }
