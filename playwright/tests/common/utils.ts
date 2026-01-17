@@ -119,9 +119,10 @@ export async function getTileByXref(page: Page, xref: string) {
 
 export async function addFamilyToClippingsCartViaMenu(page: Page) {
     await loadGVExport(page, true);
-    await page.locator('#click_action_fam').selectOption('60');
+    await page.locator('#click_action_fam').selectOption('30');
     const tile = await getTileByXref(page, 'X41');
     await tile.click();
+    await page.locator('.settings_ellipsis_menu_item', { hasText: 'Add to clippings cart' }).click();
     await expect(page.locator('.toast-message').filter({ hasText: 'Added to clippings cart' })).toBeVisible();
     await expect(page.locator('#rendering svg')).toBeVisible();
     await page.locator('.menu-clippings').getByRole('button', { name: 'Clippings cart' }).click();

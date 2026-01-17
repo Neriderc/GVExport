@@ -103,7 +103,6 @@ test.describe('user-only tests for indi tile context menu', ()=>{
 
     test('Add to clippings cart', async ({ page }) => {
         await loadGVExport(page, true);
-        await page.locator('#highlight_custom_indis').check();
         await page.locator('#click_action_indi').selectOption('50');
         const tile = await getIndividualTile(page, 'Olivia BLOGGS');
         await tile.click();
@@ -113,6 +112,31 @@ test.describe('user-only tests for indi tile context menu', ()=>{
         await page.locator('.menu-clippings').getByRole('button', { name: 'Clippings cart' }).click();
         await page.getByRole('menuitem', { name: 'Clippings cart' }).click();
         await expect(page.locator('table a').nth(0)).toContainText('Olivia BLOGGS');
+    });
+
+    test('Remove from clippings cart', async ({ page }) => {
+        // Add someone to the clippings cart first
+        await loadGVExport(page, true);
+        await page.locator('#click_action_indi').selectOption('50');
+        let tile = await getIndividualTile(page, 'Olivia BLOGGS');
+        await tile.click();
+        await page.locator('.settings_ellipsis_menu_item', { hasText: 'Add to clippings cart' }).click()
+        await expect(page.locator('.toast-message').filter({ hasText: 'Added to clippings cart' })).toBeVisible();
+        await expect(page.locator('#rendering svg')).toBeVisible();
+        await page.locator('.menu-clippings').getByRole('button', { name: 'Clippings cart' }).click();
+        await page.getByRole('menuitem', { name: 'Clippings cart' }).click();
+        await expect(page.locator('table a').nth(0)).toContainText('Olivia BLOGGS');
+
+        // Now remove them and check it worked
+        await page.goto('/module/_GVExport_/Chart/gvetest?xref=X1');
+        tile = await getIndividualTile(page, 'Olivia BLOGGS');
+        await tile.click();
+        await page.locator('.settings_ellipsis_menu_item', { hasText: 'Remove from clippings cart' }).click();
+        await expect(page.locator('.toast-message').filter({ hasText: 'Removed from clippings cart' })).toBeVisible();
+        await expect(page.locator('#rendering svg')).toBeVisible();
+        await page.locator('.menu-clippings').getByRole('button', { name: 'Clippings cart' }).click();
+        await page.getByRole('menuitem', { name: 'Clippings cart' }).nth(0).click();
+        await expect(page.locator('#content')).toContainText('Your clippings cart is empty.')
     });
 });
 
@@ -134,6 +158,21 @@ test.describe('user-only tests for family tile context menu', () => {
     });
     test('Add to clippings cart', async ({ page }) => {
         await addFamilyToClippingsCartViaMenu(page);
+    });
+    
+    test('Remove from clippings cart', async ({ page }) => {
+        await addFamilyToClippingsCartViaMenu(page);
+
+        // Now remove them and check it worked
+        await page.goto('/module/_GVExport_/Chart/gvetest?xref=X1');
+        const tile = await getTileByXref(page, 'X41');
+        await tile.click();
+        await page.locator('.settings_ellipsis_menu_item', { hasText: 'Remove from clippings cart' }).click();
+        await expect(page.locator('.toast-message').filter({ hasText: 'Removed from clippings cart' })).toBeVisible();
+        await expect(page.locator('#rendering svg')).toBeVisible();
+        await page.locator('.menu-clippings').getByRole('button', { name: 'Clippings cart' }).click();
+        await page.getByRole('menuitem', { name: 'Clippings cart' }).nth(0).click();
+        await expect(page.locator('table a').nth(0)).not.toContainText('Joe BLOGGS + Jane Smith');
     });
 });
 
