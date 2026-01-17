@@ -1,6 +1,16 @@
 import { runSharedOptionsTests } from '../common/sharedOptionTests.ts'
 import { Page, test, expect } from '../../fixtures.ts';
-import { loadGVExport, clearSavedSettingsList, getIndividualTile, getTileByXref, addFamilyToClippingsCartViaMenu } from '../common/utils.ts';
+import { 
+        loadGVExport, 
+        clearSavedSettingsList, 
+        getIndividualTile, 
+        getTileByXref, 
+        addFamilyToClippingsCartViaMenu, 
+        checkCartIgnored, 
+        checkCartUsed,
+        checkCartFieldsEnabled,
+        checkCartFieldsDisabled
+    } from '../common/utils.ts';
 import { testTileClickOpensPage } from '../common/sharedOptionTests.ts';
 
 /**
@@ -9,27 +19,27 @@ import { testTileClickOpensPage } from '../common/sharedOptionTests.ts';
 runSharedOptionsTests('user');
 
 test('option: Show events as text if no date', async ({ page }) => {
-            await loadGVExport(page, true);
+    await loadGVExport(page, true);
 
-            // Check not enabled and not showing in diagram
-            await expect(page.locator("#show_event_text_families")).not.toBeChecked();
-            let svgHtml = await page.locator('#rendering svg').innerHTML();
-            await expect(svgHtml).not.toContain('∞ Marriage');
+    // Check not enabled and not showing in diagram
+    await expect(page.locator("#show_event_text_families")).not.toBeChecked();
+    let svgHtml = await page.locator('#rendering svg').innerHTML();
+    await expect(svgHtml).not.toContain('∞ Marriage');
 
-            // Enable
-            await page.locator('#show_divorces').check();
-            await page.locator('#diagtype_combined').click();
+    // Enable
+    await page.locator('#show_divorces').check();
+    await page.locator('#diagtype_combined').click();
 
-            // Make sure SVG finishes loading after change
-            const before = await page.locator('#rendering svg').innerHTML();
-            await page.locator('#show_event_text_families').check();
-            await expect(page.locator('#rendering svg')).not.toHaveJSProperty('innerHTML', before);
+    // Make sure SVG finishes loading after change
+    const before = await page.locator('#rendering svg').innerHTML();
+    await page.locator('#show_event_text_families').check();
+    await expect(page.locator('#rendering svg')).not.toHaveJSProperty('innerHTML', before);
 
-            // Check that it shows in diagram
-            svgHtml = await page.locator('#rendering svg').innerHTML();
-            await expect(svgHtml).toContain('∞ Marriage');
-            await expect(svgHtml).toContain('⚮ Divorce');
-        });
+    // Check that it shows in diagram
+    svgHtml = await page.locator('#rendering svg').innerHTML();
+    await expect(svgHtml).toContain('∞ Marriage');
+    await expect(svgHtml).toContain('⚮ Divorce');
+});
 
 test.describe('option: Action when individual clicked', ()=>{
     test('Add a partner', async ({ page }) => {
@@ -319,3 +329,68 @@ test.describe('Test saving and loading clippings cart items to the saved setting
 });
 
 
+test.describe('Test use and ignore clippings cart settings', () => {
+    test('Adding indi to clippings cart shows clippings cart section', async ({ page }) => {
+        // Check no cart section by default
+        await loadGVExport(page, true);
+        await expect(await page.locator('#cart-section')).not.toBeVisible();
+
+        // Add someone to cart
+        await page.locator('#click_action_indi').selectOption('50');
+        const tile = await getIndividualTile(page, 'Olivia BLOGGS');
+        await tile.click();
+        await page.locator('.settings_ellipsis_menu_item', { hasText: 'Add to clippings cart' }).click()
+        await expect(page.locator('.toast-message').filter({ hasText: 'Added to clippings cart' })).toBeVisible();
+        await expect(page.locator('#rendering svg')).toBeVisible();
+
+        // Check Cart section appeared and defaults correctly
+        await checkCartIgnored(page);
+
+        // Select to use the cart
+        await page.locator('#usecart_yes').click();
+
+        // Check options disabled fields correctly
+        await checkCartUsed(page);
+
+        // Select not to use the cart again
+        await page.locator('#usecart_no').click();
+        await checkCartIgnored(page);
+    });
+
+    test('Loading with cart contents then disabling it', async ({ page }) => {
+        await loadGVExport(page, true);
+        await expect(await page.locator('#cart-section')).not.toBeVisible();
+        // Add someone to cart
+        await page.locator('#click_action_indi').selectOption('50');
+        const tile = await getIndividualTile(page, 'Olivia BLOGGS');
+        await tile.click();
+        await page.locator('.settings_ellipsis_menu_item', { hasText: 'Add to clippings cart' }).click()
+        await expect(page.locator('.toast-message').filter({ hasText: 'Added to clippings cart' })).toBeVisible();
+        await expect(page.locator('#rendering svg')).toBeVisible();
+
+        await page.goto('/module/_GVExport_/Chart/gvetest?xref=X1');
+        await page.locator('#usecart_no').click();
+        await checkCartIgnored(page);
+    });
+
+    test('No cart on page load doesn\'t disable fields', async ({ page }) => {
+        await loadGVExport(page, true);
+        await expect(await page.locator('#cart-section')).not.toBeVisible();
+        await checkCartFieldsEnabled(page);
+    });
+
+    test('Cart on page load disables fields', async ({ page }) => {
+        await loadGVExport(page, true);
+        await expect(await page.locator('#cart-section')).not.toBeVisible();
+        // Add someone to cart
+        await page.locator('#click_action_indi').selectOption('50');
+        const tile = await getIndividualTile(page, 'Olivia BLOGGS');
+        await tile.click();
+        await page.locator('.settings_ellipsis_menu_item', { hasText: 'Add to clippings cart' }).click()
+        await expect(page.locator('.toast-message').filter({ hasText: 'Added to clippings cart' })).toBeVisible();
+        await expect(page.locator('#rendering svg')).toBeVisible();
+
+        await page.goto('/module/_GVExport_/Chart/gvetest?xref=X1');
+        await checkCartFieldsDisabled(page);
+    });
+});

@@ -1,28 +1,28 @@
 <?php
 
-use Fisharebest\Webtrees\I18N;
-use Fisharebest\Webtrees\Tree;
-use vendor\WebtreesModules\gvexport\GVExport;
+    use Fisharebest\Webtrees\I18N;
+    use Fisharebest\Webtrees\Tree;
+    use vendor\WebtreesModules\gvexport\GVExport;
 
-/**
- * @var array       $vars           array of saved settings
- * @var Tree        $tree           webtrees tree object of current tree
- * @var bool        $cartempty      whether the clippings cart is empty
- * @var GVExport    $module         this module
- * @var array       $settings       wider array of settings and options
- * @var bool        $admin          whether this is for the admin page (remove functions that aren't settings)
- */
+    /**
+     * @var array       $vars           array of saved settings
+     * @var Tree        $tree           webtrees tree object of current tree
+     * @var bool        $cartempty      whether the clippings cart is empty
+     * @var GVExport    $module         this module
+     * @var array       $settings       wider array of settings and options
+     * @var bool        $admin          whether this is for the admin page (remove functions that aren't settings)
+     */
 
     $grey_people = false;
     // Check if there are INDI records in the clippings cart, to decide what options to allow
     if ($vars["use_cart"] && !$cartempty) {
         $grey_people = true;
     }
-    ?>
+?>
 
-    <div id="cart-section" class="row no-right-margin form-group" <?= $cartempty ? 'style="display: none"' : ''; ?> >
-        <?= view($module->name() . '::MainPage/PeopleToInclude/ItemsInClippingsCart',['vars' => $vars, 'admin' => $admin]); ?>
-    </div>
+<div id="cart-section" class="row no-right-margin form-group" <?= $cartempty ? 'style="display: none"' : ''; ?> >
+    <?= view($module->name() . '::MainPage/PeopleToInclude/ItemsInClippingsCart',['vars' => $vars, 'admin' => $admin]); ?>
+</div>
 
 <div class="row no-right-margin form-group">
     <?= view($module->name() . '::MainPage/PeopleToInclude/IncludeAnyoneRelatedTo',['vars' => $vars, 'tree' => $tree, 'greypeople' => $grey_people, 'admin' => $admin]); ?>

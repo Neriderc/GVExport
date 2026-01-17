@@ -129,3 +129,47 @@ export async function addFamilyToClippingsCartViaMenu(page: Page) {
     await page.getByRole('menuitem', { name: 'Clippings cart' }).click();
     await expect(page.locator('table a').nth(0)).toContainText('Joe BLOGGS + Jane Smith');
 }
+
+export async function checkCartIgnored(page: Page) {
+    await expect(await page.locator('#usecart_no')).toBeChecked();
+    await expect(await page.locator('#usecart_yes')).not.toBeChecked();
+
+    await checkCartFieldsEnabled(page);
+};
+
+export async function checkCartUsed(page: Page) {
+    await expect(await page.locator('#usecart_no')).not.toBeChecked();
+    await expect(await page.locator('#usecart_yes')).toBeChecked();
+
+    await checkCartFieldsDisabled(page);
+};
+
+export async function checkCartFieldsDisabled(page: Page) {
+    await expect(page.locator('#include_ancestors')).toBeDisabled();
+    await expect(page.locator('#include_descendants')).toBeDisabled();
+    await expect(page.locator('#ancestor_levels')).toBeDisabled();
+    await expect(page.locator('#descendant_levels')).toBeDisabled();
+    await expect(page.locator('#include_siblings')).toBeDisabled();
+    await expect(page.locator('#include_all_relatives')).toBeDisabled();
+    await expect(page.locator('#include_spouses')).toBeDisabled();
+    await expect(page.locator('#include_all')).toBeDisabled();
+    await expect(page.locator('#xref_list')).toBeDisabled();
+    await expect(page.locator('#stop_xref_list')).toBeDisabled();
+    await expect(page.locator('#mark_not_related')).toBeDisabled();
+    await expect(page.locator('#url_xref_treatment')).not.toBeDisabled();
+};
+
+export async function checkCartFieldsEnabled(page: Page) {
+    await expect(page.locator('#include_ancestors')).not.toBeDisabled();
+    await expect(page.locator('#include_descendants')).not.toBeDisabled();
+    await expect(page.locator('#ancestor_levels')).not.toBeDisabled();
+    await expect(page.locator('#descendant_levels')).not.toBeDisabled();
+    await expect(page.locator('#include_siblings')).not.toBeDisabled();
+    await expect(page.locator('#include_all_relatives')).not.toBeDisabled();
+    await expect(page.locator('#include_spouses')).not.toBeDisabled();
+    await expect(page.locator('#include_all')).not.toBeDisabled();
+    await expect(page.locator('#xref_list')).not.toBeDisabled();
+    await expect(page.locator('#stop_xref_list')).not.toBeDisabled();
+    await expect(page.locator('#mark_not_related')).not.toBeDisabled();
+    await expect(page.locator('#url_xref_treatment')).not.toBeDisabled();
+};

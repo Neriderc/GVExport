@@ -1042,8 +1042,8 @@ const Form = {
                 Form.toggleCart(false);
             } else {
                 if (cartempty) {
-                    document.getElementById("usecart_yes").setCheckStatus = false;
-                    document.getElementById("usecart_no").setCheckStatus = true;
+                    document.getElementById("usecart_yes").checked = false;
+                    document.getElementById("usecart_no").checked = true;
                 }
                 Form.toggleCart(document.getElementById("usecart_yes").checked);
             } 
