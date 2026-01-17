@@ -996,6 +996,7 @@ const Form = {
                 Form.updateClippingsCartCount();
                 UI.showToast(TRANSLATE[response]);
                 UI.contextMenu.clearContextMenu();
+                Data.api.getClippingsCartXrefs();
             } else {
                 UI.showToast(ERROR_CHAR + TRANSLATE['Unknown error']);
             }
