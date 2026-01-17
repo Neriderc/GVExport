@@ -115,10 +115,12 @@ class ClippingsCartListBuilder {
 	 * @param string $pid XREF of this individual
 	 */
 	private function addIndiToList($record) {
-		$pid = $record->xref();
+		$pid = $record instanceof Individual ? $record->xref() : $record;
+		
 		if(!isset($this->individuals[$pid])) {
 			$this->individuals[$pid] = array();
 		}
+		
 		$this->individuals[$pid]['pid'] = $pid;
 		$this->individuals[$pid]['record'] = $record;
 	}
