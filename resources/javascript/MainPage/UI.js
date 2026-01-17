@@ -189,6 +189,8 @@ const UI = {
             });
 
             for (let i = 0; i < linkElements.length; i++) {
+                let url = linkElements[i].getAttribute('xlink:href');
+                let xref = Data.url.getXrefFromUrl(url);
                 linkElements[i].addEventListener("mousedown", function (e) {
                     startx = e.clientX;
                     starty = e.clientY;
@@ -207,7 +209,6 @@ const UI = {
                     let isIndividual = UI.tile.isNodeAnIndividual(linkElements[i]);
                     let clickActionEl = isIndividual ? document.getElementById('click_action_indi') : document.getElementById('click_action_fam');
                     let clickAction = clickActionEl ? clickActionEl.value : DEFAULT_ACTION;
-                    let url = linkElements[i].getAttribute('xlink:href');
 
                     // Do nothing if user is dragging
                     if (Data.getDistance(startx, starty, e.clientX, e.clientY) >= MIN_DRAG) {
@@ -215,7 +216,6 @@ const UI = {
                     }
 
                     if (isIndividual) {
-                        let xref = Data.url.getXrefFromUrl(url);
                         switch (clickAction) {
                             case '0':
                                 window.open(url,'_blank');
@@ -241,7 +241,6 @@ const UI = {
                                 if (xref) {
                                     Form.stoppingIndiList.clearStopIndiList(false);
                                     Form.stoppingIndiList.addIndiToStopList(xref);
-                                    Data.url.changeURLXref(xref);
                                     Form.handleFormChange();
                                 }
                                 break;
@@ -267,7 +266,6 @@ const UI = {
                     } else {
                         let parent = e.currentTarget.closest('g.node');
                         let titleEl = parent.querySelector('title');
-                        let xref = titleEl.textContent;
                         // Is a family tile
                         switch (clickAction) {
                             case '0': // Open family page
