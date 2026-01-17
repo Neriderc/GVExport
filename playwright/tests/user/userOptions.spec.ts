@@ -44,17 +44,27 @@ test.describe('option: Action when individual clicked', ()=>{
         await testTileClickOpensPage(page, 'X1', 'Joe BLOGGS', /add-parent-to-individual/);
     });
 
-    test('Add to clippings cart', async ({ page }) => {
+    test('Toggle clippings cart status', async ({ page }) => {
+        // Add to cart
         await loadGVExport(page, true);
-        await page.locator('#highlight_custom_indis').check();
         await page.locator('#click_action_indi').selectOption('100');
-        const tile = await getIndividualTile(page, 'Olivia BLOGGS');
+        let tile = await getIndividualTile(page, 'Olivia BLOGGS');
         await tile.click();
         await expect(page.locator('.toast-message').filter({ hasText: 'Added to clippings cart' })).toBeVisible();
         await expect(page.locator('#rendering svg')).toBeVisible();
         await page.locator('.menu-clippings').getByRole('button', { name: 'Clippings cart' }).click();
         await page.getByRole('menuitem', { name: 'Clippings cart' }).click();
         await expect(page.locator('table a').nth(0)).toContainText('Olivia BLOGGS');
+
+        // Remove from cart
+        await page.goto('/module/_GVExport_/Chart/gvetest?xref=X1');
+        tile = await getIndividualTile(page, 'Olivia BLOGGS');
+        await tile.click();
+        await expect(page.locator('.toast-message').filter({ hasText: 'Removed from clippings cart' })).toBeVisible();
+        await expect(page.locator('#rendering svg')).toBeVisible();
+        await page.locator('.menu-clippings').getByRole('button', { name: 'Clippings cart' }).click();
+        await page.getByRole('menuitem', { name: 'Clippings cart' }).nth(0).click();
+        await expect(page.locator('#content')).toContainText('Your clippings cart is empty.')
     });
 });
 
@@ -74,17 +84,27 @@ test.describe('option: Action when family clicked', () => {
         await page.locator('#click_action_fam').selectOption('50');
         await testTileClickOpensPage(page, 'X41', 'Joe BLOGGS + Jane Smith', /change-family-members/);
     });
-    test('Add to clippings cart', async ({ page }) => {
+    test('Toggle clippings cart status', async ({ page }) => {
+        // Add to cart
         await loadGVExport(page, true);
-        await page.locator('#highlight_custom_fams').check();
         await page.locator('#click_action_fam').selectOption('60');
-        const tile = await getTileByXref(page, 'X41');
+        let tile = await getTileByXref(page, 'X41');
         await tile.click();
         await expect(page.locator('.toast-message').filter({ hasText: 'Added to clippings cart' })).toBeVisible();
         await expect(page.locator('#rendering svg')).toBeVisible();
         await page.locator('.menu-clippings').getByRole('button', { name: 'Clippings cart' }).click();
         await page.getByRole('menuitem', { name: 'Clippings cart' }).click();
         await expect(page.locator('table a').nth(0)).toContainText('Joe BLOGGS + Jane Smith');
+
+        // Remove from cart
+        await page.goto('/module/_GVExport_/Chart/gvetest?xref=X1');
+        tile = await getTileByXref(page, 'X41');
+        await tile.click();
+        await expect(page.locator('.toast-message').filter({ hasText: 'Removed from clippings cart' })).toBeVisible();
+        await expect(page.locator('#rendering svg')).toBeVisible();
+        await page.locator('.menu-clippings').getByRole('button', { name: 'Clippings cart' }).click();
+        await page.getByRole('menuitem', { name: 'Clippings cart' }).nth(0).click();
+        await expect(page.locator('table a').nth(0)).not.toContainText('Joe BLOGGS + Jane Smith');
     });
 });
 
