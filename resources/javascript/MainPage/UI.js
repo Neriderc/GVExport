@@ -587,7 +587,12 @@ const UI = {
                 document.getElementById('modal-cancel').onclick = () => {
                     document.getElementById('modal').remove();
                     Form.showHide(document.getElementById('cart-section'), !cartempty);
-                    Form.toggleCart(!cartempty);
+                    // Disable our fields again by indicating cart is enabled (only if items in cart)
+                    if (!cartempty) {
+                        Form.toggleCart(document.getElementById("usecart_yes").checked);
+                    } else {
+                        Form.toggleCart(false);
+                    }
                 };
 
                 document.getElementById('modal-yes').onclick = () => {

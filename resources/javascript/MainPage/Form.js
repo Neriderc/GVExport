@@ -190,13 +190,13 @@ const Form = {
      * @param enable
      */
     toggleCart(enable) {
-            const el = document.getElementsByClassName("cart_toggle");
-            for (let i = 0; i < el.length; i++) {
-                el.item(i).disabled = enable;
-            }
-            Form.showHideClass("cart_toggle_hide", !enable);
-            Form.showHideClass("cart_toggle_show", enable);
-        },
+        const el = document.getElementsByClassName("cart_toggle");
+        for (let i = 0; i < el.length; i++) {
+            el.item(i).disabled = enable;
+        }
+        Form.showHideClass("cart_toggle_hide", !enable);
+        Form.showHideClass("cart_toggle_show", enable);
+    },
 
     /**
      * This function is used in Form.toggleCart to show or hide all elements with a certain class,
@@ -1036,9 +1036,20 @@ const Form = {
         // Element may not exist - e.g. clippings cart module disabled
         if (el) {
             el.innerText = count;
-            
             Form.showHide(document.getElementById('cart-section'), count > 0);
+            // Disable our fields again by indicating cart is enabled (only if items in cart)
+            if (count === 0) {
+                Form.toggleCart(false);
+            } else {
+                if (cartempty) {
+                    document.getElementById("usecart_yes").setCheckStatus = false;
+                    document.getElementById("usecart_no").setCheckStatus = true;
+                }
+                Form.toggleCart(document.getElementById("usecart_yes").checked);
+            } 
+            
         }
+        cartempty = count === 0;
     },
     
 
