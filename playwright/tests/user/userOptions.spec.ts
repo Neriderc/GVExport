@@ -63,6 +63,7 @@ test.describe('option: Action when individual clicked', ()=>{
         await expect(page.locator('.toast-message').filter({ hasText: 'Added to clippings cart' })).toBeVisible();
         await expect(page.locator('#rendering svg')).toBeVisible();
         await page.locator('.menu-clippings').getByRole('button', { name: 'Clippings cart' }).click();
+        await expect(page.locator('.menu-clippings-cart .badge').first()).toHaveText('1')
         await page.getByRole('menuitem', { name: 'Clippings cart' }).click();
         await expect(page.locator('table a').nth(0)).toContainText('Olivia BLOGGS');
 
@@ -73,6 +74,7 @@ test.describe('option: Action when individual clicked', ()=>{
         await expect(page.locator('.toast-message').filter({ hasText: 'Removed from clippings cart' })).toBeVisible();
         await expect(page.locator('#rendering svg')).toBeVisible();
         await page.locator('.menu-clippings').getByRole('button', { name: 'Clippings cart' }).click();
+        await expect(page.locator('.menu-clippings-cart .badge').first()).toHaveText('0')
         await page.getByRole('menuitem', { name: 'Clippings cart' }).nth(0).click();
         await expect(page.locator('#content')).toContainText('Your clippings cart is empty.')
     });
@@ -103,6 +105,7 @@ test.describe('option: Action when family clicked', () => {
         await expect(page.locator('.toast-message').filter({ hasText: 'Added to clippings cart' })).toBeVisible();
         await expect(page.locator('#rendering svg')).toBeVisible();
         await page.locator('.menu-clippings').getByRole('button', { name: 'Clippings cart' }).click();
+        await expect(page.locator('.menu-clippings-cart .badge').first()).toHaveText('6')
         await page.getByRole('menuitem', { name: 'Clippings cart' }).click();
         await expect(page.locator('table a').nth(0)).toContainText('Joe BLOGGS + Jane Smith');
 
@@ -113,6 +116,7 @@ test.describe('option: Action when family clicked', () => {
         await expect(page.locator('.toast-message').filter({ hasText: 'Removed from clippings cart' })).toBeVisible();
         await expect(page.locator('#rendering svg')).toBeVisible();
         await page.locator('.menu-clippings').getByRole('button', { name: 'Clippings cart' }).click();
+        await expect(page.locator('.menu-clippings-cart .badge').first()).toHaveText('5')
         await page.getByRole('menuitem', { name: 'Clippings cart' }).nth(0).click();
         await expect(page.locator('table a').nth(0)).not.toContainText('Joe BLOGGS + Jane Smith');
     });
@@ -140,6 +144,7 @@ test.describe('user-only tests for indi tile context menu', ()=>{
         await expect(page.locator('.toast-message').filter({ hasText: 'Added to clippings cart' })).toBeVisible();
         await expect(page.locator('#rendering svg')).toBeVisible();
         await page.locator('.menu-clippings').getByRole('button', { name: 'Clippings cart' }).click();
+        await expect(page.locator('.menu-clippings-cart .badge').first()).toHaveText('1')
         await page.getByRole('menuitem', { name: 'Clippings cart' }).click();
         await expect(page.locator('table a').nth(0)).toContainText('Olivia BLOGGS');
     });
@@ -154,6 +159,7 @@ test.describe('user-only tests for indi tile context menu', ()=>{
         await expect(page.locator('.toast-message').filter({ hasText: 'Added to clippings cart' })).toBeVisible();
         await expect(page.locator('#rendering svg')).toBeVisible();
         await page.locator('.menu-clippings').getByRole('button', { name: 'Clippings cart' }).click();
+        await expect(page.locator('.menu-clippings-cart .badge').first()).toHaveText('1')
         await page.getByRole('menuitem', { name: 'Clippings cart' }).click();
         await expect(page.locator('table a').nth(0)).toContainText('Olivia BLOGGS');
 
@@ -165,6 +171,7 @@ test.describe('user-only tests for indi tile context menu', ()=>{
         await expect(page.locator('.toast-message').filter({ hasText: 'Removed from clippings cart' })).toBeVisible();
         await expect(page.locator('#rendering svg')).toBeVisible();
         await page.locator('.menu-clippings').getByRole('button', { name: 'Clippings cart' }).click();
+        await expect(page.locator('.menu-clippings-cart .badge').first()).toHaveText('0')
         await page.getByRole('menuitem', { name: 'Clippings cart' }).nth(0).click();
         await expect(page.locator('#content')).toContainText('Your clippings cart is empty.')
     });
@@ -201,6 +208,7 @@ test.describe('user-only tests for family tile context menu', () => {
         await expect(page.locator('.toast-message').filter({ hasText: 'Removed from clippings cart' })).toBeVisible();
         await expect(page.locator('#rendering svg')).toBeVisible();
         await page.locator('.menu-clippings').getByRole('button', { name: 'Clippings cart' }).click();
+        await expect(page.locator('.menu-clippings-cart .badge').first()).toHaveText('5')
         await page.getByRole('menuitem', { name: 'Clippings cart' }).nth(0).click();
         await expect(page.locator('table a').nth(0)).not.toContainText('Joe BLOGGS + Jane Smith');
     });
@@ -235,6 +243,7 @@ test.describe('Test saving and loading clippings cart items to the saved setting
 
         // Clear clippings cart
         await page.locator('.menu-clippings').getByRole('button', { name: 'Clippings cart' }).click();
+        await expect(page.locator('.menu-clippings-cart .badge').first()).toHaveText('6')
         await page.getByRole('menuitem', { name: 'Empty the clippings cart' }).click();
         await expect(page.locator('#content')).toContainText('Your clippings cart is empty.')
 
@@ -249,6 +258,7 @@ test.describe('Test saving and loading clippings cart items to the saved setting
         // Check items added to clippings cart
         await expect(page.locator('#rendering svg')).toBeVisible();
         await page.locator('.menu-clippings').getByRole('button', { name: 'Clippings cart' }).click();
+        await expect(page.locator('.menu-clippings-cart .badge').first()).toHaveText('6')
         await page.getByRole('menuitem', { name: 'Clippings cart' }).click();
         await expect(page.locator('table a').nth(0)).toContainText('Joe BLOGGS + Jane Smith');
     });
@@ -272,6 +282,7 @@ test.describe('Test saving and loading clippings cart items to the saved setting
 
         // Clear clippings cart
         await page.locator('.menu-clippings').getByRole('button', { name: 'Clippings cart' }).click();
+        await expect(page.locator('.menu-clippings-cart .badge').first()).toHaveText('6')
         await page.getByRole('menuitem', { name: 'Empty the clippings cart' }).click();
         await expect(page.locator('#content')).toContainText('Your clippings cart is empty.')
 
@@ -286,6 +297,7 @@ test.describe('Test saving and loading clippings cart items to the saved setting
 
         // Check items NOT added to clippings cart
         await page.locator('.menu-clippings').getByRole('button', { name: 'Clippings cart' }).click();
+        await expect(page.locator('.menu-clippings-cart .badge').first()).toHaveText('0')
         await page.getByRole('menuitem', { name: 'Clippings cart' }).click();
         await expect(page.locator('#content')).toContainText('Your clippings cart is empty.')
     });
@@ -309,6 +321,7 @@ test.describe('Test saving and loading clippings cart items to the saved setting
 
         // Clear clippings cart
         await page.locator('.menu-clippings').getByRole('button', { name: 'Clippings cart' }).click();
+        await expect(page.locator('.menu-clippings-cart .badge').first()).toHaveText('6')
         await page.getByRole('menuitem', { name: 'Empty the clippings cart' }).click();
         await expect(page.locator('#content')).toContainText('Your clippings cart is empty.')
 
@@ -323,6 +336,7 @@ test.describe('Test saving and loading clippings cart items to the saved setting
 
         // Check items NOT added to clippings cart
         await page.locator('.menu-clippings').getByRole('button', { name: 'Clippings cart' }).click();
+        await expect(page.locator('.menu-clippings-cart .badge').first()).toHaveText('0')
         await page.getByRole('menuitem', { name: 'Clippings cart' }).click();
         await expect(page.locator('#content')).toContainText('Your clippings cart is empty.')
     });

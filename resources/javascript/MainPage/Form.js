@@ -1043,7 +1043,7 @@ const Form = {
      */
     async updateClippingsCartCount() {
         const countResponse = await Data.api.getClippingsCartCount();
-        const count = countResponse.count;
+        const count = countResponse.total;
         const hasIndiOrFam = countResponse.hasIndiOrFam;
         const el = document.querySelector('.menu-clippings-cart .badge');
         // Element may not exist - e.g. clippings cart module disabled

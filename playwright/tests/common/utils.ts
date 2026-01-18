@@ -126,6 +126,7 @@ export async function addFamilyToClippingsCartViaMenu(page: Page) {
     await expect(page.locator('.toast-message').filter({ hasText: 'Added to clippings cart' })).toBeVisible();
     await expect(page.locator('#rendering svg')).toBeVisible();
     await page.locator('.menu-clippings').getByRole('button', { name: 'Clippings cart' }).click();
+    await expect(page.locator('.menu-clippings-cart .badge').first()).toHaveText('6')
     await page.getByRole('menuitem', { name: 'Clippings cart' }).click();
     await expect(page.locator('table a').nth(0)).toContainText('Joe BLOGGS + Jane Smith');
 }
