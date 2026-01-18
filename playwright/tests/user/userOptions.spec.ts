@@ -393,4 +393,27 @@ test.describe('Test use and ignore clippings cart settings', () => {
         await page.goto('/module/_GVExport_/Chart/gvetest?xref=X1');
         await checkCartFieldsDisabled(page);
     });
+
+    test('Removing last clippings cart indi/fam removes cart section', async ({ page }) => {
+        await loadGVExport(page, true);
+        await expect(await page.locator('#cart-section')).not.toBeVisible();
+        // Add someone to cart
+        await page.locator('#click_action_indi').selectOption('50');
+        let tile = await getTileByXref(page, 'X1');
+        await tile.click();
+        await page.locator('.settings_ellipsis_menu_item', { hasText: 'Add to clippings cart' }).click()
+        await expect(page.locator('.toast-message').filter({ hasText: 'Added to clippings cart' })).toBeVisible();
+        await expect(page.locator('#rendering svg')).toBeVisible();
+
+        // Now remove them
+        await page.goto('/module/_GVExport_/Chart/gvetest?xref=X1');
+        tile = await getTileByXref(page, 'X1');
+        await tile.click();
+        await page.locator('.settings_ellipsis_menu_item', { hasText: 'Remove from clippings cart' }).click();
+        await expect(page.locator('.toast-message').filter({ hasText: 'Removed from clippings cart' })).toBeVisible();
+        await expect(page.locator('#rendering svg')).toBeVisible();
+        
+        await expect(await page.locator('#cart-section')).not.toBeVisible();
+        await checkCartFieldsEnabled(page);
+    });
 });
