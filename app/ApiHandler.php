@@ -557,7 +557,10 @@ class ApiHandler
      */
     private function countXrefsClippingsCart() {
         $this->response_data['success'] = true;
-        $this->response_data['response'] = ClippingsCart::countXrefsInCart($this->tree);;
+        $this->response_data['response'] = [
+            'total'   => ClippingsCart::countXrefsInCart($this->tree),
+            'hasIndiOrFam' => ClippingsCart::hasIndividualsOrFamilies($this->tree),
+        ];
     }
 
     /**
