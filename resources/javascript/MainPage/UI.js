@@ -478,10 +478,10 @@ const UI = {
             } else {
                 UI.showToast(ERROR_CHAR + TRANSLATE['Unknown error']);
             }
+            const cart = await Data.api.getClippingsCartXrefs(false);
+
             // Only refresh if we are in the 'use cart' view, otherwise nothing would change
             if (document.getElementById("usecart_yes").checked) {
-                // We are removing the xref, so need to use another for scroll positioning
-                const cart = await Data.api.getClippingsCartXrefs(false);
                 if (cart != []) {
                     Form.handleFormChange(cart[0]);
                 }
@@ -609,6 +609,7 @@ const UI = {
             this.addXrefsToClippingsCartRequest(xrefs).then((response) => {
                 if (response) {
                     Form.updateClippingsCartCount();
+                    Form.showHide(document.getElementById('cart-section'), true);
                     UI.showToast(TRANSLATE[response]);
                     UI.contextMenu.clearContextMenu();
                     for (const xref of xrefs) {

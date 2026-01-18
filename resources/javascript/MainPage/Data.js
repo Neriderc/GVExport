@@ -116,6 +116,12 @@ const Data = {
             };
             const response = await Data.callAPI(request);
             Data.clippingsCartXrefs = new Set(response);
+            if (!allTypes && Data.clippingsCartXrefs.size !== 0) {
+                Form.showHide(document.getElementById('cart-section'), true);
+            }
+            if (Data.clippingsCartXrefs.size === 0) {
+                Form.showHide(document.getElementById('cart-section'), false);
+            }
             return response;
         },
 
