@@ -121,6 +121,7 @@ const Data = {
             }
             if (Data.clippingsCartXrefs.size === 0) {
                 Form.showHide(document.getElementById('cart-section'), false);
+                Diagram.setBorder('default');
             }
             return response;
         },
