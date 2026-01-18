@@ -147,17 +147,4 @@ const Diagram = {
             }
         }
     },
-
-    setBorder(border) {
-        this.border = border;
-        this.updateBorder();
-    },
-
-    updateBorder() {
-        this.element.classList.remove(
-            'border-red',
-            'border-default',
-        );
-        this.element.classList.add(`border-${this.border}`);
-    },
 }

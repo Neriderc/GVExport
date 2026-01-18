@@ -163,14 +163,14 @@ const UI = {
         mouseOverEvent(xref) {
             if (!Form.state.useCart) {
                 if (Data.clippingsCartXrefs.has(xref)) {
-                    Diagram.setBorder('red');
+                    UI.statusBar.setInCart();
                 }
             }
         },
 
         mouseOutEvent() {
             if (!Form.state.useCart) {
-                Diagram.setBorder('default');
+                UI.statusBar.clear();
             }
         },
 
@@ -1611,5 +1611,32 @@ const UI = {
                 textArea.remove();
             });
         }
+    },
+
+    statusBar: {
+        element: document.getElementById('status-bar'),
+
+        set(message) {
+            this.element.innerText = message;
+        },
+
+        setInCart() {
+            if (!cartempty) {
+                this.set('In clippings cart');
+                this.element.style.display = 'block';
+            }
+        },
+
+        setUsingCart() {
+            if (!cartempty) {
+                this.set('Using clippings cart');
+                this.element.style.display = 'block';
+            }
+        },
+
+        clear() {
+            this.element.innerText = '';
+            this.element.style.display = 'none';
+        },
     },
 };

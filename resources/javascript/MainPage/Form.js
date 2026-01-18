@@ -202,9 +202,9 @@ const Form = {
         Form.showHideClass("cart_toggle_show", enable);
         Form.state.useCart = enable;
         if (enable) {
-            Diagram.setBorder('red');
+            UI.statusBar.setUsingCart();
         } else {
-            Diagram.setBorder('default');
+            UI.statusBar.clear();
         }
     },
 
