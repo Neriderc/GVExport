@@ -4,6 +4,7 @@ namespace vendor\WebtreesModules\gvexport;
 
 use Fisharebest\Webtrees\GedcomRecord;
 use Fisharebest\Webtrees\Individual;
+use Fisharebest\Webtrees\Family;
 use Fisharebest\Webtrees\Session;
 use Fisharebest\Webtrees\Tree;
 use Fisharebest\Webtrees\Registry;
@@ -37,20 +38,16 @@ class ClippingsCart {
 	}
 
 	/**
-	 * Are any of the cart records an individual?
+	 * Are any of the cart records an individual or family?
 	 *
 	 * @param Tree $tree
 	 * @return bool
 	 */
-	public static function hasIndividuals(Tree $tree): bool
+	public static function hasIndividualsOrFamilies(Tree $tree): bool
 	{
 		if (!self::isCartEmpty($tree)) {
-			$records = self::getRecordsInCart($tree);
-			foreach ($records as $record) {
-				if ($record instanceof Individual) {
-					return true;
-				}
-			}
+			$records = self::getIndiFamXrefsInCart($tree);
+			return sizeof($records) !== 0;
 		}
 		return false;
 	}
