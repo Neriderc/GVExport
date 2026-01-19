@@ -1622,7 +1622,7 @@ const UI = {
 
         setInCart() {
             if (!cartempty) {
-                this.set('In clippings cart');
+                this.set(TRANSLATE['In clippings cart']);
                 this.element.style.display = 'block';
             }
         },
