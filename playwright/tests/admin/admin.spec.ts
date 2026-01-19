@@ -3,9 +3,24 @@ import { checkDefaults } from '../common/defaults.ts';
 import { checkNonDefaults, setNonDefaults } from '../common/nondefaults.ts';
 import { runDownloadTests } from '../common/sharedGeneralTests.ts';
 
-test.describe('control panel tests', () => {
-    
 
+test.describe('Downloads work when Graphviz disabled', { 
+    annotation: { 
+        type: 'issue', 
+        description: 'https://github.com/Neriderc/GVExport/issues/625' 
+    },}, () => {
+    test('Setup by disabling graphviz', async ({ page }) => {
+        await page.goto('/module/_GVExport_/Admin');
+        await page.getByRole('link', { name: 'reset to defaults' }).click();
+        await page.locator('#show_debug_panel').check();
+        await page.locator('#enable_graphviz').uncheck();
+        await page.getByRole('button', { name: 'save' }).click();
+    });
+    runDownloadTests(['svg', 'pdf', 'png', 'jpg', 'dot']);
+});
+
+
+test.describe('control panel tests', () => {
     test('control panel values are saved', async ({ page }) => {
         await page.goto('/module/_GVExport_/Admin');
         await expect(page).toHaveURL('/module/_GVExport_/Admin');
@@ -14,22 +29,7 @@ test.describe('control panel tests', () => {
         await checkNonDefaults(page, true);
     });
 
-    test.describe('Downloads work when Graphviz disabled', { 
-        annotation: { 
-            type: 'issue', 
-            description: 'https://github.com/Neriderc/GVExport/issues/625' 
-        },}, () => {
-        test('Setup by disabling graphviz', async ({ page }) => {
-            await page.goto('/module/_GVExport_/Admin');
-            await page.getByRole('link', { name: 'reset to defaults' }).click();
-            await page.locator('#show_debug_panel').check();
-            await page.locator('#enable_graphviz').uncheck();
-            await page.getByRole('button', { name: 'save' }).click();
-        });
-        runDownloadTests(['svg', 'pdf', 'png', 'jpg', 'dot']);
-    });
-
-    // It's important this test is run after the above which disabled Graphviz, as it restores the defaults.
+    // It's important this test is run after the download test which disabled Graphviz, as it restores the defaults.
     test('control panel defaults are correct', async ({ page }) => {
         await page.goto('/module/_GVExport_/Admin');
         await page.getByRole('link', { name: 'reset to defaults' }).click();
