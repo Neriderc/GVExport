@@ -2545,3 +2545,55 @@ msgstr "Es gibt eine Einstellung, mit der Sie festlegen können, was passiert, w
 msgid "Context menu when tile clicked"
 msgstr "Kontext-Menü beim Klicken auf ein Kästchen"
 
+#: 
+msgid "This saved setting contains clippings cart items, add them to the clippings cart?"
+msgstr "Diese gespeicherte Einstellung enthält Inhalte des Sammelbehälters.  Sollen sie zum Sammelbehälter hinzugefügt werden?"
+
+#: 
+msgid "Diagram is larger than the PDF page size limit. Please reduce number of records, reduce DPI setting, or use another export option."
+msgstr "Diagrammgröße überschreitet das Limit für PDF Seiten. Bitte Zahl der Sätze reduzieren, kleinere DPI Einstellung wählen, oder andere Export Option wählen"
+
+#: 
+msgid "Rounded rectangle option is not supported for the Combined diagram type"
+msgstr "Rechteck mit abgerundeten Ecken wird beim kombinierten Diagrammtyp nicht unterstützt"
+
+#: 
+msgid "Show occupation of individuals"
+msgstr "Zeige den Beruf der Person"
+
+#: 
+msgid "Whether to print the occupation of the individual on the individual's tile."
+msgstr "Ob der Beruf der Person im Personenkästchen gezeigt werden soll"
+
+#: 
+msgid "Remove from clippings cart"
+msgstr "Aus dem Sammelbehälter entfernen"
+
+#: 
+msgid "Clippings cart rebuilt"
+msgstr "Sammelbehälter wurde aufgefrischt"
+
+#: 
+msgid "When adding to the clippings cart, all linked objects are added along with the relevant individual or family. However, when removing from the clippings cart, only the relevant individual or family is removed. The option to rebuild the clippings cart will empty the cart, then add each individual and family back to the cart along with their linked objects. This allows you to remove items no longer linked to any individual or family in the clippings cart, and allows you to update the clippings cart to reflect changes to linked objects for your individuals and families."
+msgstr "Beim Hinzufügen zum Sammelbehälter werden alle verknüpften Objekte zusammen mit der entsprechenden Person oder Familie hinzugefügt. Beim Entfernen aus dem Sammelbehälter wird jedoch nur die entsprechende Person oder Familie entfernt. Mit der Option zum Auffrischen des Sammelbehälters wird dieser geleert und anschließend werden alle Personen und Familien zusammen mit den verknüpften Objekten wieder in den Sammelbehälter aufgenommen. Auf diese Weise können Sie Elemente entfernen, die nicht mehr mit einer Person oder Familie im Sammelbehälter verknüpft sind, und den Sammelbehälter aktualisieren, um Änderungen an verknüpften Objekten für die Personen und Familien widerzuspiegeln."
+
+#: 
+msgid "The option to add an individual or family to the clippings cart will become an option to remove them if they are already in the cart. Clicking this option will remove the XREF of the individual or family, but will not changed linked objects. You will need to rebuild the clippings cart to update the linked objects (see below)."
+msgstr "Die Option, eine Person oder Familie zum Sammelbehälter hinzuzufügen, wird zu einer Option, diese wieder zu entfernen, falls sie sich bereits im Sammelbehälter befinden sollte. Durch Klicken auf diese Option wird die XREF der Person oder Familie entfernt, die mit ihr verknüpften Objekte werden jedoch nicht geändert. Sie müssen den Sammelbehälter auffrischen, um diese verknüpften Objekte zu aktualisieren (siehe unten)."
+
+#: 
+msgid "Toggle clippings cart status"
+msgstr "Rein/Raus Sammelbehälter"
+
+#: 
+msgid "If they are already in the clippings cart, then remove them."
+msgstr "Wenn sie sich bereits im Sammelbehälter befinden, werden sie entfernt."
+
+#: 
+msgid "Using clippings cart"
+msgstr ""
+
+#: 
+msgid "In clippings cart"
+msgstr ""
+

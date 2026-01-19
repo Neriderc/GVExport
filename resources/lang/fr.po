@@ -2499,23 +2499,23 @@ msgstr "Ajoutez cette personne et les objets qui lui sont associés au presse-pa
 
 #: 
 msgid "Add this family and their linked objects to the clippings cart."
-msgstr ""
+msgstr "Ajoutez cette famille et les objets associés au Presse-Papier."
 
 #: 
 msgid "Add to clippings cart"
-msgstr ""
+msgstr "Ajouter au Presse-Papier"
 
 #: 
 msgid "Unknown error"
-msgstr ""
+msgstr "Erreur inconnue"
 
 #: 
 msgid "Added to clippings cart"
-msgstr ""
+msgstr "Ajouté  au Presse-Papier."
 
 #: 
 msgid "Add all diagram items to clippings cart"
-msgstr ""
+msgstr "Ajouter tous les éléments du diagramme au Presse-Papier"
 
 #: 
 msgid "Within webtrees, you can add items to the clippings cart. This is usually done by navigating to a record within webtrees then selecting the &quot;Clippings cart&quot; option near the top of the screen."
@@ -2531,21 +2531,74 @@ msgstr "Si vous avez des individus dans le panier mais que vous ne voulez pas le
 
 #: 
 msgid "Adding to the clippings cart from GVExport"
-msgstr ""
+msgstr "Ajouter au Presse-Papier depuis GVExport"
 
 #: 
 msgid "GVExport also includes ways to add individuals and families to the clippings cart."
-msgstr ""
+msgstr "GVExport propose également des moyens d'ajouter des personnes et des familles au Presse-Papier."
 
 #: 
 msgid "By clicking this this button in the Clippings Cart area of the General Settings advanced section, all individuals and families in the diagram will be added to the clippings cart along with objects linked to them."
-msgstr ""
+msgstr "En cliquant sur ce bouton dans la zone Presse-Papier de la section avancée des Paramètres généraux, toutes les personnes et familles du diagramme seront ajoutées au Presse-Papier avec les objets qui leur sont liés."
 
 #: 
 msgid "There is a setting to control what happens when an individual or family is clicked on in the diagram. This can be used to add an individual or family to the clipping cart. See the Browser render section."
-msgstr ""
+msgstr "Il existe un paramètre permettant de contrôler ce qui se passe lorsqu'on clique sur un individu ou une famille dans le diagramme. Cela peut être utilisé pour ajouter un individu ou une famille au Presse-Papier. Voir la section Rendu du navigateur."
 
 #: 
 msgid "Context menu when tile clicked"
+msgstr "Menu contextuel lorsque l'on clique sur une tuile"
+
+#: 
+msgid "This saved setting contains clippings cart items, add them to the clippings cart?"
+msgstr "Ce paramètre enregistré contient des éléments de votre Presse-Papier, voulez-vous les ajouter au Presse-Papier ?"
+
+#: 
+msgid "Diagram is larger than the PDF page size limit. Please reduce number of records, reduce DPI setting, or use another export option."
+msgstr "Le diagramme dépasse la taille maximale autorisée pour les pages PDF. Veuillez réduire le nombre d'enregistrements, diminuer le paramètre DPI ou utiliser une autre option d'exportation."
+
+#: 
+msgid "Rounded rectangle option is not supported for the Combined diagram type"
+msgstr "L'option « Rectangle arrondi » n'est pas prise en charge pour le type de diagramme « Combiné »."
+
+#: 
+msgid "Show occupation of individuals"
+msgstr "Afficher la profession des personnes"
+
+#: 
+msgid "Whether to print the occupation of the individual on the individual's tile."
+msgstr "Choix d'imprimer la profession de la personne sur sa tuile.\n"
+""
+
+#: 
+msgid "Remove from clippings cart"
+msgstr "Retirer du Presse-Papier"
+
+#: 
+msgid "Clippings cart rebuilt"
+msgstr "Presse-Papier actualisé"
+
+#: 
+msgid "When adding to the clippings cart, all linked objects are added along with the relevant individual or family. However, when removing from the clippings cart, only the relevant individual or family is removed. The option to rebuild the clippings cart will empty the cart, then add each individual and family back to the cart along with their linked objects. This allows you to remove items no longer linked to any individual or family in the clippings cart, and allows you to update the clippings cart to reflect changes to linked objects for your individuals and families."
+msgstr "Lorsque vous ajoutez des éléments au presse-papier, tous les objets liés sont ajoutés avec la personne ou la famille concernée. Cependant, lorsque vous supprimez des éléments du presse-papier, seule la personne ou la famille concernée est supprimée. L'option permettant de reconstituer le presse-papier vide le panier, puis ajoute chaque personne et chaque famille au presse-papier avec les objets liés. Cela vous permet de supprimer les éléments qui ne sont plus liés à une personne ou à une famille dans le presse-papier, et de mettre à jour le presse-papier afin de refléter les modifications apportées aux objets liés pour vos personnes et vos familles."
+
+#: 
+msgid "The option to add an individual or family to the clippings cart will become an option to remove them if they are already in the cart. Clicking this option will remove the XREF of the individual or family, but will not changed linked objects. You will need to rebuild the clippings cart to update the linked objects (see below)."
+msgstr "L'option permettant d'ajouter une personne ou une famille au presse-papier deviendra une option permettant de les supprimer si elles se trouvent déjà dans le panier. En cliquant sur cette option, vous supprimerez la référence croisée (XREF) de la personne ou de la famille, mais vous ne modifierez pas les objets liés. Vous devrez reconstituer le presse-papier pour mettre à jour les objets liés (voir ci-dessous)."
+
+#: 
+msgid "Toggle clippings cart status"
+msgstr "Activer/désactiver le statut du presse-papier"
+
+#: 
+msgid "If they are already in the clippings cart, then remove them."
+msgstr "S'ils se trouvent déjà dans le presse-papier, retirez-les."
+
+#: 
+msgid "Using clippings cart"
+msgstr ""
+
+#: 
+msgid "In clippings cart"
 msgstr ""
 

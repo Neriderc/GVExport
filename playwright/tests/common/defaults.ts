@@ -178,8 +178,8 @@ export async function checkDefaults(page: Page, admin: Boolean) {
     // General settings
     await expect(page.locator('#output_type')).toHaveValue('svg');
     await expect(page.locator('#auto_update')).toBeChecked();
-    await expect(page.locator('#click_action_indi')).toHaveValue('0');
-    await expect(page.locator('#click_action_fam')).toHaveValue('0');
+    await expect(page.locator('#click_action_indi')).toHaveValue('50');
+    await expect(page.locator('#click_action_fam')).toHaveValue('30');
     await expect(page.locator('#settings_sort_order')).toHaveValue('0');
     await expect(page.locator('#show_diagram_panel')).not.toBeChecked();
     await expect(page.locator('#only_save_diagram_settings')).not.toBeChecked();
