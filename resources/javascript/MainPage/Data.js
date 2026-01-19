@@ -1,9 +1,10 @@
 /**
- * Data object to hold data fetching and validation functionality not related to the form
+ * Data object to hold data fetching, and validation functionality not related to the form
  *
  * @type {{}}
  */
 const Data = {
+    clippingsCartXrefs: new Set(),
 
     api: {
         _treename: null,
@@ -91,7 +92,63 @@ const Data = {
                     reject(e);
                 });
             });
-        }
+        },
+
+
+        /**
+         * Get current count of items in webtrees clippings cart
+         */
+        getClippingsCartCount() {
+                let request = {
+                "type": REQUEST_TYPE_COUNT_XREFS_CLIPPINGS_CART,
+            };
+            return Data.callAPI(request);
+        },
+
+        /**
+         * Get xrefs from webtrees clippings cart.
+         * allTypes defaults to true because it's faster (no need to fetch records for each xref)
+         */
+        async getClippingsCartXrefs(allTypes = true) {
+                let request = {
+                "type": REQUEST_TYPE_GET_XREFS_CLIPPINGS_CART,
+                "allTypes": allTypes
+            };
+            const response = await Data.callAPI(request);
+            Data.clippingsCartXrefs = new Set(response);
+            if (!allTypes && Data.clippingsCartXrefs.size !== 0) {
+                Form.showHide(document.getElementById('cart-section'), true);
+            }
+            if (Data.clippingsCartXrefs.size === 0) {
+                Form.showHide(document.getElementById('cart-section'), false);
+                UI.statusBar.clear();
+            }
+            return response;
+        },
+
+        /**
+         * Get current count of items in webtrees clippings cart
+         */
+        isXrefInClippingsCart(xref) {
+                let request = {
+                "type": REQUEST_TYPE_IS_XREF_IN_CLIPPINGS_CART,
+                "xref": xref
+            };
+            return Data.callAPI(request);
+        },
+
+        /**
+         * Remove an XREF from the clippings cart
+         */
+        removeXrefFromClippingsCart(xref) {
+                let request = {
+                "type": REQUEST_TYPE_REMOVE_CLIPPINGS_CART,
+                "xref": xref
+            };
+            return Data.callAPI(request);
+        },
+
+
     },
     /**
      * Convert image URL to base64 data - we use for embedding images in SVG
@@ -681,16 +738,6 @@ const Data = {
                 UI.showToast(ERROR_CHAR + e);
             });
         }
-    },
-
-    /**
-     * Get current count of items in webtrees clippings cart
-     */
-    getClippingsCartCount() {
-            let request = {
-            "type": REQUEST_TYPE_COUNT_XREFS_CLIPPINGS_CART,
-        };
-        return Data.callAPI(request);
     },
     
 

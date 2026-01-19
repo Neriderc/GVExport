@@ -37,7 +37,8 @@ const App = {
             handleSimpleDiagram();
             document.getElementById("diagtype_simple").remove();
         }
-
+        // Keep a global copy of the clippings cart
+        Data.api.getClippingsCartXrefs();
         // Load browser render when page has loaded
         if (autoUpdate) updateRender();
         // Handle sidebars

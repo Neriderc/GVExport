@@ -222,7 +222,7 @@ class GVExport extends AbstractModule implements ModuleCustomInterface, ModuleCh
             'title'         => 'GVExport',
             'vars'          => $userDefaultVars,
             'otypes'        => $otypes,
-            'cartempty'     => !ClippingsCart::hasIndividuals($tree),
+            'cartempty'     => !ClippingsCart::hasIndividualsOrFamilies($tree),
             'module'        => $this
         ]);
     }

@@ -109,8 +109,20 @@ class ApiHandler
                 case "add_all_clippings_cart":
                     $this->addAllToClippingsCart();
                     break;
+                case "rebuild_clippings_cart":
+                    $this->rebuildClippingsCart();
+                    break;
+                case "remove_clippings_cart":
+                    $this->removeFromClippingsCart();
+                    break;
                 case "count_xrefs_clippings_cart":
                     $this->countXrefsClippingsCart();
+                    break;
+                case "get_xrefs_clippings_cart":
+                    $this->getXrefsClippingsCart();
+                    break;
+                case "is_xref_in_clippings_cart":
+                    $this->isXrefInClippingsCart();
                     break;
                 case "dump_settings":
                     $this->dumpSettings();
@@ -450,9 +462,22 @@ class ApiHandler
      */
     private function addToClippingsCart()
     {
+
+        $this->addXrefsToClippingsCart($this->json['xrefs']);
+        
+        $this->response_data['success'] = true;
+        $this->response_data['response'] = ['Added to clippings cart'];
+    }
+
+    
+    /**
+     * Adds the relevant records to the clipping cart
+     */
+    private function addXrefsToClippingsCart($xrefs)
+    {
         $cartAdder = new ClippingsCartAdder($this->tree);
 
-        foreach ($this->json['xrefs'] as $xref) {
+        foreach ($xrefs as $xref) {
 
             if (!FormSubmission::isXrefListValid($xref)) {
                 continue;
@@ -467,9 +492,9 @@ class ApiHandler
                 $cartAdder->addIndividualToCart($record);
             }
         }
-        $this->response_data['success'] = true;
-        $this->response_data['response'] = ['Added to clippings cart'];
     }
+
+
 
     /**
      * Adds all individuals and families in the diagram to the clippings cart
@@ -498,11 +523,66 @@ class ApiHandler
     }
 
     /**
-     * Adds all individuals and families in the diagram to the clippings cart
+     * Refreshes the linked objects based on indis and fams in cart
+     */
+    private function rebuildClippingsCart() {
+        $xrefs = ClippingsCart::getXrefsInCart($this->tree);
+        ClippingsCart::emptyCart($this->tree);
+        try {
+            $this->addXrefsToClippingsCart($xrefs);
+            $this->response_data['success'] = true;
+            $this->response_data['response'] = ['Clippings cart rebuilt'];
+        } catch (\Throwable $e) {
+            $this->response_data['success'] = false;
+            $this->response_data['response'] = ['Unknown error'];
+        }
+    }
+
+    /**
+     * Removes the relevant records from the clipping cart
+     */
+    private function removeFromClippingsCart()
+    {
+        if (isset($this->json['xref']) && (ctype_alnum($this->json['xref']))) {
+            ClippingsCart::removeXrefFromCart($this->tree, $this->json['xref']);
+            $this->response_data['success'] = true;
+            $this->response_data['response'] = ['Removed from clippings cart'];
+        } else {
+            $this->setFailResponse('Invalid XREF', 'E19');
+        }
+    }
+
+    /**
+     * Returns number of items in clippings cart
      */
     private function countXrefsClippingsCart() {
         $this->response_data['success'] = true;
-        $this->response_data['response'] = ClippingsCart::countXrefsInCart($this->tree);;
+        $this->response_data['response'] = [
+            'total'   => ClippingsCart::countXrefsInCart($this->tree),
+            'hasIndiOrFam' => ClippingsCart::hasIndividualsOrFamilies($this->tree),
+        ];
+    }
+
+    /**
+     * Returns xrefs of contents of clippings cart
+     */
+    private function getXrefsClippingsCart() {
+        $all = !empty($this->json['allTypes']);
+        $this->response_data['success'] = true;
+        $response = $all ? ClippingsCart::getXrefsInCart($this->tree) : ClippingsCart::getIndiFamXrefsInCart($this->tree);
+        $this->response_data['response'] = $response;
+    }
+
+    /**
+     * Returns xrefs of contents of clippings cart
+     */
+    private function isXrefInClippingsCart() {
+        if (isset($this->json['xref']) && (ctype_alnum($this->json['xref']))) {
+            $this->response_data['success'] = true;
+            $this->response_data['response'] = ClippingsCart::isXrefInCart($this->tree, $this->json['xref']);
+        } else {
+            $this->setFailResponse('Invalid XREF', 'E19');
+        }
     }
     
     /**

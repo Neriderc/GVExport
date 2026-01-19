@@ -4,6 +4,7 @@ namespace vendor\WebtreesModules\gvexport;
 
 use Fisharebest\Webtrees\GedcomRecord;
 use Fisharebest\Webtrees\Individual;
+use Fisharebest\Webtrees\Family;
 use Fisharebest\Webtrees\Session;
 use Fisharebest\Webtrees\Tree;
 use Fisharebest\Webtrees\Registry;
@@ -37,20 +38,16 @@ class ClippingsCart {
 	}
 
 	/**
-	 * Are any of the cart records an individual?
+	 * Are any of the cart records an individual or family?
 	 *
 	 * @param Tree $tree
 	 * @return bool
 	 */
-	public static function hasIndividuals(Tree $tree): bool
+	public static function hasIndividualsOrFamilies(Tree $tree): bool
 	{
 		if (!self::isCartEmpty($tree)) {
-			$records = self::getRecordsInCart($tree);
-			foreach ($records as $record) {
-				if ($record instanceof Individual) {
-					return true;
-				}
-			}
+			$records = self::getIndiFamXrefsInCart($tree);
+			return sizeof($records) !== 0;
 		}
 		return false;
 	}
@@ -69,6 +66,25 @@ class ClippingsCart {
 		// PHP converts numeric keys to integers, so we convert the XREFs to strings in case 
         // some are just numbers that got implicitly converted 
 		return array_map('strval', $xrefs);
+	}
+
+	/**
+	 * Get the XREFs in the clippings cart for only Individuals and Families
+	 *
+	 * @param Tree $tree
+	 *
+	 * @return array of XREFs
+	 */
+	public static function getIndiFamXrefsInCart(Tree $tree): array
+	{
+		$records = self::getRecordsInCart($tree);
+		$xrefs = [];
+		foreach ($records as $record) {
+			if ($record instanceof Individual || $record instanceof Family) {
+				$xrefs[] = $record->xref();
+			}
+		}
+		return $xrefs;
 	}
 
 	/**
@@ -116,8 +132,38 @@ class ClippingsCart {
 	 * @param string $xref
 	 * @return bool
 	 */
-	public function isXrefInCart(string $xref): bool
+	static function isXrefInCart($tree, string $xref): bool
 	{
-		return in_array($xref, $this->getXrefsInCart($this->tree), true);
+		return in_array($xref, self::getXrefsInCart($tree), true);
+	}
+
+
+	/**
+	 * Remove xref from cart
+	 *
+	 * @param string $xref
+	 * @return bool
+	 */
+	static function removeXrefFromCart(Tree $tree, string $xref)
+	{
+		$cart = Session::get('cart');
+		$cart = is_array($cart) ? $cart : [];
+
+		if (($cart[$tree->name()][$xref] ?? false)) {
+			unset($cart[$tree->name()][$xref]);
+			Session::put('cart', $cart);
+			return true;
+		}
+
+		return false;
+	}
+
+	static function emptyCart($tree) {
+
+		$cart = Session::get('cart');
+		$cart = is_array($cart) ? $cart : [];
+
+		$cart[$tree->name()] = [];
+		Session::put('cart', $cart);
 	}
 }

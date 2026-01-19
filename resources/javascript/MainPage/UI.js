@@ -159,10 +159,25 @@ const UI = {
             return false;
         },
 
+
+        mouseOverEvent(xref) {
+            if (!Form.state.useCart) {
+                if (Data.clippingsCartXrefs.has(xref)) {
+                    UI.statusBar.setInCart();
+                }
+            }
+        },
+
+        mouseOutEvent() {
+            if (!Form.state.useCart) {
+                UI.statusBar.clear();
+            }
+        },
+
         /**
          * Add event listeners to handle clicks on the individuals and family nodes in the diagram
          */
-        handleTileClick() {
+        handleTileEvents() {
             const MIN_DRAG = 100;
             const DEFAULT_ACTION = '0';
             let startx;
@@ -174,9 +189,19 @@ const UI = {
             });
 
             for (let i = 0; i < linkElements.length; i++) {
+                let url = linkElements[i].getAttribute('xlink:href');
+                let xref = Data.url.getXrefFromUrl(url);
                 linkElements[i].addEventListener("mousedown", function (e) {
                     startx = e.clientX;
                     starty = e.clientY;
+                });
+                linkElements[i].addEventListener("mouseover", function (e) {
+                    let url = linkElements[i].getAttribute('xlink:href');
+                    let xref = Data.url.getXrefFromUrl(url);
+                    UI.tile.mouseOverEvent(xref);
+                });
+                linkElements[i].addEventListener("mouseout", function (e) {
+                    UI.tile.mouseOutEvent();
                 });
                 // Only trigger links if not dragging
                 linkElements[i].addEventListener('click', function (e) {
@@ -184,7 +209,6 @@ const UI = {
                     let isIndividual = UI.tile.isNodeAnIndividual(linkElements[i]);
                     let clickActionEl = isIndividual ? document.getElementById('click_action_indi') : document.getElementById('click_action_fam');
                     let clickAction = clickActionEl ? clickActionEl.value : DEFAULT_ACTION;
-                    let url = linkElements[i].getAttribute('xlink:href');
 
                     // Do nothing if user is dragging
                     if (Data.getDistance(startx, starty, e.clientX, e.clientY) >= MIN_DRAG) {
@@ -192,7 +216,6 @@ const UI = {
                     }
 
                     if (isIndividual) {
-                        let xref = Data.url.getXrefFromUrl(url);
                         switch (clickAction) {
                             case '0':
                                 window.open(url,'_blank');
@@ -218,7 +241,6 @@ const UI = {
                                 if (xref) {
                                     Form.stoppingIndiList.clearStopIndiList(false);
                                     Form.stoppingIndiList.addIndiToStopList(xref);
-                                    Data.url.changeURLXref(xref);
                                     Form.handleFormChange();
                                 }
                                 break;
@@ -234,8 +256,8 @@ const UI = {
                             case '90': // Add a parent
                                 UI.tile.goToAddParent(url, xref);
                                 break;
-                            case '100': // Add to clippings cart
-                                UI.tile.addXrefsToClippingsCart([xref]);
+                            case '100': // Toggle clippings cart status
+                                UI.tile.toggleClippingsCartForXref(xref);
                                 break;
                             case '60': // Do nothing option
                             default: // Unknown, so do nothing
@@ -244,7 +266,6 @@ const UI = {
                     } else {
                         let parent = e.currentTarget.closest('g.node');
                         let titleEl = parent.querySelector('title');
-                        let xref = titleEl.textContent;
                         // Is a family tile
                         switch (clickAction) {
                             case '0': // Open family page
@@ -259,8 +280,8 @@ const UI = {
                             case '50': // Change family members
                                 UI.tile.changeFamilyMembers(url, xref);
                                 break;
-                            case '60': // Add to clippings cart
-                                UI.tile.addXrefsToClippingsCart([xref]);
+                            case '60': // Toggle clippings cart status
+                                UI.tile.toggleClippingsCartForXref(xref);
                                 break;
                             case '30': // Show menu
                                 UI.tile.showFamilyContextMenu(e, url, xref);
@@ -283,8 +304,9 @@ const UI = {
          * @param url The URL of the individual's webtrees page
          * @param xref The xref of the individual
          */
-        showIndiContextMenu(e, url, xref) {
+        async showIndiContextMenu(e, url, xref) {
             UI.contextMenu.clearContextMenu();
+            const xrefInCart = await Data.api.isXrefInClippingsCart(xref);
             const div = document.getElementById('context_list');
             div.setAttribute("data-xref",  xref);
             div.setAttribute("data-url",  url);
@@ -296,7 +318,11 @@ const UI = {
             UI.contextMenu.addContextMenuOption('🖍️', 'Add to list of individuals to highlight', UI.tile.highlightIndividualContextMenu);
             UI.contextMenu.addContextMenuOption('❤️', 'Add a partner', UI.tile.addPartnerContextMenu);
             UI.contextMenu.addContextMenuOption('🧑‍🧒', 'Add a parent', UI.tile.addParentContextMenu);
-            UI.contextMenu.addContextMenuOption('🛒', 'Add to clippings cart', UI.tile.addIndividualToCartContextMenu);
+            if (xrefInCart) {
+                UI.contextMenu.addContextMenuOption('🛒', 'Remove from clippings cart', UI.tile.removeIndividualFromCartContextMenu);
+            } else {
+                UI.contextMenu.addContextMenuOption('🛒', 'Add to clippings cart', UI.tile.addIndividualToCartContextMenu);
+            }
             UI.contextMenu.enableContextMenu(window.innerWidth - e.clientX, e.clientY);
         },
 
@@ -307,16 +333,21 @@ const UI = {
          * @param url The URL of the individual or family webtrees page
          * @param xref The xref of the family
          */
-        showFamilyContextMenu(e, url, xref) {
+        async showFamilyContextMenu(e, url, xref) {
             UI.contextMenu.clearContextMenu();
             const div = document.getElementById('context_list');
+            const xrefInCart = await Data.api.isXrefInClippingsCart(xref);
             div.setAttribute("data-xref",  xref);
             div.setAttribute("data-url",  url);
             UI.contextMenu.addContextMenuOption('👥', 'Open family page', UI.tile.openContextMenuUrl);
             UI.contextMenu.addContextMenuOption('👶', 'Add a child', UI.tile.addChildContextMenu);
             UI.contextMenu.addContextMenuOption('🖍️', 'Add to list of families to highlight', UI.tile.highlightFamilyContextMenu);
             UI.contextMenu.addContextMenuOption('🧑‍🧑‍🧒‍🧒', 'Change family members', UI.tile.changeFamilyMembersContextMenu);
-            UI.contextMenu.addContextMenuOption('🛒', 'Add to clippings cart', UI.tile.addFamilyToCartContextMenu);
+            if (xrefInCart) {
+                UI.contextMenu.addContextMenuOption('🛒', 'Remove from clippings cart', UI.tile.removeFamilyFromCartContextMenu);
+            } else {
+                UI.contextMenu.addContextMenuOption('🛒', 'Add to clippings cart', UI.tile.addFamilyToCartContextMenu);
+            }
             UI.contextMenu.enableContextMenu(window.innerWidth - e.clientX, e.clientY);
         },
 
@@ -405,6 +436,56 @@ const UI = {
         addIndividualToCartContextMenu(e) {
             let xref = e.currentTarget.parentElement.getAttribute('data-xref');
             UI.tile.addXrefsToClippingsCart([xref]);
+        },
+
+        /**
+         * Function for context menu item
+         *
+         * @param e Click event
+         */
+        removeIndividualFromCartContextMenu(e) {
+            let xref = e.currentTarget.parentElement.getAttribute('data-xref');
+            UI.tile.removeFromClippingsCart(xref);
+        },
+
+        /**
+         * Function for context menu item
+         *
+         * @param e Click event
+         */
+        removeFamilyFromCartContextMenu(e) {
+            let xref = e.currentTarget.parentElement.getAttribute('data-xref');
+            UI.tile.removeFromClippingsCart(xref);
+        },
+
+        async toggleClippingsCartForXref(xref) {
+            const xrefInCart = await Data.api.isXrefInClippingsCart(xref);
+            if (xrefInCart) {
+                this.removeFromClippingsCart(xref);
+            } else {
+                this.addXrefsToClippingsCart([xref]);
+            }
+            Form.updateClippingsCartCount();
+        },
+            
+        async removeFromClippingsCart (xref) {
+           const response = await Data.api.removeXrefFromClippingsCart(xref);
+           if (response) {
+                Form.updateClippingsCartCount();
+                UI.showToast(TRANSLATE[response]);
+                UI.contextMenu.clearContextMenu();
+                Data.clippingsCartXrefs.delete(xref);
+            } else {
+                UI.showToast(ERROR_CHAR + TRANSLATE['Unknown error']);
+            }
+            const cart = await Data.api.getClippingsCartXrefs(false);
+
+            // Only refresh if we are in the 'use cart' view, otherwise nothing would change
+            if (document.getElementById("usecart_yes").checked) {
+                if (cart != []) {
+                    Form.handleFormChange(cart[0]);
+                }
+            }
         },
 
         /**
@@ -504,7 +585,12 @@ const UI = {
                 document.getElementById('modal-cancel').onclick = () => {
                     document.getElementById('modal').remove();
                     Form.showHide(document.getElementById('cart-section'), !cartempty);
-                    Form.toggleCart(!cartempty);
+                    // Disable our fields again by indicating cart is enabled (only if items in cart)
+                    if (!cartempty) {
+                        Form.toggleCart(document.getElementById("usecart_yes").checked);
+                    } else {
+                        Form.toggleCart(false);
+                    }
                 };
 
                 document.getElementById('modal-yes').onclick = () => {
@@ -523,8 +609,12 @@ const UI = {
             this.addXrefsToClippingsCartRequest(xrefs).then((response) => {
                 if (response) {
                     Form.updateClippingsCartCount();
+                    Form.showHide(document.getElementById('cart-section'), true);
                     UI.showToast(TRANSLATE[response]);
                     UI.contextMenu.clearContextMenu();
+                    for (const xref of xrefs) {
+                        Data.clippingsCartXrefs.add(xref);
+                    }
                 } else {
                     UI.showToast(ERROR_CHAR + TRANSLATE['Unknown error']);
                 }
@@ -1521,5 +1611,32 @@ const UI = {
                 textArea.remove();
             });
         }
+    },
+
+    statusBar: {
+        element: document.getElementById('status-bar'),
+
+        set(message) {
+            this.element.innerText = message;
+        },
+
+        setInCart() {
+            if (!cartempty) {
+                this.set(TRANSLATE['In clippings cart']);
+                this.element.style.display = 'block';
+            }
+        },
+
+        setUsingCart() {
+            if (!cartempty) {
+                this.set('Using clippings cart');
+                this.element.style.display = 'block';
+            }
+        },
+
+        clear() {
+            this.element.innerText = '';
+            this.element.style.display = 'none';
+        },
     },
 };

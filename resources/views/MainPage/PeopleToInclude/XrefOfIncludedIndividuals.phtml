@@ -10,7 +10,7 @@ use vendor\WebtreesModules\gvexport\MainPage;
 <?= MainPage::addLabel('xref_list', 'XREFs of included individuals', !$admin); ?>
 <div class="col-sm-8 options-panel-background">
     <div class="input-group mt-1">
-        <input type="text" class="form-control" name="vars[xref_list]" id="xref_list" value="<?= e($vars['xref_list']) ?>" onchange="refreshIndisFromXREFS(true)">
+        <input type="text" class="form-control cart_toggle" name="vars[xref_list]" id="xref_list" value="<?= e($vars['xref_list']) ?>" onchange="refreshIndisFromXREFS(true)">
         <div class="input-group-append">
             <button type="button" class="btn btn-outline-secondary" onclick="refreshIndisFromXREFS(false)">⟳</button>
         </div>

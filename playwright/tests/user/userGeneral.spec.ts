@@ -17,6 +17,7 @@ test('option: Add all diagram items to clippings cart', async ({ page }) => {
     await loadGVExport(page, true);
     await page.getByRole('button', { name: 'Add all diagram items to clippings cart' }).click();
     await expect(page.locator('.toast-message').filter({ hasText: 'Added to clippings cart' })).toBeVisible();
+    await expect(await page.locator('#cart-section')).toBeVisible();
     await page.locator('.menu-clippings').getByRole('button', { name: 'Clippings cart' }).click();
     await expect(page.locator('.menu-clippings-cart .badge').first()).toHaveText('31')
     await page.getByRole('menuitem', { name: 'Clippings cart' }).click();

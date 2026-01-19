@@ -111,157 +111,146 @@ class Person
 
         $i = $this->dot->getUpdatedPerson($pid);
         // Get the personal data
-        if ($this->dot->settings["diagram_type"] == "combined" && (substr($pid, 0, 3) == "I_H" || substr($pid, 0, 3) == "I_W") || substr($pid, 0, 3) == "I_N") {
-            // In case of dummy individual
-            $sex_colour = $this->dot->getGenderColour('U', false);
-            $is_dead = false;
-            $death_date = "";
-            $burial_date = "";
-            $birthdate = "";
-            $link = "";
-            $name = " ";
-        } else {
-            $sex_colour = $this->dot->getGenderColour($i ? $i->sex() : 'U', $related);
-            switch ($this->dot->settings['border_col_type']) {
-                case Settings::OPTION_BORDER_SEX_COLOUR:
-                    $border_colour = $this->dot->getGenderColour($i ? $i->sex() : 'U', $related);
-                    break;
-                case Settings::OPTION_BORDER_CUSTOM_COLOUR:
-                    $border_colour = $this->dot->settings["indi_border_col"];
-                    break;
-                case Settings::OPTION_BORDER_VITAL_COLOUR:
-                    $border_colour = $this->getVitalColour($i ? $i->isDead() : false, Settings::OPTION_BORDER_VITAL_COLOUR);
-                    break;
-                case Settings::OPTION_BORDER_AGE_COLOUR:
-                    $border_colour = $this->getAgeColour($i, Settings::OPTION_BORDER_AGE_COLOUR);
-                    break;
-            }
-            $is_dead = $i && $i->isDead();
-            $link = $i->url();
+        $sex_colour = $this->dot->getGenderColour($i ? $i->sex() : 'U', $related);
+        switch ($this->dot->settings['border_col_type']) {
+            case Settings::OPTION_BORDER_SEX_COLOUR:
+                $border_colour = $this->dot->getGenderColour($i ? $i->sex() : 'U', $related);
+                break;
+            case Settings::OPTION_BORDER_CUSTOM_COLOUR:
+                $border_colour = $this->dot->settings["indi_border_col"];
+                break;
+            case Settings::OPTION_BORDER_VITAL_COLOUR:
+                $border_colour = $this->getVitalColour($i ? $i->isDead() : false, Settings::OPTION_BORDER_VITAL_COLOUR);
+                break;
+            case Settings::OPTION_BORDER_AGE_COLOUR:
+                $border_colour = $this->getAgeColour($i, Settings::OPTION_BORDER_AGE_COLOUR);
+                break;
+        }
+        $is_dead = $i && $i->isDead();
+        $link = $i->url();
 
-            // --- Birth date ---
-            if ($this->dot->settings["show_birthdate"]) {
-                if ($this->dot->settings["use_alt_events"]) {
-                      $date = $i->getBirthDate();
-                    } else {
-                        $dates = $i->getAllEventDates(['BIRT']);
-                        if ($dates !== []) {
-                            $date = $dates[0];
-                        } else {
-                            $date = new Date('');
-                        }
-                    }
-                    $birthdate = Dot::formatDate($date, $this->dot->settings["birthdate_year_only"],  $this->dot->settings["use_abbr_month"]);
-
+        // --- Birth date ---
+        if ($this->dot->settings["show_birthdate"]) {
+            if ($this->dot->settings["use_alt_events"]) {
+                    $date = $i->getBirthDate();
                 } else {
-                $birthdate = "";
-            }
-
-            if ($this->dot->settings["show_birthplace"]) {
-                // Show birthplace
-                if ($this->dot->settings["use_alt_events"]) {
-                    $birthplace = Dot::getAbbreviatedPlace($i->getBirthPlace()->gedcomName(), $this->dot->settings);
-                } else {
-                    $places = $i->getAllEventPlaces(['BIRT']);
-                    if ($places !== []) {
-                        $birthplace = $places[0]->gedcomName();
-                    }
-                }
-            }
-
-            // --- Death date ---
-            if ($this->dot->settings["show_death_date"]) {
-                if ($this->dot->settings["use_alt_events"]) {
-                    $date = $i->getDeathDate();
-                } else {
-                    $dates = $i->getAllEventDates(['DEAT']);
+                    $dates = $i->getAllEventDates(['BIRT']);
                     if ($dates !== []) {
                         $date = $dates[0];
                     } else {
                         $date = new Date('');
                     }
                 }
-                $death_date = Dot::formatDate($date, $this->dot->settings["death_date_year_only"], $this->dot->settings["use_abbr_month"]);
+                $birthdate = Dot::formatDate($date, $this->dot->settings["birthdate_year_only"],  $this->dot->settings["use_abbr_month"]);
+
             } else {
-                $death_date = "";
+            $birthdate = "";
+        }
+
+        if ($this->dot->settings["show_birthplace"]) {
+            // Show birthplace
+            if ($this->dot->settings["use_alt_events"]) {
+                $birthplace = Dot::getAbbreviatedPlace($i->getBirthPlace()->gedcomName(), $this->dot->settings);
+            } else {
+                $places = $i->getAllEventPlaces(['BIRT']);
+                if ($places !== []) {
+                    $birthplace = $places[0]->gedcomName();
+                }
             }
-            if ($this->dot->settings["show_death_place"]) {
-                // Show death place
-                if ($this->dot->settings["use_alt_events"]) {
-                    $death_place = Dot::getAbbreviatedPlace($i->getDeathPlace()->gedcomName(), $this->dot->settings);
+        }
+
+        // --- Death date ---
+        if ($this->dot->settings["show_death_date"]) {
+            if ($this->dot->settings["use_alt_events"]) {
+                $date = $i->getDeathDate();
+            } else {
+                $dates = $i->getAllEventDates(['DEAT']);
+                if ($dates !== []) {
+                    $date = $dates[0];
                 } else {
-                    $places = $i->getAllEventPlaces(['DEAT']);
-                    if ($places !== []) {
-                        $death_place = $places[0]->gedcomName();
-                    }
+                    $date = new Date('');
                 }
             }
-
-            // --- Burial date ---
-            if ($this->dot->settings["show_burial_date"]) {
-
-                $buriEvents = ['BURI', 'CREM'];
-                foreach ($buriEvents as $event) {
-                    $buriDates = $i->getAllEventDates([$event]);
-                    $burial_date = "";
-                    $break = false;
-                    foreach ($buriDates as $date) {
-                        if ($date->isOK()) {
-                            $burial_date = Dot::formatDate($buriDates[0], $this->dot->settings["burial_date_year_only"],  $this->dot->settings["use_abbr_month"]);
-                            $break=true;
-                            break;
-                        }
-                    }
-                    if ($break) {
-                        break;
-                    }
-                }
-
+            $death_date = Dot::formatDate($date, $this->dot->settings["death_date_year_only"], $this->dot->settings["use_abbr_month"]);
+        } else {
+            $death_date = "";
+        }
+        if ($this->dot->settings["show_death_place"]) {
+            // Show death place
+            if ($this->dot->settings["use_alt_events"]) {
+                $death_place = Dot::getAbbreviatedPlace($i->getDeathPlace()->gedcomName(), $this->dot->settings);
             } else {
-                $burial_date = "";
+                $places = $i->getAllEventPlaces(['DEAT']);
+                if ($places !== []) {
+                    $death_place = $places[0]->gedcomName();
+                }
             }
-            if ($this->dot->settings["show_burial_place"]) {
-                // Show burial place
+        }
+
+        // --- Burial date ---
+        if ($this->dot->settings["show_burial_date"]) {
+
+            $buriEvents = ['BURI', 'CREM'];
+            foreach ($buriEvents as $event) {
+                $buriDates = $i->getAllEventDates([$event]);
+                $burial_date = "";
                 $break = false;
-                $buriEvents = ['BURI', 'CREM'];
-                foreach ($buriEvents as $event) {
-                    $buriPlaces = $i->getAllEventPlaces([$event]);
-                    $burial_place = "";
-                    foreach ($buriPlaces as $place) {
-                        if ($place instanceof Place) {
-                            $burial_place = $place;
-                            $break=true;
-                            break;
-                        }
-                    }
-                    if ($break) {
+                foreach ($buriDates as $date) {
+                    if ($date->isOK()) {
+                        $burial_date = Dot::formatDate($buriDates[0], $this->dot->settings["burial_date_year_only"],  $this->dot->settings["use_abbr_month"]);
+                        $break=true;
                         break;
                     }
                 }
-                if (($burial_place != "") && ($burial_place instanceof Place)) {
-                    $burial_place = Dot::getAbbreviatedPlace($burial_place->gedcomName(), $this->dot->settings);
+                if ($break) {
+                    break;
                 }
             }
 
-            // --- Name ---
-            $names = $i->getAllNames();
-            $nameArray = $names[$i->getPrimaryName()];
-            $name = $this->getFormattedName($nameArray, $pid);
-
-            if ($i->getPrimaryName() !== $i->getSecondaryName()) {
-                $altNameArray = $names[$i->getSecondaryName()];
-                $add_name = $this->getFormattedName($altNameArray, "");
-                if (!empty($add_name) && trim($add_name) !== "" && $this->dot->settings["use_abbr_name"] < 50) {
-                    $name .= '<BR />' . $add_name;//@@ Meliza Amity
+        } else {
+            $burial_date = "";
+        }
+        if ($this->dot->settings["show_burial_place"]) {
+            // Show burial place
+            $break = false;
+            $buriEvents = ['BURI', 'CREM'];
+            foreach ($buriEvents as $event) {
+                $buriPlaces = $i->getAllEventPlaces([$event]);
+                $burial_place = "";
+                foreach ($buriPlaces as $place) {
+                    if ($place instanceof Place) {
+                        $burial_place = $place;
+                        $break=true;
+                        break;
+                    }
+                }
+                if ($break) {
+                    break;
                 }
             }
-            if ($this->dot->settings['show_indi_sex']) {
-                $sex = $this->getSexFull($i);
+            if (($burial_place != "") && ($burial_place instanceof Place)) {
+                $burial_place = Dot::getAbbreviatedPlace($burial_place->gedcomName(), $this->dot->settings);
             }
+        }
 
-            if ($this->dot->settings['show_indi_occupation']) {
-                $occupation = $this->getOccupation($i);
+        // --- Name ---
+        $names = $i->getAllNames();
+        $nameArray = $names[$i->getPrimaryName()];
+        $name = $this->getFormattedName($nameArray, $pid);
+
+        if ($i->getPrimaryName() !== $i->getSecondaryName()) {
+            $altNameArray = $names[$i->getSecondaryName()];
+            $add_name = $this->getFormattedName($altNameArray, "");
+            if (!empty($add_name) && trim($add_name) !== "" && $this->dot->settings["use_abbr_name"] < 50) {
+                $name .= '<BR />' . $add_name;//@@ Meliza Amity
             }
+        }
+        if ($this->dot->settings['show_indi_sex']) {
+            $sex = $this->getSexFull($i);
+        }
+
+        if ($this->dot->settings['show_indi_occupation']) {
+            $occupation = $this->getOccupation($i);
         }
 
 

@@ -214,7 +214,7 @@ class ClippingsCartListEnhancer {
 				return $media instanceof Media && $media->firstImageFile() instanceof MediaFile;
 			});
 
-		if ($fact instanceof Fact && $fact->target() instanceof Media && $this->cart->isXrefInCart($fact->target()->xref())) {
+		if ($fact instanceof Fact && $fact->target() instanceof Media && ClippingsCart::isXrefInCart($this->tree, $fact->target()->xref())) {
 			return $fact->target()->firstImageFile();
 		}
 

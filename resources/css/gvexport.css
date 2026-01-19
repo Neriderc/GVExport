@@ -135,6 +135,23 @@
     color: red;
 }
 
+/* Style for status message */
+#status-bar {
+    position: fixed;
+    display: none;
+    right: 30px;
+    bottom: 30px;
+    min-width: 250px;
+    margin-left: -125px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 2px;
+    padding: 4px;
+    z-index: 1000;
+    margin-bottom: 5px;
+}
+
 /* Style for toast messages */
 #toast-container {
     position: fixed;
@@ -212,8 +229,15 @@ toast-message.error {
     height: 100%;
     margin: 0;
     touch-action: none;
-    border: 1px solid black;
     overflow: hidden;
+}
+
+#rendering.border-red {
+    border: 1px solid red;
+}
+
+#rendering.border-default {
+    border: 1px solid black;
 }
 
 .picker-label {

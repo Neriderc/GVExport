@@ -4,6 +4,12 @@
  * @type {{}}
  */
 const Diagram = {
+    element: document.getElementById('rendering'),
+    state: {
+        border: 'default',
+
+    },
+
     svg: {
         /**
          * Clip path for different photo shapes
@@ -140,5 +146,5 @@ const Diagram = {
                 })
             }
         }
-    }
+    },
 }

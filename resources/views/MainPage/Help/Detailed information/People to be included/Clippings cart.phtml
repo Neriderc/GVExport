@@ -1,16 +1,16 @@
 <?php
 
-    /**
-     * This is part of the help sidebar content
-     *
-     * @var GVExport $module   The instance of this module from webtrees
-     */
+/**
+ * This is part of the help sidebar content
+ *
+ * @var GVExport $module   The instance of this module from webtrees
+ */
 
-    use Fisharebest\Webtrees\I18N;
-    use vendor\WebtreesModules\gvexport\Help;
+use Fisharebest\Webtrees\I18N;
+use vendor\WebtreesModules\gvexport\Help;
 
-    $page_name = Help::CLIPPINGS_CART;
-    $help = new Help();
+$page_name = Help::CLIPPINGS_CART;
+$help = new Help();
 ?>
 
 <?= view($module->name() . '::MainPage/Help/HelpHeader', ['name' => $page_name]); ?>
@@ -35,6 +35,15 @@
     <li><?= I18N::translate('Add all diagram items to clippings cart'); ?> - <?= I18N::translate('By clicking this this button in the Clippings Cart area of the General Settings advanced section, all individuals and families in the diagram will be added to the clippings cart along with objects linked to them.'); ?></li>
     <li><?= I18N::translate('Add to clippings cart option on individual or family'); ?> - <?= I18N::translate('There is a setting to control what happens when an individual or family is clicked on in the diagram. This can be used to add an individual or family to the clipping cart. See the Browser render section.'); ?></li>
 </ul>
+<h4><?= I18N::translate('Removing from the clippings cart'); ?></h4>
+<p>
+    <?= I18N::translate('The option to add an individual or family to the clippings cart will become an option to remove them if they are already in the cart. Clicking this option will remove the XREF of the individual or family, but will not changed linked objects. You will need to rebuild the clippings cart to update the linked objects (see below).'); ?>
+</p>
+
+<h4><?= I18N::translate('Rebuild clippings cart'); ?></h4>
+<p>
+    <?= I18N::translate('When adding to the clippings cart, all linked objects are added along with the relevant individual or family. However, when removing from the clippings cart, only the relevant individual or family is removed. The option to rebuild the clippings cart will empty the cart, then add each individual and family back to the cart along with their linked objects. This allows you to remove items no longer linked to any individual or family in the clippings cart, and allows you to update the clippings cart to reflect changes to linked objects for your individuals and families.'); ?>:
+</p>
 <p>
     <?= I18N::translate('Related links'); ?>:
 </p>

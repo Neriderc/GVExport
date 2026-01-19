@@ -4,6 +4,10 @@
  * @type {{}}
  */
 const Form = {
+    // Remember state so we don't have to keep querying the DOM
+    state: {
+        useCart: null,
+    },
     
     /**
      * Form change event
@@ -24,18 +28,17 @@ const Form = {
             if (xref) {
                 let [found, x, y] = UI.tile.getElementPositionFromXref(xref, xrefType);
                 if (found) {
-                    let scale = panzoomInst.getTransform().scale;
+                    let transform = panzoomInst.getTransform();
                     // Why is this 1 1/3 number needed?
-                    let zoomBase = scale * (1 + 1/3);
+                    let zoomBase = transform.scale * (1 + 1 / 3);
                     let zoom_value = zoomBase * parseFloat(document.getElementById("dpi").value) / 72;
                     const rendering = document.getElementById('rendering');
                     const svg = rendering.getElementsByTagName('svg')[0];
-                    let transform = panzoomInst.getTransform();
                     updateRender(x*zoom_value + transform.x, parseFloat(svg.getAttribute('height'))*zoomBase + y*zoom_value + transform.y, transform.scale, xref, xrefType);
                 } else {
                     updateRender();
                 }
-            // Nothing fany happening, just update
+            // Nothing fancy happening, just update
             } else {
                 updateRender();
             }
@@ -191,13 +194,19 @@ const Form = {
      * @param enable
      */
     toggleCart(enable) {
-            const el = document.getElementsByClassName("cart_toggle");
-            for (let i = 0; i < el.length; i++) {
-                el.item(i).disabled = enable;
-            }
-            Form.showHideClass("cart_toggle_hide", !enable);
-            Form.showHideClass("cart_toggle_show", enable);
-        },
+        const el = document.getElementsByClassName("cart_toggle");
+        for (let i = 0; i < el.length; i++) {
+            el.item(i).disabled = enable;
+        }
+        Form.showHideClass("cart_toggle_hide", !enable);
+        Form.showHideClass("cart_toggle_show", enable);
+        Form.state.useCart = enable;
+        if (enable) {
+            UI.statusBar.setUsingCart();
+        } else {
+            UI.statusBar.clear();
+        }
+    },
 
     /**
      * This function is used in Form.toggleCart to show or hide all elements with a certain class,
@@ -987,6 +996,7 @@ const Form = {
                 Form.updateClippingsCartCount();
                 UI.showToast(TRANSLATE[response]);
                 UI.contextMenu.clearContextMenu();
+                Data.api.getClippingsCartXrefs(false);
             } else {
                 UI.showToast(ERROR_CHAR + TRANSLATE['Unknown error']);
             }
@@ -997,8 +1007,33 @@ const Form = {
      * Add the array of xrefs to the clippings cart
      */
     addAllToClippingsCart() {
-            let request = {
+        let request = {
             "type": REQUEST_TYPE_ADD_ALL_CLIPPINGS_CART,
+        };
+        return Data.callAPI(request);
+    },
+
+    /**
+     * Trigger when button to rebuild clippings cart is clicked
+     */
+    rebuildClippingsCartClicked() {
+        this.rebuildClippingsCart().then((response) => {
+            if (response) {
+                Form.updateClippingsCartCount();
+                UI.showToast(TRANSLATE[response]);
+                UI.contextMenu.clearContextMenu();
+            } else {
+                UI.showToast(ERROR_CHAR + TRANSLATE['Unknown error']);
+            }
+        });
+    },
+
+    /**
+     * Remove linked objects and rebuild them based on current state of individuals and families
+     */
+    rebuildClippingsCart() {
+        let request = {
+            "type": REQUEST_TYPE_REBUILD_CLIPPINGS_CART,
         };
         return Data.callAPI(request);
     },
@@ -1007,16 +1042,26 @@ const Form = {
      * Update the clipping cart count in the webtrees menu
      */
     async updateClippingsCartCount() {
-        const count = await Data.getClippingsCartCount();
+        const countResponse = await Data.api.getClippingsCartCount();
+        const count = countResponse.total;
+        const hasIndiOrFam = countResponse.hasIndiOrFam;
         const el = document.querySelector('.menu-clippings-cart .badge');
         // Element may not exist - e.g. clippings cart module disabled
         if (el) {
             el.innerText = count;
+            // Disable our fields again by indicating cart is enabled (only if items in cart)
+            if (count === 0) {
+                Form.toggleCart(false);
+            } else {
+                if (cartempty) {
+                    document.getElementById("usecart_yes").checked = false;
+                    document.getElementById("usecart_no").checked = true;
+                }
+                Form.toggleCart(document.getElementById("usecart_yes").checked);
+            } 
             
-            Form.showHide(document.getElementById('cart-section'), count > 0);
-            cartempty = count === 0;
-            Form.toggleCart(count > 0);
         }
+        cartempty = !hasIndiOrFam;
     },
     
 

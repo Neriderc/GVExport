@@ -10,5 +10,10 @@ use Fisharebest\Webtrees\I18N;
 
 <?= MainPage::addLabel('', 'Clippings cart', !$admin); ?>
 <div class="col-sm-8 options-panel-background">
-    <button class="btn btn-outline-secondary" type="button" name="message_history" onclick="Form.addAllToClippingsCartClicked()"><?= I18N::translate('Add all diagram items to clippings cart') ?></button>
+    <div class="mt-2">
+        <button class="btn btn-outline-secondary" type="button" name="add_all_cart" onclick="Form.addAllToClippingsCartClicked()"><?= I18N::translate('Add all diagram items to clippings cart') ?></button>
+    </div>
+    <div class="mt-2">
+        <button class=" btn btn-outline-secondary" type="button" name="rebuild_cart" onclick="Form.rebuildClippingsCartClicked()"><?= I18N::translate('Rebuild clippings cart') ?></button>
+    </div>
 </div>
