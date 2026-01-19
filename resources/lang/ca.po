@@ -2439,7 +2439,7 @@ msgstr "Mostra les famílies seleccionades en diferents colors"
 
 #: 
 msgid "Add to list of families to highlight"
-msgstr "Afegeix a la llista de famílies per destacar"
+msgstr "Afegeix a la llista de famílies per a destacar"
 
 #: 
 msgid "This option lets you set a custom background colour for selected families. The default highlight colour is used by default, but the colour can be customised for each individual. Also see option in Browser Render settings to choose what happens when a family is clicked, as this may be an easier way to add families to this list."
@@ -2576,4 +2576,56 @@ msgstr "Hi ha una configuració per controlar què passa quan es fa clic en un i
 #: 
 msgid "Context menu when tile clicked"
 msgstr "Menú contextual quan es fa clic a la peça"
+
+#: 
+msgid "This saved setting contains clippings cart items, add them to the clippings cart?"
+msgstr "Aquesta configuració desada conté articles del carro de retalls, vols afegir-los al carro de retalls?"
+
+#: 
+msgid "Diagram is larger than the PDF page size limit. Please reduce number of records, reduce DPI setting, or use another export option."
+msgstr "El diagrama és més gran que el límit de mida de pàgina del PDF. Si us plau, redueix el nombre de registres, redueix la configuració del DPI o utilitza una altra opció d'exportació."
+
+#: 
+msgid "Rounded rectangle option is not supported for the Combined diagram type"
+msgstr "L'opció de rectangle arrodonit no és compatible amb el tipus de diagrama combinat."
+
+#: 
+msgid "Show occupation of individuals"
+msgstr "Mostra l'ocupació de les persones"
+
+#: 
+msgid "Whether to print the occupation of the individual on the individual's tile."
+msgstr "Si s'ha d'imprimir l'ocupació de la persona a la casella de la persona."
+
+#: 
+msgid "Remove from clippings cart"
+msgstr "Treure del carretó de retalls"
+
+#: 
+msgid "Clippings cart rebuilt"
+msgstr "Carro de retalls reconstruït"
+
+#: 
+msgid "When adding to the clippings cart, all linked objects are added along with the relevant individual or family. However, when removing from the clippings cart, only the relevant individual or family is removed. The option to rebuild the clippings cart will empty the cart, then add each individual and family back to the cart along with their linked objects. This allows you to remove items no longer linked to any individual or family in the clippings cart, and allows you to update the clippings cart to reflect changes to linked objects for your individuals and families."
+msgstr "Quan s'afegeix al carretó de retalls, tots els objectes vinculats s'afegeixen juntament amb la persona o família pertinent. Tanmateix, quan es treu del carretó de retalls, només s'elimina la persona o família pertinent. L'opció de reconstruir el carretó de retalls buidarà el carretó i, a continuació, afegirà cada persona i família de nou al carretó juntament amb els seus objectes vinculats. Això us permet eliminar elements que ja no estan vinculats a cap persona o família del carretó de retalls i us permet actualitzar el carretó de retalls per reflectir els canvis als objectes vinculats per a les vostres persones i famílies."
+
+#: 
+msgid "The option to add an individual or family to the clippings cart will become an option to remove them if they are already in the cart. Clicking this option will remove the XREF of the individual or family, but will not changed linked objects. You will need to rebuild the clippings cart to update the linked objects (see below)."
+msgstr "L'opció d'afegir una persona o una família al carretó de retalls esdevindrà una opció per eliminar-los si ja són al carretó. Si feu clic en aquesta opció, s'eliminarà la XREF de la persona o la família, però no es canviaran els objectes vinculats. Haureu de reconstruir el carretó de retalls per actualitzar els objectes vinculats (vegeu més avall)."
+
+#: 
+msgid "Toggle clippings cart status"
+msgstr "Activa/desactiva l'estat del carretó de retalls"
+
+#: 
+msgid "If they are already in the clippings cart, then remove them."
+msgstr "Si ja són al carret de retalls, traieu-los."
+
+#: 
+msgid "Using clippings cart"
+msgstr ""
+
+#: 
+msgid "In clippings cart"
+msgstr ""
 

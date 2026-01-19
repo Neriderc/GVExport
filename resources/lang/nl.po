@@ -2545,3 +2545,56 @@ msgstr "Er is een instelling waarmee u kunt bepalen wat er gebeurt wanneer u op 
 msgid "Context menu when tile clicked"
 msgstr "Contextmenu wanneer op tegel wordt geklikt"
 
+#: 
+msgid "This saved setting contains clippings cart items, add them to the clippings cart?"
+msgstr "Deze opgeslagen instelling bevat stamboomknipsels. Wilt u ze toevoegen aan knipselverzameling?"
+
+#: 
+msgid "Diagram is larger than the PDF page size limit. Please reduce number of records, reduce DPI setting, or use another export option."
+msgstr "Het diagram is groter dan de maximale paginagrootte van de PDF. Verminder het aantal records, verlaag de DPI-instelling of gebruik een andere exportoptie."
+
+#: 
+msgid "Rounded rectangle option is not supported for the Combined diagram type"
+msgstr "Afgeronderechthoek‑optie wordt niet ondersteund voor het gecombineerddiagram-type\n"
+""
+
+#: 
+msgid "Show occupation of individuals"
+msgstr "Toon beroep van personen"
+
+#: 
+msgid "Whether to print the occupation of the individual on the individual's tile."
+msgstr "Of het beroep van de persoon op de tegel van de persoon moet worden afgedrukt."
+
+#: 
+msgid "Remove from clippings cart"
+msgstr "Verwijderen uit knipselverzameling"
+
+#: 
+msgid "Clippings cart rebuilt"
+msgstr "Knipselverzameling opnieuw samengesteld"
+
+#: 
+msgid "When adding to the clippings cart, all linked objects are added along with the relevant individual or family. However, when removing from the clippings cart, only the relevant individual or family is removed. The option to rebuild the clippings cart will empty the cart, then add each individual and family back to the cart along with their linked objects. This allows you to remove items no longer linked to any individual or family in the clippings cart, and allows you to update the clippings cart to reflect changes to linked objects for your individuals and families."
+msgstr "Wanneer u iets toevoegt aan de knipselverzameling, worden alle gekoppelde objecten samen met de betreffende persoon of gezin toegevoegd. Wanneer u echter iets uit de knipselverzameling verwijdert, wordt alleen de betreffende persoon of gezin verwijderd. Met de optie om de knipselverzameling opnieuw samen te stellen, wordt de knipselverzameling leeggemaakt en worden vervolgens alle personen en gezinnen samen met hun gekoppelde objecten weer aan de knipselverzameling toegevoegd. Zo kunt u items verwijderen die niet langer aan een persoon of gezin in de knipselverzameling zijn gekoppeld, en kunt u de knipselverzameling bijwerken om wijzigingen in gekoppelde objecten voor uw personen en gezinnen weer te geven."
+
+#: 
+msgid "The option to add an individual or family to the clippings cart will become an option to remove them if they are already in the cart. Clicking this option will remove the XREF of the individual or family, but will not changed linked objects. You will need to rebuild the clippings cart to update the linked objects (see below)."
+msgstr "De optie om een persoon of gezin aan de knipselverzameling toe te voegen, wordt een optie om ze te verwijderen als ze al in de knipselverzameling zitten. Als u op deze optie klikt, wordt de XREF van de persoon of gezin verwijderd, maar worden gekoppelde objecten niet gewijzigd. U moet de knipselverzameling opnieuw samenstellen om de gekoppelde objecten bij te werken (zie hieronder)."
+
+#: 
+msgid "Toggle clippings cart status"
+msgstr "Status knipselverzameling wijzigen"
+
+#: 
+msgid "If they are already in the clippings cart, then remove them."
+msgstr "Als ze al in de knipselverzameling zitten, verwijder ze dan."
+
+#: 
+msgid "Using clippings cart"
+msgstr ""
+
+#: 
+msgid "In clippings cart"
+msgstr ""
+
