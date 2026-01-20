@@ -196,7 +196,7 @@ class Dot {
         for ($i=0;$i<count($indis);$i++) {
             $indiLists[$i] = array();
             if (trim($indis[$i]) !== "") {
-                $this->addIndiToList("Start | Code 16", trim($indis[$i]), $this->indi_search_method["ance"], $this->indi_search_method["desc"], $this->indi_search_method["spou"], $this->indi_search_method["sibl"], TRUE, 0, 0, $indiLists[$i], $families, $full);
+                $this->addIndiToList(null, "Start | Code 16", trim($indis[$i]), $this->indi_search_method["ance"], $this->indi_search_method["desc"], $this->indi_search_method["spou"], $this->indi_search_method["sibl"], TRUE, 0, 0, $indiLists[$i], $families, $full);
             }
         }
         // Merge multiple lists from the different starting persons into one list
@@ -217,42 +217,13 @@ class Dot {
         }
 	}
 
-	/**
-	 * This function updates our family and individual arrays to remove records that mess up
-	 * the "combined" mode. This is particularly important when including a "stop" individual,
-	 * as this can cause half a family record to be shown. So we attempt to remove these.
-	 *
-	 * @param array $individuals // List of individual records
-	 * @param array $families // List of family records
-	 * @return void
-	 */
-	private function removeGhosts(array &$individuals, array &$families) {
-		foreach ($individuals as $i) {
-			foreach ($i["fams"] as $f) {
-                if (isset($f["fid"])) {
-                    $xref = $f["fid"];
-                    // If not dummy family, the family has no children, and one of the spouse records are missing
-                    if (substr($xref, 0, 2) != "F_" && (!isset($families[$xref]["has_children"]) || !$families[$xref]["has_children"]) && (!isset($families[$xref]["husb_id"]) || !isset($families[$xref]["wife_id"]))) {
-                        // Remove this family from both the individual record of families and from the family list
-                        unset($families[$xref]);
-                        unset($individuals[$i["pid"]]["fams"][$xref]);
-                    }
-                }
-			}
-		}
-	}
-
 	function createDOTDump(): string
 	{
 		// If no individuals in the clippings cart (or option chosen to override), use standard method
 		if (!ClippingsCart::hasIndividualsOrFamilies($this->tree) || !$this->settings["use_cart"] ) {
 			// Create our tree
 			$this->createIndiList($this->individuals, $this->families, false);
-			if ($this->settings["diagram_type"] == "combined") {
-				if ($this->indi_search_method["spou"] != "") {
-					$this->removeGhosts($this->individuals, $this->families);
-				}
-			} else {
+			if ($this->settings["diagram_type"] !== "combined") {
 				// Remove families with only one link
 				foreach ($this->families as $f) {
 					$xref = $f["fid"];
@@ -331,7 +302,7 @@ class Dot {
 					// We do not show those families which has no parents and children in case of "combined" view;
 					if ((isset($this->families[$fid]["has_children"]) && $this->families[$fid]["has_children"])
 						|| (isset($this->families[$fid]["has_parents"]) && $this->families[$fid]["has_parents"])
-						|| ((isset($this->families[$fid]["husb_id"]) && $this->families[$fid]["husb_id"]) && (isset($this->families[$fid]["wife_id"]) && $this->families[$fid]["wife_id"]))
+						|| ((isset($this->families[$fid]["husb_id"]) && $this->families[$fid]["husb_id"]) || (isset($this->families[$fid]["wife_id"]) && $this->families[$fid]["wife_id"]))
 					) {
 						$out .= $this->printFamily($fid, $nodeName, $sharednotes);
 					}
@@ -950,6 +921,8 @@ class Dot {
 	/**
 	 * Adds an individual to the indi list
 	 *
+	 * @param string $sourcePID The XREF of the linked individual that triggered this indi to be added
+	 * @param string $debugCode code that identifies which path was used to start this function
 	 * @param string $pid XREF of individual to add
 	 * @param boolean $ance whether to include ancestors when adding this individual
 	 * @param boolean $desc whether to include descendants when adding this individual
@@ -962,7 +935,7 @@ class Dot {
 	 * @param array $families array of families to be updated (passed by reference)
 	 * @param boolean $full whether we are scanning full tree of relatives, ignoring settings
 	 */
-	function addIndiToList($sourcePID, string $pid, bool $ance, bool $desc, bool $spou, bool $sibl, bool $rel, int $ind, int $level, array &$individuals, array &$families, bool $full): bool
+	function addIndiToList($sourcePID, string $debugCode, string $pid, bool $ance, bool $desc, bool $spou, bool $sibl, bool $rel, int $ind, int $level, array &$individuals, array &$families, bool $full): bool
     {
 		// Seen this XREF before and skipped, so just skip again without further checks
 		if (isset($this->skipList[$pid])) {
@@ -998,7 +971,7 @@ class Dot {
 		if ($this->settings["enable_debug_mode"]) {
 			$individual = $this->getUpdatedPerson($pid);
 			$this->printDebug("Name: ".strip_tags($individual->fullName()), $ind);
-			$this->printDebug("Source PID: ".$sourcePID, $ind);
+			$this->printDebug("Source PID: " . $sourcePID . $debugCode, $ind);
 			$this->printDebug("--- #$pid# ---\n", $ind);
 			$this->printDebug("{\n", $ind);
 			$ind++;
@@ -1023,7 +996,7 @@ class Dot {
 			}
 		}
 
-		// Add the family nr which he/she belongs to as spouse (needed when "combined" mode is used)
+		// Add the family which he/she belongs to as spouse (needed when "combined" mode is used)
 		if ($this->settings["diagram_type"] == "combined") {
 			$fams = $i->spouseFamilies();
 			if ($fams->count() > 0) {
@@ -1035,8 +1008,16 @@ class Dot {
 				// -------------
 
 				foreach ($fams as $fam) {
+					$h = $fam->husband();
+					$w = $fam->wife();
+					$hxref = $h ? $h->xref() : null;
+					$wxref = $w ? $w->xref() : null;
+
 					$fid = $fam->xref();
 					$individuals[$pid]["fams"][$fid] = $fid;
+					if (!$this->settings["include_all"] && $this->settings["include_spouses"] && $wxref !== $sourcePID) continue;
+
+					
 
 					if (isset($families[$fid]) && ($families[$fid] == $fid)) {
 						// Family ID already added
@@ -1164,7 +1145,7 @@ class Dot {
 									//var_dump($fams);
 								}
 								// -------------
-								$this->addIndiToList($pid."|Code 1", $husb_id, TRUE, FALSE, $this->indi_search_method["spou"] && $relationshipType !== "BOTH", $this->indi_search_method["sibl"], FALSE, $ind, $level+1, $individuals, $families, $full);
+								$this->addIndiToList($pid, "|Code 1", $husb_id, TRUE, FALSE, $this->indi_search_method["spou"] && $relationshipType !== "BOTH", $this->indi_search_method["sibl"], FALSE, $ind, $level+1, $individuals, $families, $full);
 							} else {
 								// --- DEBUG ---
 								if ($this->settings["enable_debug_mode"]) {
@@ -1172,7 +1153,7 @@ class Dot {
 									//var_dump($fams);
 								}
 								// -------------
-								$this->addIndiToList($pid."|Code 2", $husb_id, TRUE, FALSE, $this->indi_search_method["spou"], $this->indi_search_method["sibl"], $rel && $relationshipType == "", $ind, $level+1, $individuals, $families, $full);
+								$this->addIndiToList($pid, "|Code 2", $husb_id, TRUE, FALSE, $this->indi_search_method["spou"], $this->indi_search_method["sibl"], $rel && $relationshipType == "", $ind, $level+1, $individuals, $families, $full);
 
 							}
 						}
@@ -1187,7 +1168,7 @@ class Dot {
 									//var_dump($fams);
 								}
 								// -------------
-								$this->addIndiToList($pid."|Code 3", $wife_id, TRUE, FALSE, $this->indi_search_method["spou"] && $relationshipType !== "BOTH", $this->indi_search_method["sibl"], FALSE, $ind, $level+1, $individuals, $families, $full);
+								$this->addIndiToList($pid, "|Code 3", $wife_id, TRUE, FALSE, $this->indi_search_method["spou"] && $relationshipType !== "BOTH", $this->indi_search_method["sibl"], FALSE, $ind, $level+1, $individuals, $families, $full);
 							} else {
 								// --- DEBUG ---
 								if ($this->settings["enable_debug_mode"]) {
@@ -1195,7 +1176,7 @@ class Dot {
 									//var_dump($fams);
 								}
 								// -------------
-								$this->addIndiToList($pid."|Code 4", $wife_id, TRUE, FALSE, $this->indi_search_method["spou"], $this->indi_search_method["sibl"], $rel && $relationshipType == "", $ind, $level+1, $individuals, $families, $full);
+								$this->addIndiToList($pid, "|Code 4", $wife_id, TRUE, FALSE, $this->indi_search_method["spou"], $this->indi_search_method["sibl"], $rel && $relationshipType == "", $ind, $level+1, $individuals, $families, $full);
 
 							}
 						}
@@ -1284,9 +1265,9 @@ class Dot {
 							}
 
 							if ($this->indi_search_method["any"]) {
-								$this->addIndiToList($pid."|Code 14", $child_id, TRUE, FALSE, $this->indi_search_method["spou"], FALSE, FALSE, $ind, $level-1, $individuals, $families, $full);
+								$this->addIndiToList($pid, "|Code 14", $child_id, TRUE, FALSE, $this->indi_search_method["spou"], FALSE, FALSE, $ind, $level-1, $individuals, $families, $full);
 							}
-							$this->addIndiToList($pid."|Code 5", $child_id, FALSE, TRUE, $this->indi_search_method["spou"], FALSE, $related, $ind, $level-1, $individuals, $families, $full);
+							$this->addIndiToList($pid, "|Code 5", $child_id, FALSE, TRUE, $this->indi_search_method["spou"], FALSE, $related, $ind, $level-1, $individuals, $families, $full);
 
 						}
 					}
@@ -1340,7 +1321,7 @@ class Dot {
 							//var_dump($fams);
 						}
 						// -------------
-                        $this->addIndiToList($pid."|Code 6", $spouse_id, $this->indi_search_method["any"] && $ance, $this->indi_search_method["any"] && $desc, $this->indi_search_method["any"], $this->indi_search_method["any"], FALSE, $ind, $level, $individuals, $families, $full);
+                        $this->addIndiToList($pid, "|Code 6", $spouse_id, $this->indi_search_method["any"] && $ance, $this->indi_search_method["any"] && $desc, $this->indi_search_method["any"], $this->indi_search_method["any"], FALSE, $ind, $level, $individuals, $families, $full);
 					}
 
 				}
@@ -1388,9 +1369,9 @@ class Dot {
 
 							// If searching for cousins, then the descendants of ancestors' siblings should be added
 							if ($this->indi_search_method["rels"]) {
-								$this->addIndiToList($pid."|Code 8", $child_id, TRUE, TRUE, $this->indi_search_method["spou"], FALSE, $related, $ind, $level, $individuals, $families, $full);
+								$this->addIndiToList($pid, "|Code 8", $child_id, TRUE, TRUE, $this->indi_search_method["spou"], FALSE, $related, $ind, $level, $individuals, $families, $full);
 							} else {
-								$this->addIndiToList($pid."|Code 9", $child_id, TRUE, FALSE, $this->indi_search_method["spou"], FALSE, $related, $ind, $level, $individuals, $families, $full);
+								$this->addIndiToList($pid, "|Code 9", $child_id, TRUE, FALSE, $this->indi_search_method["spou"], FALSE, $related, $ind, $level, $individuals, $families, $full);
 							}
 
 						}
@@ -1437,9 +1418,9 @@ class Dot {
 
 							// If searching for step-cousins, then the descendants of ancestors' siblings should be added
 							if ($this->indi_search_method["rels"]) {
-								$this->addIndiToList($pid."|Code 10", $child_id, FALSE, TRUE, $this->indi_search_method["spou"], FALSE, $rel, $ind, $level, $individuals, $families, $full);
+								$this->addIndiToList($pid, "|Code 10", $child_id, FALSE, TRUE, $this->indi_search_method["spou"], FALSE, $rel, $ind, $level, $individuals, $families, $full);
 							} else {
-								$this->addIndiToList($pid."|Code 11", $child_id, TRUE, FALSE, $this->indi_search_method["spou"], FALSE, $rel, $ind, $level, $individuals, $families, $full);
+								$this->addIndiToList($pid, "|Code 11", $child_id, TRUE, FALSE, $this->indi_search_method["spou"], FALSE, $rel, $ind, $level, $individuals, $families, $full);
 							}
 						}
 					}
