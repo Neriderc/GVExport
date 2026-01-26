@@ -1022,7 +1022,7 @@ const Form = {
                 Form.updateClippingsCartCount();
                 UI.showToast(TRANSLATE[response]);
                 
-                if (autoUpdate) {
+                if (autoUpdate && Form.state.useCart) {
                     updateRender();
                 } else {
                     UI.contextMenu.clearContextMenu();
