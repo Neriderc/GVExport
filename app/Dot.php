@@ -1010,14 +1010,11 @@ class Dot {
 				foreach ($fams as $fam) {
 					$h = $fam->husband();
 					$w = $fam->wife();
-					$hxref = $h ? $h->xref() : null;
-					$wxref = $w ? $w->xref() : null;
-
 					$fid = $fam->xref();
 					$individuals[$pid]["fams"][$fid] = $fid;
-					if (!$this->settings["include_all"] && $this->settings["include_spouses"] && $wxref !== $sourcePID) continue;
 
-					
+					if (!$this->settings["include_all"] && $this->settings["include_spouses"]) continue;
+
 
 					if (isset($families[$fid]) && ($families[$fid] == $fid)) {
 						// Family ID already added
