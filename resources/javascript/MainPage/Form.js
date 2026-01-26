@@ -1021,7 +1021,12 @@ const Form = {
             if (response) {
                 Form.updateClippingsCartCount();
                 UI.showToast(TRANSLATE[response]);
-                UI.contextMenu.clearContextMenu();
+                
+                if (autoUpdate && Form.state.useCart) {
+                    updateRender();
+                } else {
+                    UI.contextMenu.clearContextMenu();
+                }
             } else {
                 UI.showToast(ERROR_CHAR + TRANSLATE['Unknown error']);
             }
