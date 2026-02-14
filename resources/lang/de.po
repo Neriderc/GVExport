@@ -500,12 +500,12 @@ msgstr "Die Optionen sind hier<ul><li>Getrennt - Jede Person wird mit einem Käs
 #. This help message is displayed when the user clicks the help icon next to "Output file type". https://s3.eu-west-1.amazonaws.com/po-pub/i/apq6Tgv91ZGJTGcUfFH3V1VE.png
 #: 
 msgid "This section lets you choose the output file type when downloading the diagram. Some additional settings are available under some circumstances.<h4>Output file type</h4>The output file type you want. This is ignored when rendering in the browser, it is only used when you download a file. File types SVG, PNG, JPG, and PDF can be downloaded, in addition to the Graphviz DOT format.</p><p>There are some minor differences if you have Graphviz installed on the server:<ul><li>There are two more file types, GIF and PostScript (PS). Most people would not need these.</li><li>PDF and SVG files may be smaller and can include URLs</li><li>You may be able to include more records</li></ul><p>In addition, if you have Graphviz installed on the server there are additional quality settings that are available. The following settings are only available when Graphviz is installed on the server, and the output type is set to SVG or PDF:</p><h4>Quality of JPG photos</h4><p>This setting lets you change the quality of embedded JPG photos. This uses the quality setting that is part of the JPG standard. Reducing this can reduce the file size of the output, while increasing it may increase the quality. Also see the DPI setting to change the resolution of the diagram including photos.</p><h4>Convert photos to JPG where possible</h4><p>If enabled, GVExport will attempt to convert PNG, BMP, and GIF files to JPG and will apply the above quality setting."
-msgstr "In diesem Abschnitt können Sie den Ausgabedateityp auswählen, der beim Herunterladen des Diagramms  verwendet werden soll. Einige weitere Einstellungen sind unter bestimmten Umständen zusätzlich verfügbar.<h4>Ausgabedateityp</h4>Der gewünschte Ausgabedateityp wird beim Rendern im Browser ignoriert, er wird nur verwendet, wenn Sie eine Datei herunterladen. Die Dateitypen SVG, PNG, JPG und PDF können zusätzlich zum Graphviz DOT-Format ausgewählt werden.</p><p>Es gibt einige kleinere Unterschiede, falls Sie Graphviz auf dem Server installiert haben<ul><li>Dann sind zwei weitere Dateitypen, GIF und PostScript (PS) verfügbar. Das werden aber die meisten von ihnen nicht benötigen.<li>PDF- und SVG-Dateien können kleiner sein und können URLs enthalten.<li>Sie können möglicherweise mehr Datensätze einfügen.</ul><p>Wenn Sie Graphviz auf dem Server installiert haben, stehen außerdem zusätzliche Qualitätseinstellungen zur Verfügung. Die folgenden Einstellungen sind nur verfügbar, wenn Graphviz auf dem Server installiert ist und der Ausgabetyp auf SVG oder PDF eingestellt ist:</p><h4>Qualität von JPG-Fotos</h4><p>Mit dieser Einstellung können Sie die Qualität von eingebetteten JPG-Fotos ändern. Dabei wird die Qualitätseinstellung verwendet, die Teil des JPG-Standards ist. Eine Verringerung des Wertes kann die Dateigröße der Ausgabe verringern, während eine Erhöhung die Qualität erhöhen kann. Sehen Sie sich auch die DPI-Einstellung an, um die Auflösung des Diagramms einschließlich der Fotos zu ändern.</p><h4>Fotos in JPG konvertieren (wenn möglich)</h4><p>Wenn dies aktiviert wird, versucht GVExport, PNG-, BMP- und GIF-Dateien in JPG zu konvertieren und wendet dann die obige Qualitätseinstellung an."
+msgstr "In diesem Abschnitt können Sie den Ausgabedateityp auswählen, der beim Herunterladen des Diagramms  verwendet werden soll. Einige weitere Einstellungen sind unter bestimmten Umständen zusätzlich verfügbar.<h4>Ausgabedateityp</h4>Der gewünschte Ausgabedateityp wird bei der Erzeugung der Darstellung im Browser ignoriert, er wird nur verwendet, wenn Sie eine Datei herunterladen. Die Dateitypen SVG, PNG, JPG und PDF können zusätzlich zum Graphviz DOT-Format ausgewählt werden.</p><p>Es gibt einige kleinere Unterschiede, falls Sie Graphviz auf dem Server installiert haben<ul><li>Dann sind zwei weitere Dateitypen, GIF und PostScript (PS) verfügbar. Das werden aber die meisten von ihnen nicht benötigen.<li>PDF- und SVG-Dateien können kleiner sein und können URLs enthalten.<li>Sie können möglicherweise mehr Datensätze einfügen.</ul><p>Wenn Sie Graphviz auf dem Server installiert haben, stehen außerdem zusätzliche Qualitätseinstellungen zur Verfügung. Die folgenden Einstellungen sind nur verfügbar, wenn Graphviz auf dem Server installiert ist und der Ausgabetyp auf SVG oder PDF eingestellt ist:</p><h4>Qualität von JPG-Fotos</h4><p>Mit dieser Einstellung können Sie die Qualität von eingebetteten JPG-Fotos ändern. Dabei wird die Qualitätseinstellung verwendet, die Teil des JPG-Standards ist. Eine Verringerung des Wertes kann die Dateigröße der Ausgabe verringern, während eine Erhöhung die Qualität erhöhen kann. Sehen Sie sich auch die DPI-Einstellung an, um die Auflösung des Diagramms einschließlich der Fotos zu ändern.</p><h4>Fotos in JPG konvertieren (wenn möglich)</h4><p>Wenn dies aktiviert wird, versucht GVExport, PNG-, BMP- und GIF-Dateien in JPG zu konvertieren und wendet dann die obige Qualitätseinstellung an."
 
 #. This help message is displayed when the user clicks the help icon next to "Browser render". https://s3.eu-west-1.amazonaws.com/po-pub/i/obqZqWV3JxLlYqmWek7FPMfW.png
 #: 
 msgid "If the option &quot;Auto-update&quot; is selected, the browser rendered diagram will automatically update when any option is changed. This will also hide the &quot;Update&quot; button."
-msgstr "Wenn die Option &quot;Automatische Aktualisierung&quot; ausgewählt ist, wird das vom Browser gerenderte Diagramm automatisch aktualisiert, sobald irgendeine Option geändert wird. Dadurch wird auch die Schaltfläche &quot;Aktualisieren&quot; ausgeblendet."
+msgstr "Wenn die Option &quot;Automatische Aktualisierung&quot; ausgewählt ist, wird das vom Browser dargestellte Diagramm automatisch aktualisiert, sobald irgendeine Option geändert wird. Dadurch wird auch die Schaltfläche &quot;Aktualisieren&quot; ausgeblendet."
 
 #. Help button that will show a help page when clicked
 #: 
@@ -759,7 +759,7 @@ msgstr "Zu meinen Favoriten hinzufügen"
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/jBnrBz5yEIe6NdBhAUvjuUTU.png
 #: 
 msgid "Add to Tree favourites"
-msgstr "Zu den Stammbaumfavoriten hinzufügen"
+msgstr "Zu den Favoriten des Baumes hinzufügen"
 
 #. Option where you can add XREFs to override the option to highlight starting individuals. i.e. when you add XREFs to this list, those individuals will not be highlighted even if option to highlight starting individuals is selected.  https://s3.eu-west-1.amazonaws.com/po-pub/i/peZeLRwsxZTG8ZgMRLTKV8ph.png
 #: 
@@ -819,7 +819,7 @@ msgstr "Eine neue Startperson wurde zu den %s bereits Existierenden hinzugefügt
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/Rq4HsawCjQ0CuWW3I2SoDIJM.png
 #: 
 msgid "Diagram will be rendered in browser as server doesn't support photo shapes"
-msgstr "Das Diagramm wird im Browser gerendert, da der Server keine geformten Fotos unterstützt"
+msgstr "Das Diagramm wird vom Browser dargestellt, da der Server keine Foto-Formen unterstützt"
 
 #. One of the options in the new feature to change the shape of photos:  https://s3.eu-west-1.amazonaws.com/po-pub/i/xt0dCFkQXFZVcva3B9ae0WOL.png
 #: 
@@ -1018,7 +1018,7 @@ msgstr "Diagramm DPI"
 #. New settings group within new Diagram settings section:  https://s3.eu-west-1.amazonaws.com/po-pub/i/wzNlOBmhEznFGDQbErllBaRt.png
 #: 
 msgid "Spacing"
-msgstr "Abstand"
+msgstr "Abstände"
 
 #. New settings group within new Diagram settings section:  https://s3.eu-west-1.amazonaws.com/po-pub/i/wzNlOBmhEznFGDQbErllBaRt.png
 #: 
@@ -2004,7 +2004,7 @@ msgstr "Falls die Option zur Darstellung ausgewählte Personen in einer anderen 
 #. Part of the help for Show selected individuals in a different colour:  https://s3.eu-west-1.amazonaws.com/po-pub/i/P1bJ86EmElATeVIKW50p7nfv.png
 #: 
 msgid "This option lets you set a custom background for selected individuals. The default highlight colour is used by default, but the colour can be customised for each individual. Also see option in Browser Render settings to choose what happens when an individual is clicked, as this may be an easier way to add individuals to this list."
-msgstr "Mit dieser Option können Sie eine Hintergrundfarbe für ausgewählte Personen festlegen. Dabei wird die Standard-Hervorhebungsfarbe verwendet; die Farbe kann jedoch auch für jede Person individuell angepasst werden. Beachten Sie sich auch die Option in den Browser-Rendering-Einstellungen, um auszuwählen, was passiert, wenn auf eine Person geklickt wird, da dies möglicherweise eine einfachere Möglichkeit ist, um Personen zu dieser Liste hinzuzufügen."
+msgstr "Mit dieser Option können Sie eine Hintergrundfarbe für ausgewählte Personen festlegen. Dabei wird die Standard-Hervorhebungsfarbe verwendet; die Farbe kann jedoch auch für jede Person individuell angepasst werden. Beachten Sie sich auch die Option in den Einstellungen zur Darstellung im Browser, um auszuwählen, was passiert, wenn auf eine Person geklickt wird, da dies möglicherweise eine einfachere Möglichkeit ist, um Personen zu dieser Liste hinzuzufügen."
 
 #. Part of the help text for the option "Action when individual clicked".
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/oh4Yjz8fjz3l2aFFkAV608mv.png
@@ -2202,7 +2202,7 @@ msgstr "Für die Ausgabe von SVG (und PDF, wenn Graphviz auf dem Server installi
 #. https://s3.eu-west-1.amazonaws.com/po-pub/i/wfrHxNXw49ofOCG1CBpFzGcW.png
 #: 
 msgid "Note that SVG output will always be rendered by the browser (and not the server) if you choose to include page links."
-msgstr "Beachten Sie, dass die SVG-Ausgabe immer vom Browser (und nicht vom Server) gerendert wird, wenn Sie sich für die Einbindung von Seitenverweisen entscheiden."
+msgstr "Beachten Sie, dass die SVG-Ausgabe immer vom Browser (und nicht vom Server) erzeugt wird, wenn Sie sich für die Einbindung von Seitenverweisen entscheiden."
 
 #. "Diagram colours" is now "Diagram style": https://s3.eu-west-1.amazonaws.com/po-pub/i/4AMAMqb2XvyddBnzaeXB174Y.png
 #: 
@@ -2539,7 +2539,7 @@ msgstr "Durch Klicken auf diese Schaltfläche im Bereich \"Allgemeine Einstellun
 
 #: 
 msgid "There is a setting to control what happens when an individual or family is clicked on in the diagram. This can be used to add an individual or family to the clipping cart. See the Browser render section."
-msgstr "Es gibt eine Einstellung, mit der Sie festlegen können, was passiert, wenn Sie im Diagramm auf eine Person oder Familie klicken. Damit können Sie eine Person oder eine Familie zum Sammelbehälter hinzufügen. Siehe Abschnitt „Browser-Rendering“."
+msgstr "Es gibt eine Einstellung, mit der Sie festlegen können, was passiert, wenn Sie im Diagramm auf eine Person oder Familie klicken. Damit können Sie eine Person oder eine Familie zum Sammelbehälter hinzufügen. Siehe Abschnitt „Darstellung im Browser“."
 
 #: 
 msgid "Context menu when tile clicked"
@@ -2591,9 +2591,9 @@ msgstr "Wenn sie sich bereits im Sammelbehälter befinden, werden sie entfernt."
 
 #: 
 msgid "Using clippings cart"
-msgstr ""
+msgstr "Sammelbehälter wird angezeigt"
 
 #: 
 msgid "In clippings cart"
-msgstr ""
+msgstr "liegt im Sammelbehälter"
 

@@ -2623,9 +2623,9 @@ msgstr "Si ja són al carret de retalls, traieu-los."
 
 #: 
 msgid "Using clippings cart"
-msgstr ""
+msgstr "Ús del carro de retalls"
 
 #: 
 msgid "In clippings cart"
-msgstr ""
+msgstr "Al carretó de retalls"
 
