@@ -2592,9 +2592,9 @@ msgstr "Als ze al in de knipselverzameling zitten, verwijder ze dan."
 
 #: 
 msgid "Using clippings cart"
-msgstr ""
+msgstr "Knipselverzameling in gebruik"
 
 #: 
 msgid "In clippings cart"
-msgstr ""
+msgstr "In knipselverzameling"
 

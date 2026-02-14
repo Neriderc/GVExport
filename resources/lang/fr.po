@@ -2596,9 +2596,9 @@ msgstr "S'ils se trouvent déjà dans le presse-papier, retirez-les."
 
 #: 
 msgid "Using clippings cart"
-msgstr ""
+msgstr "Utilisation du Presse-Papier"
 
 #: 
 msgid "In clippings cart"
-msgstr ""
+msgstr "Dans le Presse-Papier"
 
