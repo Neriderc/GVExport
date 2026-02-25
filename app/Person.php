@@ -470,7 +470,7 @@ class Person
         if (!empty($pid)) {
             // If PID already in name (from another module), remove it, so we don't add twice
             $name = str_replace(" (" . $pid . ")", "", $name);
-            if ($this->dot->settings["show_xref_individuals"] && !isset($vars["first_run_xref_check"])) {
+            if ($this->dot->settings["show_xref_individuals"] && !isset($this->dot->settings["first_run_xref_check"])) {
                 // Show INDI id
                 $name = $name . " (" . $pid . ")";
             }
