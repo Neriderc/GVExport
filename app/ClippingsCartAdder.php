@@ -14,6 +14,7 @@ use Fisharebest\Webtrees\Source;
 use Fisharebest\Webtrees\Repository;
 use Fisharebest\Webtrees\Submitter;
 use Fisharebest\Webtrees\Media;
+use Fisharebest\Webtrees\Note;
 
 /**
  * This class is a service to add items to the clipings cart. Largely it copies from

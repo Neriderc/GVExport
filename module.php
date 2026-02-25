@@ -342,7 +342,7 @@ class GVExport extends AbstractModule implements ModuleCustomInterface, ModuleCh
         $out = "";
 
         $settings = new Settings();
-        $dot = $this->createDot($tree, $vars_data, $settings);
+        $dot = $this->createDot($tree, $vars_data, $settings, $temp_dir);
         
         
         
@@ -372,7 +372,7 @@ class GVExport extends AbstractModule implements ModuleCustomInterface, ModuleCh
         return [$dot->individuals, $dot->families];
     }
 
-    function createDot($tree, $vars_data, $settings) {
+    function createDot($tree, $vars_data, $settings, $temp_dir = null) {
         $dot = new Dot($tree, $this);
         $formSubmission = new FormSubmission($tree);
         $vars = $formSubmission->load($vars_data, $this);
@@ -456,6 +456,7 @@ class GVExport extends AbstractModule implements ModuleCustomInterface, ModuleCh
         if (version_compare(Webtrees::VERSION, '2.2.0', '>=')) {
             return Registry::container()->get($class);
         } else {
+            /** @phpstan-ignore-next-line */
             return app($class);
         }
     }

@@ -147,7 +147,7 @@ class Settings
      * @param int|null $user_id
      * @return array
      */
-    public function loadUserSettings(GVExport $module, Tree $tree, string $id = self::ID_MAIN_SETTINGS, int $user_id = null): array
+    public function loadUserSettings(GVExport $module, Tree $tree, string $id = self::ID_MAIN_SETTINGS, ?int $user_id = null): array
     {
         if ($user_id === null) {
             $user_id = Auth::user()->id();

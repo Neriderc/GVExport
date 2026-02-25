@@ -33,7 +33,7 @@ namespace vendor\WebtreesModules\gvexport;
 use Fisharebest\Webtrees\Date;
 use Fisharebest\Webtrees\Fact;
 use Fisharebest\Webtrees\Family;
-use Fisharebest\Webtrees\I18n;
+use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Individual;
 use Fisharebest\Webtrees\Registry;
 use Fisharebest\Webtrees\Tree;
@@ -326,7 +326,7 @@ class Dot {
 
 						// Draw an arrow from FAM to each CHIL
 						foreach ($f->children() as $child) {
-							if (!empty($child) && (isset($this->individuals[$child->xref()]))) {
+							if ($child && (isset($this->individuals[$child->xref()]))) {
 								$fams = isset($this->individuals[$child->xref()]["fams"]) ? $this->individuals[$child->xref()]["fams"] : [];
 								foreach ($fams as $fam) {
 									$family_name = $this->generateFamilyNodeName($fam);
@@ -368,7 +368,7 @@ class Dot {
 					}
 					// Draw an arrow from FAM to each CHIL
 					foreach ($f->children() as $child) {
-						if (!empty($child) && (isset($this->individuals[$child->xref()]))) {
+						if ($child && (isset($this->individuals[$child->xref()]))) {
 							$arrow_colour = $this->getChildArrowColour($child, $fid);
 							$line_style = $this->getLineStyle();
 							$arrow_label = $this->getArrowLabel($f,$child);
@@ -388,7 +388,7 @@ class Dot {
 
 					// Draw an arrow from FAM to each CHIL
 					foreach ($f->children() as $child) {
-						if (!empty($child) && (isset($this->individuals[$child->xref()]))) {
+						if ($child && (isset($this->individuals[$child->xref()]))) {
                             $line_style = $this->getLineStyle();
                             if (!empty($husb_id) && (isset($this->individuals[$husb_id]))) {
 								$out .= $this->convertID($husb_id) . " -> " . $this->convertID($child->xref()) ." [color=\"#555555\", style=\"" . $line_style . "\", arrowsize=0.3]\n";
@@ -580,10 +580,7 @@ class Dot {
 					$printCount += 1;
 
 					// Set marriage prefix only if marriage exists
-					$married = ! empty($marriageFact);
-					if ($married) {
-						$marriage_prefix_array[$printCount] = $this->settings["marriage_prefix"] . ' ';
-					}
+					$marriage_prefix_array[$printCount] = $this->settings["marriage_prefix"] . ' ';
 		
 					if ($this->settings["show_marriage_type"]) {
 						$marriageType_array[$printCount] = '';
@@ -608,7 +605,7 @@ class Dot {
 					}
 		
 					// Show marriage place
-					if ($this->settings["show_marriage_place"] && !empty($marriageFact) && !empty($marriageFact->place())) {
+					if ($this->settings["show_marriage_place"] && !empty($marriageFact->place())) {
 						$marriageplace_array[$printCount] = $this->getAbbreviatedPlace($marriageFact->place()->gedcomName(), $this->settings);
 					} else {
 						$marriageplace_array[$printCount] = "";
@@ -643,10 +640,7 @@ class Dot {
 				$printCount += 1;
 
 				// Set divorce prefix only if divorce exists
-				$divorced = ! empty($divorceFact);
-				if ($divorced) {
-					$divorce_prefix_array[$printCount] = $this->settings["divorce_prefix"] . ' ';
-				}
+				$divorce_prefix_array[$printCount] = $this->settings["divorce_prefix"] . ' ';
 	
 				// Show divorce year
 				if ($this->settings["show_divorce_date"]) {
@@ -656,7 +650,7 @@ class Dot {
 				}
 	
 				// Show divorce place
-				if ($this->settings["show_divorce_place"] && !empty($divorceFact) && !empty($divorceFact->place())) {
+				if ($this->settings["show_divorce_place"] && !empty($divorceFact->place())) {
 					$divorceplace_array[$printCount] = $this->getAbbreviatedPlace($divorceFact->place()->gedcomName(), $this->settings);
 				} else {
 					$divorceplace_array[$printCount] = "";
