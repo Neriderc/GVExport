@@ -14,6 +14,7 @@ use Fisharebest\Webtrees\Services\LinkedRecordService;
  */
 class SharedNoteList
 {
+    /** @var array<string,string> */
     private array $indi_style = [];
     private string $default_col;
 
@@ -25,7 +26,7 @@ class SharedNoteList
      * @param Tree $tree  The webtrees tree
      * @param $default_col
      */
-    public function __construct($json, $tree, $default_col)
+    public function __construct(string $json, Tree $tree, string $default_col)
     {
         $data = json_decode($json, true);
         if (!empty($data)) {

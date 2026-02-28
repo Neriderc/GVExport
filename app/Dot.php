@@ -1,4 +1,5 @@
 <?php
+
 /**
  * DOT file generating functions for Graphviz module
  *
@@ -37,6 +38,7 @@ use Fisharebest\Webtrees\I18N;
 use Fisharebest\Webtrees\Individual;
 use Fisharebest\Webtrees\Registry;
 use Fisharebest\Webtrees\Tree;
+use Fisharebest\Webtrees\MediaFile;
 use Psr\Http\Message\StreamFactoryInterface;
 use Fisharebest\Webtrees\Gedcom;
 use Fisharebest\Webtrees\Http\Exceptions\HttpAccessDeniedException;
@@ -49,16 +51,23 @@ use Fisharebest\Webtrees\Elements\PedigreeLinkageType;
  * Main class for managing the DOT file
  *
  */
-class Dot {
+class Dot
+{
+	/** @var array<mixed> */
 	var array $individuals = array();
+	/** @var array<string> */
 	var array $skipList = array();
+	/** @var array<mixed> */
 	var array $families = array();
+	/** @var array<string, bool> */
 	var array $indi_search_method = array("ance" => FALSE, "desc" => FALSE, "spou" => FALSE, "sibl" => FALSE, "rels" => FALSE, "any" => FALSE);
+	/** @var array<mixed> */
 	var array $settings = array();
-    var array $messages = array(); // messages for toast system
+	/** @var array<string> */
+	var array $messages = array(); // messages for toast system
 	private const ERROR_CHAR = "E:"; // Messages that start with this will be highlighted
-    private Tree $tree;
-    public string $debug_string = "";
+	private Tree $tree;
+	public string $debug_string = "";
 
 	public const DUMMY_INDIVIDUAL_XREF	= 'I_';
 	public const DUMMY_FAMILIY_XREF		= 'F_';						// what happens if someone is using such a XREF ???
@@ -67,25 +76,27 @@ class Dot {
 	public const ID_WIFE				= 'wife_id';
 	public const ID_UNKNOWN				= 'unkn_id';
 
-    /**
+	/**
 	 * Constructor of Dot class
 	 */
-	function __construct($tree, $module) {
+	function __construct(Tree $tree, GVExport $module)
+	{
 		$this->tree = $tree;
-    // Load settings from config file
-        $this->settings=(new Settings())->loadUserSettings($module,$tree);
-        $this->settings["no_fams"] = FALSE;
+		// Load settings from config file
+		$this->settings = (new Settings())->loadUserSettings($module, $tree);
+		$this->settings["no_fams"] = FALSE;
 	}
 
-    /**
-     * Function to set settings
-     *
-     * @param array $vars
-     */
-    public function setSettings(array $vars) {
-        foreach ($vars as $preference => $value) {
-            $this->settings[$preference] = $value;
-        }
+	/**
+	 * Function to set settings
+	 *
+	 * @param array<mixed> $vars
+	 */
+	public function setSettings(array $vars): void
+	{
+		foreach ($vars as $preference => $value) {
+			$this->settings[$preference] = $value;
+		}
 	}
 
 	/**
@@ -138,7 +149,7 @@ class Dot {
 							$famFound = TRUE;
 							// ---DEBUG---
 							if ($this->settings["enable_debug_mode"]) {
-									$this->printDebug("(".$i->xref().") -- ADOP record: " . preg_replace("/\n/", " | ", $gedcom) . "\n", $ind);
+								$this->printDebug("(" . $i->xref() . ") -- ADOP record: " . preg_replace("/\n/", " | ", $gedcom) . "\n", $ind);
 							}
 							// -----------
 						}
@@ -175,52 +186,53 @@ class Dot {
 
 		// --- DEBUG ---
 		if ($this->settings["enable_debug_mode"]) {
-			$this->printDebug("-- Link between individual ".$i->xref()." and family ".$fid." is ".($adopfamcadoptype=="" ? "blood" : $adopfamcadoptype).".\n", $ind);
+			$this->printDebug("-- Link between individual " . $i->xref() . " and family " . $fid . " is " . ($adopfamcadoptype == "" ? "blood" : $adopfamcadoptype) . ".\n", $ind);
 		}
 		// -------------
 
 		return $adopfamcadoptype;
 	}
 
-    /** Populate $individuals and $families arrays with lists of the individuals and families
-     *  that will be included in the diagram.
-     * @param array $individuals    Array to pupulate individuals to
-     * @param array $families       Array to populate families to
-     * @param bool $full            Whether max levels setting should be ignored to generate a full tree of relatives
-     * @return void                 Directly updates arrays so no return value
-     */
-    private function createIndiList (array &$individuals, array &$families, bool $full) {
-        $this->indi_search_method = array("ance" => $this->settings["include_ancestors"], "desc" => $this->settings["include_descendants"], "spou" => $this->settings["include_spouses"], "sibl" => $this->settings["include_siblings"], "rels" => $this->settings["include_all_relatives"], "any" => $this->settings["include_all"]);
-        $indis = explode(",", $this->settings['xref_list']);
-        $indiLists = array();
-        for ($i=0;$i<count($indis);$i++) {
-            $indiLists[$i] = array();
-            if (trim($indis[$i]) !== "") {
-                $this->addIndiToList(null, "Start | Code 16", trim($indis[$i]), $this->indi_search_method["ance"], $this->indi_search_method["desc"], $this->indi_search_method["spou"], $this->indi_search_method["sibl"], TRUE, 0, 0, $indiLists[$i], $families, $full);
-            }
-        }
-        // Merge multiple lists from the different starting persons into one list
-        // Taking extra care to ensure if one list marks a person as related
-        // they should be marked as related in the final tree
-        $individuals = $indiLists[0];
-        for($i=1;$i<count($indiLists);$i++) {
-            $indiList = $indiLists[$i];
-            foreach ($indiList as $key => $value) {
-                if (isset($individuals[$key])) {
-                    if (!$individuals[$key]["rel"] && $value["rel"]) {
-                        $individuals[$key]["rel"] = true;
-                    }
-                } else {
-                    $individuals[$key] = $value;
-                }
-            }
-        }
+	/** Populate $individuals and $families arrays with lists of the individuals and families
+	 *  that will be included in the diagram.
+	 * @param array<mixed> $individuals    Array to pupulate individuals to
+	 * @param array<mixed> $families       Array to populate families to
+	 * @param bool $full            Whether max levels setting should be ignored to generate a full tree of relatives
+	 * @return void                 Directly updates arrays so no return value
+	 */
+	private function createIndiList(array &$individuals, array &$families, bool $full)
+	{
+		$this->indi_search_method = array("ance" => $this->settings["include_ancestors"], "desc" => $this->settings["include_descendants"], "spou" => $this->settings["include_spouses"], "sibl" => $this->settings["include_siblings"], "rels" => $this->settings["include_all_relatives"], "any" => $this->settings["include_all"]);
+		$indis = explode(",", $this->settings['xref_list']);
+		$indiLists = array();
+		for ($i = 0; $i < count($indis); $i++) {
+			$indiLists[$i] = array();
+			if (trim($indis[$i]) !== "") {
+				$this->addIndiToList(null, "Start | Code 16", trim($indis[$i]), $this->indi_search_method["ance"], $this->indi_search_method["desc"], $this->indi_search_method["spou"], $this->indi_search_method["sibl"], TRUE, 0, 0, $indiLists[$i], $families, $full);
+			}
+		}
+		// Merge multiple lists from the different starting persons into one list
+		// Taking extra care to ensure if one list marks a person as related
+		// they should be marked as related in the final tree
+		$individuals = $indiLists[0];
+		for ($i = 1; $i < count($indiLists); $i++) {
+			$indiList = $indiLists[$i];
+			foreach ($indiList as $key => $value) {
+				if (isset($individuals[$key])) {
+					if (!$individuals[$key]["rel"] && $value["rel"]) {
+						$individuals[$key]["rel"] = true;
+					}
+				} else {
+					$individuals[$key] = $value;
+				}
+			}
+		}
 	}
 
 	function createDOTDump(): string
 	{
 		// If no individuals in the clippings cart (or option chosen to override), use standard method
-		if (!ClippingsCart::hasIndividualsOrFamilies($this->tree) || !$this->settings["use_cart"] ) {
+		if (!ClippingsCart::hasIndividualsOrFamilies($this->tree) || !$this->settings["use_cart"]) {
 			// Create our tree
 			$this->createIndiList($this->individuals, $this->families, false);
 			if ($this->settings["diagram_type"] !== "combined") {
@@ -268,12 +280,12 @@ class Dot {
 				}
 			}
 		} else {
-		// If individuals in clipping cart and option chosen to use them, then proceed
+			// If individuals in clipping cart and option chosen to use them, then proceed
 
 			$cart = new ClippingsCart($this->tree);
-			$lists = (new ClippingsCartListBuilder($cart, ($this->settings["diagram_type"] == "combined")))->getLists();
+			$lists = new ClippingsCartListBuilder($cart)->getLists();
 			$enhancedLists = (new ClippingsCartListEnhancer($cart, $lists, $this->isPhotoRequired(), $this->settings['dpi'], ($this->settings["diagram_type"] == "combined")))->enhance();
-			
+
 			$this->individuals = $enhancedLists['individuals'];
 			$this->families = $enhancedLists['families'];
 		}
@@ -296,7 +308,7 @@ class Dot {
 		// ### Print the families list ###
 		// If no_fams option is not checked then we print the families
 		if (!$this->settings["no_fams"]) {
-			foreach ($this->families as $fid=>$fam_data) {
+			foreach ($this->families as $fid => $fam_data) {
 				if ($this->settings["diagram_type"] == "combined") {
 					$nodeName = $this->generateFamilyNodeName($fid);
 					// We do not show those families which has no parents and children in case of "combined" view;
@@ -315,26 +327,26 @@ class Dot {
 		// ### Print the connections ###
 		// If no_fams option is not checked
 		if (!$this->settings["no_fams"]) {
-			foreach ($this->families as $fid=>$set) {
-                // COMBINED type diagram
+			foreach ($this->families as $fid => $set) {
+				// COMBINED type diagram
 				if ($this->settings["diagram_type"] == "combined") {
-                    $nodeName = $this->generateFamilyNodeName($fid);
-                    // In case of dummy family do nothing, because it has no children
+					$nodeName = $this->generateFamilyNodeName($fid);
+					// In case of dummy family do nothing, because it has no children
 					if (substr($fid, 0, 2) != "F_") {
 						// Get the family data
 						$f = $this->getUpdatedFamily($fid);
 
 						// Draw an arrow from FAM to each CHIL
 						foreach ($f->children() as $child) {
-							if ($child && (isset($this->individuals[$child->xref()]))) {
+							if (isset($this->individuals[$child->xref()])) {
 								$fams = isset($this->individuals[$child->xref()]["fams"]) ? $this->individuals[$child->xref()]["fams"] : [];
 								foreach ($fams as $fam) {
 									$family_name = $this->generateFamilyNodeName($fam);
 									$arrow_colour = $this->getChildArrowColour($child, $fid);
 									$line_style = $this->getLineStyle();
-									$arrow_desc = $this->getArrowLabel($f,$child);
+									$arrow_desc = $this->getArrowLabel($f, $child);
 									$arrow_label = empty($arrow_desc) ? '' : $arrow_desc;
-									$out .= $nodeName . " -> " . $family_name . ":" . $this->convertID($child->xref()) . " [".$arrow_label."color=\"$arrow_colour\", style=\"" . $line_style . "\", arrowsize=0.3] \n";
+									$out .= $nodeName . " -> " . $family_name . ":" . $this->convertID($child->xref()) . " [" . $arrow_label . "color=\"$arrow_colour\", style=\"" . $line_style . "\", arrowsize=0.3] \n";
 								}
 							}
 						}
@@ -344,42 +356,42 @@ class Dot {
 					$f = $this->getUpdatedFamily($fid);
 
 					// Get the husband & wife ID
-                    $h = $f->husband();
-                    $w = $f->wife();
-                    if($h)
-                        $husb_id = $h->xref();
-                    else
-                        $husb_id = null;
-                    if($w)
-                        $wife_id = $w->xref();
-                    else
-                        $wife_id = null;
+					$h = $f->husband();
+					$w = $f->wife();
+					if ($h)
+						$husb_id = $h->xref();
+					else
+						$husb_id = null;
+					if ($w)
+						$wife_id = $w->xref();
+					else
+						$wife_id = null;
 
-                    $parent_arrow_colour = $this->getParentArrowColour();
+					$parent_arrow_colour = $this->getParentArrowColour();
 					// Draw an arrow from HUSB to FAM
 					if (!empty($husb_id) && (isset($this->individuals[$husb_id]))) {
-                        $line_style = $this->getLineStyle();
-                        $out .= $this->convertID($husb_id) . " -> " . $this->convertID($fid) ." [color=\"" . $parent_arrow_colour . "\", style=\"" . $line_style . "\", arrowsize=0.3]\n";
+						$line_style = $this->getLineStyle();
+						$out .= $this->convertID($husb_id) . " -> " . $this->convertID($fid) . " [color=\"" . $parent_arrow_colour . "\", style=\"" . $line_style . "\", arrowsize=0.3]\n";
 					}
 					// Draw an arrow from WIFE to FAM
 					if (!empty($wife_id) && (isset($this->individuals[$wife_id]))) {
-                        $line_style = $this->getLineStyle();
-						$out .= $this->convertID($wife_id) . " -> ". $this->convertID($fid) ." [color=\"" . $parent_arrow_colour . "\", style=\"" . $line_style . "\", arrowsize=0.3]\n";
+						$line_style = $this->getLineStyle();
+						$out .= $this->convertID($wife_id) . " -> " . $this->convertID($fid) . " [color=\"" . $parent_arrow_colour . "\", style=\"" . $line_style . "\", arrowsize=0.3]\n";
 					}
 					// Draw an arrow from FAM to each CHIL
 					foreach ($f->children() as $child) {
-						if ($child && (isset($this->individuals[$child->xref()]))) {
+						if (isset($this->individuals[$child->xref()])) {
 							$arrow_colour = $this->getChildArrowColour($child, $fid);
 							$line_style = $this->getLineStyle();
-							$arrow_label = $this->getArrowLabel($f,$child);
-							$out .= $this->convertID($fid) . " -> " . $this->convertID($child->xref()) . " [".$arrow_label."color=\"$arrow_colour\", style=\"" . $line_style . "\", arrowsize=0.3]\n";
+							$arrow_label = $this->getArrowLabel($f, $child);
+							$out .= $this->convertID($fid) . " -> " . $this->convertID($child->xref()) . " [" . $arrow_label . "color=\"$arrow_colour\", style=\"" . $line_style . "\", arrowsize=0.3]\n";
 						}
 					}
 				}
 			}
 		} else {
-		// If no_fams option is checked then we do not print the families
-			foreach ($this->families as $fid=>$set) {
+			// If no_fams option is checked then we do not print the families
+			foreach ($this->families as $fid => $set) {
 				if ($this->settings["diagram_type"] != "combined") {
 					$f = $this->getUpdatedFamily($fid);
 					// Draw an arrow from HUSB and WIFE to FAM
@@ -388,13 +400,13 @@ class Dot {
 
 					// Draw an arrow from FAM to each CHIL
 					foreach ($f->children() as $child) {
-						if ($child && (isset($this->individuals[$child->xref()]))) {
-                            $line_style = $this->getLineStyle();
-                            if (!empty($husb_id) && (isset($this->individuals[$husb_id]))) {
-								$out .= $this->convertID($husb_id) . " -> " . $this->convertID($child->xref()) ." [color=\"#555555\", style=\"" . $line_style . "\", arrowsize=0.3]\n";
+						if (isset($this->individuals[$child->xref()])) {
+							$line_style = $this->getLineStyle();
+							if (!empty($husb_id) && (isset($this->individuals[$husb_id]))) {
+								$out .= $this->convertID($husb_id) . " -> " . $this->convertID($child->xref()) . " [color=\"#555555\", style=\"" . $line_style . "\", arrowsize=0.3]\n";
 							}
 							if (!empty($wife_id) && (isset($this->individuals[$wife_id]))) {
-								$out .= $this->convertID($wife_id) . " -> ". $this->convertID($child->xref()) ." [color=\"#555555\", style=\"" . $line_style . "\", arrowsize=0.3]\n";
+								$out .= $this->convertID($wife_id) . " -> " . $this->convertID($child->xref()) . " [color=\"#555555\", style=\"" . $line_style . "\", arrowsize=0.3]\n";
 							}
 						}
 					}
@@ -410,40 +422,40 @@ class Dot {
 	}
 
 	/**
- 	 * Gets the colour associated with the given gender
- 	 *
- 	 * If a custom colour was used then this function will pull it from the form
- 	 * otherwise it will use the default colours in the config file
- 	 *
- 	 * @param string $gender (F/M/U)
- 	 * @param boolean $related (TRUE/FALSE) Person is blood-related
- 	 * @return string $colour (#RRGGBB)
- 	 */
+	 * Gets the colour associated with the given gender
+	 *
+	 * If a custom colour was used then this function will pull it from the form
+	 * otherwise it will use the default colours in the config file
+	 *
+	 * @param string $gender (F/M/U)
+	 * @param boolean $related (TRUE/FALSE) Person is blood-related
+	 * @return string $colour (#RRGGBB)
+	 */
 	function getGenderColour(string $gender, bool $related = TRUE): string
-    {
+	{
 		// Determine the fill colour
 		if ($gender == 'F') {
 			if ($related || !$this->settings["mark_not_related"]) {
 				$fill_colour = $this->settings["female_col"];
-			} else  {
+			} else {
 				$fill_colour = $this->settings["female_unrelated_col"];
 			}
-		} elseif ($gender == 'M'){
+		} elseif ($gender == 'M') {
 			if ($related || !$this->settings["mark_not_related"]) {
 				$fill_colour = $this->settings["male_col"];
-			} else  {
+			} else {
 				$fill_colour = $this->settings["male_unrelated_col"];
 			}
-		} elseif ($gender == 'X'){
+		} elseif ($gender == 'X') {
 			if ($related || !$this->settings["mark_not_related"]) {
 				$fill_colour = $this->settings["other_gender_col"];
-			} else  {
+			} else {
 				$fill_colour = $this->settings["oth_gender_unrel_col"];
 			}
 		} else {
 			if ($related || !$this->settings["mark_not_related"]) {
 				$fill_colour = $this->settings["unknown_gender_col"];
-			} else  {
+			} else {
 				$fill_colour = $this->settings["unkn_gender_unrel_col"];
 			}
 		}
@@ -451,20 +463,20 @@ class Dot {
 	}
 
 	/**
- 	 * Gets the colour associated with the families
- 	 *
- 	 * If a custom colour was used then this function will pull it from the form
- 	 * otherwise it will use the default colours in the config file
- 	 *
- 	 * @return string colour (#RRGGBB)
- 	 */
-	function getFamilyColour($xref = null): string
-    {	
+	 * Gets the colour associated with the families
+	 *
+	 * If a custom colour was used then this function will pull it from the form
+	 * otherwise it will use the default colours in the config file
+	 *
+	 * @return string colour (#RRGGBB)
+	 */
+	function getFamilyColour(?string $xref = null): string
+	{
 		if (!empty($xref) && $this->settings['highlight_custom_fams'] && Utils::isKeyInJson($this->settings['highlight_custom_fams_json'], $xref)) {
 			$data = json_decode($this->settings['highlight_custom_fams_json'], true);
-            return $data[$xref];
-        } 
-        return $this->settings["family_col"];
+			return $data[$xref];
+		}
+		return $this->settings["family_col"];
 	}
 
 	/**
@@ -473,10 +485,10 @@ class Dot {
 	 * @return	string	DOT header text
 	 */
 	function printDOTHeader(): string
-    {
-        $out = "digraph WT_Graph {\n";
-		$out .= "ranksep=\"" . str_replace("%","",$this->settings["ranksep"])*$this->settings["space_base"]/100 . " equally\"\n";
-		$out .= "nodesep=\"" . str_replace("%","",$this->settings["nodesep"])*$this->settings["space_base"]/100	 . "\"\n";
+	{
+		$out = "digraph WT_Graph {\n";
+		$out .= "ranksep=\"" . str_replace("%", "", $this->settings["ranksep"]) * $this->settings["space_base"] / 100 . " equally\"\n";
+		$out .= "nodesep=\"" . str_replace("%", "", $this->settings["nodesep"]) * $this->settings["space_base"] / 100	 . "\"\n";
 		$out .= "dpi=\"" . $this->settings['dpi'] . "\"\n";
 		$out .= "mclimit=\"" . $this->settings["mclimit"] . "\"\n";
 		$out .= "rankdir=\"" . $this->settings["graph_dir"] . "\"\n";
@@ -485,7 +497,7 @@ class Dot {
 		#splines https://gitlab.com/graphviz/graphviz/-/blob/main/lib/common/utils.c
 		$out .= "splines=\"spline\"\n";   #<- default
 		$out .= "edge [ style=solid, arrowhead=normal, arrowtail=none];\n";
-		$out .= "node [ shape=plaintext font_size=\"" . $this->settings['font_size'] ."\" fontname=\"" . $this->settings["typefaces"][$this->settings["typeface"]] . "\"];\n";
+		$out .= "node [ shape=plaintext font_size=\"" . $this->settings['font_size'] . "\" fontname=\"" . $this->settings["typefaces"][$this->settings["typeface"]] . "\"];\n";
 		return $out;
 	}
 
@@ -495,36 +507,36 @@ class Dot {
 	 * @return	string	DOT header text
 	 */
 	function printDOTFooter(): string
-    {
-        return "}\n";
+	{
+		return "}\n";
 	}
 
-    /**
-     * Prints the line for drawing a box for a family.
-     *
-     * @param string $fid Family ID
-     * @param string $nodeName Name of DOT file node we are creating
-     * @param SharedNoteList $sharednotes
-     * @return string
-     */
+	/**
+	 * Prints the line for drawing a box for a family.
+	 *
+	 * @param string $fid Family ID
+	 * @param string $nodeName Name of DOT file node we are creating
+	 * @param SharedNoteList $sharednotes
+	 * @return string
+	 */
 	function printFamily(string $fid, string $nodeName, SharedNoteList $sharednotes): string
 	{
 		$out = $nodeName;
-		$marriage_prefix_array = Array();
-		$divorce_prefix_array = Array();
-		$marriageType_array = Array();
-		$marriagedate_array = Array();
-		$marriageplace_array = Array();
-		$marriageEmpty_array = Array();
-		$pic_marriage_first_array = Array();
-		$pic_marriage_first_title_array = Array();
-		$pic_marriage_first_link_array = Array();
-		$divorcedate_array = Array();
-		$divorceplace_array = Array();
-		$divorceEmpty_array = Array();
-		$pic_divorce_first_array = Array();
-		$pic_divorce_first_title_array = Array();
-		$pic_divorce_first_link_array = Array();
+		$marriage_prefix_array = array();
+		$divorce_prefix_array = array();
+		$marriageType_array = array();
+		$marriagedate_array = array();
+		$marriageplace_array = array();
+		$marriageEmpty_array = array();
+		$pic_marriage_first_array = array();
+		$pic_marriage_first_title_array = array();
+		$pic_marriage_first_link_array = array();
+		$divorcedate_array = array();
+		$divorceplace_array = array();
+		$divorceEmpty_array = array();
+		$pic_divorce_first_array = array();
+		$pic_divorce_first_title_array = array();
+		$pic_divorce_first_link_array = array();
 
 		$printCount = -1;
 
@@ -550,7 +562,7 @@ class Dot {
 				$unkn_id = $this->families[$fid]["unkn_id"];
 			}
 			$link = "#";
-		// Querying webtrees for the data of a FAM object
+			// Querying webtrees for the data of a FAM object
 		} else {
 			$f = $this->getUpdatedFamily($fid);
 
@@ -564,7 +576,7 @@ class Dot {
 			// Get the husband's and wife's id from PGV
 			$husb_id = $this->families[$fid]["husb_id"] ?? "";
 			$wife_id = $this->families[$fid]["wife_id"] ?? "";
-	
+
 			$fill_colour = $this->getFamilyColour($fid);
 			$link = $f->url();
 
@@ -581,31 +593,29 @@ class Dot {
 
 					// Set marriage prefix only if marriage exists
 					$marriage_prefix_array[$printCount] = $this->settings["marriage_prefix"] . ' ';
-		
+
 					if ($this->settings["show_marriage_type"]) {
 						$marriageType_array[$printCount] = '';
-						if (($marriageFact instanceof Fact)) {
-							$marriageAttributeType = $marriageFact->attribute('TYPE');
-							if ($marriageAttributeType !== '') {
-								$element = Registry::elementFactory()->make('FAM:MARR:TYPE');
-								$marriageType_array[$printCount] = $element->value($marriageAttributeType, $this->tree);
-							} else {
-								if ($this->settings["show_marriage_type"] && $this->settings["show_marriage_type_not_specified"]) {
-									$marriageType_array[$printCount] = I18N::translate('Unknown type of marriage') ;
-								}
+						$marriageAttributeType = $marriageFact->attribute('TYPE');
+						if ($marriageAttributeType !== '') {
+							$element = Registry::elementFactory()->make('FAM:MARR:TYPE');
+							$marriageType_array[$printCount] = $element->value($marriageAttributeType, $this->tree);
+						} else {
+							if ($this->settings["show_marriage_type_not_specified"]) {
+								$marriageType_array[$printCount] = I18N::translate('Unknown type of marriage');
 							}
 						}
 					}
-		
+
 					// Show marriage year
 					if ($this->settings["show_marriage_date"]) {
 						$marriagedate_array[$printCount] = $this->formatDate($marriageFact->date(), $this->settings["marr_date_year_only"],  $this->settings["use_abbr_month"]);
 					} else {
 						$marriagedate_array[$printCount] = "";
 					}
-		
+
 					// Show marriage place
-					if ($this->settings["show_marriage_place"] && !empty($marriageFact->place())) {
+					if ($this->settings["show_marriage_place"]) {
 						$marriageplace_array[$printCount] = $this->getAbbreviatedPlace($marriageFact->place()->gedcomName(), $this->settings);
 					} else {
 						$marriageplace_array[$printCount] = "";
@@ -616,13 +626,15 @@ class Dot {
 					} else {
 						$marriageEmpty_array[$printCount] = "";
 					}
-			
+
 					if ($this->settings["show_marriage_first_image"] && $this->isPhotoRequired()) {
-						[$pic_marriage_first_array[$printCount], 
-						$pic_marriage_first_title_array[$printCount], 
-						$pic_marriage_first_link_array[$printCount]] = $this->addFirstPhotoFromSpecificFactToFam($marriageFact);
+						[
+							$pic_marriage_first_array[$printCount],
+							$pic_marriage_first_title_array[$printCount],
+							$pic_marriage_first_link_array[$printCount]
+						] = $this->addFirstPhotoFromSpecificFactToFam($marriageFact);
 					}
-		
+
 					// Get the husband's and wife's id from PGV
 					$husb_id = $this->families[$fid]["husb_id"] ?? "";
 					$wife_id = $this->families[$fid]["wife_id"] ?? "";
@@ -632,8 +644,8 @@ class Dot {
 					}
 				}
 			}
-                        #---
-                        #Divorce
+			#---
+			#Divorce
 
 			# At least one divorce event
 			foreach ($divorces as $divorceFact) {
@@ -641,16 +653,16 @@ class Dot {
 
 				// Set divorce prefix only if divorce exists
 				$divorce_prefix_array[$printCount] = $this->settings["divorce_prefix"] . ' ';
-	
+
 				// Show divorce year
 				if ($this->settings["show_divorce_date"]) {
 					$divorcedate_array[$printCount] = $this->formatDate($divorceFact->date(), $this->settings["divorce_date_year_only"],  $this->settings["use_abbr_month"]);
 				} else {
 					$divorcedate_array[$printCount] = "";
 				}
-	
+
 				// Show divorce place
-				if ($this->settings["show_divorce_place"] && !empty($divorceFact->place())) {
+				if ($this->settings["show_divorce_place"]) {
 					$divorceplace_array[$printCount] = $this->getAbbreviatedPlace($divorceFact->place()->gedcomName(), $this->settings);
 				} else {
 					$divorceplace_array[$printCount] = "";
@@ -662,11 +674,13 @@ class Dot {
 					$divorceEmpty_array[$printCount] = "";
 				}
 				if ($this->settings["show_divorce_first_image"] && $this->isPhotoRequired()) {
-					[$pic_divorce_first_array[$printCount], 
-					 $pic_divorce_first_title_array[$printCount], 
-					 $pic_divorce_first_link_array[$printCount]] = $this->addFirstPhotoFromSpecificFactToFam($divorceFact);
+					[
+						$pic_divorce_first_array[$printCount],
+						$pic_divorce_first_title_array[$printCount],
+						$pic_divorce_first_link_array[$printCount]
+					] = $this->addFirstPhotoFromSpecificFactToFam($divorceFact);
 				}
-	
+
 				// Get the husband's and wife's id from PGV
 				$husb_id = $this->families[$fid]["husb_id"] ?? "";
 				$wife_id = $this->families[$fid]["wife_id"] ?? "";
@@ -685,18 +699,18 @@ class Dot {
 				empty($marriagedate_array[$i]) &&
 				empty($marriageplace_array[$i]) &&
 				empty($marriageType_array[$i]) &&
-				empty($marriageEmpty_array[$i]) 
+				empty($marriageEmpty_array[$i])
 			);
 			$hasDivorces = !(
 				empty($divorce_prefix_array[$i]) &&
 				empty($divorcedate_array[$i]) &&
 				empty($divorceplace_array[$i]) &&
-				empty($divorceEmpty_array[$i]) 
+				empty($divorceEmpty_array[$i])
 			);
 			$hasContent = (
 				($hasMarriages || $hasDivorces) ||
 				!(empty($family) &&
-				empty($marriage_prefix_array[$i]) && empty($divorce_prefix_array[$i]))
+					empty($marriage_prefix_array[$i]) && empty($divorce_prefix_array[$i]))
 			);
 			$noPartners = empty($husb_id) && empty($wife_id);
 			$enabled = (
@@ -708,15 +722,15 @@ class Dot {
 			// --- Printing ---
 			// "Combined" type
 			if ($this->settings["diagram_type"] == "combined") {
-				if ($i==0) {
+				if ($i == 0) {
 					$out .= "label=<";
-		
+
 					// --- Print table ---
 					$out .= "<TABLE COLOR=\"" . $this->settings["border_col"] . "\" BORDER=\"0\" CELLBORDER=\"0\" CELLPADDING=\"2\" CELLSPACING=\"0\">";
-		
+
 					// --- Print couple ---
 					$out .= "<TR>";
-		
+
 					if (!empty($unkn_id)) {
 						// Print unknown gender INDI
 						$person = new Person([], $this);
@@ -727,7 +741,7 @@ class Dot {
 							$person = new Person([], $this);
 							$out = $person->addPersonLabel($husb_id, $out, $sharednotes);
 						}
-		
+
 						// Print wife
 						if (!empty($wife_id)) {
 							if ($this->settings["combined_layout_type"] == 'OU' && !empty($husb_id)) {
@@ -743,7 +757,7 @@ class Dot {
 							$out = $person->addPersonLabel('I_N', $out, $sharednotes);
 						}
 					}
-		
+
 					$out .= "</TR>";
 				}
 
@@ -760,30 +774,30 @@ class Dot {
 					if (($hasMarriages) || (!$hasDivorces)) {
 						$out .= "<TR>";
 						$out .= "<TD>";
-						$text = ($marriage_prefix_array[$i] ?? '') . (empty($marriageType_array[$i])?"":$marriageType_array[$i]) . (empty($marriageEmpty_array[$i])?"":$marriageEmpty_array[$i] . " ") . (empty($marriagedate_array[$i])?"":$marriagedate_array[$i] . " ") . (empty($marriageplace_array[$i])?"":"(".$marriageplace_array[$i].")");
-						if (!empty($text)) $out .= "<FONT COLOR=\"". $this->settings["font_colour_details"] ."\" POINT-SIZE=\"" . ($this->settings["font_size"]) ."\">" . $text . "</FONT><BR />";
+						$text = ($marriage_prefix_array[$i] ?? '') . (empty($marriageType_array[$i]) ? "" : $marriageType_array[$i]) . (empty($marriageEmpty_array[$i]) ? "" : $marriageEmpty_array[$i] . " ") . (empty($marriagedate_array[$i]) ? "" : $marriagedate_array[$i] . " ") . (empty($marriageplace_array[$i]) ? "" : "(" . $marriageplace_array[$i] . ")");
+						if (!empty($text)) $out .= "<FONT COLOR=\"" . $this->settings["font_colour_details"] . "\" POINT-SIZE=\"" . ($this->settings["font_size"]) . "\">" . $text . "</FONT><BR />";
 						$out .= "</TD>";
-	
+
 						if ($this->isPhotoRequired()) {
 							if ($this->settings["show_marriage_first_image"] && !empty($pic_marriage_first_array[$i])) {
 								$out .= $this->getFamFactImage(true /*$detailsExist*/, $pic_marriage_first_array[$i], $pic_marriage_first_link_array[$i], $pic_marriage_first_title_array[$i]);
 							}
 						}
-	
+
 						$out .= "</TR>";
 					}
 					if ($hasDivorces) {
 						$out .= "<TR>";
 						$out .= "<TD>";
-						$out .= "<FONT COLOR=\"". $this->settings["font_colour_details"] ."\" POINT-SIZE=\"" . ($this->settings["font_size"]) ."\">" . ($divorce_prefix_array[$i] ?? '') . (empty($divorceEmpty_array[$i])?"":$divorceEmpty_array[$i] . " ") . (empty($divorcedate_array[$i])?"":$divorcedate_array[$i] . " ") . (empty($divorceplace_array[$i])?"":"(".$divorceplace_array[$i].")") . "</FONT><BR />";
+						$out .= "<FONT COLOR=\"" . $this->settings["font_colour_details"] . "\" POINT-SIZE=\"" . ($this->settings["font_size"]) . "\">" . ($divorce_prefix_array[$i] ?? '') . (empty($divorceEmpty_array[$i]) ? "" : $divorceEmpty_array[$i] . " ") . (empty($divorcedate_array[$i]) ? "" : $divorcedate_array[$i] . " ") . (empty($divorceplace_array[$i]) ? "" : "(" . $divorceplace_array[$i] . ")") . "</FONT><BR />";
 						$out .= "</TD>";
-	
+
 						if ($this->isPhotoRequired()) {
 							if ($this->settings["show_divorce_first_image"] && !empty($pic_divorce_first_array[$i])) {
 								$out .= $this->getFamFactImage(true /*$detailsExist*/, $pic_divorce_first_array[$i], $pic_divorce_first_link_array[$i], $pic_divorce_first_title_array[$i]);
 							}
 						}
-	
+
 						$out .= "</TR>";
 					}
 					if ($i == $printCount) {
@@ -791,7 +805,7 @@ class Dot {
 						if (!empty($family)) {
 							$out .= "<TR>";
 							$out .= "<TD>";
-							$out .= "<FONT COLOR=\"". $this->settings["font_colour_details"] ."\" POINT-SIZE=\"" . ($this->settings["font_size"]) ."\">" . $family . "</FONT>";
+							$out .= "<FONT COLOR=\"" . $this->settings["font_colour_details"] . "\" POINT-SIZE=\"" . ($this->settings["font_size"]) . "\">" . $family . "</FONT>";
 							$out .= "</TD>";
 							$out .= "</TR>";
 						}
@@ -800,13 +814,13 @@ class Dot {
 					$out .= "</TD>";
 					$out .= "</TR>";
 				}
-	
+
 				if ($i == $printCount) {
 					$out .= "</TABLE>";
 					$out .= ">";
 				}
 			} else {
-			// Non-combined type
+				// Non-combined type
 				if ($this->settings["add_links"]) {
 					$href = "target=\"_blank\" href=\"" . $this->convertToHTMLSC($link) . "\", target=\"_blank\", ";
 				} else {
@@ -822,7 +836,7 @@ class Dot {
 						$out .= ", label=" . "<<TABLE border=\"0\" CELLPADDING=\"5\" CELLSPACING=\"0\"><TR><TD>";
 					}
 					if ($hasMarriages) {
-						$out .= "<FONT COLOR=\"". $this->settings["font_colour_details"] ."\" POINT-SIZE=\"" . ($this->settings["font_size"]) ."\">" . (empty($marriage_prefix_array[$i])?"": $marriage_prefix_array[$i]) . (empty($marriageType_array[$i])?"":$marriageType_array[$i]) . (empty($marriageEmpty_array[$i])?"":$marriageEmpty_array[$i] . " ") . (empty($marriagedate_array[$i])?"":$marriagedate_array[$i]) . "<BR />" . (empty($marriageplace_array[$i])?"":"(".$marriageplace_array[$i].")") . "</FONT>";
+						$out .= "<FONT COLOR=\"" . $this->settings["font_colour_details"] . "\" POINT-SIZE=\"" . ($this->settings["font_size"]) . "\">" . (empty($marriage_prefix_array[$i]) ? "" : $marriage_prefix_array[$i]) . (empty($marriageType_array[$i]) ? "" : $marriageType_array[$i]) . (empty($marriageEmpty_array[$i]) ? "" : $marriageEmpty_array[$i] . " ") . (empty($marriagedate_array[$i]) ? "" : $marriagedate_array[$i]) . "<BR />" . (empty($marriageplace_array[$i]) ? "" : "(" . $marriageplace_array[$i] . ")") . "</FONT>";
 
 						if ($this->isPhotoRequired()) {
 							if ($this->settings["show_marriage_first_image"] && !empty($pic_marriage_first_array[$i])) {
@@ -833,7 +847,7 @@ class Dot {
 						}
 					}
 					if ($hasDivorces) {
-						$out .= "<FONT COLOR=\"". $this->settings["font_colour_details"] ."\" POINT-SIZE=\"" . ($this->settings["font_size"]) ."\">" . (empty($divorce_prefix_array[$i])?"": $divorce_prefix_array[$i]) . (empty($divorceEmpty_array[$i])?"":$divorceEmpty_array[$i] . " ") . (empty($divorcedate_array[$i])?"":$divorcedate_array[$i]) . "<BR />" . (empty($divorceplace_array[$i])?"":"(".$divorceplace_array[$i].")") . "</FONT>";
+						$out .= "<FONT COLOR=\"" . $this->settings["font_colour_details"] . "\" POINT-SIZE=\"" . ($this->settings["font_size"]) . "\">" . (empty($divorce_prefix_array[$i]) ? "" : $divorce_prefix_array[$i]) . (empty($divorceEmpty_array[$i]) ? "" : $divorceEmpty_array[$i] . " ") . (empty($divorcedate_array[$i]) ? "" : $divorcedate_array[$i]) . "<BR />" . (empty($divorceplace_array[$i]) ? "" : "(" . $divorceplace_array[$i] . ")") . "</FONT>";
 
 						if ($this->isPhotoRequired()) {
 							if ($this->settings["show_divorce_first_image"] && !empty($pic_divorce_first_array[$i])) {
@@ -845,13 +859,13 @@ class Dot {
 					}
 
 					if ($i == $printCount) {
-						
+
 						if (!empty($family)) {
 							if (!empty($divorceplace_array[$i]) || (!empty($marriageplace_array[$i]) && empty($divorceplace_array[$i]))) {
 								$out .= "<BR />";
 							}
-						
-							$out .= "<FONT COLOR=\"". $this->settings["font_colour_details"] ."\" POINT-SIZE=\"" . ($this->settings["font_size"]) ."\">" . $family . "</FONT>";
+
+							$out .= "<FONT COLOR=\"" . $this->settings["font_colour_details"] . "\" POINT-SIZE=\"" . ($this->settings["font_size"]) . "\">" . $family . "</FONT>";
 						}
 						# Last Fact
 						$out .= "</TD>";
@@ -889,15 +903,16 @@ class Dot {
 		return 1;
 	}
 
-	public function getFamFactImage(bool $detailsExist, string $img, string $link, string $title) : string {
+	public function getFamFactImage(bool $detailsExist, string $img, string $link, string $title): string
+	{
 		$out = "";
 		// Show photo
 		if (($detailsExist) && ($this->isPhotoRequired())) {
 			if (!empty($img)) {
-				$photo_size = floatval($this->settings["photo_size"]) / 100;
+				$photo_size = intval($this->settings["photo_size"]) / 100;
 				$padding = $this->getFamPhotoPaddingSize();
 				if ($this->settings["add_links"]) {
-					$out .= "<TD CELLPADDING=\"$padding\" PORT=\"pic\" WIDTH=\"" . ($this->settings["font_size"] * 4 * $photo_size)  . "\" HEIGHT=\"" . ($this->settings["font_size"] * 4 * $photo_size) . "\" FIXEDSIZE=\"true\" ALIGN=\"CENTER\" VALIGN=\"MIDDLE\" HREF=\"".$this->convertToHTMLSC($link)."\" TOOLTIP=\"" . $title . "\"><IMG SCALE=\"true\" SRC=\"" . $img . "\" /></TD>";
+					$out .= "<TD CELLPADDING=\"$padding\" PORT=\"pic\" WIDTH=\"" . ($this->settings["font_size"] * 4 * $photo_size)  . "\" HEIGHT=\"" . ($this->settings["font_size"] * 4 * $photo_size) . "\" FIXEDSIZE=\"true\" ALIGN=\"CENTER\" VALIGN=\"MIDDLE\" HREF=\"" . $this->convertToHTMLSC($link) . "\" TOOLTIP=\"" . $title . "\"><IMG SCALE=\"true\" SRC=\"" . $img . "\" /></TD>";
 				} else {
 					$out .= "<TD CELLPADDING=\"$padding\" PORT=\"pic\" WIDTH=\"" . ($this->settings["font_size"] * 4 * $photo_size)  . "\" HEIGHT=\"" . ($this->settings["font_size"] * 4 * $photo_size) . "\" FIXEDSIZE=\"true\" ALIGN=\"CENTER\" VALIGN=\"MIDDLE\" TOOLTIP=\"" . $title . "\"><IMG SCALE=\"true\" SRC=\"" . $img . "\" /></TD>";
 				}
@@ -915,7 +930,7 @@ class Dot {
 	/**
 	 * Adds an individual to the indi list
 	 *
-	 * @param string $sourcePID The XREF of the linked individual that triggered this indi to be added
+	 * @param string|null $sourcePID The XREF of the linked individual that triggered this indi to be added
 	 * @param string $debugCode code that identifies which path was used to start this function
 	 * @param string $pid XREF of individual to add
 	 * @param boolean $ance whether to include ancestors when adding this individual
@@ -925,12 +940,12 @@ class Dot {
 	 * @param boolean $rel whether to treat this individual as related
 	 * @param integer $ind indent level - used for debug output
 	 * @param integer $level the current generation - 0 is starting generation, negative numbers are descendants, positive are ancestors
-	 * @param array $individuals array of individuals to be updated (passed by reference)
-	 * @param array $families array of families to be updated (passed by reference)
+	 * @param array<mixed> $individuals array of individuals to be updated (passed by reference)
+	 * @param array<mixed> $families array of families to be updated (passed by reference)
 	 * @param boolean $full whether we are scanning full tree of relatives, ignoring settings
 	 */
-	function addIndiToList($sourcePID, string $debugCode, string $pid, bool $ance, bool $desc, bool $spou, bool $sibl, bool $rel, int $ind, int $level, array &$individuals, array &$families, bool $full): bool
-    {
+	function addIndiToList(string|null $sourcePID, string $debugCode, string $pid, bool $ance, bool $desc, bool $spou, bool $sibl, bool $rel, int $ind, int $level, array &$individuals, array &$families, bool $full): bool
+	{
 		// Seen this XREF before and skipped, so just skip again without further checks
 		if (isset($this->skipList[$pid])) {
 			return false;
@@ -964,7 +979,7 @@ class Dot {
 		// --- DEBUG ---
 		if ($this->settings["enable_debug_mode"]) {
 			$individual = $this->getUpdatedPerson($pid);
-			$this->printDebug("Name: ".strip_tags($individual->fullName()), $ind);
+			$this->printDebug("Name: " . strip_tags($individual->fullName()), $ind);
 			$this->printDebug("Source PID: " . $sourcePID . $debugCode, $ind);
 			$this->printDebug("--- #$pid# ---\n", $ind);
 			$this->printDebug("{\n", $ind);
@@ -977,16 +992,16 @@ class Dot {
 		if ($this->isPhotoRequired()) {
 			[$individuals[$pid]["pic"], $individuals[$pid]["pic" . "_title"], $individuals[$pid]["pic" . "_link"]] = $this->addPhotoToIndi($pid);
 
-			if ($this->settings["show_birth_first_image"] && $this->isPhotoRequired()) {
-				[$individuals[$pid]["pic_birth_first"], $individuals[$pid]["pic_birth_first"."_title"], $individuals[$pid]["pic_birth_first"."_link"]] = $this->addFirstPhotoFromFactsToIndi($pid, Gedcom::BIRTH_EVENTS);
+			if ($this->settings["show_birth_first_image"]) {
+				[$individuals[$pid]["pic_birth_first"], $individuals[$pid]["pic_birth_first" . "_title"], $individuals[$pid]["pic_birth_first" . "_link"]] = $this->addFirstPhotoFromFactsToIndi($pid, Gedcom::BIRTH_EVENTS);
 			}
-	
-			if ($this->settings["show_death_first_image"] && $this->isPhotoRequired()) {
-				[$individuals[$pid]["pic_death_first"], $individuals[$pid]["pic_death_first"."_title"], $individuals[$pid]["pic_death_first"."_link"]] = $this->addFirstPhotoFromFactsToIndi($pid, ["DEAT"]);
+
+			if ($this->settings["show_death_first_image"]) {
+				[$individuals[$pid]["pic_death_first"], $individuals[$pid]["pic_death_first" . "_title"], $individuals[$pid]["pic_death_first" . "_link"]] = $this->addFirstPhotoFromFactsToIndi($pid, ["DEAT"]);
 			}
-	
-			if ($this->settings["show_burial_first_image"] && $this->isPhotoRequired()) {
-				[$individuals[$pid]["pic_burial_first"], $individuals[$pid]["pic_burial_first"."_title"], $individuals[$pid]["pic_burial_first"."_link"]] = $this->addFirstPhotoFromFactsToIndi($pid, ['BURI', 'CREM']);
+
+			if ($this->settings["show_burial_first_image"]) {
+				[$individuals[$pid]["pic_burial_first"], $individuals[$pid]["pic_burial_first" . "_title"], $individuals[$pid]["pic_burial_first" . "_link"]] = $this->addFirstPhotoFromFactsToIndi($pid, ['BURI', 'CREM']);
 			}
 		}
 
@@ -1056,13 +1071,13 @@ class Dot {
 					$families["F_$pid"]["husb_id"] = $pid;
 					$families["F_$pid"]["wife_id"] = "";
 				} elseif ($i->sex() == "F") {
-				 	$families["F_$pid"]["wife_id"] = $pid;
-				 	$families["F_$pid"]["husb_id"] = "";
+					$families["F_$pid"]["wife_id"] = $pid;
+					$families["F_$pid"]["husb_id"] = "";
 				} else {
 					// Unknown gender
 					$families["F_$pid"]["unkn_id"] = $pid;
 					$families["F_$pid"]["wife_id"] = "";
-				 	$families["F_$pid"]["husb_id"] = "";
+					$families["F_$pid"]["husb_id"] = "";
 				}
 			}
 		}
@@ -1073,8 +1088,8 @@ class Dot {
 		$stop_proc = FALSE;
 		if (isset($this->settings["stop_proc"]) && $this->settings["stop_proc"]) {
 			$stop_pids = explode(",", $this->settings["stop_xref_list"]);
-			for ($j=0;$j<count($stop_pids);$j++) {
-				if ($pid == trim($stop_pids[$j])){
+			for ($j = 0; $j < count($stop_pids); $j++) {
+				if ($pid == trim($stop_pids[$j])) {
 					// --- DEBUG ---
 					if ($this->settings["enable_debug_mode"]) {
 						$this->printDebug("($pid) -- STOP processing, because INDI is listed in the \"Stop tree processing on INDIs\"\n", $ind);
@@ -1085,8 +1100,7 @@ class Dot {
 			}
 		}
 
-		if (!$stop_proc || $full)
-		{
+		if (!$stop_proc || $full) {
 
 			// Add ancestors (parents)
 			if ($ance && ($full || $level < $ance_level)) {
@@ -1109,18 +1123,18 @@ class Dot {
 						// Get the family object
 						$f = $this->getUpdatedFamily($fid);
 
-                        $this->addIndiFamilies($fid, $pid, $ind, $families);
+						$this->addIndiFamilies($fid, $pid, $ind, $families);
 
 						// Work out if indi has adoptive relationship to this family
 						$relationshipType = $this->getRelationshipType($i, $fam, $ind);
 						// Add father & mother
 						$h = $f->husband();
 						$w = $f->wife();
-						if($h)
+						if ($h)
 							$husb_id = $h->xref();
 						else
 							$husb_id = null;
-						if($w)
+						if ($w)
 							$wife_id = $w->xref();
 						else
 							$wife_id = null;
@@ -1136,7 +1150,7 @@ class Dot {
 									//var_dump($fams);
 								}
 								// -------------
-								$this->addIndiToList($pid, "|Code 1", $husb_id, TRUE, FALSE, $this->indi_search_method["spou"] && $relationshipType !== "BOTH", $this->indi_search_method["sibl"], FALSE, $ind, $level+1, $individuals, $families, $full);
+								$this->addIndiToList($pid, "|Code 1", $husb_id, TRUE, FALSE, $this->indi_search_method["spou"] && $relationshipType !== "BOTH", $this->indi_search_method["sibl"], FALSE, $ind, $level + 1, $individuals, $families, $full);
 							} else {
 								// --- DEBUG ---
 								if ($this->settings["enable_debug_mode"]) {
@@ -1144,8 +1158,7 @@ class Dot {
 									//var_dump($fams);
 								}
 								// -------------
-								$this->addIndiToList($pid, "|Code 2", $husb_id, TRUE, FALSE, $this->indi_search_method["spou"], $this->indi_search_method["sibl"], $rel && $relationshipType == "", $ind, $level+1, $individuals, $families, $full);
-
+								$this->addIndiToList($pid, "|Code 2", $husb_id, TRUE, FALSE, $this->indi_search_method["spou"], $this->indi_search_method["sibl"], $rel && $relationshipType == "", $ind, $level + 1, $individuals, $families, $full);
 							}
 						}
 						if (!empty($wife_id)) {
@@ -1159,7 +1172,7 @@ class Dot {
 									//var_dump($fams);
 								}
 								// -------------
-								$this->addIndiToList($pid, "|Code 3", $wife_id, TRUE, FALSE, $this->indi_search_method["spou"] && $relationshipType !== "BOTH", $this->indi_search_method["sibl"], FALSE, $ind, $level+1, $individuals, $families, $full);
+								$this->addIndiToList($pid, "|Code 3", $wife_id, TRUE, FALSE, $this->indi_search_method["spou"] && $relationshipType !== "BOTH", $this->indi_search_method["sibl"], FALSE, $ind, $level + 1, $individuals, $families, $full);
 							} else {
 								// --- DEBUG ---
 								if ($this->settings["enable_debug_mode"]) {
@@ -1167,23 +1180,21 @@ class Dot {
 									//var_dump($fams);
 								}
 								// -------------
-								$this->addIndiToList($pid, "|Code 4", $wife_id, TRUE, FALSE, $this->indi_search_method["spou"], $this->indi_search_method["sibl"], $rel && $relationshipType == "", $ind, $level+1, $individuals, $families, $full);
-
+								$this->addIndiToList($pid, "|Code 4", $wife_id, TRUE, FALSE, $this->indi_search_method["spou"], $this->indi_search_method["sibl"], $rel && $relationshipType == "", $ind, $level + 1, $individuals, $families, $full);
 							}
 						}
 
 						if ($this->settings["diagram_type"] == "combined") {
 							// This person's spouse family HAS parents
-							foreach ($individuals[$pid]["fams"] as $s_fid=>$s_fam) {
+							foreach ($individuals[$pid]["fams"] as $s_fid => $s_fam) {
 								$families[$s_fid]["has_parents"] = TRUE;
 							}
 						}
-
 					}
 				} else {
 					if ($this->settings["diagram_type"] == "combined") {
 						// This person's spouse family HAS NO parents
-						foreach ($individuals[$pid]["fams"] as $s_fid=>$s_fam) {
+						foreach ($individuals[$pid]["fams"] as $s_fid => $s_fam) {
 							if (!isset($families[$s_fid]["has_parents"])) {
 								$families[$s_fid]["has_parents"] = FALSE;
 							}
@@ -1194,7 +1205,7 @@ class Dot {
 			}
 
 			// Add descendants (children)
-			if ($desc && ($full || $level > -1*$desc_level)) {
+			if ($desc && ($full || $level > -1 * $desc_level)) {
 				$fams = $i->spouseFamilies();
 
 				// --- DEBUG ---
@@ -1211,31 +1222,30 @@ class Dot {
 					$families[$fid]["has_children"] = FALSE;
 					$f = $this->getUpdatedFamily($fid);
 
-                    $h = $f->husband();
-                    if($h){
-                        if($h->xref() == $pid){
-                            $families[$fid]["husb_id"] = $pid;
-                        } else {
-                            $families[$fid]["wife_id"] = $pid;
-                        }
-                    }
-                    else {
-                        $w = $f->wife();
-                        if($w){
-                            if($w->xref() == $pid){
-                                $families[$fid]["wife_id"] = $pid;
-                            } else {
-                                $families[$fid]["husb_id"] = $pid;
-                            }
-                        }
-                    }
+					$h = $f->husband();
+					if ($h) {
+						if ($h->xref() == $pid) {
+							$families[$fid]["husb_id"] = $pid;
+						} else {
+							$families[$fid]["wife_id"] = $pid;
+						}
+					} else {
+						$w = $f->wife();
+						if ($w) {
+							if ($w->xref() == $pid) {
+								$families[$fid]["wife_id"] = $pid;
+							} else {
+								$families[$fid]["husb_id"] = $pid;
+							}
+						}
+					}
 
-                    $this->addIndiFamilies($fid, $pid, $ind, $families);
+					$this->addIndiFamilies($fid, $pid, $ind, $families);
 
 					$children = $f->children();
-                    if (sizeof($children) !== 0) {
-                        $families[$fid]["has_children"] = TRUE;
-                    }
+					if (sizeof($children) !== 0) {
+						$families[$fid]["has_children"] = TRUE;
+					}
 					foreach ($children as $child) {
 						$child_id = $child->xref();
 						if (!empty($child_id)) {
@@ -1256,17 +1266,16 @@ class Dot {
 							}
 
 							if ($this->indi_search_method["any"]) {
-								$this->addIndiToList($pid, "|Code 14", $child_id, TRUE, FALSE, $this->indi_search_method["spou"], FALSE, FALSE, $ind, $level-1, $individuals, $families, $full);
+								$this->addIndiToList($pid, "|Code 14", $child_id, TRUE, FALSE, $this->indi_search_method["spou"], FALSE, FALSE, $ind, $level - 1, $individuals, $families, $full);
 							}
-							$this->addIndiToList($pid, "|Code 5", $child_id, FALSE, TRUE, $this->indi_search_method["spou"], FALSE, $related, $ind, $level-1, $individuals, $families, $full);
-
+							$this->addIndiToList($pid, "|Code 5", $child_id, FALSE, TRUE, $this->indi_search_method["spou"], FALSE, $related, $ind, $level - 1, $individuals, $families, $full);
 						}
 					}
 				}
 			}
 
 			// Add spouses
-			if (($spou && !$desc) || ($spou && $desc && $level >= -1*$desc_level) || ($spou && $this->settings["diagram_type"] == "combined")) {
+			if ($spou && (!$desc || ($level >= -1 * $desc_level) || $this->settings["diagram_type"] == "combined")) {
 				$fams = $i->spouseFamilies();
 
 				// --- DEBUG ---
@@ -1281,29 +1290,28 @@ class Dot {
 					$fid = $fam->xref();
 					$f = $this->getUpdatedFamily($fid);
 
-                    $this->addIndiFamilies($fid, $pid, $ind, $families);
+					$this->addIndiFamilies($fid, $pid, $ind, $families);
 
 					//$spouse_id = $f->getSpouseId($pid);
 					// Alternative method of getting the $spouse_id - workaround by Till Schulte-Coerne
-                    // And the coerced into webtrees by Iain MacDonald
-                    $h = $f->husband();
+					// And the coerced into webtrees by Iain MacDonald
+					$h = $f->husband();
 					if ($h) {
-                        $w = $f->wife();
-                        if($h->xref() == $pid) {
-                            if($w) {
-                                $spouse_id = $w->xref();
-                                $families[$fid]["husb_id"] = $pid;
-                                $families[$fid]["wife_id"] = $spouse_id;
-                            }
-                        }
-                        else {
-                            if($w && $w->xref() == $pid) {
-                                $spouse_id = $h->xref();
-                                $families[$fid]["husb_id"] = $spouse_id;
-                                $families[$fid]["wife_id"] = $pid;
-                            }
-                        }
-                    }
+						$w = $f->wife();
+						if ($h->xref() == $pid) {
+							if ($w) {
+								$spouse_id = $w->xref();
+								$families[$fid]["husb_id"] = $pid;
+								$families[$fid]["wife_id"] = $spouse_id;
+							}
+						} else {
+							if ($w && $w->xref() == $pid) {
+								$spouse_id = $h->xref();
+								$families[$fid]["husb_id"] = $spouse_id;
+								$families[$fid]["wife_id"] = $pid;
+							}
+						}
+					}
 
 					if (!empty($spouse_id)) {
 						// --- DEBUG ---
@@ -1312,9 +1320,8 @@ class Dot {
 							//var_dump($fams);
 						}
 						// -------------
-                        $this->addIndiToList($pid, "|Code 6", $spouse_id, $this->indi_search_method["any"] && $ance, $this->indi_search_method["any"] && $desc, $this->indi_search_method["any"], $this->indi_search_method["any"], FALSE, $ind, $level, $individuals, $families, $full);
+						$this->addIndiToList($pid, "|Code 6", $spouse_id, $this->indi_search_method["any"] && $ance, $this->indi_search_method["any"] && $desc, $this->indi_search_method["any"], $this->indi_search_method["any"], FALSE, $ind, $level, $individuals, $families, $full);
 					}
-
 				}
 			}
 
@@ -1334,7 +1341,7 @@ class Dot {
 					$fid = $fam->xref();
 					$f = $this->getUpdatedFamily($fid);
 
-                    $this->addIndiFamilies($fid, $pid, $ind, $families);
+					$this->addIndiFamilies($fid, $pid, $ind, $families);
 
 					$children = $f->children();
 					foreach ($children as $child) {
@@ -1350,8 +1357,8 @@ class Dot {
 
 							// Work out if indi has adoptive relationship to this family
 							$relationshipType = $this->getRelationshipType($child, $fam, $ind);
-                            // Work out if WE have adoptive relationship to this family
-                            $sourceRelationshipType = $this->getRelationshipType($i, $fam, $ind);
+							// Work out if WE have adoptive relationship to this family
+							$sourceRelationshipType = $this->getRelationshipType($i, $fam, $ind);
 							if ($relationshipType != "" || $sourceRelationshipType != "") {
 								$related = false;
 							} else {
@@ -1364,7 +1371,6 @@ class Dot {
 							} else {
 								$this->addIndiToList($pid, "|Code 9", $child_id, TRUE, FALSE, $this->indi_search_method["spou"], FALSE, $related, $ind, $level, $individuals, $families, $full);
 							}
-
 						}
 					}
 				}
@@ -1426,18 +1432,20 @@ class Dot {
 			$this->printDebug("}\n", $ind);
 		}
 		// -------------
-        return false;
-    }
+		return false;
+	}
 
 	/**
 	 * Adds a family to the family list
-	 *
+	 * @param Family|string $fid
+	 * @param array<mixed> $families
 	 */
-	function addFamToList($fid, &$families) {
-		if($fid instanceof Family) {
+	function addFamToList(Family|string $fid, array &$families): void
+	{
+		if ($fid instanceof Family) {
 			$fid = $fid->xref();
 		}
-		if(!isset($families[$fid])) {
+		if (!isset($families[$fid])) {
 			$families[$fid] = array();
 		}
 		$families[$fid]["fid"] = $fid;
@@ -1445,20 +1453,21 @@ class Dot {
 
 	/**
 	 * Adds a path to the photo of a given individual
- 	 *
+	 *
 	 * @param string $pid Individual's GEDCOM id (Ixxx)
+	 * @return array<mixed>
 	 */
 	function addPhotoToIndi(string $pid): array
-    {
+	{
 		$i = Registry::individualFactory()->make($pid, $this->tree);
 		$m = $i->findHighlightedMediaFile();
-		$resolution = floatval($this->settings["photo_resolution"]) / 100;
+		$resolution = intval($this->settings["photo_resolution"]) / 100;
 		if (empty($m)) {
 			return [null, "", null];
 		} else if (!$m->isExternal() && $m->fileExists()) {
 			$media_title  = strip_tags($i->fullName());
-            return $this->getImageLocation($m, $resolution, $media_title);
-        } else {
+			return $this->getImageLocation($m, $resolution, $media_title);
+		} else {
 			return [null, "", null];
 		}
 	}
@@ -1466,32 +1475,31 @@ class Dot {
 	/**
 	 * Searches in all specified facts of a given individual (even if repeated) for the first photo and adds it's path
 	 * It should be analized if it would be better to just consider the first fact of a specified kind and take it's photo, if present. That way the written information is consistent with it
- 	 *
+	 *
 	 * @param string $pid Individual's GEDCOM id (Ixxx)
-	 * @param array $fnames of GEDCOM fact names to be searched
+	 * @param array<string> $fnames of GEDCOM fact names to be searched
+	 * @return array<mixed>
 	 */
 	function addFirstPhotoFromFactsToIndi(string $pid, array $fnames): array
-    {
-		$emptyimg='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=';
+	{
+		$emptyimg = 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=';
 		$i = $this->getUpdatedPerson($pid);
 
 		$m = null;
 		$media_title = null;
-		$break=false;
+		$break = false;
 		foreach ($fnames as $fname) {
 			foreach ($i->facts([$fname]) as $fact) {
-				if ($fact instanceof Fact) {
-					if ($fact->canShow()) {
-						if (preg_match_all('/\n2 OBJE\b\s@*([^@]*)@*/', $fact->gedcom(), $matches, PREG_SET_ORDER) > 0) {
-							$mediaGed = $matches[0][1];
-							if (!empty($mediaGed)) {
-								$mediaobject = Registry::mediaFactory()->make($mediaGed, $this->tree);
-								if ($mediaobject !== null) {
-									$m  = $mediaobject->firstImageFile();
-									$media_title  = $mediaobject->fullName();
-									$break=true;
-									break;
-								}
+				if ($fact->canShow()) {
+					if (preg_match_all('/\n2 OBJE\b\s@*([^@]*)@*/', $fact->gedcom(), $matches, PREG_SET_ORDER) > 0) {
+						$mediaGed = $matches[0][1];
+						if (!empty($mediaGed)) {
+							$mediaobject = Registry::mediaFactory()->make($mediaGed, $this->tree);
+							if ($mediaobject !== null) {
+								$m  = $mediaobject->firstImageFile();
+								$media_title  = $mediaobject->fullName();
+								$break = true;
+								break;
 							}
 						}
 					}
@@ -1502,12 +1510,12 @@ class Dot {
 			}
 		}
 
-		$resolution = floatval($this->settings["photo_resolution"]) / 100;
+		$resolution = intval($this->settings["photo_resolution"]) / 100;
 		if (empty($m)) {
 			return [null, "", $emptyimg];
 		} else if (!$m->isExternal() && $m->fileExists()) {
 			// If we are rendering in the browser, provide the URL, otherwise provide the server side file location
-            return $this->getImageLocation($m, $resolution, $media_title);
+			return $this->getImageLocation($m, $resolution, $media_title);
 		} else {
 			return [null, "", $emptyimg];
 		}
@@ -1515,14 +1523,15 @@ class Dot {
 
 	/**
 	 * Searches for the first photo of a given fact and adds it's path
- 	 *
+	 *
 	 * @param Fact $fact The fact to search on
+	 * @return array<mixed>
 	 */
 	function addFirstPhotoFromSpecificFactToFam(Fact $fact): array
-    {
-		$emptyimg='data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=';
-        $resolution = 1;
-        $media_title = "";
+	{
+		$emptyimg = 'data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=';
+		$resolution = 1;
+		$media_title = "";
 		if ($fact->canShow()) {
 			$imageGed = '';
 			$imageVal = $fact->attribute('OBJE'); # Obtains the first one
@@ -1536,171 +1545,184 @@ class Dot {
 					$media_title  = $mediaobject->fullName();
 				}
 			}
-			$resolution = floatval($this->settings["photo_resolution"]) / 100;
+			$resolution = intval($this->settings["photo_resolution"]) / 100;
 		}
 		if (empty($m)) {
 			return [null, "", $emptyimg];
 		} else if (!$m->isExternal() && $m->fileExists()) {
 			// If we are rendering in the browser, provide the URL, otherwise provide the server side file location
-            return $this->getImageLocation($m, $resolution, $media_title);
+			return $this->getImageLocation($m, $resolution, $media_title);
 		} else {
 			return [null, "", $emptyimg];
 		}
 	}
 
 
-	function getUpdatedFamily($fid): ?Family
+	function getUpdatedFamily(string $fid): ?Family
 	{
 		return Registry::familyFactory()->make($fid, $this->tree);
 	}
 
-	function getUpdatedPerson($pid): ?Individual
+	function getUpdatedPerson(string $pid): ?Individual
 	{
 		return Registry::individualFactory()->make($pid, $this->tree);
 	}
 
-	function printDebug($txt, $ind = 0) {
+	function printDebug(string $txt, int $ind = 0): void
+	{
 		$this->debug_string .= (str_repeat("\t", $ind) . $txt);
 	}
 
 
-    public function getChildArrowColour($i, $fid)
-    {
-        if ((int) $this->settings["arrow_colour_type"] === Settings::OPTION_ARROW_RANDOM_COLOUR) {
-            return $this->getRandomColour();
-        } elseif ((int) $this->settings["arrow_colour_type"] === Settings::OPTION_ARROW_CUSTOM_COLOUR) {
-            $relationshipType = "";
-            if (substr($fid, 0, 2) !== "F_") {
-                $f = $this->getUpdatedFamily($fid);
-                $relationshipType = $this->getRelationshipType($i, $f);
-            }
+	public function getChildArrowColour(Individual $i, string $fid): string
+	{
+		if ((int) $this->settings["arrow_colour_type"] === Settings::OPTION_ARROW_RANDOM_COLOUR) {
+			return $this->getRandomColour();
+		} elseif ((int) $this->settings["arrow_colour_type"] === Settings::OPTION_ARROW_CUSTOM_COLOUR) {
+			$relationshipType = "";
+			if (substr($fid, 0, 2) !== "F_") {
+				$f = $this->getUpdatedFamily($fid);
+				$relationshipType = $this->getRelationshipType($i, $f);
+			}
 
-            if ($relationshipType != "") {
-                $arrow_colour = $this->settings["colour_arrow_related"] == "colour_arrow_related" ? $this->settings["arrows_not_related"] : $this->settings["arrows_default"];
-            } else {
-                $arrow_colour = $this->settings["colour_arrow_related"] == "colour_arrow_related" ? $this->settings["arrows_related"] : $this->settings["arrows_default"];
-            }
-            return $arrow_colour;
-        }
-        return $this->settings["arrows_default"];
-    }
+			if ($relationshipType != "") {
+				$arrow_colour = $this->settings["colour_arrow_related"] == "colour_arrow_related" ? $this->settings["arrows_not_related"] : $this->settings["arrows_default"];
+			} else {
+				$arrow_colour = $this->settings["colour_arrow_related"] == "colour_arrow_related" ? $this->settings["arrows_related"] : $this->settings["arrows_default"];
+			}
+			return $arrow_colour;
+		}
+		return $this->settings["arrows_default"];
+	}
 
-    /**
-     * @param string $fid XREF of the family for this node
-     * @return string
-     */
-    private function generateFamilyNodeName(string $fid): string
-    {
-        return $this->convertID($fid) . (isset($this->families[$fid]["husb_id"]) ? "_" . $this->families[$fid]["husb_id"] : "") . (isset($this->families[$fid]["wife_id"]) ? "_" . $this->families[$fid]["wife_id"] : "") . (isset($this->families[$fid]["unkn_id"]) ? "_" . $this->families[$fid]["unkn_id"] : "");
-    }
+	/**
+	 * @param string $fid XREF of the family for this node
+	 * @return string
+	 */
+	private function generateFamilyNodeName(string $fid): string
+	{
+		return $this->convertID($fid) . (isset($this->families[$fid]["husb_id"]) ? "_" . $this->families[$fid]["husb_id"] : "") . (isset($this->families[$fid]["wife_id"]) ? "_" . $this->families[$fid]["wife_id"] : "") . (isset($this->families[$fid]["unkn_id"]) ? "_" . $this->families[$fid]["unkn_id"] : "");
+	}
 
-    private function addIndiFamilies($fid, $pid, $ind, &$families)
-    {
-        if (isset($families[$fid]["fid"]) && ($families[$fid]["fid"]== $fid)) {
-            // Family ID already added, do nothing
-            // --- DEBUG ---
-            if ($this->settings["enable_debug_mode"]) {
-                $this->printDebug("($pid) -- FAM ($fid) already added\n", $ind);
-            }
-            // -------------
-        } else {
-            $this->addFamToList($fid, $families);
+	/**
+	 * @param array<mixed> $families
+	 */
+	private function addIndiFamilies(string $fid, string $pid, int $ind, array &$families): void
+	{
+		if (isset($families[$fid]["fid"]) && ($families[$fid]["fid"] == $fid)) {
+			// Family ID already added, do nothing
+			// --- DEBUG ---
+			if ($this->settings["enable_debug_mode"]) {
+				$this->printDebug("($pid) -- FAM ($fid) already added\n", $ind);
+			}
+			// -------------
+		} else {
+			$this->addFamToList($fid, $families);
 
-            // --- DEBUG ---
-            if ($this->settings["enable_debug_mode"]) {
-                $this->printDebug("($pid) -- FAM ($fid) added\n", $ind);
-            }
-            // -------------
-        }
-    }
+			// --- DEBUG ---
+			if ($this->settings["enable_debug_mode"]) {
+				$this->printDebug("($pid) -- FAM ($fid) added\n", $ind);
+			}
+			// -------------
+		}
+	}
 
-    /**
-     * Returns an abbreviated version of the PLAC string.
-     *
-     * @param	string $place_long Place string in long format (Town,County,State/Region,Country)
-     * @return	string	The abbreviated place name
-     */
-    public static function getAbbreviatedPlace(string $place_long, array $settings): string
-    {
-        // If chose no abbreviating, then return string untouched
-        if ($settings["use_abbr_place"] == Settings::OPTION_FULL_PLACE_NAME) {
-            return $place_long;
-        }
+	/**
+	 * Returns an abbreviated version of the PLAC string.
+	 *
+	 * @param	string $place_long Place string in long format (Town,County,State/Region,Country)
+	 * @param array<mixed> $settings
+	 * @return	string	The abbreviated place name
+	 */
+	public static function getAbbreviatedPlace(string $place_long, array $settings): string
+	{
+		// If chose no abbreviating, then return string untouched
+		if ($settings["use_abbr_place"] == Settings::OPTION_FULL_PLACE_NAME) {
+			return $place_long;
+		}
 
-        // Cut the place name up into pieces using the commas
-        $place_chunks = explode(",", $place_long);
-        $place = "";
-        $chunk_count = count($place_chunks);
-        $abbreviating_country = !($chunk_count == 1 && ($settings["use_abbr_place"] == Settings::OPTION_2_LETTER_ISO || $settings["use_abbr_place"] == Settings::OPTION_3_LETTER_ISO));
+		// Cut the place name up into pieces using the commas
+		$place_chunks = explode(",", $place_long);
+		$place = "";
+		$chunk_count = count($place_chunks);
+		$abbreviating_country = !($chunk_count == 1 && ($settings["use_abbr_place"] == Settings::OPTION_2_LETTER_ISO || $settings["use_abbr_place"] == Settings::OPTION_3_LETTER_ISO));
 
-        // Add city to our return string
-        if (!empty($place_chunks[0]) && $abbreviating_country) {
-            $place .= trim($place_chunks[0]);
+		// Add city to our return string
+		if (!empty($place_chunks[0]) && $abbreviating_country) {
+			$place .= trim($place_chunks[0]);
 
-            if ($settings["use_abbr_place"] == Settings::OPTION_CITY_ONLY) {
-                return $place;
-            }
-        }
+			if ($settings["use_abbr_place"] == Settings::OPTION_CITY_ONLY) {
+				return $place;
+			}
+		}
 
-        // Chose to keep just the first and last sections
-        if ($settings["use_abbr_place"] == Settings::OPTION_CITY_AND_COUNTRY) {
-            if (!empty($place_chunks[$chunk_count - 1]) && ($chunk_count > 1)) {
-                if (!empty($place)) {
-                    $place .= ", ";
-                }
+		// Chose to keep just the first and last sections
+		if ($settings["use_abbr_place"] == Settings::OPTION_CITY_AND_COUNTRY) {
+			if (!empty($place_chunks[$chunk_count - 1]) && ($chunk_count > 1)) {
+				if (!empty($place)) {
+					$place .= ", ";
+				}
 				// Add last section, but convert to full name if it's ISO
 				$country = Dot::getIsoCountry($settings, trim($place_chunks[$chunk_count - 1]));
 				// Translate city/country combo if translation available in webtrees, else just translate country
 				if ($place . $country === I18N::translate($place . $country)) {
 					return $place . I18N::translate($country);
 				}
-                return I18N::translate($place . $country);
-            }
-        }
+				return I18N::translate($place . $country);
+			}
+		}
 
-        /* Otherwise, we have chosen one of the ISO code options */
-        switch ($settings["use_abbr_place"]) {
-            case Settings::OPTION_2_LETTER_ISO:
-                $code = "iso2";
-                break;
-            case Settings::OPTION_3_LETTER_ISO:
-                $code = "iso3";
-                break;
-            default:
-                return $place_long;
-        }
+		/* Otherwise, we have chosen one of the ISO code options */
+		switch ($settings["use_abbr_place"]) {
+			case Settings::OPTION_2_LETTER_ISO:
+				$code = "iso2";
+				break;
+			case Settings::OPTION_3_LETTER_ISO:
+				$code = "iso3";
+				break;
+			default:
+				return $place_long;
+		}
 
-        /* It's possible the place name string was blank, meaning our return variable is
+		/* It's possible the place name string was blank, meaning our return variable is
                still blank. We don't want to add a comma if that's the case. */
-        if (!empty($place) && !empty($place_chunks[$chunk_count - 1]) && ($chunk_count > 1)) {
-            $place .= ", ";
-        }
+		if (!empty($place) && !empty($place_chunks[$chunk_count - 1]) && ($chunk_count > 1)) {
+			$place .= ", ";
+		}
 
-        $place .= Dot::getCountryIso($settings, $place_chunks[$chunk_count - 1], $chunk_count, $code);
-        return $place;
-    }
-	private static function getIsoCountry($settings, string $countryName): string
+		$place .= Dot::getCountryIso($settings, $place_chunks[$chunk_count - 1], $code);
+		return $place;
+	}
+
+	/**
+	 * @param array<mixed> $settings
+	 */
+	private static function getIsoCountry(array $settings, string $countryName): string
 	{
 		/* Look up our country code in the array of country codes.
            It must be an exact match, or it won't be converted to the country name. */
-        if (isset($settings["countries"]['isoToName'][strtoupper(trim($countryName))])) {
-            return $settings["countries"]['isoToName'][strtoupper(trim($countryName))];
-        }
+		if (isset($settings["countries"]['isoToName'][strtoupper(trim($countryName))])) {
+			return $settings["countries"]['isoToName'][strtoupper(trim($countryName))];
+		}
 		// We didn't find country in the abbreviation list, so just add the full country name
 		return trim($countryName);
 	}
 
-	private static function getCountryIso($settings, $country, $chunk_count, $isoCode) {
+	/**
+	 * @param array<mixed> $settings
+	 */
+	private static function getCountryIso(array $settings, string $country, string $isoCode): string
+	{
 		// Our country might have been stored as a country code, in this case we should convert
 		// to the country, then convert back to the code. This allows conversion from 2 to 3 or
 		// 3 to 2 character ISO codes
 		$country = Dot::getIsoCountry($settings, $country);
-		
+
 		/* Look up our country in the array of country names.
            It must be an exact match, or it won't be abbreviated to the country code. */
-        if (isset($settings["countries"][$isoCode][strtolower(trim($country))])) {
-            return $settings["countries"][$isoCode][strtolower(trim($country))];
-        }
+		if (isset($settings["countries"][$isoCode][strtolower(trim($country))])) {
+			return $settings["countries"][$isoCode][strtolower(trim($country))];
+		}
 		// We didn't find country in the abbreviation list, so just add the full country name
 		if (!empty($country)) {
 			return trim($country);
@@ -1708,255 +1730,336 @@ class Dot {
 		return '';
 	}
 
-    /**
-     * Gives back a text with HTML special chars
-     *
-     * @param string $text	String to convert
-     * @return	string	Converted string
-     */
-    public static function convertToHTMLSC(string $text): string
-    {
-        return htmlspecialchars($text, ENT_QUOTES, "UTF-8");
-    }
+	/**
+	 * Gives back a text with HTML special chars
+	 *
+	 * @param string $text	String to convert
+	 * @return	string	Converted string
+	 */
+	public static function convertToHTMLSC(string $text): string
+	{
+		return htmlspecialchars($text, ENT_QUOTES, "UTF-8");
+	}
 
-    /** Linked IDs have a colon, it needs to be replaced
-     * @param $id
-     * @return array|string|string[]|null
-     */
-    public static function convertID($id) {
-        return preg_replace("/:/", "_", $id);
-    }
+	/** Linked IDs have a colon, it needs to be replaced
+	 * @param $id
+	 * @return array|string|string[]|null
+	 */
+	public static function convertID(string $id)
+	{
+		return preg_replace("/:/", "_", $id);
+	}
 
-    /** Format a date for display in the diagram
-     *
-     * @param object $date The date
-     * @param bool $yearOnly Whether to only show year and not day/month
-     * @param bool $abbr_month If month name should be abbreviated
-     * @return string
-     */
-    public static function formatDate(object $date, bool $yearOnly = false, bool $abbr_month = false): string
-    {
-        $date_format = I18N::dateFormat();
-        if ($abbr_month) {
-            $date_format = str_replace('%F', '%M', $date_format);
-        }
-        $q1 = $date->qual1;
+	/** Format a date for display in the diagram
+	 *
+	 * @param object $date The date
+	 * @param bool $yearOnly Whether to only show year and not day/month
+	 * @param bool $abbr_month If month name should be abbreviated
+	 * @return string
+	 */
+	public static function formatDate(object $date, bool $yearOnly = false, bool $abbr_month = false): string
+	{
+		$date_format = I18N::dateFormat();
+		if ($abbr_month) {
+			$date_format = str_replace('%F', '%M', $date_format);
+		}
+		$q1 = $date->qual1;
 
-        $d1 = $date->minimumDate()->format($date_format, $date->qual1);
-        $q2 = $date->qual2;
-        if ($date->maximumDate() === null) {
-            $d2 = '';
-        } else {
-            $d2 = $date->maximumDate()->format($date_format, $q2);
-        }
-        $dy = $date->minimumDate()->format("%Y");
+		$d1 = $date->minimumDate()->format($date_format, $date->qual1);
+		$q2 = $date->qual2;
+		if ($date->maximumDate() === null) {
+			$d2 = '';
+		} else {
+			$d2 = $date->maximumDate()->format($date_format, $q2);
+		}
+		$dy = $date->minimumDate()->format("%Y");
 
-        if (!$yearOnly) {
-            switch ($q1 . $q2) {
-                case '':
-                    $tmp = $d1;
-                    break;
-                case 'ABT':
-                    $tmp = "~ " . $d1;
-                    break;
-                case 'CAL':
-                    $tmp = I18N::translate('calculated %s', $d1);
-                    break;
-                case 'EST':
-                    $tmp = "± " . $d1;
-                    break;
-                case 'INT':
-                    $tmp = I18N::translate('interpreted %s', $d1);
-                    break;
-                case 'BEF':
-                    $tmp = "&lt; " . $d1;
-                    break;
-                case 'AFT':
-                    $tmp = "&gt; " . $d1;
-                    break;
-                case 'FROM':
-                    $tmp = I18N::translate('from %s', $d1);
-                    break;
-                case 'TO':
-                    $tmp = I18N::translate('to %s', $d1);
-                    break;
-                case 'BETAND':
-                    $tmp = "&gt; " . $d1 . " &lt; " . $d2;
-                    break;
-                case 'FROMTO':
-                    $tmp = I18N::translate('from %s to %s', $d1, $d2);
-                    break;
-                default:
-                    $tmp = '';
-                    break;
-            }
-        } else {
-            $tmp = trim("$q1 $dy");
-        }
-        return $tmp;
-    }
+		if (!$yearOnly) {
+			switch ($q1 . $q2) {
+				case '':
+					$tmp = $d1;
+					break;
+				case 'ABT':
+					$tmp = "~ " . $d1;
+					break;
+				case 'CAL':
+					$tmp = I18N::translate('calculated %s', $d1);
+					break;
+				case 'EST':
+					$tmp = "± " . $d1;
+					break;
+				case 'INT':
+					$tmp = I18N::translate('interpreted %s', $d1);
+					break;
+				case 'BEF':
+					$tmp = "&lt; " . $d1;
+					break;
+				case 'AFT':
+					$tmp = "&gt; " . $d1;
+					break;
+				case 'FROM':
+					$tmp = I18N::translate('from %s', $d1);
+					break;
+				case 'TO':
+					$tmp = I18N::translate('to %s', $d1);
+					break;
+				case 'BETAND':
+					$tmp = "&gt; " . $d1 . " &lt; " . $d2;
+					break;
+				case 'FROMTO':
+					$tmp = I18N::translate('from %s to %s', $d1, $d2);
+					break;
+				default:
+					$tmp = '';
+					break;
+			}
+		} else {
+			$tmp = trim("$q1 $dy");
+		}
+		return $tmp;
+	}
 
-    /**
-     * Returns the location of the image. For browser this is the URL but downloads are given the hard drive location
-     *
-     * @param $m
-     * @param $resolution
-     * @param string $media_title
-     * @return array
-     */
-    public function getImageLocation($m, $resolution, string $media_title): array
-    {
-        if (isset($_REQUEST["download"])) {
-            $image = new ImageFile($m, $this->tree, $this->settings['dpi'] * $resolution);
-            return [$image->getImageLocation($this->settings["photo_quality"], $this->settings["convert_photos_jpeg"]), strip_tags($media_title), $m->downloadUrl('inline')];
-        } else {
-            switch ($this->settings['photo_shape']) {
-                case 0:
-                case 10:
-                case 40:
-                    $fit = 'contain';
-                    break;
-                default:
-                    $fit = 'crop';
-            }
+	/**
+	 * Returns the location of the image. For browser this is the URL but downloads are given the hard drive location
+	 *
+	 * @param $m
+	 * @param $resolution
+	 * @param string $media_title
+	 * @return array<string>
+	 */
+	public function getImageLocation(?MediaFile $m, int $resolution, string $media_title): array
+	{
+		if (isset($_REQUEST["download"])) {
+			$image = new ImageFile($m, $this->tree, $this->settings['dpi'] * $resolution);
+			return [$image->getImageLocation($this->settings["photo_quality"], $this->settings["convert_photos_jpeg"]), strip_tags($media_title), $m->downloadUrl('inline')];
+		} else {
+			switch ($this->settings['photo_shape']) {
+				case 0:
+				case 10:
+				case 40:
+					$fit = 'contain';
+					break;
+				default:
+					$fit = 'crop';
+			}
 
-            return [str_replace("&", "%26", $m->imageUrl($this->settings['dpi'] * $resolution, $this->settings['dpi'] * $resolution, $fit)), strip_tags($media_title), $m->downloadUrl('inline')];
-        }
-    }
+			return [str_replace("&", "%26", $m->imageUrl($this->settings['dpi'] * $resolution, $this->settings['dpi'] * $resolution, $fit)), strip_tags($media_title), $m->downloadUrl('inline')];
+		}
+	}
 
-    private function getLineStyle(): string
-    {
-        switch ($this->settings['arrow_style']) {
-            case 0:
-            default:
-                $style = 'solid';
-                break;
-            case 10:
-                $style = 'dotted';
-                break;
-            case 20:
-                $style = 'dashed';
-                break;
-            case 30:
-                $style = 'bold';
-                break;
-            case 40:
-                $style = 'tapered';
-                break;
-            case 50:
-                $styles = ['solid', 'dotted', 'tapered', 'dashed', 'bold'];
-                $style = $styles[array_rand($styles)];
-                break;
-            case 60:
-                $style = 'invis';
-                break;
-        }
-        return $style;
-    }
+	private function getLineStyle(): string
+	{
+		switch ($this->settings['arrow_style']) {
+			case 0:
+			default:
+				$style = 'solid';
+				break;
+			case 10:
+				$style = 'dotted';
+				break;
+			case 20:
+				$style = 'dashed';
+				break;
+			case 30:
+				$style = 'bold';
+				break;
+			case 40:
+				$style = 'tapered';
+				break;
+			case 50:
+				$styles = ['solid', 'dotted', 'tapered', 'dashed', 'bold'];
+				$style = $styles[array_rand($styles)];
+				break;
+			case 60:
+				$style = 'invis';
+				break;
+		}
+		return $style;
+	}
 
-    private function getRandomColour()
-    {
-        $colours = [
-            "#E51616", "#E52316", "#E52F16", "#E53C16", "#E54816", "#E55416", "#E56116", "#E56D16", "#E57A16", "#E58616",
-            "#E59216", "#E59F16", "#E5AB16", "#E5B816", "#E5C416", "#E5D016", "#E5DD16", "#E1E516", "#D4E516", "#C8E516",
-            "#BCE516", "#AFE516", "#A3E516", "#97E516", "#8AE516", "#7EE516", "#71E516", "#65E516", "#59E516", "#4CE516",
-            "#40E516", "#33E516", "#27E516", "#1BE516", "#16E51F", "#16E52B", "#16E537", "#16E544", "#16E550", "#16E55D",
-            "#16E569", "#16E575", "#16E582", "#16E58E", "#16E59B", "#16E5A7", "#16E5B3", "#16E5C0", "#16E5CC", "#16E5D9",
-            "#16E5E5", "#16D9E5", "#16CCE5", "#16C0E5", "#16B3E5", "#16A7E5", "#169BE5", "#168EE5", "#1682E5", "#1675E5",
-            "#1669E5", "#165DE5", "#1650E5", "#1644E5", "#1637E5", "#162BE5", "#161FE5", "#1B16E5", "#2716E5", "#3316E5",
-            "#4016E5", "#4C16E5", "#5916E5", "#6516E5", "#7116E5", "#7E16E5", "#8A16E5", "#9716E5", "#A316E5", "#AF16E5",
-            "#BC16E5", "#C816E5", "#D416E5", "#E116E5", "#E516DD", "#E516D0", "#E516C4", "#E516B8", "#E516AB", "#E5169F",
-            "#E51692", "#E51686", "#E5167A", "#E5166D", "#E51661", "#E51654", "#E51648", "#E5163C", "#E5162F", "#E51623"
-        ];
-        return $colours[array_rand($colours)];
-    }
+	private function getRandomColour(): string
+	{
+		$colours = [
+			"#E51616",
+			"#E52316",
+			"#E52F16",
+			"#E53C16",
+			"#E54816",
+			"#E55416",
+			"#E56116",
+			"#E56D16",
+			"#E57A16",
+			"#E58616",
+			"#E59216",
+			"#E59F16",
+			"#E5AB16",
+			"#E5B816",
+			"#E5C416",
+			"#E5D016",
+			"#E5DD16",
+			"#E1E516",
+			"#D4E516",
+			"#C8E516",
+			"#BCE516",
+			"#AFE516",
+			"#A3E516",
+			"#97E516",
+			"#8AE516",
+			"#7EE516",
+			"#71E516",
+			"#65E516",
+			"#59E516",
+			"#4CE516",
+			"#40E516",
+			"#33E516",
+			"#27E516",
+			"#1BE516",
+			"#16E51F",
+			"#16E52B",
+			"#16E537",
+			"#16E544",
+			"#16E550",
+			"#16E55D",
+			"#16E569",
+			"#16E575",
+			"#16E582",
+			"#16E58E",
+			"#16E59B",
+			"#16E5A7",
+			"#16E5B3",
+			"#16E5C0",
+			"#16E5CC",
+			"#16E5D9",
+			"#16E5E5",
+			"#16D9E5",
+			"#16CCE5",
+			"#16C0E5",
+			"#16B3E5",
+			"#16A7E5",
+			"#169BE5",
+			"#168EE5",
+			"#1682E5",
+			"#1675E5",
+			"#1669E5",
+			"#165DE5",
+			"#1650E5",
+			"#1644E5",
+			"#1637E5",
+			"#162BE5",
+			"#161FE5",
+			"#1B16E5",
+			"#2716E5",
+			"#3316E5",
+			"#4016E5",
+			"#4C16E5",
+			"#5916E5",
+			"#6516E5",
+			"#7116E5",
+			"#7E16E5",
+			"#8A16E5",
+			"#9716E5",
+			"#A316E5",
+			"#AF16E5",
+			"#BC16E5",
+			"#C816E5",
+			"#D416E5",
+			"#E116E5",
+			"#E516DD",
+			"#E516D0",
+			"#E516C4",
+			"#E516B8",
+			"#E516AB",
+			"#E5169F",
+			"#E51692",
+			"#E51686",
+			"#E5167A",
+			"#E5166D",
+			"#E51661",
+			"#E51654",
+			"#E51648",
+			"#E5163C",
+			"#E5162F",
+			"#E51623"
+		];
+		return $colours[array_rand($colours)];
+	}
 
-    private function getParentArrowColour()
-    {
-        if ((int) $this->settings["arrow_colour_type"] === Settings::OPTION_ARROW_RANDOM_COLOUR) {
-            return $this->getRandomColour();
-        } elseif ((int) $this->settings["arrow_colour_type"] === Settings::OPTION_ARROW_CUSTOM_COLOUR) {
-            return $this->settings["arrows_default"];
-        }
-        return $this->settings["arrows_default"];
-    }
+	private function getParentArrowColour(): string
+	{
+		if ((int) $this->settings["arrow_colour_type"] === Settings::OPTION_ARROW_RANDOM_COLOUR) {
+			return $this->getRandomColour();
+		} elseif ((int) $this->settings["arrow_colour_type"] === Settings::OPTION_ARROW_CUSTOM_COLOUR) {
+			return $this->settings["arrows_default"];
+		}
+		return $this->settings["arrows_default"];
+	}
 
-    private function getArrowLabel($family,$child)
-    {
-        // Add a label to arrows to individuals when pedigree type is not "birth"
+	private function getArrowLabel(Family $family, Individual $child): string
+	{
+		// Add a label to arrows to individuals when pedigree type is not "birth"
 
-        $result = "";
+		$result = "";
 
-        if (! $this->settings['show_pedigree_type']) {
-            return $result;
-        }
+		if (! $this->settings['show_pedigree_type']) {
+			return $result;
+		}
 
-        $famID = $family->xref();
+		$famID = $family->xref();
 
 		try {
-        	$individual = Auth::checkIndividualAccess($child, true);
-        	$family = Auth::checkFamilyAccess($family, true);
+			$individual = Auth::checkIndividualAccess($child, true);
+			$family = Auth::checkFamilyAccess($family, true);
 		} catch (HttpAccessDeniedException $e) {
 			return '';
 		}
 
-        $fact_id = '';
-        $pedigree = '';
-        foreach ($individual->facts(['FAMC']) as $fact) {
-            if ($family === $fact->target()) {
+		$pedigree = '';
+		foreach ($individual->facts(['FAMC']) as $fact) {
+			if ($family === $fact->target()) {
+				$pedigree = $fact->attribute('PEDI');
+				break;
+			}
+		}
 
-                $fact_id = $fact->id();
+		$label_adopted_by = '';
+		if ($pedigree === PedigreeLinkageType::VALUE_ADOPTED) {
+			foreach ($individual->facts(['ADOP']) as $fact) {
+				$adopt_family = $fact->attribute('FAMC');
+				if ('@' . $famID . '@' === $adopt_family) {
 
-                if ($fact instanceof Fact) {
-                    $pedigree = $fact->attribute('PEDI');
-                }
+					$adopted_by = "";
+					if (preg_match_all('/\n3 ADOP (.+)/', $fact->gedcom(), $adopted_by_arr)) {
+						foreach ($adopted_by_arr[1] as $adopted_by) {
+							# Takes the first row
+							break;
+						}
+					}
+					$which_parent = new AdoptedByWhichParent(I18N::translate('Adoption'));
+					$label_adopted_by = $which_parent->values()[$adopted_by];
+					if (empty($label_adopted_by)) {
+						$label_adopted_by = I18N::translateContext('Pedigree', 'Adopted');
+					}
+				}
+				break;
+			}
+		}
 
-                break;
-            }
-        }
-
-        $label_adopted_by = '';
-        if ($pedigree === PedigreeLinkageType::VALUE_ADOPTED) {
-            foreach ($individual->facts(['ADOP']) as $fact) {
-                if ($fact instanceof Fact) {
-                    $adopt_family = $fact->attribute('FAMC');
-                    if ('@' . $famID . '@' === $adopt_family) {
-        
-                        $adopted_by = "";
-                        if (preg_match_all('/\n3 ADOP (.+)/', $fact->gedcom(), $adopted_by_arr)) {
-                            foreach ($adopted_by_arr[1] as $adopted_by) {
-                                # Takes the first row
-                                break;
-                            }
-                        }
-                        $which_parent = new AdoptedByWhichParent(I18N::translate('Adoption'));
-                        $label_adopted_by = $which_parent->values()[$adopted_by];
-                        if (empty($label_adopted_by)) {
-                            $label_adopted_by = I18N::translateContext('Pedigree', 'Adopted');
-                        }
-                    }
-        
-                    break;
-                }
-            }
-        }
-
-        $values = [
-            "" => "",
-            PedigreeLinkageType::VALUE_BIRTH   => "",
-            PedigreeLinkageType::VALUE_ADOPTED => $label_adopted_by,
-            PedigreeLinkageType::VALUE_FOSTER  => I18N::translateContext('Pedigree', 'Foster'),
-            /* I18N: “sealing” is a Mormon ceremony. */
-            PedigreeLinkageType::VALUE_SEALING => I18N::translateContext('Pedigree', 'Sealing'),
+		$values = [
+			"" => "",
+			PedigreeLinkageType::VALUE_BIRTH   => "",
+			PedigreeLinkageType::VALUE_ADOPTED => $label_adopted_by,
+			PedigreeLinkageType::VALUE_FOSTER  => I18N::translateContext('Pedigree', 'Foster'),
+			/* I18N: “sealing” is a Mormon ceremony. */
+			PedigreeLinkageType::VALUE_SEALING => I18N::translateContext('Pedigree', 'Sealing'),
 			/* I18N: “Radāʿ” is an Arabic word, pronounced “ra DAH”. It is child-to-parent pedigree, established by wet-nursing. */
 			PedigreeLinkageType::VALUE_RADA    => I18N::translateContext('Pedigree', 'Rada'),
-        ];
+		];
 
-        $result = $values[$pedigree] ?? $values[PedigreeLinkageType::VALUE_BIRTH];
+		$result = $values[$pedigree] ?? $values[PedigreeLinkageType::VALUE_BIRTH];
 
-        if (!empty($result)) {
-            $result = 'fontsize=' . $this->settings['font_size'] .', label="'.$result.'", ';
-        }
-        return $result;
-    }
+		if (!empty($result)) {
+			$result = 'fontsize=' . $this->settings['font_size'] . ', label="' . $result . '", ';
+		}
+		return $result;
+	}
 }

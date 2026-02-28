@@ -51,13 +51,16 @@ class Settings
     const OPTION_CITY_AND_COUNTRY = 10;
     const OPTION_2_LETTER_ISO = 20;
     const OPTION_3_LETTER_ISO = 30;
+    /** @var array<mixed> */
     private array $settings_json_cache = [];
+    /** @var array<mixed> */
     private array $defaultSettings;
 
     /**
      * Settings instance always starts with default settings
      */
-    public function __construct($tree = null){
+    public function __construct(?Tree $tree = null)
+    {
         // Load settings from config file
         $this->defaultSettings = include dirname(__FILE__) . "/../config.php";
         // Add options lists
@@ -68,10 +71,10 @@ class Settings
         $this->defaultSettings['url_xref_treatment_options']['add'] = "Add to list";
         $this->defaultSettings['url_xref_treatment_options']['nothing'] = "Don't add to list";
         $this->defaultSettings['url_xref_treatment_options']['overwrite'] = "Overwrite";
-        $this->defaultSettings['use_abbr_places'] = [self::OPTION_FULL_PLACE_NAME => "Full place name", self::OPTION_CITY_ONLY => "City only" ,  self::OPTION_CITY_AND_COUNTRY => "City and country" ,  self::OPTION_2_LETTER_ISO => "City and 2 letter ISO country code", self::OPTION_3_LETTER_ISO => "City and 3 letter ISO country code"];
-        $this->defaultSettings['use_abbr_names'] = [0 => "Full name", 10 => "Given and surnames", 20 => "Given names" , 30 => "First given name only", 80 => "Preferred given name and surname", 40 => "Surnames", 50 => "Initials only", 60 => "Given name initials and surname", 70 => "Don't show names"];
-        $this->defaultSettings['photo_shape_options'] = [Person::SHAPE_NONE => "No change", Person::SHAPE_OVAL => "Oval", Person::SHAPE_CIRCLE => "Circle" , Person::SHAPE_SQUARE => "Square", Person::SHAPE_ROUNDED_RECT => "Rounded rectangle", Person::SHAPE_ROUNDED_SQUARE => "Rounded square"];
-        $this->defaultSettings['photo_quality_options'] = [0 => "Lowest", 20 => "Low", 50 => "Medium" , 75 => "High", 100 => "Highest"];
+        $this->defaultSettings['use_abbr_places'] = [self::OPTION_FULL_PLACE_NAME => "Full place name", self::OPTION_CITY_ONLY => "City only",  self::OPTION_CITY_AND_COUNTRY => "City and country",  self::OPTION_2_LETTER_ISO => "City and 2 letter ISO country code", self::OPTION_3_LETTER_ISO => "City and 3 letter ISO country code"];
+        $this->defaultSettings['use_abbr_names'] = [0 => "Full name", 10 => "Given and surnames", 20 => "Given names", 30 => "First given name only", 80 => "Preferred given name and surname", 40 => "Surnames", 50 => "Initials only", 60 => "Given name initials and surname", 70 => "Don't show names"];
+        $this->defaultSettings['photo_shape_options'] = [Person::SHAPE_NONE => "No change", Person::SHAPE_OVAL => "Oval", Person::SHAPE_CIRCLE => "Circle", Person::SHAPE_SQUARE => "Square", Person::SHAPE_ROUNDED_RECT => "Rounded rectangle", Person::SHAPE_ROUNDED_SQUARE => "Rounded square"];
+        $this->defaultSettings['photo_quality_options'] = [0 => "Lowest", 20 => "Low", 50 => "Medium", 75 => "High", 100 => "Highest"];
         $this->defaultSettings['indi_tile_shape_custom_options'] = [0 => "Rectangle", 10 => "Rounded rectangle"];
         $this->defaultSettings['indi_tile_shape_options'] = $this->defaultSettings['indi_tile_shape_custom_options'] + [Person::TILE_SHAPE_SEX => 'Based on individual&apos;s sex', Person::TILE_SHAPE_VITAL => 'Based on vital status'];
         $this->defaultSettings['bg_col_type_options'] = [self::OPTION_BACKGROUND_CUSTOM_COLOUR => 'Custom', self::OPTION_BACKGROUND_SEX_COLOUR => 'Based on individual&apos;s sex', self::OPTION_BACKGROUND_VITAL_COLOUR => 'Based on vital status', self::OPTION_BACKGROUND_AGE_COLOUR => 'Based on age'];
@@ -79,7 +82,7 @@ class Settings
         $this->defaultSettings['border_col_type_options'] = [self::OPTION_BORDER_CUSTOM_COLOUR => 'Custom', self::OPTION_BORDER_SEX_COLOUR => 'Based on individual&apos;s sex', self::OPTION_BORDER_FAMILY => 'Same as family border', self::OPTION_BORDER_VITAL_COLOUR => 'Based on vital status', self::OPTION_BORDER_AGE_COLOUR => 'Based on age'];
         $this->defaultSettings['settings_sort_order_options'] = [0 => 'Oldest first', 10 => 'Newest first', 20 => 'Alphabetical order', 30 => 'Reverse alphabetical order'];
         $this->defaultSettings['click_action_indi_options'] = [0 => 'Open individual\'s page', 10 => 'Add individual to list of starting individuals', 20 => 'Replace starting individuals with this individual', 30 => 'Add this individual to the list of stopping individuals', 40 => 'Replace stopping individuals with this individual', 70 => 'Add to list of individuals to highlight', 80 => 'Add a partner', 90 => 'Add a parent', 100 => 'Toggle clippings cart status', 50 => 'Show menu', 60 => 'Do nothing'];
-        $this->defaultSettings['click_action_fam_options'] = [0 => 'Open family page', 10 => 'Add a child', 20 => 'Add to list of families to highlight', 50 => 'Change family members', 60 => 'Toggle clippings cart status', 30 => 'Show menu',40 => 'Do nothing'];
+        $this->defaultSettings['click_action_fam_options'] = [0 => 'Open family page', 10 => 'Add a child', 20 => 'Add to list of families to highlight', 50 => 'Change family members', 60 => 'Toggle clippings cart status', 30 => 'Show menu', 40 => 'Do nothing'];
         $this->defaultSettings['arrow_style_options'] = [0 => 'Solid', 10 => 'Dotted', 20 => 'Dashed', 30 => 'Bold', 40 => 'Tapered', 50 => 'Random', 60 => 'None'];
         $this->defaultSettings['arrow_colour_type_options'] = [Settings::OPTION_ARROW_CUSTOM_COLOUR => 'Custom', Settings::OPTION_ARROW_RANDOM_COLOUR => 'Random'];
         $this->defaultSettings['countries'] = $this->getCountryAbbreviations();
@@ -97,7 +100,7 @@ class Settings
     /**
      * Retrieve the currently set default settings from the admin page
      *
-     * @return array
+     * @return array<mixed>
      */
     public function getDefaultSettings(): array
     {
@@ -108,7 +111,7 @@ class Settings
      * Retrieve the currently set default settings from the admin page
      *
      * @param GVExport $module
-     * @return array
+     * @return array<mixed>
      */
     public function getAdminSettings(GVExport $module): array
     {
@@ -135,7 +138,6 @@ class Settings
         }
         $settings['graphviz_config'] = Diagram::getGraphvizSettings($settings);
         return $settings;
-
     }
 
     /**
@@ -145,7 +147,7 @@ class Settings
      * @param Tree $tree
      * @param string $id
      * @param int|null $user_id
-     * @return array
+     * @return array<mixed>
      */
     public function loadUserSettings(GVExport $module, Tree $tree, string $id = self::ID_MAIN_SETTINGS, ?int $user_id = null): array
     {
@@ -208,10 +210,10 @@ class Settings
 
     /** Given an array of settings, migrate old settings into the new settings structure
      *
-     * @param $settings
-     * @return array
+     * @param array<mixed> $settings
+     * @return array<mixed>
      */
-    private function migrate($settings): array
+    private function migrate(array $settings): array
     {
         $migrated = $settings;
         if (isset($migrated['highlight_custom_json'])) {
@@ -254,13 +256,14 @@ class Settings
      *  Save the provided settings to webtrees admin storage
      *
      * @param GVExport $module
-     * @param array $settings
+     * @param array<mixed> $settings
      * @return void
      */
-    public function saveAdminSettings(GVExport $module, array $settings) {
+    public function saveAdminSettings(GVExport $module, array $settings)
+    {
         $saveSettings = $this->defaultSettings;
         $s = [];
-        foreach ($saveSettings as $preference=>$value) {
+        foreach ($saveSettings as $preference => $value) {
             if (self::shouldSaveSetting($preference, Settings::CONTEXT_ADMIN)) {
                 if (isset($settings[$preference])) {
                     if (gettype($value) == 'boolean') {
@@ -282,7 +285,7 @@ class Settings
      *
      * @param GVExport $module
      * @param Tree $tree
-     * @param array $settings
+     * @param array<mixed> $settings
      * @param string $id
      * @return bool
      */
@@ -329,7 +332,8 @@ class Settings
      * @param string $id
      * @return void
      */
-    public function deleteUserSettings(GVExport $module, Tree $tree, string $id) {
+    public function deleteUserSettings(GVExport $module, Tree $tree, string $id)
+    {
         if (User::isUserLoggedIn()) {
             $loaded = $module->getPreference(self::PREFERENCE_PREFIX . self::TREE_PREFIX . $tree->id() . self::USER_PREFIX . Auth::user()->id(), "preference not set");
             if ($loaded != "preference not set") {
@@ -350,12 +354,11 @@ class Settings
         }
     }
 
-
     /**
      * Load country data for abbreviating place names
      * Data comes from https://github.com/stefangabos/world_countries
      *
-     * @return array
+     * @return array<mixed>
      */
     private function getCountryAbbreviations(): array
     {
@@ -364,9 +367,6 @@ class Settings
         $countries['isoToName'] = Utils::loadCountryDataFileToNameArray();
         return $countries;
     }
-
-   
-
 
     /**
      * Returns whether a setting should or shouldn't be saved to cookies/preferences
@@ -422,24 +422,24 @@ class Settings
             case 'limit_levels_manager':
                 return $context === self::CONTEXT_ADMIN;
             case 'show_diagram_panel':
-                return $context !== self::CONTEXT_NAMED_SETTING || $context !== self::CONTEXT_NAMED_SETTING_DIAGRAM_ONLY;
+                return $context !== self::CONTEXT_NAMED_SETTING && $context !== self::CONTEXT_NAMED_SETTING_DIAGRAM_ONLY;
 
-            // Include these in most things but not in cookie and not in saved settings if option
-            // to only save diagram settings is enabled
+                // Include these in most things but not in cookie and not in saved settings if option
+                // to only save diagram settings is enabled
             case 'click_action_indi':
             case 'click_action_fam':
             case 'auto_update':
             case 'convert_photos_jpeg':
             case 'photo_quality':
             case 'settings_sort_order':
-            return ($context !== self::CONTEXT_COOKIE && $context !== self::CONTEXT_NAMED_SETTING_DIAGRAM_ONLY);
+                return ($context !== self::CONTEXT_COOKIE && $context !== self::CONTEXT_NAMED_SETTING_DIAGRAM_ONLY);
 
-            // Include these in everything (including cookie), except not in saved settings if option
-            // to only save diagram settings is enabled
+                // Include these in everything (including cookie), except not in saved settings if option
+                // to only save diagram settings is enabled
             case 'output_type':
             case 'url_xref_treatment':
                 return $context !== (self::CONTEXT_NAMED_SETTING_DIAGRAM_ONLY);
-            // Include these in everything (especially including cookie)
+                // Include these in everything (especially including cookie)
             case 'include_ancestors':
             case 'include_descendants':
             case 'ancestor_levels':
@@ -472,7 +472,7 @@ class Settings
      * @param int $context
      * @return bool
      */
-    public static function shouldLoadSetting($setting, int $context = self::CONTEXT_USER): bool
+    public static function shouldLoadSetting(string $setting, int $context = self::CONTEXT_USER): bool
     {
         if ($setting == 'updated_date' && $context !== self::CONTEXT_MAIN_SETTINGS) {
             return false;
@@ -490,7 +490,7 @@ class Settings
      * @return false|string
      * @throws Exception
      */
-    public function getSettingsJson(GVExport $module, Tree $tree, string $id)
+    public function getSettingsJson(GVExport $module, Tree $tree, string $id): string|false
     {
         $userSettings = $this->loadUserSettings($module, $tree, $id);
         return self::getJsonFromSettings($userSettings);
@@ -498,8 +498,10 @@ class Settings
 
     /**
      * Turn a settings array into JSON
+     * 
+     * @param array<mixed> $settings
      */
-    public function getJsonFromSettings($settings, $context = Settings::CONTEXT_USER)
+    public function getJsonFromSettings(array $settings, int $context = Settings::CONTEXT_USER): string
     {
         $new_settings = [];
         foreach ($this->defaultSettings as $preference => $value) {
@@ -516,7 +518,7 @@ class Settings
      * @param $tree
      * @return false|string
      */
-    public function getAllSettingsJson($module, $tree)
+    public function getAllSettingsJson(GVExport $module, Tree $tree)
     {
         $settings = $this->loadUserSettings($module, $tree, Settings::ID_ALL_SETTINGS);
         return json_encode($settings);
@@ -528,7 +530,7 @@ class Settings
      * @param GVExport $module
      * @param Tree $tree
      * @param string $id
-     * @return array
+     * @return array<mixed>
      */
     public function getSettingsLink(GVExport $module, Tree $tree, string $id): array
     {
@@ -541,7 +543,6 @@ class Settings
                 $response['success'] = false;
                 $response['error'] = $error;
             }
-
         } else {
             $response['success'] = false;
             $response['error'] = "Settings don't exist";
@@ -557,7 +558,7 @@ class Settings
      * @param GVExport $module
      * @param Tree $tree
      * @param string $token
-     * @return array
+     * @return array<mixed>
      * @throws Exception
      */
     public function loadSettingsToken(GVExport $module, Tree $tree, string $token): array
@@ -590,7 +591,7 @@ class Settings
             $last_id = end($preferences);
             if ($last_id != "") {
                 $next_id = (int)base_convert($last_id, 36, 10) + 1;
-                $new_id = base_convert($next_id, 10, 36);
+                $new_id = base_convert((string) $next_id, 10, 36);
                 $id_list = $id_list . "," . $new_id;
             } else {
                 return "";
@@ -606,13 +607,13 @@ class Settings
      * @param GVExport $module
      * @param Tree $tree
      * @param string $id
-     * @return string
+     * @return bool
      */
-    public function deleteSettingsId(GVExport $module, Tree $tree, string $id): string
+    public function deleteSettingsId(GVExport $module, Tree $tree, string $id): bool
     {
         $id_list = $this->getSettingsIdList($module, $tree);
         if ($id_list == "") {
-           return false;
+            return false;
         } else {
             $preferences = explode(',', $id_list);
             $key = array_search($id, $preferences);
@@ -654,10 +655,10 @@ class Settings
      * @param GVExport $module
      * @param Tree $tree
      * @param string $id
-     * @param array $s
+     * @param array<mixed> $s
      * @return void
      */
-    private function addUserSettings(GVExport $module, Tree $tree, string $id, array $s)
+    private function addUserSettings(GVExport $module, Tree $tree, string $id, array $s): void
     {
         $prefs_json = $module->getPreference(self::PREFERENCE_PREFIX . self::TREE_PREFIX . $tree->id() . self::USER_PREFIX . Auth::user()->id(), "preference not set");
         if ($prefs_json == "preference not set") {
@@ -670,7 +671,7 @@ class Settings
         $settings[$id]['name'] = $s['save_settings_name'];
         $settings[$id]['updated_date'] = $s['updated_date'];
         $settings[$id]['id'] = $id;
-        $settings[$id]['token'] = empty($s['token']) ? '':$s['token'];
+        $settings[$id]['token'] = empty($s['token']) ? '' : $s['token'];
         $new_json = json_encode($settings);
         $module->setPreference(self::PREFERENCE_PREFIX . self::TREE_PREFIX . $tree->id() . self::USER_PREFIX . Auth::user()->id(), $new_json);
     }
@@ -703,7 +704,7 @@ class Settings
      * @param $tree
      * @return bool
      */
-    private function doSettingsExist($module, $tree): bool
+    private function doSettingsExist(GVExport $module, Tree $tree): bool
     {
         if (Auth::user()->id() == self::GUEST_USER_ID) {
             return false;
@@ -727,7 +728,7 @@ class Settings
      * @param $token
      * @return bool
      */
-    public function revokeSettingsToken($module, $tree, $token): bool
+    public function revokeSettingsToken(GVExport $module, Tree $tree, string $token): bool
     {
         $settingsLink = new SettingsLink($module, $tree, $this);
         return $settingsLink->revokeToken($token);
@@ -741,7 +742,7 @@ class Settings
      * @param $settings_id
      * @return mixed
      */
-    public function getSettingsName($module, $tree, $settings_id)
+    public function getSettingsName(GVExport $module, Tree $tree, string $settings_id)
     {
         $userSettings = $this->loadUserSettings($module, $tree, $settings_id);
         return $userSettings['save_settings_name'];
@@ -751,10 +752,10 @@ class Settings
      * Find the maximum number of ancestor or descendant levels this user is allowed
      *
      * @param $tree
-     * @param $settings
+     * @param array<mixed> $settings
      * @return string
      */
-    private function getLevelLimit($tree, $settings): string
+    private function getLevelLimit(Tree $tree, array $settings): string
     {
         if (Auth::isAdmin()) {
             return '99';
@@ -774,7 +775,8 @@ class Settings
     /**
      * 
      */
-    static function dumpSettings($module, $tree) {
+    static function dumpSettings(GVExport $module, Tree $tree): string
+    {
         $user_id = Auth::user()->id();
         if ($user_id === 0) {
             return 'Not available when logged out';
@@ -793,7 +795,7 @@ class Settings
 
         $output .= "\n\nPreference list:\n";
         $output .=  $module->getPreference(self::PREFERENCE_PREFIX . self::SETTINGS_LIST_PREFERENCE_NAME . self::TREE_PREFIX . $tree->id(), "preference not set");
-    
+
         return $output;
     }
 }

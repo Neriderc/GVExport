@@ -23,10 +23,14 @@ class Person
     const TILE_SHAPE_ROUNDED = 10;
     const TILE_SHAPE_SEX = 20;
     const TILE_SHAPE_VITAL = 30;
+    /** @var array<mixed> */
     public array $attributes;
     private Dot $dot;
 
-    function __construct($attributes, $dot)
+    /**
+     * @param array<mixed> $attributes
+     */
+    function __construct(array $attributes, Dot $dot)
     {
         $this->attributes = $attributes;
         $this->dot = $dot;
@@ -132,18 +136,17 @@ class Person
         // --- Birth date ---
         if ($this->dot->settings["show_birthdate"]) {
             if ($this->dot->settings["use_alt_events"]) {
-                    $date = $i->getBirthDate();
-                } else {
-                    $dates = $i->getAllEventDates(['BIRT']);
-                    if ($dates !== []) {
-                        $date = $dates[0];
-                    } else {
-                        $date = new Date('');
-                    }
-                }
-                $birthdate = Dot::formatDate($date, $this->dot->settings["birthdate_year_only"],  $this->dot->settings["use_abbr_month"]);
-
+                $date = $i->getBirthDate();
             } else {
+                $dates = $i->getAllEventDates(['BIRT']);
+                if ($dates !== []) {
+                    $date = $dates[0];
+                } else {
+                    $date = new Date('');
+                }
+            }
+            $birthdate = Dot::formatDate($date, $this->dot->settings["birthdate_year_only"],  $this->dot->settings["use_abbr_month"]);
+        } else {
             $birthdate = "";
         }
 
@@ -198,7 +201,7 @@ class Person
                 foreach ($buriDates as $date) {
                     if ($date->isOK()) {
                         $burial_date = Dot::formatDate($buriDates[0], $this->dot->settings["burial_date_year_only"],  $this->dot->settings["use_abbr_month"]);
-                        $break=true;
+                        $break = true;
                         break;
                     }
                 }
@@ -206,7 +209,6 @@ class Person
                     break;
                 }
             }
-
         } else {
             $burial_date = "";
         }
@@ -218,17 +220,15 @@ class Person
                 $buriPlaces = $i->getAllEventPlaces([$event]);
                 $burial_place = "";
                 foreach ($buriPlaces as $place) {
-                    if ($place instanceof Place) {
-                        $burial_place = $place;
-                        $break=true;
-                        break;
-                    }
+                    $burial_place = $place;
+                    $break = true;
+                    break;
                 }
                 if ($break) {
                     break;
                 }
             }
-            if (($burial_place != "") && ($burial_place instanceof Place)) {
+            if ($burial_place != "") {
                 $burial_place = Dot::getAbbreviatedPlace($burial_place->gedcomName(), $this->dot->settings);
             }
         }
@@ -242,7 +242,7 @@ class Person
             $altNameArray = $names[$i->getSecondaryName()];
             $add_name = $this->getFormattedName($altNameArray, "");
             if (!empty($add_name) && trim($add_name) !== "" && $this->dot->settings["use_abbr_name"] < 50) {
-                $name .= '<BR />' . $add_name;//@@ Meliza Amity
+                $name .= '<BR />' . $add_name; //@@ Meliza Amity
             }
         }
         if ($this->dot->settings['show_indi_sex']) {
@@ -318,10 +318,10 @@ class Person
                 $stripe_colour = $sex_colour;
                 break;
             case Settings::OPTION_STRIPE_VITAL_COLOUR:
-                $stripe_colour = $this->getVitalColour($i ? $i->isDead() : false,Settings::OPTION_STRIPE_VITAL_COLOUR);
+                $stripe_colour = $this->getVitalColour($i ? $i->isDead() : false, Settings::OPTION_STRIPE_VITAL_COLOUR);
                 break;
             case Settings::OPTION_STRIPE_AGE_COLOUR:
-                $stripe_colour = $this->getAgeColour($i,Settings::OPTION_STRIPE_AGE_COLOUR);
+                $stripe_colour = $this->getAgeColour($i, Settings::OPTION_STRIPE_AGE_COLOUR);
                 break;
             default:
                 $stripe_colour = '';
@@ -353,9 +353,9 @@ class Person
                 }
             }
             // Show sex
-            if (trim($sex) != "") {
+            if (trim($sex) !== "") {
                 $out .= "<FONT COLOR=\"" . $this->dot->settings["font_colour_details"] . "\" POINT-SIZE=\"" . ($this->dot->settings["font_size"]) . "\">" . $sex . "</FONT>";
-                if (trim($birthData . $deathData . $burialData . $occupation != "")) {
+                if (trim($birthData . $deathData . $burialData . $occupation) !== "") {
                     $out .= "<BR />";
                 }
             }
@@ -404,30 +404,31 @@ class Person
     }
 
 
-    public function getFactImage(string $pid, bool $detailsExist, string $id) : string {
-            $out = "";
-            // Show photo
-            if ($this->dot->isPhotoRequired()) {
-                if (isset($this->dot->individuals[$pid][$id]) && !empty($this->dot->individuals[$pid][$id])) {
-                    $photo_size = floatval($this->dot->settings["photo_size"]) / 100;
-                    $padding = $this->getPhotoPaddingSize();
-                    if ($this->dot->settings["add_links"]) {
-                        $out .= "<TD ROWSPAN=\"2\" COLSPAN=\"2\" CELLPADDING=\"$padding\" PORT=\"pic\" WIDTH=\"" . ($this->dot->settings["font_size"] * 4 * $photo_size)  . "\" HEIGHT=\"" . ($this->dot->settings["font_size"] * 4 * $photo_size) . "\" FIXEDSIZE=\"true\" ALIGN=\"CENTER\" VALIGN=\"MIDDLE\"" . ($id != 'pic' ? " HREF=\"".$this->dot->convertToHTMLSC( $this->dot->individuals[$pid][$id . "_link"])."\"" : '') . "><IMG SCALE=\"true\" SRC=\"" . $this->dot->individuals[$pid][$id] . "\" ALT=\"" . $this->dot->individuals[$pid][$id . "_title"] . "\"  /></TD>";
-                    } else {
-                        $out .= "<TD ROWSPAN=\"2\" CELLPADDING=\"$padding\" PORT=\"pic\" WIDTH=\"" . ($this->dot->settings["font_size"] * 4 * $photo_size)  . "\" HEIGHT=\"" . ($this->dot->settings["font_size"] * 4 * $photo_size) . "\" FIXEDSIZE=\"true\" ALIGN=\"CENTER\" VALIGN=\"MIDDLE\"><IMG SCALE=\"true\" SRC=\"" . $this->dot->individuals[$pid][$id] . "\" ALT=\"" . $this->dot->individuals[$pid][$id . "_title"] . "\" /></TD>";
-                    }
+    public function getFactImage(string $pid, bool $detailsExist, string $id): string
+    {
+        $out = "";
+        // Show photo
+        if ($this->dot->isPhotoRequired()) {
+            if (isset($this->dot->individuals[$pid][$id]) && !empty($this->dot->individuals[$pid][$id])) {
+                $photo_size = floatval($this->dot->settings["photo_size"]) / 100;
+                $padding = $this->getPhotoPaddingSize();
+                if ($this->dot->settings["add_links"]) {
+                    $out .= "<TD ROWSPAN=\"2\" COLSPAN=\"2\" CELLPADDING=\"$padding\" PORT=\"pic\" WIDTH=\"" . ($this->dot->settings["font_size"] * 4 * $photo_size)  . "\" HEIGHT=\"" . ($this->dot->settings["font_size"] * 4 * $photo_size) . "\" FIXEDSIZE=\"true\" ALIGN=\"CENTER\" VALIGN=\"MIDDLE\"" . ($id != 'pic' ? " HREF=\"" . $this->dot->convertToHTMLSC($this->dot->individuals[$pid][$id . "_link"]) . "\"" : '') . "><IMG SCALE=\"true\" SRC=\"" . $this->dot->individuals[$pid][$id] . "\" ALT=\"" . $this->dot->individuals[$pid][$id . "_title"] . "\"  /></TD>";
                 } else {
-                    // Blank cell zero width to keep the height right
-                    $out .= "<TD ROWSPAN=\"2\" CELLPADDING=\"1\" PORT=\"pic\" WIDTH=\"0\" HEIGHT=\"" . ($this->dot->settings["font_size"] * 4) . "\" FIXEDSIZE=\"true\"></TD>";
+                    $out .= "<TD ROWSPAN=\"2\" CELLPADDING=\"$padding\" PORT=\"pic\" WIDTH=\"" . ($this->dot->settings["font_size"] * 4 * $photo_size)  . "\" HEIGHT=\"" . ($this->dot->settings["font_size"] * 4 * $photo_size) . "\" FIXEDSIZE=\"true\" ALIGN=\"CENTER\" VALIGN=\"MIDDLE\"><IMG SCALE=\"true\" SRC=\"" . $this->dot->individuals[$pid][$id] . "\" ALT=\"" . $this->dot->individuals[$pid][$id . "_title"] . "\" /></TD>";
                 }
+            } else {
+                // Blank cell zero width to keep the height right
+                $out .= "<TD ROWSPAN=\"2\" CELLPADDING=\"1\" PORT=\"pic\" WIDTH=\"0\" HEIGHT=\"" . ($this->dot->settings["font_size"] * 4) . "\" FIXEDSIZE=\"true\"></TD>";
             }
-            return $out;
+        }
+        return $out;
     }
 
     /**
      * Add formatting to name before adding to DOT
      *
-     * @param array $nameArray webtrees name array for the person
+     * @param array<string> $nameArray webtrees name array for the person
      * @param string $pid XREF of the person, for adding to name if enabled
      * @return string Returns formatted name
      */
@@ -448,9 +449,7 @@ class Person
         while ($pos_start != false) {
             // Start by replacing the </span>
             $pos_end = strpos(substr($name, $pos_start), "</span>") + $pos_start;
-            if ($pos_end) {
-                $name = substr_replace($name, "_/U_", $pos_end, strlen("</span>"));
-            }
+            $name = substr_replace($name, "_/U_", $pos_end, strlen("</span>"));
 
             // Next do the starting tags
             $pos_start = strpos($name, '<span class="starredname">');
@@ -482,7 +481,7 @@ class Person
     /**
      * Abbreviate name based on settings
      *
-     * @param array $nameArray array of names from webtrees
+     * @param array<string> $nameArray array of names from webtrees
      * @return string
      */
     private function getAbbreviatedName(array $nameArray): string
@@ -541,7 +540,6 @@ class Person
                 return "";
             default:
                 return $nameArray["full"];
-
         }
     }
 
@@ -628,7 +626,8 @@ class Person
                         return $this->shouldBeRounded($i, $this->dot->settings['shape_sex_other']);
                     case 'U':
                         return $this->shouldBeRounded($i, $this->dot->settings['shape_sex_unknown']);
-                    default: return false;
+                    default:
+                        return false;
                 }
             case Person::TILE_SHAPE_VITAL:
                 if ($i->isDead()) {
@@ -642,14 +641,14 @@ class Person
     /**
      * Retrieve colour to represent the status of living or deceased, based on $context
      *
-     * @param string $is_dead
+     * @param bool $is_dead
      * @param $context
      * @return mixed|string
      */
-    private function getVitalColour(string $is_dead, $context)
+    private function getVitalColour(bool $is_dead, int $context)
     {
         if ($is_dead) {
-            switch($context) {
+            switch ($context) {
                 case Settings::OPTION_BACKGROUND_VITAL_COLOUR:
                     return $this->dot->settings['indi_background_dead_col'];
                 case Settings::OPTION_STRIPE_VITAL_COLOUR:
@@ -658,7 +657,7 @@ class Person
                     return $this->dot->settings['indi_border_dead_col'];
             }
         } else {
-            switch($context) {
+            switch ($context) {
                 case Settings::OPTION_BACKGROUND_VITAL_COLOUR:
                     return $this->dot->settings['indi_background_living_col'];
                 case Settings::OPTION_STRIPE_VITAL_COLOUR:
@@ -677,16 +676,14 @@ class Person
      * @param $context
      * @return string
      */
-    private function getAgeColour($individual, $context): string
+    private function getAgeColour(Individual $individual, int $context): string
     {
         $age = '';
-        if ($individual) {
-            if ($individual->isDead()) {
-                $age = (string)new Age($individual->getBirthDate(), $individual->getDeathDate());
-            } else {
-                $today = new Date(strtoupper(date('d M Y')));
-                $age = (string)new Age($individual->getBirthDate(), $today);
-            }
+        if ($individual->isDead()) {
+            $age = (string)new Age($individual->getBirthDate(), $individual->getDeathDate());
+        } else {
+            $today = new Date(strtoupper(date('d M Y')));
+            $age = (string)new Age($individual->getBirthDate(), $today);
         }
         if ($age === '') {
             switch ($context) {
@@ -697,7 +694,6 @@ class Person
                 case Settings::OPTION_STRIPE_AGE_COLOUR:
                     return $this->dot->settings['indi_stripe_age_unknown_col'];
             }
-
         } else {
             $age = (int) $age;
         }
@@ -724,7 +720,7 @@ class Person
         }
         $range = $high_age - $low_age;
         if ($range == 0) $range = 0.01;
-        $ratio = min(max($age-$low_age, 0), $range)/$range;
+        $ratio = min(max($age - $low_age, 0), $range) / $range;
         $colour = new Colour($low_col);
         return $colour->mergeWithColour($high_col, $ratio);
     }

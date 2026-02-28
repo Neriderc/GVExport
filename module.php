@@ -34,7 +34,7 @@ require_once dirname(__FILE__) . "/config.php";
 // Auto-load class files
 spl_autoload_register(function ($class) {
     if (strpos($class, "\gvexport\\")) {
-        $name = basename(dirname(__FILE__) . "/app/" . str_replace('\\', '/',$class . '.php'));
+        $name = basename(dirname(__FILE__) . "/app/" . str_replace('\\', '/', $class . '.php'));
         include dirname(__FILE__) . "/app/" . $name;
     }
 });
@@ -78,7 +78,7 @@ class GVExport extends AbstractModule implements ModuleCustomInterface, ModuleCh
     public const CUSTOM_VERSION     = '2.2.7';
     public const CUSTOM_MODULE      = "GVExport";
     public const CUSTOM_DESCRIPTION = "Generate a diagram of everyone in your family tree. Highly customisable, with the ability to navigate in your browser or export the diagram to a file.";
-    public const CUSTOM_LATEST      = 'https://raw.githubusercontent.com/Neriderc/' . self::CUSTOM_MODULE. '/main/latest-version.txt';
+    public const CUSTOM_LATEST      = 'https://raw.githubusercontent.com/Neriderc/' . self::CUSTOM_MODULE . '/main/latest-version.txt';
     public const SUPPORT_URL        = 'https://github.com/Neriderc/GVExport';
     public string $base_url;
     public ModuleService $module_service;
@@ -163,7 +163,7 @@ class GVExport extends AbstractModule implements ModuleCustomInterface, ModuleCh
         return self::SUPPORT_URL;
     }
 
-    public function getIndividual($tree, $xref): Individual
+    public function getIndividual(Tree $tree, String $xref): Individual
     {
         $individual = Registry::individualFactory()->make($xref, $tree);
         return Auth::checkIndividualAccess($individual, false, true);
@@ -184,10 +184,10 @@ class GVExport extends AbstractModule implements ModuleCustomInterface, ModuleCh
             $xref = $tree->getUserPreference(Auth::user(), UserInterface::PREF_TREE_ACCOUNT_XREF);
         }
         $individual = $this->getIndividual($tree, $tree->significantIndividual(Auth::user(), $xref)->xref());
-		$userDefaultVars = (new Settings($tree))->getAdminSettings($this);
+        $userDefaultVars = (new Settings($tree))->getAdminSettings($this);
         $settings = new Settings($tree);
         $userDefaultVars['first_render'] = true;
-        if (isset($_REQUEST['reset'])){
+        if (isset($_REQUEST['reset'])) {
             if (!$userDefaultVars['enable_graphviz'] && $userDefaultVars['graphviz_bin'] != "") {
                 $userDefaultVars['graphviz_bin'] = "";
             }
@@ -232,9 +232,9 @@ class GVExport extends AbstractModule implements ModuleCustomInterface, ModuleCh
      *
      * @return ResponseInterface
      *
-         * @throws JsonException
+     * @throws JsonException
      */
-    public function getJSAction() : ResponseInterface
+    public function getJSAction(): ResponseInterface
     {
         return response(
             file_get_contents($this->resourcesFolder() . 'javascript' . DIRECTORY_SEPARATOR . 'gvexport.js'),
@@ -302,8 +302,10 @@ class GVExport extends AbstractModule implements ModuleCustomInterface, ModuleCh
         $vars = $formSubmission->load($vars_data, $this);
         if ($params['save'] === '1') {
             (new Settings())->saveAdminSettings($this, $vars);
-            FlashMessages::addMessage(I18N::translate('The preferences for the module “%s” have been updated.',
-                $this->title()), 'success');
+            FlashMessages::addMessage(I18N::translate(
+                'The preferences for the module “%s” have been updated.',
+                $this->title()
+            ), 'success');
         }
         return redirect($this->getConfigLink());
     }
@@ -311,13 +313,14 @@ class GVExport extends AbstractModule implements ModuleCustomInterface, ModuleCh
     /**
      * Creates and saves a DOT file
      *
+     * @param array<mixed> $vars_data
      * @return    string    Directory where the file is saved
      * @throws Exception
      */
-    function saveDOTFile($tree, $vars_data): string
+    function saveDOTFile(Tree $tree, array $vars_data): string
     {
         // Make a unique directory to the tmp dir
-        $temp_dir = (new File())->sys_get_temp_dir_my() . "/" . md5(Auth::id());
+        $temp_dir = (new File())->sys_get_temp_dir_my() . "/" . md5((string) Auth::id());
         if (!is_dir("$temp_dir")) {
             mkdir("$temp_dir");
         }
@@ -335,21 +338,23 @@ class GVExport extends AbstractModule implements ModuleCustomInterface, ModuleCh
     }
 
     /**
+     *     
+     * @param array<mixed> $vars_data
      * @throws Exception
      */
-    function createGraphVizDump($tree, $vars_data, $temp_dir): string
+    function createGraphVizDump(Tree $tree, array $vars_data, String $temp_dir): string
     {
         $out = "";
 
         $settings = new Settings();
         $dot = $this->createDot($tree, $vars_data, $settings, $temp_dir);
-        
-        
-        
+
+
+
         // Get out DOT file
         $out .= $dot->createDOTDump();
         if (isset($_POST["browser"]) && $_POST["browser"] == "true") {
-            $dot->messages[] = I18N::translate('Generated diagram with %s individuals, %s family records, and %s images', sizeof($dot->individuals), sizeof($dot->families), substr_count($out, '<IMG'));
+            $dot->messages[] = I18N::translate('Generated diagram with %s individuals, %s family records, and %s images', (string) sizeof($dot->individuals), (string) sizeof($dot->families), (string) substr_count($out, '<IMG'));
             $response['messages'] = $dot->messages;
             $response['enable_debug_mode'] = $dot->debug_string;
             $response['dot'] = $out;
@@ -366,13 +371,25 @@ class GVExport extends AbstractModule implements ModuleCustomInterface, ModuleCh
         return $r;
     }
 
-    function createIndiFamArrays($tree, $vars_data, $settings) {
+    /**
+     *     
+     * @param array<mixed> $vars_data
+     * @return array<mixed>
+     **/
+    function createIndiFamArrays(Tree $tree, array $vars_data, Settings $settings): array
+    {
         $dot = $this->createDot($tree, $vars_data, $settings);
         $dot->createDOTDump();
         return [$dot->individuals, $dot->families];
     }
 
-    function createDot($tree, $vars_data, $settings, $temp_dir = null) {
+    /**
+     *     
+     * @param array<mixed> $vars_data
+     * 
+     **/
+    function createDot(Tree $tree, array $vars_data, Settings $settings, ?String $temp_dir = null): Dot
+    {
         $dot = new Dot($tree, $this);
         $formSubmission = new FormSubmission($tree);
         $vars = $formSubmission->load($vars_data, $this);
@@ -385,7 +402,7 @@ class GVExport extends AbstractModule implements ModuleCustomInterface, ModuleCh
         $settings->saveUserSettings($this, $tree, $dot->settings);
         return $dot;
     }
-    
+
 
     /**
      * Additional translations for module.
@@ -408,10 +425,10 @@ class GVExport extends AbstractModule implements ModuleCustomInterface, ModuleCh
 
     /** Return list of available output types
      *
-     * @param $vars
-     * @return array
+     * @param array<mixed> $vars
+     * @return array<string>
      */
-    private function getOTypes($vars): array
+    private function getOTypes(array $vars): array
     {
         $otypes = array();
         foreach ($vars['graphviz_config']["output"] as $fmt => $val) {
@@ -431,16 +448,16 @@ class GVExport extends AbstractModule implements ModuleCustomInterface, ModuleCh
      * @param $param
      * @return string
      */
-    private function strip_param_from_url($url, $param): string
+    private function strip_param_from_url(String $url, String $param): string
     {
         $base_url = strtok($url, '?');                   // Get the base URL
         $parsed_url = parse_url($url);                   // Parse it
-        if(array_key_exists('query',$parsed_url)) {      // Only execute if there are parameters
+        if (array_key_exists('query', $parsed_url)) {      // Only execute if there are parameters
             $query = $parsed_url['query'];               // Get the query string
             parse_str($query, $parameters);              // Convert Parameters into array
             unset($parameters[$param]);                  // Delete the one you want
             $new_query = http_build_query($parameters);  // Rebuilt query string
-            $url =$base_url.'?'.$new_query;              // Finally URL is ready
+            $url = $base_url . '?' . $new_query;              // Finally URL is ready
         }
         return $url;
     }
@@ -448,11 +465,13 @@ class GVExport extends AbstractModule implements ModuleCustomInterface, ModuleCh
     /**
      * A breaking change in webtrees 2.2.0 changes how the classes are retrieved.
      * This function allows support for both 2.1.X and 2.2.X versions
-     * @param $class
-     * @return mixed
+     * @template T of object
+     * @param class-string<T> $class
+     * @return T
      */
-    static function getClass($class)
+    static function getClass(string $class)
     {
+        /** @phpstan-ignore-next-line */
         if (version_compare(Webtrees::VERSION, '2.2.0', '>=')) {
             return Registry::container()->get($class);
         } else {
@@ -463,4 +482,4 @@ class GVExport extends AbstractModule implements ModuleCustomInterface, ModuleCh
 }
 
 $moduleService = GVExport::getClass(ModuleService::class);
-return new GVExport($moduleService);    
+return new GVExport($moduleService);

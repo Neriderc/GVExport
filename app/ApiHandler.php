@@ -1,6 +1,7 @@
 <?php
 
 namespace vendor\WebtreesModules\gvexport;
+
 use Exception;
 use Fisharebest\Webtrees\Auth;
 use Fisharebest\Webtrees\I18N;
@@ -8,6 +9,7 @@ use Fisharebest\Webtrees\Validator;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\ResponseInterface;
 use Fisharebest\Webtrees\Tree;
 use Fisharebest\Webtrees\Registry;
 
@@ -17,12 +19,13 @@ use Fisharebest\Webtrees\Registry;
  */
 class ApiHandler
 {
+    /** @var array<mixed> */
     var array $response_data = array();
     private ServerRequestInterface $request;
     private GVExport $module;
     private Tree $tree;
     private string $json_data;
-    private $json;
+    private mixed $json;
 
     /**
      * @param ServerRequestInterface $request
@@ -41,9 +44,10 @@ class ApiHandler
     /**
      * Convert response data into a data stream for returning response
      *
-     * @return mixed
+     * @return ResponseInterface
      */
-    public function getResponse() {
+    public function getResponse(): ResponseInterface
+    {
         $stream = GVExport::getClass(StreamFactoryInterface::class)->createStream(json_encode($this->response_data));
         $response_factory = GVExport::getClass(ResponseFactoryInterface::class);
         return $response_factory->createResponse()
@@ -56,7 +60,8 @@ class ApiHandler
      *
      * @return mixed
      */
-    public function handle() {
+    public function handle()
+    {
         if (json_last_error() === JSON_ERROR_NONE) {
             $type = FormSubmission::isNameStringValid($this->json['type']) ? $this->json['type'] : "";
             switch ($type) {
@@ -101,7 +106,6 @@ class ApiHandler
                     break;
                 case "get_record_count":
                     $this->getRecordCount();
-                    break;
                     break;
                 case "add_clippings_cart":
                     $this->addToClippingsCart();
@@ -148,7 +152,8 @@ class ApiHandler
      * @param string $code
      * @return void
      */
-    private function setFailResponse(string $error, string $code = "") {
+    private function setFailResponse(string $error, string $code = "")
+    {
         $this->response_data['success'] = false;
         $this->response_data['errorMessage'] = ($code === '' ? '' : $code . ": ") . I18N::translate($error);
     }
@@ -395,10 +400,10 @@ class ApiHandler
     /**
      * Does the heavy lifting of adding a favourite of the provided type
      *
-     * @param $type
+     * @param string $type
      * @return void
      */
-    private function addFavourite($type): void
+    private function addFavourite(string $type): void
     {
         if (isset($this->json['settings_id']) && (ctype_alnum((string) $this->json['settings_id']))) {
             $settings = new Settings();
@@ -424,12 +429,12 @@ class ApiHandler
      *
      * @return void
      */
-    private function getHelp()
+    private function getHelp(): void
     {
         $help = new Help();
         $this->response_data['success'] = true;
         if ($help->helpExists($this->json['help_name'])) {
-            $this->response_data['response'] = view($this->module->name() . '::MainPage/Help/' . $help->getHelpLocation($this->json['help_name']) . $this->json['help_name'],['module' => $this->module]);
+            $this->response_data['response'] = view($this->module->name() . '::MainPage/Help/' . $help->getHelpLocation($this->json['help_name']) . $this->json['help_name'], ['module' => $this->module]);
         } else {
             // API call successful, even though help information not found
             $this->response_data['response'] = view($this->module->name() . '::MainPage/Help/' . $help->getHelpLocation(Help::NOT_FOUND) . Help::NOT_FOUND);
@@ -441,7 +446,7 @@ class ApiHandler
      *
      * @return void
      */
-    private function getSharedNoteForm()
+    private function getSharedNoteForm(): void
     {
         $vars = Validator::parsedBody($this->request)->array('vars');
         $this->response_data['success'] = true;
@@ -451,7 +456,7 @@ class ApiHandler
     /**
      * Gets the number of records in the diagram
      */
-    private function getRecordCount()
+    private function getRecordCount(): void
     {
         $this->response_data['success'] = true;
         $this->response_data['response'] = Diagram::loadRecordCount($this->json['token']);
@@ -460,20 +465,22 @@ class ApiHandler
     /**
      * Adds the relevant records to the clipping cart
      */
-    private function addToClippingsCart()
+    private function addToClippingsCart(): void
     {
 
         $this->addXrefsToClippingsCart($this->json['xrefs']);
-        
+
         $this->response_data['success'] = true;
         $this->response_data['response'] = ['Added to clippings cart'];
     }
 
-    
+
     /**
      * Adds the relevant records to the clipping cart
+     * 
+     * @param array<string> $xrefs
      */
-    private function addXrefsToClippingsCart($xrefs)
+    private function addXrefsToClippingsCart(array $xrefs): void
     {
         $cartAdder = new ClippingsCartAdder($this->tree);
 
@@ -499,17 +506,18 @@ class ApiHandler
     /**
      * Adds all individuals and families in the diagram to the clippings cart
      */
-    private function addAllToClippingsCart() {
+    private function addAllToClippingsCart(): void
+    {
         $vars = Validator::parsedBody($this->request)->array('vars');
         $settings = new Settings();
         [$individuals, $families] = $this->module->createIndiFamArrays($this->tree, $vars, $settings);
 
         $cartAdder = new ClippingsCartAdder($this->tree);
         foreach ($families as $xref => $val) {
-                $record = Registry::familyFactory()->make($xref, $this->tree);
-                if ($record) {
-                    $cartAdder->addFamilyToCart($record);
-                }
+            $record = Registry::familyFactory()->make($xref, $this->tree);
+            if ($record) {
+                $cartAdder->addFamilyToCart($record);
+            }
         }
         foreach ($individuals as $xref => $val) {
             $record = Registry::individualFactory()->make($xref, $this->tree);
@@ -525,7 +533,8 @@ class ApiHandler
     /**
      * Refreshes the linked objects based on indis and fams in cart
      */
-    private function rebuildClippingsCart() {
+    private function rebuildClippingsCart(): void
+    {
         $xrefs = ClippingsCart::getXrefsInCart($this->tree);
         ClippingsCart::emptyCart($this->tree);
         try {
@@ -541,7 +550,7 @@ class ApiHandler
     /**
      * Removes the relevant records from the clipping cart
      */
-    private function removeFromClippingsCart()
+    private function removeFromClippingsCart(): void
     {
         if (isset($this->json['xref']) && (ctype_alnum($this->json['xref']))) {
             ClippingsCart::removeXrefFromCart($this->tree, $this->json['xref']);
@@ -555,7 +564,8 @@ class ApiHandler
     /**
      * Returns number of items in clippings cart
      */
-    private function countXrefsClippingsCart() {
+    private function countXrefsClippingsCart(): void
+    {
         $this->response_data['success'] = true;
         $this->response_data['response'] = [
             'total'   => ClippingsCart::countXrefsInCart($this->tree),
@@ -566,7 +576,8 @@ class ApiHandler
     /**
      * Returns xrefs of contents of clippings cart
      */
-    private function getXrefsClippingsCart() {
+    private function getXrefsClippingsCart(): void
+    {
         $all = !empty($this->json['allTypes']);
         $this->response_data['success'] = true;
         $response = $all ? ClippingsCart::getXrefsInCart($this->tree) : ClippingsCart::getIndiFamXrefsInCart($this->tree);
@@ -576,7 +587,8 @@ class ApiHandler
     /**
      * Returns xrefs of contents of clippings cart
      */
-    private function isXrefInClippingsCart() {
+    private function isXrefInClippingsCart(): void
+    {
         if (isset($this->json['xref']) && (ctype_alnum($this->json['xref']))) {
             $this->response_data['success'] = true;
             $this->response_data['response'] = ClippingsCart::isXrefInCart($this->tree, $this->json['xref']);
@@ -584,11 +596,12 @@ class ApiHandler
             $this->setFailResponse('Invalid XREF', 'E19');
         }
     }
-    
+
     /**
      * Adds all individuals and families in the diagram to the clippings cart
      */
-    private function dumpSettings() {
+    private function dumpSettings(): void
+    {
         $output = Settings::dumpSettings($this->module, $this->tree);
 
         $this->response_data['success'] = true;

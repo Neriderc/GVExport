@@ -18,7 +18,8 @@ class Cookie
      *
      * @param $tree
      */
-    function __construct($tree) {
+    function __construct(Tree $tree)
+    {
         $this->tree = $tree;
         $this->name = $this->getName();
     }
@@ -43,10 +44,11 @@ class Cookie
     /**
      * Save the settings in a cookie
      *
-     * @param $vars
+     * @param array<mixed> $vars
      * @return void
      */
-    public function set($vars) {
+    public function set(array $vars)
+    {
         $cookieArray = [];
         foreach ($vars as $preference => $value) {
             if (Settings::shouldSaveSetting($preference, Settings::CONTEXT_COOKIE)) {
@@ -54,7 +56,7 @@ class Cookie
             }
         }
         $json_cookie = json_encode($cookieArray);
-        $cookie_options = array (
+        $cookie_options = array(
             'expires' => time() + (3600 * 24 * 365),
             'samesite' => 'Strict'
         );
@@ -65,10 +67,10 @@ class Cookie
     /**
      * Load settings from cookie over the provided settings (e.g. the default ones)
      *
-     * @param $userDefaultVars
-     * @return array
+     * @param array<mixed> $userDefaultVars
+     * @return array<mixed>
      */
-    public function load($userDefaultVars): array
+    public function load(array $userDefaultVars): array
     {
         if (isset($_COOKIE[$this->name]) and $_COOKIE[$this->name] != "") {
             try {
@@ -92,7 +94,7 @@ class Cookie
                 }
             }
         }
-        if (!isset($userDefaultVars['enable_graphviz'])){
+        if (!isset($userDefaultVars['enable_graphviz'])) {
             $userDefaultVars['graphviz_bin'] = "";
         }
         return $userDefaultVars;

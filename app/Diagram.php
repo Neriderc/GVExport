@@ -32,7 +32,7 @@ class Diagram
      * @param $token
      * @return string
      */
-    static public function loadRecordCount($token): string
+    static public function loadRecordCount(string $token): string
     {
         $defaults = [
             'time_token' => '',
@@ -52,8 +52,11 @@ class Diagram
         return json_encode($defaults);
     }
 
-
-    static function getGraphvizSettings($settings): array
+    /** 
+     * @param array<mixed> $settings
+     * @return array<mixed>
+     **/
+    static function getGraphvizSettings(array $settings): array
     {
         // Output file formats
         $Graphviz['output']['svg']['label'] = "SVG"; #ESL!!! 20090213

@@ -1,6 +1,7 @@
 <?php
 
 namespace vendor\WebtreesModules\gvexport;
+
 use Fisharebest\Webtrees\I18N;
 
 /**
@@ -43,35 +44,35 @@ class Help
      * @var array|string[]
      */
     private array $help_location = [
-            self::HOME => '',
-            self::NOT_FOUND => '',
-            'Getting started' => '',
-            self::ABOUT => '',
-            self::DETAILED_INFORMATION => '',
-            self::PEOPLE_TO_INCLUDE => 'Detailed information/',
-            self::CLIPPINGS_CART => 'Detailed information/People to be included/',
-            self::INCLUDE_RELATED_TO => 'Detailed information/People to be included/',
-            self::CONNECTIONS_TO_INCLUDE => 'Detailed information/People to be included/',
-            self::XREFs_OF_INDIVIDUALS => 'Detailed information/People to be included/',
-            self::STOP_PROCESSING_ON => 'Detailed information/People to be included/',
-            self::NON_RELATIVES => 'Detailed information/People to be included/',
-            self::TREATMENT_OF_SOURCE_INDIVIDUALS => 'Detailed information/People to be included/',
-            self::APPEARANCE => 'Detailed information/',
-            self::GRAPH_DIRECTION => 'Detailed information/Appearance/',
-            self::DIAGRAM_TYPE => 'Detailed information/Appearance/',
-            self::TILE_DESIGN => 'Detailed information/Appearance/',
-            self::TILE_CONTENTS => 'Detailed information/Appearance/',
-            self::DIAGRAM_APPEARANCE => 'Detailed information/Appearance/',
-            self::GENERAL_SETTINGS => 'Detailed information/',
-            self::OUTPUT_FILE => 'Detailed information/General settings/',
-            self::BROWSER_RENDER => 'Detailed information/General settings/',
-            self::CONTEXT_MENU_HELP => 'Detailed information/General settings/Browser render/',
-            self::SAVE_SETTINGS => 'Detailed information/General settings/',
-            self::SETTINGS_FILE => 'Detailed information/General settings/',
-            self::MESSAGE_HISTORY => 'Detailed information/General settings/',
-            self::SAVED_DIAGRAMS => 'Detailed information/',
-            self::LIST_OF_DIAGRAMS => 'Detailed information/Saved diagrams/',
-        ];
+        self::HOME => '',
+        self::NOT_FOUND => '',
+        'Getting started' => '',
+        self::ABOUT => '',
+        self::DETAILED_INFORMATION => '',
+        self::PEOPLE_TO_INCLUDE => 'Detailed information/',
+        self::CLIPPINGS_CART => 'Detailed information/People to be included/',
+        self::INCLUDE_RELATED_TO => 'Detailed information/People to be included/',
+        self::CONNECTIONS_TO_INCLUDE => 'Detailed information/People to be included/',
+        self::XREFs_OF_INDIVIDUALS => 'Detailed information/People to be included/',
+        self::STOP_PROCESSING_ON => 'Detailed information/People to be included/',
+        self::NON_RELATIVES => 'Detailed information/People to be included/',
+        self::TREATMENT_OF_SOURCE_INDIVIDUALS => 'Detailed information/People to be included/',
+        self::APPEARANCE => 'Detailed information/',
+        self::GRAPH_DIRECTION => 'Detailed information/Appearance/',
+        self::DIAGRAM_TYPE => 'Detailed information/Appearance/',
+        self::TILE_DESIGN => 'Detailed information/Appearance/',
+        self::TILE_CONTENTS => 'Detailed information/Appearance/',
+        self::DIAGRAM_APPEARANCE => 'Detailed information/Appearance/',
+        self::GENERAL_SETTINGS => 'Detailed information/',
+        self::OUTPUT_FILE => 'Detailed information/General settings/',
+        self::BROWSER_RENDER => 'Detailed information/General settings/',
+        self::CONTEXT_MENU_HELP => 'Detailed information/General settings/Browser render/',
+        self::SAVE_SETTINGS => 'Detailed information/General settings/',
+        self::SETTINGS_FILE => 'Detailed information/General settings/',
+        self::MESSAGE_HISTORY => 'Detailed information/General settings/',
+        self::SAVED_DIAGRAMS => 'Detailed information/',
+        self::LIST_OF_DIAGRAMS => 'Detailed information/Saved diagrams/',
+    ];
 
     /**
      * Checks if $help is a valid name of a help view
@@ -94,8 +95,9 @@ class Help
      * @param $help
      * @return mixed|string
      */
-    public function getHelpLocation($help) {
-            return $this->help_location[$help];
+    public function getHelpLocation(string $help)
+    {
+        return $this->help_location[$help];
     }
 
     /**
@@ -117,11 +119,11 @@ class Help
      * @param $msg
      * @return string
      */
-    static function translateClean($msg): string
+    static function translateClean(string $msg): string
     {
         $translation = I18N::translate($msg);
-        $no_apostrophe = str_replace("'","&apos;",$translation);
-        $no_ampersand = str_replace("&","&amp;",$no_apostrophe);
+        $no_apostrophe = str_replace("'", "&apos;", $translation);
+        $no_ampersand = str_replace("&", "&amp;", $no_apostrophe);
         return str_replace(array("\r", "\n"), '', $no_ampersand);
     }
 }

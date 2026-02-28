@@ -19,9 +19,11 @@ class OutputFile
     var string $tempDir;
     var string $fileType;
     var string $baseName;
+    /** @var array<mixed> */
     var array $settings;
 
-    function __construct($temp_dir, $file_type, $module) {
+    function __construct(string $temp_dir, string $file_type, GVExport $module)
+    {
         $this->settings = (new Settings())->getAdminSettings($module);
         $this->tempDir = $temp_dir;
         $this->fileType = $file_type;
@@ -92,7 +94,7 @@ class OutputFile
         return GVExport::getClass(StreamFactoryInterface::class)->createStreamFromFile($filename);
     }
 
-    private function embedSvgImages($pFilename)
+    private function embedSvgImages(string $pFilename): void
     {
         #Find and convert all images to base64 from html
         #https://stackoverflow.com/a/48295003/2796922
@@ -107,14 +109,13 @@ class OutputFile
         libxml_clear_errors();
         $images = $dom->getElementsByTagName('image');
         foreach ($images as $image) {
-                $src = $image->getAttribute('xlink:href');
-                $type = pathinfo($src, PATHINFO_EXTENSION);
-                $data = file_get_contents($src);
-                $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
-                $image->setAttribute("xlink:href", $base64);
+            $src = $image->getAttribute('xlink:href');
+            $type = pathinfo($src, PATHINFO_EXTENSION);
+            $data = file_get_contents($src);
+            $base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+            $image->setAttribute("xlink:href", $base64);
         }
 
         file_put_contents($pFilename, $dom->saveXML());
     }
-
 }

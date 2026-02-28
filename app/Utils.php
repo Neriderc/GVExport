@@ -19,11 +19,12 @@ class Utils
      */
     static function isKeyInJson(string $json, string $key): bool
     {
-        try {
-            $data = json_decode($json, true);
-        } catch (Exception $e) {
+        $data = json_decode($json, true);
+
+        if (!is_array($data)) {
             return false;
         }
+
         return isset($data[$key]);
     }
 
@@ -62,7 +63,7 @@ class Utils
      * @param $binPath
      * @return mixed|string
      */
-    static function isGraphvizAvailable($binPath)
+    static function isGraphvizAvailable(string $binPath)
     {
         static $outcome;
 
@@ -93,9 +94,9 @@ class Utils
      * Loads country data from JSON file for converting to ISO code
      *
      * @param $type
-     * @return array|false
+     * @return array<string>|false
      */
-    static function loadCountryDataFile($type)
+    static function loadCountryDataFile(string $type): array|false
     {
         switch ($type) {
             case 'iso2':
@@ -119,9 +120,9 @@ class Utils
      * Loads country data from JSON file for converting from ISO code to English name
      *
      * @param $type
-     * @return array|false
+     * @return array<string>
      */
-    static function loadCountryDataFileToNameArray()
+    static function loadCountryDataFileToNameArray(): array
     {
         $codeToCountry = file_get_contents(dirname(__FILE__) . "/../resources/data/CountryFromCode.json");
 
