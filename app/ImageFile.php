@@ -2,10 +2,13 @@
 /* ImageFile class
  * Represents an image to be included in a diagram (e.g. photo)
  */
+
 namespace vendor\WebtreesModules\gvexport;
 
 use Fisharebest\Webtrees\Auth;
 use Fisharebest\Webtrees\Site;
+use Fisharebest\Webtrees\Tree;
+use GdImage;
 
 /**
  * An image file, representing a hard drive image file
@@ -17,7 +20,8 @@ class ImageFile
     private object $tree;
     private int $type;
 
-    function __construct($media_file, $tree, $resolution) {
+    function __construct(object $media_file, Tree $tree, int $resolution)
+    {
         $this->mediaFile = $media_file;
         $this->tree = $tree;
         $this->resolution = $resolution;
@@ -37,7 +41,9 @@ class ImageFile
         $full_media_path = Site::getPreference('INDEX_DIRECTORY') . $this->tree->getPreference('MEDIA_DIRECTORY') . $filename;
         // If SVG then scale image and provide location of temp file
         if ($_REQUEST["vars"]["output_type"] == "svg" || $_REQUEST["vars"]["output_type"] == "pdf") {
-            $temp_dir = (new File())->sys_get_temp_dir_my() . "/" . md5(Auth::id());
+            $temp_dir = new File()->sys_get_temp_dir_my();
+            if ($temp_dir === "") return "";
+            $temp_dir = $temp_dir . "/" . md5((string) Auth::id());
             $temp_image_file = $temp_dir . "/" . $filename;
 
             $image = $this->loadImage($full_media_path);
@@ -56,16 +62,16 @@ class ImageFile
                 return $full_media_path;
             }
         } else {
-                return $full_media_path;
+            return $full_media_path;
         }
     }
 
     /** Load the image into PHP
      *
      * @param $filepath
-     * @return false|\GdImage|resource
+     * @return false|\GdImage
      */
-    private function loadImage($filepath)
+    private function loadImage(string $filepath)
     {
         $this->type = exif_imagetype($filepath);
         switch ($this->type) {
@@ -73,7 +79,7 @@ class ImageFile
                 $image = @imageCreateFromGif($filepath);
                 break;
             case IMAGETYPE_JPEG:
-ini_set('memory_limit', '8192M');
+                ini_set('memory_limit', '8192M');
                 $image = @imageCreateFromJpeg($filepath);
                 break;
             case IMAGETYPE_PNG:
@@ -101,13 +107,13 @@ ini_set('memory_limit', '8192M');
      * @param $convert
      * @return bool
      */
-    private function saveImage($image, $temp_image_file_path, $full_media_path, $quality, $convert): bool
+    private function saveImage(GdImage $image, string $temp_image_file_path, string $full_media_path, int $quality, bool $convert): bool
     {
         $dir = dirname($temp_image_file_path);
 
         // We definitely do not want to overwrite any data - make sure our temp
         // directory is not in the webtrees directory to reduce risk
-        $webtrees_dir = explode("webtrees",Site::getPreference('INDEX_DIRECTORY'))[0] . "webtrees";
+        $webtrees_dir = explode("webtrees", Site::getPreference('INDEX_DIRECTORY'))[0] . "webtrees";
         if (substr($temp_image_file_path, 0, strlen($webtrees_dir)) == $webtrees_dir) {
             die("Error: Temp directory cannot be within webtrees directory");
         }
@@ -141,5 +147,4 @@ ini_set('memory_limit', '8192M');
         imagedestroy($image);
         return true;
     }
-
 }

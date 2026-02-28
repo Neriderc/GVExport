@@ -1,6 +1,7 @@
 <?php
 
 namespace vendor\WebtreesModules\gvexport;
+
 use Fisharebest\Webtrees\I18N;
 
 /**
@@ -12,10 +13,10 @@ class MainPage
      * This function updates the configured names in the provided array to translated versions.
      * It is used for translating options for dropdown boxes in the module.
      *
-     * @param $array
-     * @return array
+     * @param array<string> $array
+     * @return array<string>
      */
-    public static function updateTranslations($array): array
+    public static function updateTranslations(array $array): array
     {
         foreach ($array as $key => $value) {
             $array[$key] = I18N::translate($value);
@@ -44,7 +45,7 @@ class MainPage
      */
     public static function addLabel(string $for, string $text, bool $help = TRUE): string
     {
-        return '<label class="col-sm-4 col-form-label sidebar-labels label-group" for="' . $for .'"><span class="label-text">' . I18N::translate($text) . "</span>" . ($help ? MainPage::addInfoButton($text) : "") . '</label>';
+        return '<label class="col-sm-4 col-form-label sidebar-labels label-group" for="' . $for . '"><span class="label-text">' . I18N::translate($text) . "</span>" . ($help ? MainPage::addInfoButton($text) : "") . '</label>';
     }
 
     /**
@@ -54,11 +55,10 @@ class MainPage
      * @param $diagram_type
      * @return void
      */
-    public static function handleSimpleSettings($diagram_type)
+    public static function handleSimpleSettings(string $diagram_type)
     {
         if ($diagram_type == "simple") {
             echo '<input type="radio" id="diagtype_simple" name="vars[diagram_type]" value="simple" checked>';
         }
     }
-
 }

@@ -20,14 +20,16 @@ use Fisharebest\Webtrees\Note;
  * This class is a service to add items to the clipings cart. Largely it copies from
  * the clippings cart module as the module does not make the functions accessible
  */
-class ClippingsCartAdder {
+class ClippingsCartAdder
+{
 
 	public Tree $tree;
 
 	/**
 	 * @param Tree $tree
 	 */
-	function __construct(Tree $tree) {
+	function __construct(Tree $tree)
+	{
 		$this->tree = $tree;
 	}
 
@@ -134,7 +136,7 @@ class ClippingsCartAdder {
 
 		foreach ($matches[1] as $xref) {
 			$media = Registry::mediaFactory()->make($xref, $record->tree());
-			
+
 			if ($media instanceof Media && $media->canShow()) {
 				$this->addMediaToCart($media);
 			}

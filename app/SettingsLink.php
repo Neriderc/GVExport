@@ -24,7 +24,7 @@ class SettingsLink
     private string $id;
     private Settings $settings_obj;
 
-    public function __construct($module, $tree, $parent_obj, $id = "")
+    public function __construct(GVExport $module, Tree $tree, Settings $parent_obj, string $id = "")
     {
         $this->module = $module;
         $this->tree = $tree;
@@ -74,7 +74,7 @@ class SettingsLink
     /**
      * Retrieve the list of shared settings
      *
-     * @return array
+     * @return array<mixed>
      * @throws Exception
      */
     private function getSharedSettingsList(): array
@@ -85,7 +85,7 @@ class SettingsLink
         } else {
             $shared_settings = json_decode($pref, true);
             if (json_last_error() !== JSON_ERROR_NONE) {
-                throw new Exception(json_last_error());
+                throw new Exception(json_last_error_msg());
             }
             return $shared_settings;
         }
@@ -94,7 +94,7 @@ class SettingsLink
     /**
      * Save the list of shared settings into the webtrees preferences
      *
-     * @param array $record
+     * @param array<mixed> $record
      * @return void
      */
     private function setSharedSettingsList(array $record)
@@ -108,7 +108,7 @@ class SettingsLink
      *
      * @param string $token
      * @param Settings $settings
-     * @return array
+     * @return array<mixed>
      * @throws Exception
      */
     public function loadToken(string $token, Settings $settings): array
@@ -145,9 +145,11 @@ class SettingsLink
             $sharedSettingsList = $this->getSharedSettingsList();
             if ($token == '') {
                 foreach ($sharedSettingsList as $key => $value) {
-                    if ($value['user'] === Auth::user()->id() &&
+                    if (
+                        $value['user'] === Auth::user()->id() &&
                         $value['tree'] === $this->tree->id() &&
-                        $value['settings_id'] === $this->id) {
+                        $value['settings_id'] === $this->id
+                    ) {
                         unset($sharedSettingsList[$key]);
                     }
                 }
@@ -164,10 +166,10 @@ class SettingsLink
     /**
      * Adds a shared settings token into the settings record saved in webtrees
      *
-     * @param $token
+     * @param string $token
      * @return bool
      */
-    public function updateSettingsWithToken($token): bool
+    public function updateSettingsWithToken(string $token): bool
     {
         if (Auth::user()->id() == Settings::GUEST_USER_ID) {
             return false;
@@ -182,10 +184,10 @@ class SettingsLink
     /**
      * Removes a shared settings token, so it can't be used anymore
      *
-     * @param $token
+     * @param string $token
      * @return bool
      */
-    public function revokeToken($token): bool
+    public function revokeToken(string $token): bool
     {
         try {
             $sharedSettingsList = $this->getSharedSettingsList();

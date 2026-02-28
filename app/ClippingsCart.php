@@ -12,18 +12,20 @@ use Fisharebest\Webtrees\Registry;
 /**
  * Class to access the webtrees clippings cart
  */
-class ClippingsCart {
+class ClippingsCart
+{
 
 	public Tree $tree;
 
 	/**
 	 * @param Tree $tree
 	 */
-	function __construct(Tree $tree) {
+	function __construct(Tree $tree)
+	{
 		$this->tree = $tree;
 	}
-    
-    /**
+
+	/**
 	 * Check if clippings cart of a tree is empty
 	 *
 	 * @param Tree $tree
@@ -57,14 +59,14 @@ class ClippingsCart {
 	 *
 	 * @param Tree $tree
 	 *
-	 * @return array of XREFs
+	 * @return array<string> of XREFs
 	 */
 	public static function getXrefsInCart(Tree $tree): array
 	{
 		$cart = Session::get('cart', []);
 		$xrefs = array_keys($cart[$tree->name()] ?? []);
 		// PHP converts numeric keys to integers, so we convert the XREFs to strings in case 
-        // some are just numbers that got implicitly converted 
+		// some are just numbers that got implicitly converted 
 		return array_map('strval', $xrefs);
 	}
 
@@ -73,7 +75,7 @@ class ClippingsCart {
 	 *
 	 * @param Tree $tree
 	 *
-	 * @return array of XREFs
+	 * @return array<string> of XREFs
 	 */
 	public static function getIndiFamXrefsInCart(Tree $tree): array
 	{
@@ -106,7 +108,7 @@ class ClippingsCart {
 	 *
 	 * @param Tree $tree
 	 *
-	 * @return array
+	 * @return array<GedcomRecord>
 	 */
 	public static function getRecordsInCart(Tree $tree): array
 	{
@@ -132,7 +134,7 @@ class ClippingsCart {
 	 * @param string $xref
 	 * @return bool
 	 */
-	static function isXrefInCart($tree, string $xref): bool
+	static function isXrefInCart(Tree $tree, string $xref): bool
 	{
 		return in_array($xref, self::getXrefsInCart($tree), true);
 	}
@@ -144,7 +146,7 @@ class ClippingsCart {
 	 * @param string $xref
 	 * @return bool
 	 */
-	static function removeXrefFromCart(Tree $tree, string $xref)
+	static function removeXrefFromCart(Tree $tree, string $xref): bool
 	{
 		$cart = Session::get('cart');
 		$cart = is_array($cart) ? $cart : [];
@@ -158,7 +160,8 @@ class ClippingsCart {
 		return false;
 	}
 
-	static function emptyCart($tree) {
+	static function emptyCart(Tree $tree): void
+	{
 
 		$cart = Session::get('cart');
 		$cart = is_array($cart) ? $cart : [];

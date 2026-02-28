@@ -21,7 +21,7 @@ class Favourite
     /**
      * @param $type
      */
-    public function __construct($type)
+    public function __construct(string $type)
     {
         $this->type = $type;
     }
@@ -34,7 +34,7 @@ class Favourite
      * @param $title
      * @return bool
      */
-    public function addFavourite($tree, $url, $title): bool
+    public function addFavourite(Tree $tree, string $url, string $title): bool
     {
         switch ($this->type) {
             case self::TYPE_USER_FAVOURITE:
@@ -59,6 +59,9 @@ class Favourite
         $note = "";
         $user = Auth::user();
         $favorite = function ($tree, $user, $url, $title, $note) {
+            // The webtrees favorites module doesn't allow other modules to add favourites, so we need
+            // to do some sneaky stuff that phpstan doesn't like
+            /** @phpstan-ignore-next-line */
             return GVExport::getClass(UserFavoritesModule::class)->addUrlFavorite($tree, $user, $url, $title, $note);
         };
         $favorite->call(GVExport::getClass(UserFavoritesModule::class), $tree, $user, $url, $title, $note);
@@ -77,6 +80,9 @@ class Favourite
     {
         $note = "";
         $favorite = function ($tree, $url, $title, $note) {
+            // The webtrees favorites module doesn't allow other modules to add favourites, so we need
+            // to do some sneaky stuff that phpstan doesn't like
+            /** @phpstan-ignore-next-line */
             return GVExport::getClass(FamilyTreeFavoritesModule::class)->addUrlFavorite($tree, $url, $title, $note);
         };
         $favorite->call(GVExport::getClass(FamilyTreeFavoritesModule::class), $tree, $url, $title, $note);

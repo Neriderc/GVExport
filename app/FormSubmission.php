@@ -20,11 +20,11 @@ class FormSubmission
      * Takes list of values from form submission and returns structures and
      * validated settings list
      *
-     * @param $vars
+     * @param array<mixed> $vars
      * @param $module
-     * @return array
+     * @return array<mixed>
      */
-    public function load($vars, $module): array
+    public function load(array $vars, GVExport $module): array
     {
         $settings = [];
 
@@ -398,7 +398,6 @@ class FormSubmission
         // Settings
         if (!empty($vars['diagram_type']) && ctype_alpha($vars['diagram_type'])) {
             $settings['diagram_type'] = $vars['diagram_type'];
-
         }
         $settings['show_photos'] = isset($vars['show_photos']);
         $settings['convert_photos_jpeg'] = isset($vars['convert_photos_jpeg']);
@@ -472,7 +471,7 @@ class FormSubmission
      */
     static function isXrefListValid(string $list): bool
     {
-        return preg_match('/^[A-Za-z0-9:,_.-]*$/',$list);
+        return preg_match('/^[A-Za-z0-9:,_.-]*$/', $list);
     }
 
     /**
@@ -483,7 +482,7 @@ class FormSubmission
      */
     private function isValidColourHex(string $colour): bool
     {
-        return preg_match('/^#[0-9a-f]{6}$/',$colour);
+        return preg_match('/^#[0-9a-f]{6}$/', $colour);
     }
 
     /**
@@ -504,9 +503,9 @@ class FormSubmission
      * @param $name
      * @return bool
      */
-    public static function isNameStringValid($name): bool
+    public static function isNameStringValid(string $name): bool
     {
-        return preg_match('/^[A-Za-z0-9 _.-]*$/',$name);
+        return preg_match('/^[A-Za-z0-9 _.-]*$/', $name);
     }
 
     /**
@@ -515,9 +514,9 @@ class FormSubmission
      * @param $name
      * @return bool
      */
-    private function isPrefixStringValid($name): bool
+    private function isPrefixStringValid(string $name): bool
     {
-        return preg_match('/^[A-Za-z0-9_ .*+()^∞%$#@!†-↑↓×⚮\\|]*$/',$name);
+        return preg_match('/^[A-Za-z0-9_ .*+()^∞%$#@!†-↑↓×⚮\\|]*$/', $name);
     }
 
     /**
@@ -526,9 +525,9 @@ class FormSubmission
      * @param $string
      * @return bool
      */
-    private function isPercent($string): bool
+    private function isPercent(string $string): bool
     {
-        return preg_match('/^[0-9]*%$/',$string);
+        return preg_match('/^[0-9]*%$/', $string);
     }
 
     /**
@@ -548,7 +547,7 @@ class FormSubmission
      * @param $percent
      * @return string
      */
-    private function cleanPercent($percent): string
+    private function cleanPercent(string $percent): string
     {
         if (!strpos($percent, '%')) {
             $percent = $percent . '%';

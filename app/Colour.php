@@ -7,26 +7,27 @@ namespace vendor\WebtreesModules\gvexport;
  */
 class Colour
 {
-    private $red;
-    private $blue;
-    private $green;
+    private int $red;
+    private int $blue;
+    private int $green;
 
     /**
      * Create colour instance using hex code
      *
      * @param $hex_col string the colour hex code for this colour
      */
-    function __construct(string $hex_col) {
+    function __construct(string $hex_col)
+    {
         list($this->red, $this->green, $this->blue) = $this->hexToRgb($hex_col);
     }
 
     /**
      * Converts an HTML hex colour to an array of RGB
      *
-     * @param $hex_col
-     * @return array
+     * @param string $hex_col
+     * @return array<int>
      */
-    function hexToRgb($hex_col): array
+    function hexToRgb(string $hex_col): array
     {
         return sscanf($hex_col, '#%02x%02x%02x');
     }
@@ -39,7 +40,7 @@ class Colour
      * @param $ratio
      * @return string
      */
-    function mergeWithColour($colour, $ratio): string
+    function mergeWithColour(string $colour, int $ratio): string
     {
         list($red, $green, $blue) = $this->hexToRgb($colour);
         $intermediate_rgb = [];

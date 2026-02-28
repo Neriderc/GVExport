@@ -1,4 +1,5 @@
 <?php
+
 namespace vendor\WebtreesModules\gvexport;
 
 use Fisharebest\Webtrees\Fact;
@@ -13,11 +14,13 @@ use Fisharebest\Webtrees\Registry;
 /**
  * Class to read the clippings cart in order to build up the arrays for individuals and families
  */
-class ClippingsCartListEnhancer {
+class ClippingsCartListEnhancer
+{
 
+	/** @var array<mixed> */
 	private array $individuals = [];
+	/** @var array<mixed> */
 	private array $families = [];
-	private ClippingsCart $cart;
 	private Tree $tree;
 	private bool $photoIsRequired;
 	private bool $combinedMode;
@@ -27,12 +30,13 @@ class ClippingsCartListEnhancer {
 	 * constructor for this class
 	 *
 	 * @param ClippingsCart $clippingsCart
+	 * @param array<mixed> $lists
 	 * @param bool $photoIsRequired
 	 * @param int $dpi
 	 * @param bool $combinedMode
 	 */
-	function __construct(ClippingsCart $clippingsCart, array $lists, $photoIsRequired, $dpi, $combinedMode) {
-		$this->cart = $clippingsCart;
+	function __construct(ClippingsCart $clippingsCart, array $lists, bool $photoIsRequired, int $dpi, bool $combinedMode)
+	{
 		$this->tree = $clippingsCart->tree;
 		$this->dpi = $dpi;
 		$this->photoIsRequired = $photoIsRequired;
@@ -44,16 +48,20 @@ class ClippingsCartListEnhancer {
 	/**
 	 * Fill the arrays "individuals" and "families" with their relevant data
 	 *
+	 * @return array<mixed>
 	 */
-	public function enhance () {
+	public function enhance(): array
+	{
 		foreach ($this->individuals as $indi) {
 			$record = $indi['record'];
 			if ($this->combinedMode) {
 				$this->enhanceIndividualsList($record);
 			}
-			[$this->individuals[$record->xref()]['pic'], 
-				$this->individuals[$record->xref()]['pic_title'], 
-				$this->individuals[$record->xref()]['pic_link']] = $this->getPhoto($record->xref());
+			[
+				$this->individuals[$record->xref()]['pic'],
+				$this->individuals[$record->xref()]['pic_title'],
+				$this->individuals[$record->xref()]['pic_link']
+			] = $this->getPhoto($record->xref());
 		}
 
 
@@ -63,14 +71,15 @@ class ClippingsCartListEnhancer {
 		];
 	}
 
-	
+
 
 	/**
 	 * add information to the arrays "individuals" and "families" about the spouse families or add a dummy spouse family
 	 *
 	 * @param Individual $individual
 	 */
-	private function enhanceIndividualsList (Individual $individual) {
+	private function enhanceIndividualsList(Individual $individual): void
+	{
 		$fams = $individual->spouseFamilies();
 		if (count($fams) > 0) {
 			foreach ($fams as $family) {
@@ -83,33 +92,34 @@ class ClippingsCartListEnhancer {
 			$this->addDummyFamily($individual);
 		}
 	}
-	
+
 	/**
 	 * if there is no spouse family we create a dummy one
 	 * that is needed for the "combined" mode
 	 *
 	 * @param Individual $individual
 	 */
-	private function addDummyFamily (Individual $individual) {
+	private function addDummyFamily(Individual $individual): void
+	{
 		$pid = $individual->xref();
-		$this->addFamToList(Dot::DUMMY_FAMILIY_XREF.$pid);
-		$this->individuals[$pid]['fams'][Dot::DUMMY_FAMILIY_XREF.$pid] = Dot::DUMMY_FAMILIY_XREF.$pid;
-		$this->families[Dot::DUMMY_FAMILIY_XREF.$pid][Dot::HAS_PARENTS] = true;
+		$this->addFamToList(Dot::DUMMY_FAMILIY_XREF . $pid);
+		$this->individuals[$pid]['fams'][Dot::DUMMY_FAMILIY_XREF . $pid] = Dot::DUMMY_FAMILIY_XREF . $pid;
+		$this->families[Dot::DUMMY_FAMILIY_XREF . $pid][Dot::HAS_PARENTS] = true;
 		if ($individual->sex() == "M") {
-			$this->families[Dot::DUMMY_FAMILIY_XREF.$pid][Dot::ID_HUSBAND] = $pid;
-			$this->families[Dot::DUMMY_FAMILIY_XREF.$pid][Dot::ID_WIFE] = "";
+			$this->families[Dot::DUMMY_FAMILIY_XREF . $pid][Dot::ID_HUSBAND] = $pid;
+			$this->families[Dot::DUMMY_FAMILIY_XREF . $pid][Dot::ID_WIFE] = "";
 		} elseif ($individual->sex() == "F") {
-			$this->families[Dot::DUMMY_FAMILIY_XREF.$pid][Dot::ID_WIFE] = $pid;
-			$this->families[Dot::DUMMY_FAMILIY_XREF.$pid][Dot::ID_HUSBAND] = "";
+			$this->families[Dot::DUMMY_FAMILIY_XREF . $pid][Dot::ID_WIFE] = $pid;
+			$this->families[Dot::DUMMY_FAMILIY_XREF . $pid][Dot::ID_HUSBAND] = "";
 		} elseif ($individual->sex() == "X") {
-			$this->families[Dot::DUMMY_FAMILIY_XREF.$pid][Dot::ID_UNKNOWN] = $pid;
-			$this->families[Dot::DUMMY_FAMILIY_XREF.$pid][Dot::ID_WIFE] = "";
-			$this->families[Dot::DUMMY_FAMILIY_XREF.$pid][Dot::ID_HUSBAND] = "";
+			$this->families[Dot::DUMMY_FAMILIY_XREF . $pid][Dot::ID_UNKNOWN] = $pid;
+			$this->families[Dot::DUMMY_FAMILIY_XREF . $pid][Dot::ID_WIFE] = "";
+			$this->families[Dot::DUMMY_FAMILIY_XREF . $pid][Dot::ID_HUSBAND] = "";
 		} else {
 			// unknown gender
-			$this->families[Dot::DUMMY_FAMILIY_XREF.$pid][Dot::ID_UNKNOWN] = $pid;
-			$this->families[Dot::DUMMY_FAMILIY_XREF.$pid][Dot::ID_WIFE] = "";
-			$this->families[Dot::DUMMY_FAMILIY_XREF.$pid][Dot::ID_HUSBAND] = "";
+			$this->families[Dot::DUMMY_FAMILIY_XREF . $pid][Dot::ID_UNKNOWN] = $pid;
+			$this->families[Dot::DUMMY_FAMILIY_XREF . $pid][Dot::ID_WIFE] = "";
+			$this->families[Dot::DUMMY_FAMILIY_XREF . $pid][Dot::ID_HUSBAND] = "";
 		}
 	}
 
@@ -119,7 +129,8 @@ class ClippingsCartListEnhancer {
 	 * @param Individual $individual
 	 * @param Family $family
 	 */
-	private function addInfoForExistingFamily (Individual $individual, Family $family) {
+	private function addInfoForExistingFamily(Individual $individual, Family $family): void
+	{
 		$pid = $individual->xref();
 		$fid = $family->xref();
 		$this->individuals[$pid]['fams'][$fid] = $fid;
@@ -132,24 +143,13 @@ class ClippingsCartListEnhancer {
 	}
 
 	/**
-	 * add an individual to the individuals list
-	 *
-	 * @param string $pid XREF of this individual
-	 */
-	private function addIndiToList(string $pid) {
-		if(!isset($this->individuals[$pid])) {
-			$this->individuals[$pid] = array();
-		}
-		$this->individuals[$pid]['pid'] = $pid;
-	}
-
-	/**
 	 * add a family to the families list
 	 *
 	 * @param string $fid XREF of this family
 	 */
-	private function addFamToList(string $fid) {
-		if(!isset($this->families[$fid])) {
+	private function addFamToList(string $fid): void
+	{
+		if (!isset($this->families[$fid])) {
 			$this->families[$fid] = array();
 		}
 		$this->families[$fid]['fid'] = $fid;
@@ -165,7 +165,7 @@ class ClippingsCartListEnhancer {
 	 * 9/12/2025 This function had changes made by @stefaz to resolve issues with media files 
 	 *
 	 * @param string $pid XREF of individual
-	 * @return array [URL/path, title, link] or [null, "", null]
+	 * @return array<mixed> [URL/path, title, link] or [null, "", null]
 	 */
 	private function getPhoto(string $pid): array
 	{
