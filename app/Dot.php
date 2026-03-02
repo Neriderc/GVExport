@@ -283,7 +283,7 @@ class Dot
 			// If individuals in clipping cart and option chosen to use them, then proceed
 
 			$cart = new ClippingsCart($this->tree);
-			$lists = new ClippingsCartListBuilder($cart)->getLists();
+			$lists = (new ClippingsCartListBuilder($cart))->getLists();
 			$enhancedLists = (new ClippingsCartListEnhancer($cart, $lists, $this->isPhotoRequired(), $this->settings['dpi'], ($this->settings["diagram_type"] == "combined")))->enhance();
 
 			$this->individuals = $enhancedLists['individuals'];
