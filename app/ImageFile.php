@@ -41,7 +41,7 @@ class ImageFile
         $full_media_path = Site::getPreference('INDEX_DIRECTORY') . $this->tree->getPreference('MEDIA_DIRECTORY') . $filename;
         // If SVG then scale image and provide location of temp file
         if ($_REQUEST["vars"]["output_type"] == "svg" || $_REQUEST["vars"]["output_type"] == "pdf") {
-            $temp_dir = new File()->sys_get_temp_dir_my();
+            $temp_dir = (new File())->sys_get_temp_dir_my();
             if ($temp_dir === "") return "";
             $temp_dir = $temp_dir . "/" . md5((string) Auth::id());
             $temp_image_file = $temp_dir . "/" . $filename;
