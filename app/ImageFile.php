@@ -55,14 +55,14 @@ class ImageFile
                     // Resize failed for some reason, despite being supported format
                     // (e.g. invalid file). Return path to original file instead, as most
                     // of the time the file will work even if PHP couldn't load it.
-                    return $full_media_path;
+                    return "case 1";//$full_media_path;
                 }
             } else {
                 // Don't scale as not one of our recognised formats, just return original image path
-                return $full_media_path;
+                return "case 2"; //$full_media_path;
             }
         } else {
-            return $full_media_path;
+            return "case 3"; //$full_media_path;
         }
     }
 
