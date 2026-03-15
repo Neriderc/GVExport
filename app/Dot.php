@@ -1843,7 +1843,7 @@ class Dot
 					$fit = 'crop';
 			}
 
-			return [str_replace("&", "%26", $m->imageUrl($this->settings['dpi'] * $resolution, $this->settings['dpi'] * $resolution, $fit)), strip_tags($media_title), $m->downloadUrl('inline')];
+			return [str_replace("&", "%26", $m->imageUrl($this->settings['dpi'] * $resolution, $this->settings['dpi'] * $resolution, $fit) . '%26case4check'), strip_tags($media_title), $m->downloadUrl('inline')];
 		}
 	}
 
