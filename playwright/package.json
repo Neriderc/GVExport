@@ -1,4 +1,4 @@
-  {
+{
   "name": "playwright",
   "version": "1.0.0",
   "description": "",
@@ -8,7 +8,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@playwright/test": "^1.57.0",
+    "@playwright/test": "^1.58.2",
     "@types/node": "^24.10.1",
     "@typescript-eslint/parser": "^5.62.0",
     "eslint": "^8.57.1",

@@ -3,7 +3,7 @@ import { getTileByXref, loadGVExport, addFamilyToClippingsCartViaMenu } from '..
 
 export function runSharedGeneralTests(role: 'guest' | 'user') {
     test.describe('Check all download types trigger download', () => {
-        runDownloadTests(['svg', 'pdf', 'png', 'jpg', 'gif', 'ps', 'dot']);
+        runDownloadTests(['svg', 'pdf', 'png', 'jpg', 'gif', 'ps', 'dot'], role);
     });
 
 
@@ -87,7 +87,7 @@ export function runSharedGeneralTests(role: 'guest' | 'user') {
     });
 }
 
-export function runDownloadTests(options: Array<string>) {
+export function runDownloadTests(options: Array<string>, role: string) {
     for (const value of options) {
         test(`Download triggers for ${value}`, async ({ page }) => {
             await loadGVExport(page);
@@ -105,5 +105,33 @@ export function runDownloadTests(options: Array<string>) {
 
             expect(pageErrors).toHaveLength(0);
         });
+    }
+
+    if (role === "user") {
+        for (const value of options) {
+            test(`Download triggers for ${value} with Clippings Cart enabled`, async ({ page }) => {
+                await loadGVExport(page, true);
+                await page.getByRole('button', { name: 'Add all diagram items to clippings cart' }).click();
+                await expect(page.locator('.toast-message').filter({ hasText: 'Added to clippings cart' })).toBeVisible();
+                await expect(await page.locator('#cart-section')).toBeVisible();
+                await page.locator('.menu-clippings').getByRole('button', { name: 'Clippings cart' }).click();
+                await expect(page.locator('.menu-clippings-cart .badge').first()).toHaveText('31')
+
+                await page.check('#usecart_yes');
+
+                await page.selectOption('#output_type', value);
+                await expect(page.locator('#rendering svg')).toBeVisible();
+
+                const pageErrors: Error[] = [];
+                page.on('pageerror', err => pageErrors.push(err));
+
+                const [download] = await Promise.all([
+                    page.waitForEvent('download'),
+                    page.getByRole('button', { name: /Download/i }).click(),
+                ]);
+
+                expect(pageErrors).toHaveLength(0);
+            });
+        }
     }
 }
