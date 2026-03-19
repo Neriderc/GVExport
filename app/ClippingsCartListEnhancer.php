@@ -178,7 +178,7 @@ class ClippingsCartListEnhancer
 			if (isset($mediaFile) && !$mediaFile->isExternal()) {
 				$media_title = strip_tags($individual->fullName());
 				// If we are rendering in the browser, provide the URL, otherwise provide the server side file location
-				if (isset($_REQUEST["render"])) {
+				if (isset($_REQUEST["browser"]) && $_REQUEST["browser"] === "false") {
 					$pic = Site::getPreference('INDEX_DIRECTORY') . $this->tree->getPreference('MEDIA_DIRECTORY') . $mediaFile->filename();
 				} else {
 					$pic = str_replace("&", "%26", $mediaFile->imageUrl($this->dpi, $this->dpi, "contain"));
